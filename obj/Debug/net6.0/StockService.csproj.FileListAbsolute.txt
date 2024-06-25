@@ -41,3 +41,4 @@ C:\Users\InDrive\source\repos\StockService\bin\Debug\net6.0\Microsoft.Extensions
 C:\Users\InDrive\source\repos\StockService\bin\Debug\net6.0\Npgsql.dll
 C:\Users\InDrive\source\repos\StockService\bin\Debug\net6.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
 C:\Users\InDrive\source\repos\StockService\bin\Debug\net6.0\System.Diagnostics.DiagnosticSource.dll
+C:\Users\InDrive\source\repos\StockService\obj\Debug\net6.0\StockService.sourcelink.json

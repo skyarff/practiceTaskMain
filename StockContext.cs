@@ -25,10 +25,19 @@ namespace StockService
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Employee>()
-                .HasOne(e => e.Company)
-                .WithMany(c => c.Employees)
-                .HasForeignKey(c => c.EmployeeId);
+            modelBuilder.Entity<Company>(entity =>
+            {
+                entity.HasKey(e => e.CompanyId);
+            });
+
+            modelBuilder.Entity<Employee>(entity =>
+            {
+                entity.HasKey(e => e.EmployeeId);
+
+                entity.HasOne(e => e.Company)
+                    .WithMany(c => c.Employees)
+                    .HasForeignKey(e => e.CompanyId);
+            });
         }
 
     }

@@ -1,9 +1,13 @@
-﻿namespace StockService.Models
+﻿using System.Text.Json.Serialization;
+
+namespace StockService.Models
 {
     public class Stock
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public Company Company { get; set; }
+        public int StockId { get; set; }
+        public string? Name { get; set; }
+        public int CompanyId { get; set; }
+        [JsonIgnore]
+        public Company? Company { get; set; }
     }
 }

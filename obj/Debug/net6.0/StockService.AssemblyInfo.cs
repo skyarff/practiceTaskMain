@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("StockService")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5c617db2ea038e941dad1001291365624e7c8f11")]
 [assembly: System.Reflection.AssemblyProductAttribute("StockService")]
 [assembly: System.Reflection.AssemblyTitleAttribute("StockService")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
