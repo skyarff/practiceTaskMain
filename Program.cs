@@ -1,7 +1,10 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using StockService;
-using StockService.Repository;
+using StockService.Repository.CompanyRep;
+using StockService.Repository.EmployeeRep;
+using StockService.Repository.ProviderRep;
+using StockService.Repository.StockRep;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +21,10 @@ builder.Services.AddSingleton(mapper);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+builder.Services.AddScoped<ICompanyService, CompanyService>();
+builder.Services.AddScoped<IProviderService, ProviderService>();
+builder.Services.AddScoped<IStockService, StockServise>();
+
 
 //services.AddAutoMapper(typeof(MappingConfig));
 

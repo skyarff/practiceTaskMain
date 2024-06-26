@@ -1,29 +1,31 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using StockService.Models;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using StockService.Models.dto;
+using StockService.Models;
 using StockService.Repository.EmployeeRep;
+using StockService.Repository.StockRep;
 
 namespace StockService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EmployeeController : ControllerBase
+    public class StockController : ControllerBase
     {
-        private readonly IEmployeeService _employeeService;
+        private readonly IStockService _stockService;
         private Response _response;
 
-        public EmployeeController(IEmployeeService employeeService)
+        public StockController(IStockService stockService)
         {
-            _employeeService = employeeService;
+            _stockService = stockService;
             this._response = new Response();
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateEmployee(EmployeeDto employeeDto)
+        public async Task<IActionResult> CreateStock(StockDto stockDto)
         {
             try
             {
-                _response = await _employeeService.CreateEmployeeAsync(employeeDto);
+                _response = await _stockService.CreateStockAsync(stockDto);
                 return Ok(_response);
             }
             catch (Exception ex)
@@ -35,11 +37,11 @@ namespace StockService.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteEmployeeAsync(int id)
+        public async Task<IActionResult> DeleteStockAsync(int id)
         {
             try
             {
-                _response = await _employeeService.DeleteEmployeeAsync(id);
+                _response = await _stockService.DeleteStockAsync(id);
                 return Ok(_response);
             }
             catch (Exception ex)
@@ -51,11 +53,11 @@ namespace StockService.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllEmployees()
+        public async Task<IActionResult> GetAllStocks()
         {
             try
             {
-                _response = await _employeeService.GetAllEmployeesAsync();
+                _response = await _stockService.GetAllStocksAsync();
 
                 if (_response.IsSuccess)
                 {
@@ -76,11 +78,11 @@ namespace StockService.Controllers
 
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetEmployeeById(int id)
+        public async Task<IActionResult> GetStockByIdAsync(int id)
         {
             try
             {
-                _response = await _employeeService.GetEmployeeByIdAsync(id);
+                _response = await _stockService.GetStockByIdAsync(id);
 
                 if (_response.IsSuccess)
                 {
@@ -100,11 +102,11 @@ namespace StockService.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateEmployeeAsync(int id, EmployeeDto employeeDto)
+        public async Task<IActionResult> UpdateStockAsync(int id, StockDto stockDto)
         {
             try
             {
-                var response = await _employeeService.UpdateEmployeeAsync(id, employeeDto);
+                var response = await _stockService.UpdateStockAsync(id, stockDto);
                 if (response.IsSuccess)
                 {
                     return Ok(response);

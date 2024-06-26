@@ -11,8 +11,8 @@ using StockService;
 namespace StockService.Migrations
 {
     [DbContext(typeof(StockContext))]
-    [Migration("20240625104940_first")]
-    partial class first
+    [Migration("20240626092809_add-migration stock")]
+    partial class addmigrationstock
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -60,23 +60,18 @@ namespace StockService.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("FullName")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("JobTitle")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Phone")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Photo")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("EmployeeId");
@@ -86,10 +81,85 @@ namespace StockService.Migrations
                     b.ToTable("Employees");
                 });
 
+            modelBuilder.Entity("StockService.Models.Provider", b =>
+                {
+                    b.Property<int>("ProviderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ProviderId"));
+
+                    b.Property<string>("BIK")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Bank")
+                        .HasColumnType("text");
+
+                    b.Property<string>("CheckingAccount")
+                        .HasColumnType("text");
+
+                    b.Property<string>("CorrAccount")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
+                    b.Property<string>("INN")
+                        .HasColumnType("text");
+
+                    b.Property<string>("LegalAdress")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ManagerFullname")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("text");
+
+                    b.HasKey("ProviderId");
+
+                    b.ToTable("Providers");
+                });
+
+            modelBuilder.Entity("StockService.Models.Stock", b =>
+                {
+                    b.Property<int>("StockId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("StockId"));
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("StockId");
+
+                    b.HasIndex("CompanyId");
+
+                    b.ToTable("Stocks");
+                });
+
             modelBuilder.Entity("StockService.Models.Employee", b =>
                 {
                     b.HasOne("StockService.Models.Company", "Company")
                         .WithMany("Employees")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Company");
+                });
+
+            modelBuilder.Entity("StockService.Models.Stock", b =>
+                {
+                    b.HasOne("StockService.Models.Company", "Company")
+                        .WithMany()
                         .HasForeignKey("CompanyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

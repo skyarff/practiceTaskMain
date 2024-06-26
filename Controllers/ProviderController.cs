@@ -1,29 +1,31 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using StockService.Models;
 using StockService.Models.dto;
 using StockService.Repository.EmployeeRep;
+using StockService.Repository.ProviderRep;
 
 namespace StockService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EmployeeController : ControllerBase
+    public class ProviderController : ControllerBase
     {
-        private readonly IEmployeeService _employeeService;
+        private readonly IProviderService _providerService;
         private Response _response;
 
-        public EmployeeController(IEmployeeService employeeService)
+        public ProviderController(IProviderService providerService)
         {
-            _employeeService = employeeService;
+            _providerService = providerService;
             this._response = new Response();
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateEmployee(EmployeeDto employeeDto)
+        public async Task<IActionResult> CreateEmployee(ProviderDto providerDto)
         {
             try
             {
-                _response = await _employeeService.CreateEmployeeAsync(employeeDto);
+                _response = await _providerService.CreateProviderAsync(providerDto);
                 return Ok(_response);
             }
             catch (Exception ex)
@@ -39,7 +41,7 @@ namespace StockService.Controllers
         {
             try
             {
-                _response = await _employeeService.DeleteEmployeeAsync(id);
+                _response = await _providerService.DeleteProviderAsync(id);
                 return Ok(_response);
             }
             catch (Exception ex)
@@ -55,7 +57,7 @@ namespace StockService.Controllers
         {
             try
             {
-                _response = await _employeeService.GetAllEmployeesAsync();
+                _response = await _providerService.GetAllProvidersAsync();
 
                 if (_response.IsSuccess)
                 {
@@ -80,7 +82,7 @@ namespace StockService.Controllers
         {
             try
             {
-                _response = await _employeeService.GetEmployeeByIdAsync(id);
+                _response = await _providerService.GetProviderByIdAsync(id);
 
                 if (_response.IsSuccess)
                 {
@@ -100,11 +102,11 @@ namespace StockService.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateEmployeeAsync(int id, EmployeeDto employeeDto)
+        public async Task<IActionResult> UpdateEmployeeAsync(int id, ProviderDto providerDto)
         {
             try
             {
-                var response = await _employeeService.UpdateEmployeeAsync(id, employeeDto);
+                var response = await _providerService.UpdateProviderAsync(id, providerDto);
                 if (response.IsSuccess)
                 {
                     return Ok(response);

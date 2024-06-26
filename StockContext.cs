@@ -16,8 +16,8 @@ namespace StockService
         public DbSet<Company> Companies { get; set; }
         public DbSet<Employee> Employees { get; set; }
         //public DbSet<Product> Products { get; set; }
-        //public DbSet<Provider> Providers { get; set; }
-        //public DbSet<Stock> Stocks { get; set; }
+        public DbSet<Provider> Providers { get; set; }
+        public DbSet<Stock> Stocks { get; set; }
         //public DbSet<Storage> Storages { get; set; }
         //public DbSet<UPD> UPDs { get; set; }
 

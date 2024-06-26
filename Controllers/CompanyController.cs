@@ -1,45 +1,53 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StockService.Models;
 using StockService.Models.dto;
-using StockService.Repository.EmployeeRep;
+using StockService.Repository.CompanyRep;
 
 namespace StockService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EmployeeController : ControllerBase
+    public class CompanyController: ControllerBase
     {
-        private readonly IEmployeeService _employeeService;
+        private readonly ICompanyService _companyService;
         private Response _response;
 
-        public EmployeeController(IEmployeeService employeeService)
+
+        public CompanyController(ICompanyService companyService)
         {
-            _employeeService = employeeService;
+            _companyService = companyService;
             this._response = new Response();
         }
 
+
         [HttpPost]
-        public async Task<IActionResult> CreateEmployee(EmployeeDto employeeDto)
+        public async Task<IActionResult> CreateCompany(CompanyDto companyDto)
         {
             try
             {
-                _response = await _employeeService.CreateEmployeeAsync(employeeDto);
+                _response = await _companyService.CreateCompanyAsync(companyDto);
                 return Ok(_response);
             }
             catch (Exception ex)
             {
                 _response.IsSuccess = false;
-                _response.Errors.Add(ex.Message);
+                _response.Errors.Add($"An error occurred while saving the entity changes: {ex.Message}");
+
+                if (ex.InnerException != null)
+                {
+                    _response.Errors.Add($"Inner exception: {ex.InnerException.Message}");
+                }
+
                 return BadRequest(_response);
             }
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteEmployeeAsync(int id)
+        public async Task<IActionResult> DeleteCompanyAsync(int id)
         {
             try
             {
-                _response = await _employeeService.DeleteEmployeeAsync(id);
+                _response = await _companyService.DeleteCompanyAsync(id);
                 return Ok(_response);
             }
             catch (Exception ex)
@@ -55,7 +63,7 @@ namespace StockService.Controllers
         {
             try
             {
-                _response = await _employeeService.GetAllEmployeesAsync();
+                _response = await _companyService.GetAllCompaniesAsync();
 
                 if (_response.IsSuccess)
                 {
@@ -73,14 +81,13 @@ namespace StockService.Controllers
                 return BadRequest(_response);
             }
         }
-
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetEmployeeById(int id)
+        public async Task<IActionResult> GetCompanyById(int id)
         {
             try
             {
-                _response = await _employeeService.GetEmployeeByIdAsync(id);
+                _response = await _companyService.GetCompanyByIdAsync(id);
 
                 if (_response.IsSuccess)
                 {
@@ -98,13 +105,12 @@ namespace StockService.Controllers
                 return BadRequest(_response);
             }
         }
-
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateEmployeeAsync(int id, EmployeeDto employeeDto)
+        public async Task<IActionResult> UpdateEmployeeAsync(int id, CompanyDto companyDto)
         {
             try
             {
-                var response = await _employeeService.UpdateEmployeeAsync(id, employeeDto);
+                var response = await _companyService.UpdateCompanyAsync(id, companyDto);
                 if (response.IsSuccess)
                 {
                     return Ok(response);

@@ -12,6 +12,8 @@ namespace StockService
             {
                 config.CreateMap<Employee, EmployeeDto>().ReverseMap();
                 config.CreateMap<Company, CompanyDto>().ReverseMap();
+                config.CreateMap<Provider, ProviderDto>().ReverseMap();
+                config.CreateMap<Stock, StockDto>().ReverseMap();
             });
         }
     }
