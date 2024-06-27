@@ -64,23 +64,15 @@ namespace StockService.Repository.ProviderRep
         {
             Response response = new Response();
 
-            try
-            {
-                var providers = await _db.Providers.ToListAsync();
-                response.IsSuccess = false;
-                response.Message = "Поставщики не найдены.";
+            var providers = await _db.Providers.ToListAsync();
+            response.IsSuccess = false;
+            response.Message = "Поставщики не найдены.";
 
-                if (providers.Count != 0)
-                {
-                    response.IsSuccess = true;
-                    response.Result = providers;
-                    response.Message = "Поставщики успешно получены.";
-                }
-            }
-            catch (Exception ex)
+            if (providers.Count != 0)
             {
-                response.IsSuccess = false;
-                response.Errors.Add(ex.Message);
+                response.IsSuccess = true;
+                response.Result = providers;
+                response.Message = "Поставщики успешно получены.";
             }
 
             return response;
@@ -88,19 +80,19 @@ namespace StockService.Repository.ProviderRep
 
         public async Task<Response> GetProviderByIdAsync(int id)
         {
-            Response response = new Response();
+            
             var provider = await _db.Providers.FirstOrDefaultAsync(p => p.ProviderId == id);
 
-            response.IsSuccess = false;
-            response.Message = "Поставщик не найден.";
+            _response.IsSuccess = false;
+            _response.Message = "Поставщик не найден.";
             if (provider != null)
             {
-                response.IsSuccess = true;
-                response.Result = provider;
-                response.Message = "Поставщик найден.";
+                _response.IsSuccess = true;
+                _response.Result = provider;
+                _response.Message = "Поставщик найден.";
             }
 
-            return response;
+            return _response;
         }
 
         public async Task<Response> UpdateProviderAsync(int id, ProviderDto providerDto)
@@ -132,7 +124,7 @@ namespace StockService.Repository.ProviderRep
                     provider.BIK = providerDto.BIK;
 
                 if (!string.IsNullOrEmpty(providerDto.CorrAccount))
-                    provider.CorrAccount = providerDto.CorrAccount;
+                    provider.CorrespondentAccount = providerDto.CorrAccount;
 
                 if (!string.IsNullOrEmpty(providerDto.ManagerFullname))
                     provider.ManagerFullname = providerDto.ManagerFullname;

@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using StockService.Models;
-using AutoMapper;
 using StockService.Models.dto;
 
 namespace StockService.Repository.EmployeeRep
@@ -115,7 +115,7 @@ namespace StockService.Repository.EmployeeRep
                     employee.FullName = employeeDto.FullName;
 
                 if (employeeDto.CompanyId != 0)
-                    employee.CompanyId = employeeDto.CompanyId;
+                    employee.StockId = employeeDto.CompanyId;
 
                 if (!string.IsNullOrEmpty(employeeDto.JobTitle))
                     employee.JobTitle = employeeDto.JobTitle;

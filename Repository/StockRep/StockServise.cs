@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using StockService.Models.dto;
 using StockService.Models;
+using StockService.Models.dto;
 
 namespace StockService.Repository.StockRep
 {

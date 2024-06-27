@@ -1,5 +1,5 @@
-﻿using StockService.Models.dto;
-using StockService.Models;
+﻿using StockService.Models;
+using StockService.Models.dto;
 
 namespace StockService.Repository.ProviderRep
 {

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using StockService.Models;
 using StockService.Models.dto;
 using StockService.Repository.CompanyRep;
@@ -7,7 +8,7 @@ namespace StockService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CompanyController: ControllerBase
+    public class CompanyController : ControllerBase
     {
         private readonly ICompanyService _companyService;
         private Response _response;
@@ -19,7 +20,7 @@ namespace StockService.Controllers
             this._response = new Response();
         }
 
-
+        
         [HttpPost]
         public async Task<IActionResult> CreateCompany(CompanyDto companyDto)
         {

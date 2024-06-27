@@ -1,15 +1,22 @@
-﻿namespace StockService.Models
+﻿using System.Text.Json.Serialization;
+
+namespace StockService.Models
 {
     public class Company
     {
         public int CompanyId { get; set; }
         public string Name { get; set; }
-        public string INN {  get; set; }
-        public string Logo { get; set; }
-        public List<Employee> Employees { get; set; }
+        public string? INN { get; set; }
+        public string? Logo { get; set; }
+
+        [JsonIgnore]
+        public List<Stock>? Stocks { get; set; }
+        [JsonIgnore]
+        public List<ProductCategory>? ProductCategories { get; set; }
         public Company()
         {
-            this.Employees = new List<Employee>();  
+            this.Stocks = new List<Stock>();
+            this.ProductCategories = new List<ProductCategory>();
         }
-    } 
+    }
 }

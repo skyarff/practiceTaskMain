@@ -5,8 +5,8 @@ namespace StockService.Models
 {
     public class Product
     {
-        public int Id { get; set; }
-        public string? Name { get; set; }
+        public int ProductId { get; set; }
+        public string Name { get; set; }
         public string? Manufacturer { get; set; }
         public string? ProductionArticle { get; set; }
         public string? InnerArticle { get; set; }
@@ -14,26 +14,20 @@ namespace StockService.Models
         public decimal Price { get; set; }
         public string? FactoryNumber { get; set; }
 
-        public int BillId { get; set; }
+        public int? BillId { get; set; }
         [JsonIgnore]
         public Bill? Bill { get; set; }
-        public int UPDId { get; set; }
+        public int? UpdId { get; set; }
         [JsonIgnore]
-        public UPD? UPD { get; set; }
-        public int ProviderId { get; set; }
+        public Upd? Upd { get; set; }
+        public int? ProductCategoryId { get; set; }
         [JsonIgnore]
-        public Provider? Provider { get; set; }
-        public int CategoryId { get; set; }
+        public ProductCategory? ProductCategory { get; set; }
+        public int StorageLocationId { get; set; }
         [JsonIgnore]
-        public Category? Category { get; set; }
-        public int StorageId { get; set; }
-        [JsonIgnore]
-        public Storage? Storage { get; set; }
-        public int StockId { get; set; }
-        [JsonIgnore]
-        public Stock? Stock { get; set; }
+        public StorageLocation StorageLocation { get; set; }
         public int EmployeeId { get; set; }
         [JsonIgnore]
-        public Employee? Employee { get; set; }
+        public Employee Employee { get; set; }
     }
 }

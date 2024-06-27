@@ -2,13 +2,20 @@
 
 namespace StockService.Models
 {
-    public class UPD
+    public class Upd
     {
-        public int Id { get; set; }
-        public string? DocNumber { get; set; }
-        public string? PdfScan { get; set; }
+        public int UpdId { get; set; }
+        public string DocumentNumber { get; set; }
+        public string ScanPdf { get; set; }
+
         public int ProviderId { get; set; }
         [JsonIgnore]
-        public Provider? Provider { get; set; }
+        public Provider Provider { get; set; }
+        [JsonIgnore]
+        public List<Product>? Products { get; set; }
+        public Upd()
+        {
+            this.Products = new List<Product>();
+        }
     }
 }
