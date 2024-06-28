@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StockService.Models;
 using StockService.Models.dto;
+using StockService.Repository.CookieRep;
 using StockService.Repository.EmployeeRep;
 
 namespace StockService.Controllers
@@ -23,7 +24,7 @@ namespace StockService.Controllers
         public async Task<IActionResult> CreateEmployee([FromForm] EmployeeDto employeeDto)
         {
             try
-            {  
+            {
                 _response = await _employeeService.CreateEmployeeAsync(employeeDto);
                 return Ok(_response);
             }

@@ -2,6 +2,7 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using StockService;
 using StockService.Repository.CompanyRep;
+using StockService.Repository.CookieRep;
 using StockService.Repository.EmployeeRep;
 using StockService.Repository.ProductCategoryRep;
 using StockService.Repository.ProviderRep;
@@ -29,6 +30,8 @@ builder.Services.AddScoped<IProductCategoryService, ProductCategoryService>();
 //builder.Services.AddScoped<IStockService, StockServise>();
 
 
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddScoped<ICookieService, CookieService>();
 
 
 builder.Services.AddDbContext<StockContext>(opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("PgSQL")));

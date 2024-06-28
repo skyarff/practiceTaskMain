@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "N+ISStA+HrANChUuTvu6er9EgwB75fFFDV7L0+v3eBA=",
+  "Hash": "xbhQhtWAmyCMWWkZQquTYSQPRzPKFwEjA1oH2UT3ETk=",
   "Source": "StockService",
   "BasePath": "_content/StockService",
   "Mode": "Default",
@@ -17,12 +17,12 @@
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\c873a2bc381b57447a355d10d6fd1eee-self-esteem-flower-cute-icon.png",
+      "Identity": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\bf97bdff08e5e31c3f0a78840b0a25e8.jpg",
       "SourceId": "StockService",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\",
       "BasePath": "_content/StockService",
-      "RelativePath": "c873a2bc381b57447a355d10d6fd1eee-self-esteem-flower-cute-icon.png",
+      "RelativePath": "Images/EmployeeImages/bf97bdff08e5e31c3f0a78840b0a25e8.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -31,7 +31,24 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\c873a2bc381b57447a355d10d6fd1eee-self-esteem-flower-cute-icon.png"
+      "OriginalItemSpec": "wwwroot\\Images\\EmployeeImages\\bf97bdff08e5e31c3f0a78840b0a25e8.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\c873a2bc381b57447a355d10d6fd1eee-self-esteem-flower-cute-icon.png",
+      "SourceId": "StockService",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\",
+      "BasePath": "_content/StockService",
+      "RelativePath": "Images/EmployeeImages/c873a2bc381b57447a355d10d6fd1eee-self-esteem-flower-cute-icon.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\EmployeeImages\\c873a2bc381b57447a355d10d6fd1eee-self-esteem-flower-cute-icon.png"
     }
   ]
 }
