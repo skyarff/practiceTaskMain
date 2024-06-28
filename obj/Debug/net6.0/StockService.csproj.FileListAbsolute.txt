@@ -85,3 +85,4 @@ C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\obj\Debug\net6.
 C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\obj\Debug\net6.0\StockService.csproj.CopyComplete
 C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\obj\Debug\net6.0\StockService.genruntimeconfig.cache
 C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\obj\Debug\net6.0\ref\StockService.dll
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\bin\Debug\net6.0\StockService.staticwebassets.runtime.json

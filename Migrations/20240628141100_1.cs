@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace StockService.Migrations
 {
-    public partial class company : Migration
+    public partial class _1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -48,7 +48,7 @@ namespace StockService.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductCategory",
+                name: "ProductCategories",
                 columns: table => new
                 {
                     ProductCategoryId = table.Column<int>(type: "integer", nullable: false)
@@ -58,16 +58,17 @@ namespace StockService.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductCategory", x => x.ProductCategoryId);
+                    table.PrimaryKey("PK_ProductCategories", x => x.ProductCategoryId);
                     table.ForeignKey(
-                        name: "FK_ProductCategory_Companies_CompanyId",
+                        name: "FK_ProductCategories_Companies_CompanyId",
                         column: x => x.CompanyId,
                         principalTable: "Companies",
-                        principalColumn: "CompanyId");
+                        principalColumn: "CompanyId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Stock",
+                name: "Stocks",
                 columns: table => new
                 {
                     StockId = table.Column<int>(type: "integer", nullable: false)
@@ -77,12 +78,13 @@ namespace StockService.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Stock", x => x.StockId);
+                    table.PrimaryKey("PK_Stocks", x => x.StockId);
                     table.ForeignKey(
-                        name: "FK_Stock_Companies_CompanyId",
+                        name: "FK_Stocks_Companies_CompanyId",
                         column: x => x.CompanyId,
                         principalTable: "Companies",
-                        principalColumn: "CompanyId");
+                        principalColumn: "CompanyId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -95,7 +97,7 @@ namespace StockService.Migrations
                     BillPdf = table.Column<string>(type: "text", nullable: false),
                     ProviderId = table.Column<int>(type: "integer", nullable: true),
                     BillTotal = table.Column<decimal>(type: "numeric", nullable: false, defaultValue: 0m),
-                    CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTime(2024, 6, 28, 7, 40, 5, 217, DateTimeKind.Utc).AddTicks(1908))
+                    CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTime(2024, 6, 28, 14, 11, 0, 21, DateTimeKind.Utc).AddTicks(718))
                 },
                 constraints: table =>
                 {
@@ -104,7 +106,8 @@ namespace StockService.Migrations
                         name: "FK_Bill_Provider_ProviderId",
                         column: x => x.ProviderId,
                         principalTable: "Provider",
-                        principalColumn: "ProviderId");
+                        principalColumn: "ProviderId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -116,7 +119,7 @@ namespace StockService.Migrations
                     DocumentNumber = table.Column<string>(type: "text", nullable: false),
                     ScanPdf = table.Column<string>(type: "text", nullable: false),
                     ProviderId = table.Column<int>(type: "integer", nullable: true),
-                    CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTime(2024, 6, 28, 7, 40, 5, 217, DateTimeKind.Utc).AddTicks(4199))
+                    CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTime(2024, 6, 28, 14, 11, 0, 21, DateTimeKind.Utc).AddTicks(3335))
                 },
                 constraints: table =>
                 {
@@ -125,11 +128,12 @@ namespace StockService.Migrations
                         name: "FK_Upd_Provider_ProviderId",
                         column: x => x.ProviderId,
                         principalTable: "Provider",
-                        principalColumn: "ProviderId");
+                        principalColumn: "ProviderId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Employee",
+                name: "Employees",
                 columns: table => new
                 {
                     EmployeeId = table.Column<int>(type: "integer", nullable: false)
@@ -139,18 +143,19 @@ namespace StockService.Migrations
                     Login = table.Column<string>(type: "text", nullable: false),
                     Password = table.Column<string>(type: "text", nullable: false),
                     StockId = table.Column<int>(type: "integer", nullable: true),
-                    Photo = table.Column<string>(type: "text", nullable: true),
+                    ImagePath = table.Column<string>(type: "text", nullable: true),
                     Email = table.Column<string>(type: "text", nullable: true),
                     Phone = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Employee", x => x.EmployeeId);
+                    table.PrimaryKey("PK_Employees", x => x.EmployeeId);
                     table.ForeignKey(
-                        name: "FK_Employee_Stock_StockId",
+                        name: "FK_Employees_Stocks_StockId",
                         column: x => x.StockId,
-                        principalTable: "Stock",
-                        principalColumn: "StockId");
+                        principalTable: "Stocks",
+                        principalColumn: "StockId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -169,10 +174,11 @@ namespace StockService.Migrations
                 {
                     table.PrimaryKey("PK_StorageLocation", x => x.StorageLocationId);
                     table.ForeignKey(
-                        name: "FK_StorageLocation_Stock_StockId",
+                        name: "FK_StorageLocation_Stocks_StockId",
                         column: x => x.StockId,
-                        principalTable: "Stock",
-                        principalColumn: "StockId");
+                        principalTable: "Stocks",
+                        principalColumn: "StockId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -188,7 +194,7 @@ namespace StockService.Migrations
                     Photo = table.Column<string>(type: "text", nullable: true),
                     Price = table.Column<decimal>(type: "numeric", nullable: false, defaultValue: 0m),
                     FactoryNumber = table.Column<string>(type: "text", nullable: true),
-                    CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTime(2024, 6, 28, 7, 40, 5, 217, DateTimeKind.Utc).AddTicks(6868)),
+                    CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTime(2024, 6, 28, 14, 11, 0, 21, DateTimeKind.Utc).AddTicks(6383)),
                     BillId = table.Column<int>(type: "integer", nullable: true),
                     UpdId = table.Column<int>(type: "integer", nullable: true),
                     ProductCategoryId = table.Column<int>(type: "integer", nullable: true),
@@ -204,16 +210,17 @@ namespace StockService.Migrations
                         principalTable: "Bill",
                         principalColumn: "BillId");
                     table.ForeignKey(
-                        name: "FK_Product_Employee_EmployeeId",
+                        name: "FK_Product_Employees_EmployeeId",
                         column: x => x.EmployeeId,
-                        principalTable: "Employee",
+                        principalTable: "Employees",
                         principalColumn: "EmployeeId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Product_ProductCategory_ProductCategoryId",
+                        name: "FK_Product_ProductCategories_ProductCategoryId",
                         column: x => x.ProductCategoryId,
-                        principalTable: "ProductCategory",
-                        principalColumn: "ProductCategoryId");
+                        principalTable: "ProductCategories",
+                        principalColumn: "ProductCategoryId",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Product_StorageLocation_StorageLocationId",
                         column: x => x.StorageLocationId,
@@ -233,8 +240,14 @@ namespace StockService.Migrations
                 column: "ProviderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Employee_StockId",
-                table: "Employee",
+                name: "IX_Employees_Login",
+                table: "Employees",
+                column: "Login",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Employees_StockId",
+                table: "Employees",
                 column: "StockId");
 
             migrationBuilder.CreateIndex(
@@ -264,13 +277,13 @@ namespace StockService.Migrations
                 column: "UpdId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductCategory_CompanyId",
-                table: "ProductCategory",
+                name: "IX_ProductCategories_CompanyId",
+                table: "ProductCategories",
                 column: "CompanyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Stock_CompanyId",
-                table: "Stock",
+                name: "IX_Stocks_CompanyId",
+                table: "Stocks",
                 column: "CompanyId");
 
             migrationBuilder.CreateIndex(
@@ -293,10 +306,10 @@ namespace StockService.Migrations
                 name: "Bill");
 
             migrationBuilder.DropTable(
-                name: "Employee");
+                name: "Employees");
 
             migrationBuilder.DropTable(
-                name: "ProductCategory");
+                name: "ProductCategories");
 
             migrationBuilder.DropTable(
                 name: "StorageLocation");
@@ -305,7 +318,7 @@ namespace StockService.Migrations
                 name: "Upd");
 
             migrationBuilder.DropTable(
-                name: "Stock");
+                name: "Stocks");
 
             migrationBuilder.DropTable(
                 name: "Provider");

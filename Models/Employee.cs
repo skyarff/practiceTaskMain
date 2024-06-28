@@ -22,7 +22,7 @@ namespace StockService.Models
             this.Products = new List<Product>();
         }
 
-        public string? Photo { get; set; }
+        public string? ImagePath { get; set; }
         public string? Email { get; set; }
         public string? Phone { get; set; }
     }

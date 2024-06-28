@@ -46,7 +46,7 @@ namespace StockService.Migrations
                     b.Property<DateTime>("CreateDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
-                        .HasDefaultValue(new DateTime(2024, 6, 28, 11, 48, 16, 974, DateTimeKind.Utc).AddTicks(1058));
+                        .HasDefaultValue(new DateTime(2024, 6, 28, 14, 11, 0, 21, DateTimeKind.Utc).AddTicks(718));
 
                     b.Property<int?>("ProviderId")
                         .HasColumnType("integer");
@@ -96,6 +96,9 @@ namespace StockService.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("ImagePath")
+                        .HasColumnType("text");
+
                     b.Property<string>("JobTitle")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
@@ -111,9 +114,6 @@ namespace StockService.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Phone")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Photo")
                         .HasColumnType("text");
 
                     b.Property<int?>("StockId")
@@ -143,7 +143,7 @@ namespace StockService.Migrations
                     b.Property<DateTime>("CreateDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
-                        .HasDefaultValue(new DateTime(2024, 6, 28, 11, 48, 16, 974, DateTimeKind.Utc).AddTicks(6863));
+                        .HasDefaultValue(new DateTime(2024, 6, 28, 14, 11, 0, 21, DateTimeKind.Utc).AddTicks(6383));
 
                     b.Property<int>("EmployeeId")
                         .HasColumnType("integer");
@@ -327,7 +327,7 @@ namespace StockService.Migrations
                     b.Property<DateTime>("CreateDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
-                        .HasDefaultValue(new DateTime(2024, 6, 28, 11, 48, 16, 974, DateTimeKind.Utc).AddTicks(3930));
+                        .HasDefaultValue(new DateTime(2024, 6, 28, 14, 11, 0, 21, DateTimeKind.Utc).AddTicks(3335));
 
                     b.Property<string>("DocumentNumber")
                         .IsRequired()

@@ -19,10 +19,11 @@ namespace StockService.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateEmployee(EmployeeDto employeeDto)
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> CreateEmployee([FromForm] EmployeeDto employeeDto)
         {
             try
-            {
+            {  
                 _response = await _employeeService.CreateEmployeeAsync(employeeDto);
                 return Ok(_response);
             }

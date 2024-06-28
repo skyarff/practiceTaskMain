@@ -10,7 +10,8 @@ namespace StockService.Models.dto
         public string? Login { get; set; }
         public string? Password { get; set; }
 
-        public string? Photo { get; set; }
+        public IFormFile? Image { get; set; }
+        [JsonIgnore]
         public string? Email { get; set; }
         public string? Phone { get; set; }
 

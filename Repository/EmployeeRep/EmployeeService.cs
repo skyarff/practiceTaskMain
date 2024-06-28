@@ -26,6 +26,21 @@ namespace StockService.Repository.EmployeeRep
             if (!employeeIsExists)
             {
                 var employee = _mapper.Map<EmployeeDto, Employee>(employeeDto);
+
+                if (employeeDto.Image != null && employeeDto.Image.Length > 0)
+                {
+                    var fileName = Path.GetFileName(employeeDto.Image.FileName);
+                    var filePath = Path.Combine("\\Images\\EmployeeImages", fileName);
+                    
+
+                    using (var stream = new FileStream(Path.Combine("wwwroot\\Images\\EmployeeImages", fileName), FileMode.Create))
+                    {
+                        await employeeDto.Image.CopyToAsync(stream);
+                    }
+
+                    employee.ImagePath = filePath;
+                }
+
                 _db.Employees.Add(employee);
                 await _db.SaveChangesAsync();
 
@@ -130,8 +145,8 @@ namespace StockService.Repository.EmployeeRep
                 if (!string.IsNullOrEmpty(employeeDto.Password))
                     employee.Password = employeeDto.Password;
 
-                if (!string.IsNullOrEmpty(employeeDto.Photo))
-                    employee.Photo = employeeDto.Photo;
+                //if (!string.IsNullOrEmpty(employeeDto.Photo))
+                //    employee.Photo = employeeDto.Photo;
 
                 if (!string.IsNullOrEmpty(employeeDto.Email))
                     employee.Email = employeeDto.Email;

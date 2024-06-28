@@ -1,11 +1,37 @@
 {
   "Version": 1,
-  "Hash": "B2/IdWv457zUeRz98J4uFT2v/z0HLeet414rYOZLYPg=",
+  "Hash": "N+ISStA+HrANChUuTvu6er9EgwB75fFFDV7L0+v3eBA=",
   "Source": "StockService",
   "BasePath": "_content/StockService",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": []
+  "DiscoveryPatterns": [
+    {
+      "Name": "StockService\\wwwroot",
+      "Source": "StockService",
+      "ContentRoot": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\",
+      "BasePath": "_content/StockService",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\c873a2bc381b57447a355d10d6fd1eee-self-esteem-flower-cute-icon.png",
+      "SourceId": "StockService",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\",
+      "BasePath": "_content/StockService",
+      "RelativePath": "c873a2bc381b57447a355d10d6fd1eee-self-esteem-flower-cute-icon.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\c873a2bc381b57447a355d10d6fd1eee-self-esteem-flower-cute-icon.png"
+    }
+  ]
 }
