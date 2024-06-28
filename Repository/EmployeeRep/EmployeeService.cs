@@ -19,106 +19,116 @@ namespace StockService.Repository.EmployeeRep
 
         public async Task<Response> CreateEmployeeAsync(EmployeeDto employeeDto)
         {
-            Response response = new Response();
-            var employeeIsExists = await _db.Employees.AnyAsync(e => e.FullName == employeeDto.FullName);
+            var employeeIsExists = await _db.Employees.AnyAsync(e => e.Login == employeeDto.Login);
 
-            response.IsSuccess = false;
-            response.Message = "Пользователь уже существует.";
+            _response.IsSuccess = false;
+            _response.Message = "Пользователь уже существует.";
             if (!employeeIsExists)
             {
                 var employee = _mapper.Map<EmployeeDto, Employee>(employeeDto);
                 _db.Employees.Add(employee);
                 await _db.SaveChangesAsync();
 
-                response.IsSuccess = true;
-                response.Result = employee;
-                response.Message = "Пользователь добавлен.";
+                _response.IsSuccess = true;
+                _response.Result = employee;
+                _response.Message = "Пользователь добавлен.";
             }
-            return response;
+
+            return _response;
         }
 
         public async Task<Response> DeleteEmployeeAsync(int id)
         {
-            Response response = new Response();
             var employee = await _db.Employees.FindAsync(id);
 
-            response.IsSuccess = true;
-            response.Message = "Сотрудник не найден.";
+            _response.IsSuccess = true;
+            _response.Message = "Сотрудник не найден.";
 
             if (employee != null)
             {
-                response.IsSuccess = false;
-                response.Message = "Сотрудник успешно удален.";
+                _response.IsSuccess = false;
+                _response.Message = "Сотрудник успешно удален.";
 
                 _db.Employees.Remove(employee);
                 await _db.SaveChangesAsync();
             }
 
-            return response;
+            return _response;
         }
 
-        public async Task<Response> GetAllEmployeesAsync()
+        public async Task<Response> GetEmployeesByStockIdAsync(int stockId)
         {
-            Response response = new Response();
+            _response.IsSuccess = false;
+            _response.Message = "Сотрудники не найдены.";
 
-            try
-            {
-                var employees = await _db.Employees.ToListAsync();
-                response.IsSuccess = false;
-                response.Message = "Сотрудники не найдены.";
+            var employees = await _db.Employees
+                    .Where(e => e.StockId == stockId)
+                    .ToListAsync();
 
-                if (employees.Count != 0)
-                {
-                    response.IsSuccess = true;
-                    response.Result = employees;
-                    response.Message = "Сотрудники успешно получены.";
-                }
-            }
-            catch (Exception ex)
+            if (employees.Any())
             {
-                response.IsSuccess = false;
-                response.Errors.Add(ex.Message);
+                _response.IsSuccess = true;
+                _response.Result = employees;
+                _response.Message = $"Сотрудники для склада с ID {stockId} успешно получены.";
             }
 
-            return response;
+            return _response;
+        }
+
+        public async Task<Response> GetEmployeesByCompanyIdAsync(int companyId)
+        {
+            _response.IsSuccess = false;
+            _response.Message = "Сотрудники не найдены для указанной компании.";
+
+            var employees = _db.Companies
+                .Where(c => c.CompanyId == companyId)
+                .SelectMany(c => c.Stocks.SelectMany(w => w.Employees))
+                .ToList();
+
+            if (employees.Any())
+            {
+                _response.IsSuccess = true;
+                _response.Result = employees;
+                _response.Message = $"Сотрудники для компании с ID {companyId} успешно получены.";
+            }
+
+            return _response;
         }
 
         public async Task<Response> GetEmployeeByIdAsync(int id)
         {
-            Response response = new Response();
             var employee = await _db.Employees.FirstOrDefaultAsync(e => e.EmployeeId == id);
 
-            response.IsSuccess = false;
-            response.Message = "Сотрудник не найден.";
+            _response.IsSuccess = false;
+            _response.Message = "Сотрудник не найден.";
             if (employee != null)
             {
-                response.IsSuccess = true;
-                response.Result = employee;
-                response.Message = "Сотрудник найден.";
+                _response.IsSuccess = true;
+                _response.Result = employee;
+                _response.Message = "Сотрудник найден.";
 
             }
 
-            return response;
+            return _response;
         }
 
         public async Task<Response> UpdateEmployeeAsync(int id, EmployeeDto employeeDto)
         {
-            Response response = new Response();
             var employee = await _db.Employees.FirstOrDefaultAsync(e => e.EmployeeId == id);
 
-            response.IsSuccess = false;
-            response.Message = "Сотрудник не найден.";
+            _response.IsSuccess = false;
+            _response.Message = "Сотрудник не найден.";
 
             if (employee != null)
             {
                 if (!string.IsNullOrEmpty(employeeDto.FullName))
                     employee.FullName = employeeDto.FullName;
 
-                if (employeeDto.CompanyId != 0)
-                    employee.StockId = employeeDto.CompanyId;
-
                 if (!string.IsNullOrEmpty(employeeDto.JobTitle))
                     employee.JobTitle = employeeDto.JobTitle;
+
+                if (!string.IsNullOrEmpty(employeeDto.Password))
+                    employee.Password = employeeDto.Password;
 
                 if (!string.IsNullOrEmpty(employeeDto.Photo))
                     employee.Photo = employeeDto.Photo;
@@ -132,12 +142,12 @@ namespace StockService.Repository.EmployeeRep
 
                 await _db.SaveChangesAsync();
 
-                response.IsSuccess = true;
-                response.Result = employee;
-                response.Message = "Данные сотрудника обновлены.";
+                _response.IsSuccess = true;
+                _response.Result = employee;
+                _response.Message = "Данные сотрудника обновлены.";
             }
 
-            return response;
+            return _response;
         }
     }
 }

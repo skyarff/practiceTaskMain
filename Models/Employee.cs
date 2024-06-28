@@ -11,10 +11,6 @@ namespace StockService.Models
         public string Login { get; set; }
         public string Password { get; set; }
 
-        public string? AccessToken { get; set; }
-        public string? RefreshToken { get; set; }
-        public DateTime? ExpireAt { get; set; }
-
 
         public int? StockId { get; set; }
         [JsonIgnore]

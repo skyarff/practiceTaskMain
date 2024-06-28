@@ -13,6 +13,7 @@ namespace StockService.Models
         public string? Photo { get; set; }
         public decimal Price { get; set; }
         public string? FactoryNumber { get; set; }
+        public DateTime CreateDate { get; set; }
 
         public int? BillId { get; set; }
         [JsonIgnore]

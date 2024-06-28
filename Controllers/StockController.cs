@@ -36,12 +36,12 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> DeleteStockAsync(int id)
+        [HttpDelete("{stockId}")]
+        public async Task<IActionResult> DeleteStockAsync(int stockId)
         {
             try
             {
-                _response = await _stockService.DeleteStockAsync(id);
+                _response = await _stockService.DeleteStockAsync(stockId);
                 return Ok(_response);
             }
             catch (Exception ex)
@@ -76,13 +76,12 @@ namespace StockService.Controllers
             }
         }
 
-
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetStockByIdAsync(int id)
+        [HttpGet("byCompany/{companyId}")]
+        public async Task<IActionResult> GetStocksByCompanyId(int companyId)
         {
             try
             {
-                _response = await _stockService.GetStockByIdAsync(id);
+                _response = await _stockService.GetStocksByCompanyIdAsync(companyId);
 
                 if (_response.IsSuccess)
                 {
@@ -101,12 +100,36 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateStockAsync(int id, StockDto stockDto)
+        [HttpGet("{stockId}")]
+        public async Task<IActionResult> GetStockByIdAsync(int stockId)
         {
             try
             {
-                var response = await _stockService.UpdateStockAsync(id, stockDto);
+                _response = await _stockService.GetStockByIdAsync(stockId);
+
+                if (_response.IsSuccess)
+                {
+                    return Ok(_response);
+                }
+                else
+                {
+                    return NotFound(_response);
+                }
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.Errors.Add(ex.Message);
+                return BadRequest(_response);
+            }
+        }
+
+        [HttpPut("{stockId}")]
+        public async Task<IActionResult> UpdateStockAsync(int stockId, StockDto stockDto)
+        {
+            try
+            {
+                var response = await _stockService.UpdateStockAsync(stockId, stockDto);
                 if (response.IsSuccess)
                 {
                     return Ok(response);

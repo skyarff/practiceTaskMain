@@ -13,7 +13,7 @@ namespace StockService.Models
         public string? BIK { get; set; }
         public string? CorrespondentAccount { get; set; }
         public string? ManagerFullname { get; set; }
-        public string Email { get; set; }
+        public string? Email { get; set; }
         public string Phone { get; set; }
         [JsonIgnore]
         public List<Bill>? Bills { get; set; }

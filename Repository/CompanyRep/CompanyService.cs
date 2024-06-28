@@ -20,95 +20,96 @@ namespace StockService.Repository.CompanyRep
 
         public async Task<Response> CreateCompanyAsync(CompanyDto companyDto)
         {
-            Response response = new Response();
             var companyIsExists = await _db.Companies.AnyAsync(c => c.Name == companyDto.Name);
 
-            response.IsSuccess = false;
-            response.Message = "Компания уже существует.";
+            _response.IsSuccess = false;
+            _response.Message = "Компания уже существует.";
             if (!companyIsExists)
             {
                 var company = _mapper.Map<CompanyDto, Company>(companyDto);
                 _db.Companies.Add(company);
                 await _db.SaveChangesAsync();
 
-                response.IsSuccess = true;
-                response.Result = company;
-                response.Message = "Компания добавлена.";
+                _response.IsSuccess = true;
+                _response.Result = company;
+                _response.Message = "Компания добавлена.";
             }
-            return response;
+            return _response;
         }
 
-        public async Task<Response> DeleteCompanyAsync(int id)
+        public async Task<Response> DeleteCompanyAsync(int companyId)
         {
-            Response response = new Response();
-            var company = await _db.Companies.FindAsync(id);
+            var company = await _db.Companies.FindAsync(companyId);
 
-            response.IsSuccess = true;
-            response.Message = "Компания не найдена.";
+            _response.IsSuccess = false;
+            _response.Message = "Компания не найдена.";
 
             if (company != null)
             {
-                response.IsSuccess = false;
-                response.Message = "Компания успешно удалена.";
-
                 _db.Companies.Remove(company);
-                await _db.SaveChangesAsync();
+
+                try
+                {
+                    await _db.SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+
+                    Console.WriteLine(ex.Message);
+
+                    _response.Errors.Add(ex.Message);
+
+                    throw;
+                }
+
+                
+
+                _response.IsSuccess = true;
+                _response.Message = "Компания успешно удалена.";
             }
 
-            return response;
+            return _response;
         }
 
         public async Task<Response> GetAllCompaniesAsync()
         {
-            Response response = new Response();
 
-            try
-            {
-                var companies = await _db.Companies.ToListAsync();
-                response.IsSuccess = false;
-                response.Message = "Компании не найдены.";
+            var companies = await _db.Companies.ToListAsync();
+            _response.IsSuccess = false;
+            _response.Message = "Компании не найдены.";
 
-                if (companies.Count != 0)
-                {
-                    response.IsSuccess = true;
-                    response.Result = companies;
-                    response.Message = "Компании успешно получены.";
-                }
-            }
-            catch (Exception ex)
+            if (companies.Any())
             {
-                response.IsSuccess = false;
-                response.Errors.Add(ex.Message);
+                _response.IsSuccess = true;
+                _response.Result = companies;
+                _response.Message = "Компании получены.";
             }
 
-            return response;
+            return _response;
         }
 
-        public async Task<Response> GetCompanyByIdAsync(int id)
+        public async Task<Response> GetCompanyByIdAsync(int companyId)
         {
-            Response response = new Response();
-            var company = await _db.Companies.FirstOrDefaultAsync(c => c.CompanyId == id);
+            var company = await _db.Companies.FindAsync(companyId);
 
-            response.IsSuccess = false;
-            response.Message = "Компания не найдена.";
+            _response.IsSuccess = false;
+            _response.Message = "Компания не найдена.";
             if (company != null)
             {
-                response.IsSuccess = true;
-                response.Result = company;
-                response.Message = "Компания найдена.";
-
+                _response.IsSuccess = true;
+                _response.Result = company;
+                _response.Message = "Компания найдена.";
             }
 
-            return response;
+            return _response;
         }
 
-        public async Task<Response> UpdateCompanyAsync(int id, CompanyDto companyDto)
+        public async Task<Response> UpdateCompanyAsync(int companyId, CompanyDto companyDto)
         {
-            Response response = new Response();
-            var company = await _db.Companies.FirstOrDefaultAsync(e => e.CompanyId == id);
+            var company = await _db.Companies.FindAsync(companyId);
 
-            response.IsSuccess = false;
-            response.Message = "Компания не найдена.";
+            _response.IsSuccess = false;
+            _response.Message = "Компания не найдена.";
 
             if (company != null)
             {
@@ -124,12 +125,12 @@ namespace StockService.Repository.CompanyRep
 
                 await _db.SaveChangesAsync();
 
-                response.IsSuccess = true;
-                response.Result = company;
-                response.Message = "Данные сотрудника обновлены.";
+                _response.IsSuccess = true;
+                _response.Result = company;
+                _response.Message = "Данные компании обновлены.";
             }
 
-            return response;
+            return _response;
         }
 
     }

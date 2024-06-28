@@ -8,9 +8,9 @@ namespace StockService.Models
         public string BillNumber { get; set; }
         public string BillPdf { get; set; }
 
-        public int ProviderId { get; set; }
+        public int? ProviderId { get; set; }
         [JsonIgnore]
-        public Provider Provider { get; set; }
+        public Provider? Provider { get; set; }
         [JsonIgnore]
         public List<Product>? Products { get; set; }
         public Bill()
@@ -19,5 +19,6 @@ namespace StockService.Models
         }
 
         public decimal BillTotal { get; set; }
+        public DateTime CreateDate { get; set; }
     }
 }

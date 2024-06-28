@@ -43,12 +43,12 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> DeleteCompanyAsync(int id)
+        [HttpDelete("{companyId}")]
+        public async Task<IActionResult> DeleteCompanyAsync(int companyId)
         {
             try
             {
-                _response = await _companyService.DeleteCompanyAsync(id);
+                _response = await _companyService.DeleteCompanyAsync(companyId);
                 return Ok(_response);
             }
             catch (Exception ex)
@@ -83,12 +83,12 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetCompanyById(int id)
+        [HttpGet("{companyId}")]
+        public async Task<IActionResult> GetCompanyById(int companyId)
         {
             try
             {
-                _response = await _companyService.GetCompanyByIdAsync(id);
+                _response = await _companyService.GetCompanyByIdAsync(companyId);
 
                 if (_response.IsSuccess)
                 {
@@ -106,12 +106,12 @@ namespace StockService.Controllers
                 return BadRequest(_response);
             }
         }
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateEmployeeAsync(int id, CompanyDto companyDto)
+        [HttpPut("{companyId}")]
+        public async Task<IActionResult> UpdateEmployeeAsync(int companyId, CompanyDto companyDto)
         {
             try
             {
-                var response = await _companyService.UpdateCompanyAsync(id, companyDto);
+                var response = await _companyService.UpdateCompanyAsync(companyId, companyDto);
                 if (response.IsSuccess)
                 {
                     return Ok(response);

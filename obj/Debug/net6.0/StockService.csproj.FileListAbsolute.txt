@@ -42,3 +42,46 @@ C:\Users\InDrive\source\repos\StockService\bin\Debug\net6.0\Npgsql.dll
 C:\Users\InDrive\source\repos\StockService\bin\Debug\net6.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
 C:\Users\InDrive\source\repos\StockService\bin\Debug\net6.0\System.Diagnostics.DiagnosticSource.dll
 C:\Users\InDrive\source\repos\StockService\obj\Debug\net6.0\StockService.sourcelink.json
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\obj\Debug\net6.0\StockService.csproj.AssemblyReference.cache
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\obj\Debug\net6.0\StockService.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\obj\Debug\net6.0\StockService.AssemblyInfoInputs.cache
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\obj\Debug\net6.0\StockService.AssemblyInfo.cs
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\obj\Debug\net6.0\StockService.csproj.CoreCompileInputs.cache
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\obj\Debug\net6.0\StockService.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\obj\Debug\net6.0\StockService.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\obj\Debug\net6.0\StockService.dll
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\obj\Debug\net6.0\refint\StockService.dll
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\obj\Debug\net6.0\StockService.pdb
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\bin\Debug\net6.0\appsettings.Development.json
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\bin\Debug\net6.0\appsettings.json
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\bin\Debug\net6.0\StockService.exe
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\bin\Debug\net6.0\StockService.deps.json
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\bin\Debug\net6.0\StockService.runtimeconfig.json
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\bin\Debug\net6.0\StockService.dll
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\bin\Debug\net6.0\StockService.pdb
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\bin\Debug\net6.0\AutoMapper.dll
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\bin\Debug\net6.0\Humanizer.dll
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\bin\Debug\net6.0\Microsoft.OpenApi.dll
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\bin\Debug\net6.0\Npgsql.dll
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\bin\Debug\net6.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\bin\Debug\net6.0\System.Diagnostics.DiagnosticSource.dll
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\obj\Debug\net6.0\staticwebassets\msbuild.StockService.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\obj\Debug\net6.0\staticwebassets\msbuild.build.StockService.props
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.StockService.props
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.StockService.props
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\obj\Debug\net6.0\staticwebassets.pack.json
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\obj\Debug\net6.0\staticwebassets.build.json
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\obj\Debug\net6.0\staticwebassets.development.json
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\obj\Debug\net6.0\scopedcss\bundle\StockService.styles.css
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\obj\Debug\net6.0\StockService.csproj.CopyComplete
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\obj\Debug\net6.0\StockService.genruntimeconfig.cache
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\obj\Debug\net6.0\ref\StockService.dll

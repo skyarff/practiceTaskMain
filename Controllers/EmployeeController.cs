@@ -34,12 +34,12 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> DeleteEmployeeAsync(int id)
+        [HttpDelete("{employeeId}")]
+        public async Task<IActionResult> DeleteEmployeeAsync(int employeeId)
         {
             try
             {
-                _response = await _employeeService.DeleteEmployeeAsync(id);
+                _response = await _employeeService.DeleteEmployeeAsync(employeeId);
                 return Ok(_response);
             }
             catch (Exception ex)
@@ -50,12 +50,12 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAllEmployees()
+        [HttpGet("{employeeId}")]
+        public async Task<IActionResult> GetEmployeeById(int employeeId)
         {
             try
             {
-                _response = await _employeeService.GetAllEmployeesAsync();
+                _response = await _employeeService.GetEmployeeByIdAsync(employeeId);
 
                 if (_response.IsSuccess)
                 {
@@ -74,13 +74,12 @@ namespace StockService.Controllers
             }
         }
 
-
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetEmployeeById(int id)
+        [HttpGet("byStock/{stockId}")]
+        public async Task<IActionResult> GetEmployeesByStockIdAsync(int stockId)
         {
             try
             {
-                _response = await _employeeService.GetEmployeeByIdAsync(id);
+                _response = await _employeeService.GetEmployeesByStockIdAsync(stockId);
 
                 if (_response.IsSuccess)
                 {
@@ -99,12 +98,36 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateEmployeeAsync(int id, EmployeeDto employeeDto)
+        [HttpGet("byCompany/{companyId}")]
+        public async Task<IActionResult> GetEmployeesByCompanyIdAsync(int companyId)
         {
             try
             {
-                var response = await _employeeService.UpdateEmployeeAsync(id, employeeDto);
+                _response = await _employeeService.GetEmployeesByCompanyIdAsync(companyId);
+
+                if (_response.IsSuccess)
+                {
+                    return Ok(_response);
+                }
+                else
+                {
+                    return NotFound(_response);
+                }
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.Errors.Add(ex.Message);
+                return BadRequest(_response);
+            }
+        }
+
+        [HttpPut("{employeeId}")]
+        public async Task<IActionResult> UpdateEmployeeAsync(int employeeId, EmployeeDto employeeDto)
+        {
+            try
+            {
+                var response = await _employeeService.UpdateEmployeeAsync(employeeId, employeeDto);
                 if (response.IsSuccess)
                 {
                     return Ok(response);

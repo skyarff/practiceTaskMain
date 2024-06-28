@@ -15,9 +15,6 @@ namespace StockService.Models
         public Stock? Stock { get; set; }
         [JsonIgnore]
         public Product? Product { get; set; }
-        public StorageLocation()
-        {
-            
-        }
+
     }
 }

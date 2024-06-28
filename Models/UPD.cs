@@ -8,11 +8,12 @@ namespace StockService.Models
         public string DocumentNumber { get; set; }
         public string ScanPdf { get; set; }
 
-        public int ProviderId { get; set; }
+        public int? ProviderId { get; set; }
         [JsonIgnore]
-        public Provider Provider { get; set; }
+        public Provider? Provider { get; set; }
         [JsonIgnore]
         public List<Product>? Products { get; set; }
+        public DateTime CreateDate { get; set; }
         public Upd()
         {
             this.Products = new List<Product>();
