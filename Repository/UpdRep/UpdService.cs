@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using StockService.Models;
 using StockService.Models.dto;
 using StockService.Repository.UpdRep;
+using AppSettings;
 
 namespace StockService.Repository.BillRep
 {
@@ -11,6 +12,7 @@ namespace StockService.Repository.BillRep
         private readonly StockContext _db;
         private readonly IMapper _mapper;
         private Response _response;
+        private string _imagePath = PathSettings.ImagePaths["UpdPdfs"];
         public UpdService(IMapper mapper, StockContext db)
         {
             _db = db;
@@ -31,11 +33,12 @@ namespace StockService.Repository.BillRep
 
                 if (updDto.UpdPdf != null && updDto.UpdPdf.Length > 0)
                 {
+
                     var fileName = Path.GetFileName(updDto.UpdPdf.FileName);
-                    var filePath = Path.Combine("\\Images\\UpdPdfs", fileName);
+                    var filePath = $"{_imagePath}/{fileName}";
 
 
-                    using (var stream = new FileStream(Path.Combine("wwwroot\\Images\\UpdPdfs", fileName), FileMode.Create))
+                    using (var stream = new FileStream("wwwroot/" + filePath, FileMode.Create))
                     {
                         await updDto.UpdPdf.CopyToAsync(stream);
                     }
@@ -43,6 +46,7 @@ namespace StockService.Repository.BillRep
                     upd.UpdPdfPath = filePath;
                 }
 
+                upd.CreateDate = DateTime.UtcNow;
                 _db.Upds.Add(upd);
                 await _db.SaveChangesAsync();
 

@@ -80,7 +80,7 @@ namespace StockService
             modelBuilder.Entity<Bill>(entity =>
             {
                 entity.Property(b => b.BillTotal).HasDefaultValue(0);
-                entity.Property(b => b.CreateDate).HasDefaultValue(DateTime.UtcNow);
+                entity.Property(b => b.CreateDate);
 
                 entity.HasKey(b => b.BillId);
                 entity.HasIndex(b => b.ProviderId);
@@ -95,7 +95,7 @@ namespace StockService
             {
                 entity.HasKey(u => u.UpdId);
 
-                entity.Property(u => u.CreateDate).HasDefaultValue(DateTime.UtcNow);
+                entity.Property(u => u.CreateDate);
                 entity.HasIndex(u => u.ProviderId);
 
                 entity.HasOne(u => u.Provider)
@@ -110,8 +110,6 @@ namespace StockService
 
                 entity.Property(p => p.Price).HasDefaultValue(0);
                 entity.Property(p => p.CreateDate).HasDefaultValue(DateTime.UtcNow);
-
-
 
                 entity.HasIndex(p => p.ProductCategoryId);
                 entity.HasIndex(p => p.StorageLocationId).IsUnique();

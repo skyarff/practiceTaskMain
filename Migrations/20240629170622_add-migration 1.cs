@@ -97,7 +97,7 @@ namespace StockService.Migrations
                     BillPdfPath = table.Column<string>(type: "text", nullable: false),
                     ProviderId = table.Column<int>(type: "integer", nullable: false),
                     BillTotal = table.Column<decimal>(type: "numeric", nullable: false, defaultValue: 0m),
-                    CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTime(2024, 6, 29, 13, 4, 51, 973, DateTimeKind.Utc).AddTicks(4033))
+                    CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -119,7 +119,7 @@ namespace StockService.Migrations
                     DocumentNumber = table.Column<string>(type: "text", nullable: false),
                     UpdPdfPath = table.Column<string>(type: "text", nullable: false),
                     ProviderId = table.Column<int>(type: "integer", nullable: false),
-                    CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTime(2024, 6, 29, 13, 4, 51, 973, DateTimeKind.Utc).AddTicks(6248))
+                    CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -194,7 +194,7 @@ namespace StockService.Migrations
                     Photo = table.Column<string>(type: "text", nullable: true),
                     Price = table.Column<decimal>(type: "numeric", nullable: false, defaultValue: 0m),
                     FactoryNumber = table.Column<string>(type: "text", nullable: true),
-                    CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTime(2024, 6, 29, 13, 4, 51, 973, DateTimeKind.Utc).AddTicks(8943)),
+                    CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTime(2024, 6, 29, 17, 6, 22, 553, DateTimeKind.Utc).AddTicks(4029)),
                     BillId = table.Column<int>(type: "integer", nullable: true),
                     UpdId = table.Column<int>(type: "integer", nullable: true),
                     ProductCategoryId = table.Column<int>(type: "integer", nullable: true),

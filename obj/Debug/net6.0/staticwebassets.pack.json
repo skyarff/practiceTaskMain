@@ -9,6 +9,10 @@
       "PackagePath": "staticwebassets\\Images\\BillPdfs\\c873a2bc381b57447a355d10d6fd1eee-self-esteem-flower-cute-icon.png"
     },
     {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\BillPdfs\\content_дыхание7.jpg",
+      "PackagePath": "staticwebassets\\Images\\BillPdfs\\content_дыхание7.jpg"
+    },
+    {
       "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\Oao9LFl8O0U.jpg",
       "PackagePath": "staticwebassets\\Images\\EmployeeImages\\Oao9LFl8O0U.jpg"
     },
@@ -19,6 +23,58 @@
     {
       "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\c873a2bc381b57447a355d10d6fd1eee-self-esteem-flower-cute-icon.png",
       "PackagePath": "staticwebassets\\Images\\EmployeeImages\\c873a2bc381b57447a355d10d6fd1eee-self-esteem-flower-cute-icon.png"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\UpdPdfs\\274px-Strelnikova_AN.jpg",
+      "PackagePath": "staticwebassets\\Images\\UpdPdfs\\274px-Strelnikova_AN.jpg"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\UpdPdfs\\2зфзф.jpg",
+      "PackagePath": "staticwebassets\\Images\\UpdPdfs\\2зфзф.jpg"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\UpdPdfs\\Dyxatelnaya-gimnastika-strelnikovoj9.png",
+      "PackagePath": "staticwebassets\\Images\\UpdPdfs\\Dyxatelnaya-gimnastika-strelnikovoj9.png"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\UpdPdfs\\GDv6p6ERVH4.jpg",
+      "PackagePath": "staticwebassets\\Images\\UpdPdfs\\GDv6p6ERVH4.jpg"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\UpdPdfs\\bf97bdff08e5e31c3f0a78840b0a25e8.jpg",
+      "PackagePath": "staticwebassets\\Images\\UpdPdfs\\bf97bdff08e5e31c3f0a78840b0a25e8.jpg"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\UpdPdfs\\c873a2bc381b57447a355d10d6fd1eee-self-esteem-flower-cute-icon.png",
+      "PackagePath": "staticwebassets\\Images\\UpdPdfs\\c873a2bc381b57447a355d10d6fd1eee-self-esteem-flower-cute-icon.png"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\UpdPdfs\\i.jpg",
+      "PackagePath": "staticwebassets\\Images\\UpdPdfs\\i.jpg"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\UpdPdfs\\images.jpg",
+      "PackagePath": "staticwebassets\\Images\\UpdPdfs\\images.jpg"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\UpdPdfs\\pepe-silvija-6.jpg",
+      "PackagePath": "staticwebassets\\Images\\UpdPdfs\\pepe-silvija-6.jpg"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\UpdPdfs\\photo_5217718870855498380_y.jpg",
+      "PackagePath": "staticwebassets\\Images\\UpdPdfs\\photo_5217718870855498380_y.jpg"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\UpdPdfs\\sherlock.png",
+      "PackagePath": "staticwebassets\\Images\\UpdPdfs\\sherlock.png"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\UpdPdfs\\рол.png",
+      "PackagePath": "staticwebassets\\Images\\UpdPdfs\\рол.png"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\UpdPdfs\\фывфыв.png",
+      "PackagePath": "staticwebassets\\Images\\UpdPdfs\\фывфыв.png"
     },
     {
       "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.StockService.Microsoft.AspNetCore.StaticWebAssets.props",

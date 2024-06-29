@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using StockService.Models;
 using StockService.Models.dto;
+using AppSettings;
 
 namespace StockService.Repository.StorageLocationRep
 {
@@ -10,6 +11,7 @@ namespace StockService.Repository.StorageLocationRep
         private readonly StockContext _db;
         private readonly IMapper _mapper;
         private Response _response;
+        private string _imagePath = PathSettings.ImagePaths["StorageLocationImages"];
         public StorageLocationService(IMapper mapper, StockContext db)
         {
             _db = db;
@@ -34,10 +36,10 @@ namespace StockService.Repository.StorageLocationRep
                 if (storageLocationDto.Image != null && storageLocationDto.Image.Length > 0)
                 {
                     var fileName = Path.GetFileName(storageLocationDto.Image.FileName);
-                    var filePath = Path.Combine("\\Images\\StorageLocationImages", fileName);
+                    var filePath = $"{_imagePath}/{fileName}";
 
 
-                    using (var stream = new FileStream(Path.Combine("wwwroot\\Images\\StorageLocationImages", fileName), FileMode.Create))
+                    using (var stream = new FileStream("wwwroot/" + filePath, FileMode.Create))
                     {
                         await storageLocationDto.Image.CopyToAsync(stream);
                     }
@@ -134,9 +136,10 @@ namespace StockService.Repository.StorageLocationRep
                     }
 
                     var fileName = Path.GetFileName(storageLocationDto.Image.FileName);
-                    var filePath = Path.Combine("\\Images\\EmployeeImages", fileName);
+                    var filePath = $"{_imagePath}/{fileName}";
 
-                    using (var stream = new FileStream(Path.Combine("wwwroot\\Images\\EmployeeImages", fileName), FileMode.Create))
+
+                    using (var stream = new FileStream("wwwroot/" + filePath, FileMode.Create))
                     {
                         await storageLocationDto.Image.CopyToAsync(stream);
                     }

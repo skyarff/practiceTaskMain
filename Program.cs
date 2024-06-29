@@ -40,8 +40,10 @@ builder.Services.AddScoped<ICookieService, CookieService>();
 
 builder.Services.AddDbContext<StockContext>(opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("PgSQL")));
 
-var app = builder.Build();
 
+AppSettings.PathSettings.Initialize(builder.Configuration);
+
+var app = builder.Build();
 
 
 // Configure the HTTP request pipeline.
@@ -58,3 +60,23 @@ app.UseStaticFiles();
 app.MapControllers();
 
 app.Run();
+
+
+
+
+namespace AppSettings
+{
+    public static class PathSettings
+    {
+        public static Dictionary<string, string> ImagePaths { get; private set; }
+
+        public static void Initialize(IConfiguration configuration)
+        {
+            ImagePaths = configuration.GetSection("ImagePaths")
+                                      .Get<Dictionary<string, string>>();
+        }
+    }
+}
+
+
+

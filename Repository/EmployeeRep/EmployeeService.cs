@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using AppSettings;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using StockService.Models;
 using StockService.Models.dto;
@@ -10,6 +11,7 @@ namespace StockService.Repository.EmployeeRep
         private readonly StockContext _db;
         private readonly IMapper _mapper;
         private Response _response;
+        private string _imagePath = PathSettings.ImagePaths["EmployeeImages"];
         public EmployeeService(IMapper mapper, StockContext db)
         {
             _db = db;
@@ -57,10 +59,10 @@ namespace StockService.Repository.EmployeeRep
                 if (employeeDto.Image != null && employeeDto.Image.Length > 0)
                 {
                     var fileName = Path.GetFileName(employeeDto.Image.FileName);
-                    var filePath = Path.Combine("\\Images\\EmployeeImages", fileName);
-                    
+                    var filePath = $"{_imagePath}/{fileName}";
 
-                    using (var stream = new FileStream(Path.Combine("wwwroot\\Images\\EmployeeImages", fileName), FileMode.Create))
+
+                    using (var stream = new FileStream("wwwroot/" + filePath, FileMode.Create))
                     {
                         await employeeDto.Image.CopyToAsync(stream);
                     }
@@ -204,10 +206,10 @@ namespace StockService.Repository.EmployeeRep
 
 
                     var fileName = Path.GetFileName(employeeDto.Image.FileName);
-                    var filePath = Path.Combine("\\Images\\EmployeeImages", fileName);
+                    var filePath = $"{_imagePath}/{fileName}";
 
 
-                    using (var stream = new FileStream(Path.Combine("wwwroot\\Images\\EmployeeImages", fileName), FileMode.Create))
+                    using (var stream = new FileStream("wwwroot/" + filePath, FileMode.Create))
                     {
                         await employeeDto.Image.CopyToAsync(stream);
                     }

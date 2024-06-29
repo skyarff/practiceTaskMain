@@ -78,11 +78,13 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpPost("getInRange")]
-        public async Task<IActionResult> GetUpdsInRange(UpdDto updDto)
+        [HttpGet("getInRange")]
+        public async Task<IActionResult> GetUpdsInRange([FromQuery] DateTime startDate, [FromQuery] DateTime endDate, bool ascending = true)
         {
             try
             {
+                var updDto = new UpdDto { StartDate = startDate, EndDate = endDate, Ascending = ascending };
+
                 _response = await _updService.GetUpdsInRangeAsync(updDto);
 
                 if (_response.IsSuccess)

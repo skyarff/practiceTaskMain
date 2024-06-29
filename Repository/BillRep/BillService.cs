@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using StockService.Models;
 using StockService.Models.dto;
 using System.Linq;
+using AppSettings;
 
 namespace StockService.Repository.BillRep
 {
@@ -11,6 +12,7 @@ namespace StockService.Repository.BillRep
         private readonly StockContext _db;
         private readonly IMapper _mapper;
         private Response _response;
+        private string _imagePath = PathSettings.ImagePaths["BillPdfs"];
         public BillService(IMapper mapper, StockContext db)
         {
             _db = db;
@@ -32,10 +34,10 @@ namespace StockService.Repository.BillRep
                 if (billDto.BillPdf != null && billDto.BillPdf.Length > 0)
                 {
                     var fileName = Path.GetFileName(billDto.BillPdf.FileName);
-                    var filePath = Path.Combine("\\Images\\BillPdfs", fileName);
+                    var filePath = $"{_imagePath}/{fileName}";
 
 
-                    using (var stream = new FileStream(Path.Combine("wwwroot\\Images\\BillPdfs", fileName), FileMode.Create))
+                    using (var stream = new FileStream("wwwroot/" + filePath, FileMode.Create))
                     {
                         await billDto.BillPdf.CopyToAsync(stream);
                     }
@@ -43,6 +45,7 @@ namespace StockService.Repository.BillRep
                     bill.BillPdfPath = filePath;
                 }
 
+                bill.CreateDate = DateTime.UtcNow;
                 _db.Bills.Add(bill);
                 await _db.SaveChangesAsync();
 

@@ -44,9 +44,7 @@ namespace StockService.Migrations
                         .HasDefaultValue(0m);
 
                     b.Property<DateTime>("CreateDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValue(new DateTime(2024, 6, 29, 13, 4, 51, 973, DateTimeKind.Utc).AddTicks(4033));
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("ProviderId")
                         .HasColumnType("integer");
@@ -142,7 +140,7 @@ namespace StockService.Migrations
                     b.Property<DateTime>("CreateDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
-                        .HasDefaultValue(new DateTime(2024, 6, 29, 13, 4, 51, 973, DateTimeKind.Utc).AddTicks(8943));
+                        .HasDefaultValue(new DateTime(2024, 6, 29, 17, 6, 22, 553, DateTimeKind.Utc).AddTicks(4029));
 
                     b.Property<int>("EmployeeId")
                         .HasColumnType("integer");
@@ -324,9 +322,7 @@ namespace StockService.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("UpdId"));
 
                     b.Property<DateTime>("CreateDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValue(new DateTime(2024, 6, 29, 13, 4, 51, 973, DateTimeKind.Utc).AddTicks(6248));
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("DocumentNumber")
                         .IsRequired()
