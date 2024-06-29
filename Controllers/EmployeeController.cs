@@ -19,7 +19,7 @@ namespace StockService.Controllers
             this._response = new Response();
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> CreateEmployee([FromForm] EmployeeDto employeeDto)
         {
@@ -36,7 +36,7 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpDelete("{employeeId}")]
+        [HttpDelete("dellById/{employeeId}")]
         public async Task<IActionResult> DeleteEmployeeAsync(int employeeId)
         {
             try
@@ -52,7 +52,31 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpGet("{employeeId}")]
+        [HttpGet("getAll")]
+        public async Task<IActionResult> GetAllEmployees()
+        {
+            try
+            {
+                _response = await _employeeService.GetAllEmployessAsync();
+
+                if (_response.IsSuccess)
+                {
+                    return Ok(_response);
+                }
+                else
+                {
+                    return NotFound(_response);
+                }
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.Errors.Add(ex.Message);
+                return BadRequest(_response);
+            }
+        }
+
+        [HttpGet("getById/{employeeId}")]
         public async Task<IActionResult> GetEmployeeById(int employeeId)
         {
             try
@@ -76,7 +100,7 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpGet("byStock/{stockId}")]
+        [HttpGet("getByStockId/{stockId}")]
         public async Task<IActionResult> GetEmployeesByStockIdAsync(int stockId)
         {
             try
@@ -100,7 +124,7 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpGet("byCompany/{companyId}")]
+        [HttpGet("getByCompanyId/{companyId}")]
         public async Task<IActionResult> GetEmployeesByCompanyIdAsync(int companyId)
         {
             try
@@ -124,13 +148,13 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpPut("{employeeId}")]
+        [HttpPut("update")]
         [Consumes("multipart/form-data")]
-        public async Task<IActionResult> UpdateEmployeeAsync(int employeeId, [FromForm] EmployeeDto employeeDto)
+        public async Task<IActionResult> UpdateEmployeeAsync([FromForm] EmployeeDto employeeDto)
         {
             try
             {
-                var response = await _employeeService.UpdateEmployeeAsync(employeeId, employeeDto);
+                var response = await _employeeService.UpdateEmployeeAsync(employeeDto);
                 if (response.IsSuccess)
                 {
                     return Ok(response);
@@ -148,12 +172,12 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpPut("changePassword/{employeeId}")]
-        public async Task<IActionResult> SetEmployeePassword(int employeeId, string? password)
+        [HttpPut("changePassword")]
+        public async Task<IActionResult> ChangeEmployeePassword(EmployeeDto employeeDto)
         {
             try
             {
-                var response = await _employeeService.ChangeEmployeePassword(employeeId, password);
+                var response = await _employeeService.ChangeEmployeePassword(employeeDto);
                 if (response.IsSuccess)
                 {
                     return Ok(response);

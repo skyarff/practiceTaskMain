@@ -1,32 +1,32 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using StockService.Models;
 using StockService.Models.dto;
-using StockService.Repository.CookieRep;
 using StockService.Repository.EmployeeRep;
-using StockService.Repository.StorageLocationRep;
+using StockService.Repository.BillRep;
 
 namespace StockService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class StorageLocationController : ControllerBase
+    public class BillController : ControllerBase
     {
-        private readonly IStorageLocationService _storageLocationService;
+        private readonly IBillService _billService;
         private Response _response;
 
-        public StorageLocationController(IStorageLocationService storageLocationService)
+        public BillController(IBillService billService)
         {
-            _storageLocationService = storageLocationService;
+            _billService = billService;
             this._response = new Response();
         }
 
         [HttpPost("create")]
         [Consumes("multipart/form-data")]
-        public async Task<IActionResult> CreateStorageLocation([FromForm] StorageLocationDto storageLocationDto)
+        public async Task<IActionResult> CreateStorageLocation([FromForm] BillDto billDto)
         {
             try
             {
-                _response = await _storageLocationService.CreateStorageLocationAsync(storageLocationDto);
+                _response = await _billService.CreateBillAsync(billDto);
                 return Ok(_response);
             }
             catch (Exception ex)
@@ -37,12 +37,12 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpDelete("dellById/{storageLocationId}")]
-        public async Task<IActionResult> DeletesStorageLocationAsync(int storageLocationId)
+        [HttpDelete("delById/{billId}")]
+        public async Task<IActionResult> DeleteBill(int billId)
         {
             try
             {
-                _response = await _storageLocationService.DeletesStorageLocationAsync(storageLocationId);
+                _response = await _billService.DeleteBillAsync(billId);
                 return Ok(_response);
             }
             catch (Exception ex)
@@ -53,12 +53,12 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpGet("getById/{storageLocationId}")]
-        public async Task<IActionResult> GetStorageLocationById(int storageLocationId)
+        [HttpGet("getAll")]
+        public async Task<IActionResult> GetAllBills()
         {
             try
             {
-                _response = await _storageLocationService.GetStorageLocationByIdAsync(storageLocationId);
+                _response = await _billService.GetAllBillsAsync();
 
                 if (_response.IsSuccess)
                 {
@@ -77,12 +77,12 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpGet("getByStockId/{stockId}")]
-        public async Task<IActionResult> GetStorageLocationsByStockIdAsync(int stockId)
+        [HttpPost("getInRange")]
+        public async Task<IActionResult> GetBillsInRange(BillDto billDto)
         {
             try
             {
-                _response = await _storageLocationService.GetStorageLocationsByStockIdAsync(stockId);
+                _response = await _billService.GetBillsInRangeAsync(billDto);
 
                 if (_response.IsSuccess)
                 {
@@ -101,29 +101,52 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpPut("update")]
-        [Consumes("multipart/form-data")]
-        public async Task<IActionResult> UpdateStorageLocationAsync([FromForm] StorageLocationDto storageLocationDto)
+        [HttpGet("getByProviderId/{providerId}")]
+        public async Task<IActionResult> GetBillsByProviderId(int providerId)
         {
             try
             {
-                var response = await _storageLocationService.UpdateStorageLocationAsync(storageLocationDto);
-                if (response.IsSuccess)
+                _response = await _billService.GetBillsByProviderIdAsync(providerId);
+
+                if (_response.IsSuccess)
                 {
-                    return Ok(response);
+                    return Ok(_response);
                 }
                 else
                 {
-                    return NotFound(response);
+                    return NotFound(_response);
                 }
             }
             catch (Exception ex)
             {
                 _response.IsSuccess = false;
                 _response.Errors.Add(ex.Message);
-                return StatusCode(StatusCodes.Status500InternalServerError, _response);
+                return BadRequest(_response);
             }
         }
 
+        [HttpGet("getById/{billId}")]
+        public async Task<IActionResult> GetBillByIdAsync(int billId)
+        {
+            try
+            {
+                _response = await _billService.GetBillByIdAsync(billId);
+
+                if (_response.IsSuccess)
+                {
+                    return Ok(_response);
+                }
+                else
+                {
+                    return NotFound(_response);
+                }
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.Errors.Add(ex.Message);
+                return BadRequest(_response);
+            }
+        }
     }
 }

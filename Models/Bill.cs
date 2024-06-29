@@ -6,13 +6,14 @@ namespace StockService.Models
     {
         public int BillId { get; set; }
         public string BillNumber { get; set; }
-        public string BillPdf { get; set; }
+        public string BillPdfPath { get; set; }
+        public int ProviderId { get; set; }
 
-        public int? ProviderId { get; set; }
         [JsonIgnore]
         public Provider? Provider { get; set; }
         [JsonIgnore]
         public List<Product>? Products { get; set; }
+
         public Bill()
         {
             this.Products = new List<Product>();

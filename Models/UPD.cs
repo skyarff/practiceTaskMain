@@ -6,9 +6,9 @@ namespace StockService.Models
     {
         public int UpdId { get; set; }
         public string DocumentNumber { get; set; }
-        public string ScanPdf { get; set; }
+        public string UpdPdfPath { get; set; }
+        public int ProviderId { get; set; }
 
-        public int? ProviderId { get; set; }
         [JsonIgnore]
         public Provider? Provider { get; set; }
         [JsonIgnore]

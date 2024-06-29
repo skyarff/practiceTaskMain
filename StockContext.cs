@@ -10,7 +10,7 @@ namespace StockService
         {
         }
 
-        //public DbSet<Bill> Bills {  get; set; }
+        public DbSet<Bill> Bills {  get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<Company> Companies { get; set; }
         public DbSet<Employee> Employees { get; set; }
@@ -18,7 +18,7 @@ namespace StockService
         public DbSet<Provider> Providers { get; set; }
         public DbSet<Stock> Stocks { get; set; }
         public DbSet<StorageLocation> StorageLocations { get; set; }
-        //public DbSet<UPD> UPDs { get; set; }
+        public DbSet<Upd> Upds { get; set; }
 
         //public ApplicationContext() => Database.EnsureCreated();
 
@@ -110,6 +110,8 @@ namespace StockService
 
                 entity.Property(p => p.Price).HasDefaultValue(0);
                 entity.Property(p => p.CreateDate).HasDefaultValue(DateTime.UtcNow);
+
+
 
                 entity.HasIndex(p => p.ProductCategoryId);
                 entity.HasIndex(p => p.StorageLocationId).IsUnique();

@@ -21,7 +21,7 @@ namespace StockService.Controllers
         }
 
         
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<IActionResult> CreateCompany(CompanyDto companyDto)
         {
             try
@@ -43,7 +43,7 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpDelete("{companyId}")]
+        [HttpDelete("dellById/{companyId}")]
         public async Task<IActionResult> DeleteCompanyAsync(int companyId)
         {
             try
@@ -59,7 +59,7 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("getAll")]
         public async Task<IActionResult> GetAllEmployees()
         {
             try
@@ -83,7 +83,7 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpGet("{companyId}")]
+        [HttpGet("getById")]
         public async Task<IActionResult> GetCompanyById(int companyId)
         {
             try
@@ -106,12 +106,12 @@ namespace StockService.Controllers
                 return BadRequest(_response);
             }
         }
-        [HttpPut("{companyId}")]
-        public async Task<IActionResult> UpdateEmployeeAsync(int companyId, CompanyDto companyDto)
+        [HttpPut("update")]
+        public async Task<IActionResult> UpdateEmployeeAsync(CompanyDto companyDto)
         {
             try
             {
-                var response = await _companyService.UpdateCompanyAsync(companyId, companyDto);
+                var response = await _companyService.UpdateCompanyAsync(companyDto);
                 if (response.IsSuccess)
                 {
                     return Ok(response);

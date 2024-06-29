@@ -111,16 +111,16 @@ namespace StockService.Repository.StockRep
             return _response;
         }
 
-        public async Task<Response> ChangeStockCompanyAsync(int stockId, int companyId)
+        public async Task<Response> ChangeStockCompanyAsync(StockDto stockDto)
         {
-            var stock = await _db.Stocks.FindAsync(stockId);
+            var stock = await _db.Stocks.FindAsync(stockDto.StockId);
 
             _response.IsSuccess = false;
             _response.Message = "Не удалось установить новую компанию для склада.";
 
             if (stock != null)
             {
-                stock.CompanyId = companyId;
+                stock.CompanyId = stockDto.CompanyId;
 
                 await _db.SaveChangesAsync();
 

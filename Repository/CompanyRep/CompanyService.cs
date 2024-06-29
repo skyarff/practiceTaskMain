@@ -104,9 +104,9 @@ namespace StockService.Repository.CompanyRep
             return _response;
         }
 
-        public async Task<Response> UpdateCompanyAsync(int companyId, CompanyDto companyDto)
+        public async Task<Response> UpdateCompanyAsync(CompanyDto companyDto)
         {
-            var company = await _db.Companies.FindAsync(companyId);
+            var company = await _db.Companies.FindAsync(companyDto.CompanyId);
 
             _response.IsSuccess = false;
             _response.Message = "Компания не найдена.";

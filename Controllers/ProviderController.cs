@@ -20,8 +20,8 @@ namespace StockService.Controllers
             this._response = new Response();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateEmployee(ProviderDto providerDto)
+        [HttpPost("create")]
+        public async Task<IActionResult> CreateProvider(ProviderDto providerDto)
         {
             try
             {
@@ -36,8 +36,8 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpDelete("{providerId}")]
-        public async Task<IActionResult> DeleteEmployeeAsync(int providerId)
+        [HttpDelete("dellById/{providerId}")]
+        public async Task<IActionResult> DeleteProviderAsync(int providerId)
         {
             try
             {
@@ -52,8 +52,8 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAllEmployees()
+        [HttpGet("getAll")]
+        public async Task<IActionResult> GetAllProviders()
         {
             try
             {
@@ -77,8 +77,8 @@ namespace StockService.Controllers
         }
 
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetEmployeeById(int id)
+        [HttpGet("getById/{id}")]
+        public async Task<IActionResult> GetProviderById(int id)
         {
             try
             {
@@ -101,12 +101,12 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateEmployeeAsync(int id, ProviderDto providerDto)
+        [HttpPut("update")]
+        public async Task<IActionResult> UpdateProviderAsync(ProviderDto providerDto)
         {
             try
             {
-                var response = await _providerService.UpdateProviderAsync(id, providerDto);
+                var response = await _providerService.UpdateProviderAsync(providerDto);
                 if (response.IsSuccess)
                 {
                     return Ok(response);

@@ -8,7 +8,7 @@ namespace StockService.Repository.ProviderRep
         Task<Response> GetAllProvidersAsync();
         Task<Response> GetProviderByIdAsync(int providerId);
         Task<Response> CreateProviderAsync(ProviderDto providerId);
-        Task<Response> UpdateProviderAsync(int providerId, ProviderDto providerDto);
+        Task<Response> UpdateProviderAsync(ProviderDto providerDto);
         Task<Response> DeleteProviderAsync(int iproviderId);
     }
 }

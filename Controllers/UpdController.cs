@@ -1,32 +1,33 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using StockService.Models;
 using StockService.Models.dto;
-using StockService.Repository.CookieRep;
+using StockService.Repository.BillRep;
 using StockService.Repository.EmployeeRep;
-using StockService.Repository.StorageLocationRep;
+using StockService.Repository.UpdRep;
 
 namespace StockService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class StorageLocationController : ControllerBase
+    public class UpdController : ControllerBase
     {
-        private readonly IStorageLocationService _storageLocationService;
+        private readonly IUpdService _updService;
         private Response _response;
 
-        public StorageLocationController(IStorageLocationService storageLocationService)
+        public UpdController(IUpdService updService)
         {
-            _storageLocationService = storageLocationService;
+            _updService = updService;
             this._response = new Response();
         }
 
         [HttpPost("create")]
         [Consumes("multipart/form-data")]
-        public async Task<IActionResult> CreateStorageLocation([FromForm] StorageLocationDto storageLocationDto)
+        public async Task<IActionResult> CreateStorageLocation([FromForm] UpdDto updDto)
         {
             try
             {
-                _response = await _storageLocationService.CreateStorageLocationAsync(storageLocationDto);
+                _response = await _updService.CreateUpdAsync(updDto);
                 return Ok(_response);
             }
             catch (Exception ex)
@@ -37,12 +38,12 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpDelete("dellById/{storageLocationId}")]
-        public async Task<IActionResult> DeletesStorageLocationAsync(int storageLocationId)
+        [HttpDelete("delById/{updId}")]
+        public async Task<IActionResult> DeleteBill(int updId)
         {
             try
             {
-                _response = await _storageLocationService.DeletesStorageLocationAsync(storageLocationId);
+                _response = await _updService.DeleteUpdAsync(updId);
                 return Ok(_response);
             }
             catch (Exception ex)
@@ -53,12 +54,12 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpGet("getById/{storageLocationId}")]
-        public async Task<IActionResult> GetStorageLocationById(int storageLocationId)
+        [HttpGet("getAll")]
+        public async Task<IActionResult> GetAllUpds()
         {
             try
             {
-                _response = await _storageLocationService.GetStorageLocationByIdAsync(storageLocationId);
+                _response = await _updService.GetAllUpdsAsync();
 
                 if (_response.IsSuccess)
                 {
@@ -77,12 +78,12 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpGet("getByStockId/{stockId}")]
-        public async Task<IActionResult> GetStorageLocationsByStockIdAsync(int stockId)
+        [HttpPost("getInRange")]
+        public async Task<IActionResult> GetUpdsInRange(UpdDto updDto)
         {
             try
             {
-                _response = await _storageLocationService.GetStorageLocationsByStockIdAsync(stockId);
+                _response = await _updService.GetUpdsInRangeAsync(updDto);
 
                 if (_response.IsSuccess)
                 {
@@ -101,29 +102,52 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpPut("update")]
-        [Consumes("multipart/form-data")]
-        public async Task<IActionResult> UpdateStorageLocationAsync([FromForm] StorageLocationDto storageLocationDto)
+        [HttpGet("getByProviderId/{providerId}")]
+        public async Task<IActionResult> GetUpdsByProviderId(int providerId)
         {
             try
             {
-                var response = await _storageLocationService.UpdateStorageLocationAsync(storageLocationDto);
-                if (response.IsSuccess)
+                _response = await _updService.GetUpdsByProviderIdAsync(providerId);
+
+                if (_response.IsSuccess)
                 {
-                    return Ok(response);
+                    return Ok(_response);
                 }
                 else
                 {
-                    return NotFound(response);
+                    return NotFound(_response);
                 }
             }
             catch (Exception ex)
             {
                 _response.IsSuccess = false;
                 _response.Errors.Add(ex.Message);
-                return StatusCode(StatusCodes.Status500InternalServerError, _response);
+                return BadRequest(_response);
             }
         }
 
+        [HttpGet("getById/{updId}")]
+        public async Task<IActionResult> GetUpdByIdAsync(int updId)
+        {
+            try
+            {
+                _response = await _updService.GetUpdByIdAsync(updId);
+
+                if (_response.IsSuccess)
+                {
+                    return Ok(_response);
+                }
+                else
+                {
+                    return NotFound(_response);
+                }
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.Errors.Add(ex.Message);
+                return BadRequest(_response);
+            }
+        }
     }
 }

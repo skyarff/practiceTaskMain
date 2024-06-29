@@ -20,7 +20,7 @@ namespace StockService.Controllers
             this._response = new Response();
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<IActionResult> CreateStock(StockDto stockDto)
         {
             try
@@ -36,7 +36,7 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpDelete("{stockId}")]
+        [HttpDelete("dellById/{stockId}")]
         public async Task<IActionResult> DeleteStockAsync(int stockId)
         {
             try
@@ -52,7 +52,7 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("getAll")]
         public async Task<IActionResult> GetAllStocks()
         {
             try
@@ -76,7 +76,7 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpGet("byCompany/{companyId}")]
+        [HttpGet("getByCompanyId/{companyId}")]
         public async Task<IActionResult> GetStocksByCompanyId(int companyId)
         {
             try
@@ -100,7 +100,7 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpGet("{stockId}")]
+        [HttpGet("getById{stockId}")]
         public async Task<IActionResult> GetStockByIdAsync(int stockId)
         {
             try
@@ -124,12 +124,12 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpPut("changeCompany/{stockId}")]
-        public async Task<IActionResult> UpdateStockAsync(int stockId, int companyId)
+        [HttpPut("update")]
+        public async Task<IActionResult> UpdateStockAsync(StockDto stockDto)
         {
             try
             {
-                var response = await _stockService.ChangeStockCompanyAsync(stockId, companyId);
+                var response = await _stockService.ChangeStockCompanyAsync(stockDto);
                 if (response.IsSuccess)
                 {
                     return Ok(response);

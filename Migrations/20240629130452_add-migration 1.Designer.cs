@@ -12,8 +12,8 @@ using StockService;
 namespace StockService.Migrations
 {
     [DbContext(typeof(StockContext))]
-    [Migration("20240629085456_1")]
-    partial class _1
+    [Migration("20240629130452_add-migration 1")]
+    partial class addmigration1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -36,7 +36,7 @@ namespace StockService.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("BillPdf")
+                    b.Property<string>("BillPdfPath")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -48,16 +48,16 @@ namespace StockService.Migrations
                     b.Property<DateTime>("CreateDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
-                        .HasDefaultValue(new DateTime(2024, 6, 29, 8, 54, 56, 552, DateTimeKind.Utc).AddTicks(9618));
+                        .HasDefaultValue(new DateTime(2024, 6, 29, 13, 4, 51, 973, DateTimeKind.Utc).AddTicks(4033));
 
-                    b.Property<int?>("ProviderId")
+                    b.Property<int>("ProviderId")
                         .HasColumnType("integer");
 
                     b.HasKey("BillId");
 
                     b.HasIndex("ProviderId");
 
-                    b.ToTable("Bill");
+                    b.ToTable("Bills");
                 });
 
             modelBuilder.Entity("StockService.Models.Company", b =>
@@ -144,7 +144,7 @@ namespace StockService.Migrations
                     b.Property<DateTime>("CreateDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
-                        .HasDefaultValue(new DateTime(2024, 6, 29, 8, 54, 56, 553, DateTimeKind.Utc).AddTicks(4434));
+                        .HasDefaultValue(new DateTime(2024, 6, 29, 13, 4, 51, 973, DateTimeKind.Utc).AddTicks(8943));
 
                     b.Property<int>("EmployeeId")
                         .HasColumnType("integer");
@@ -206,7 +206,7 @@ namespace StockService.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ProductCategoryId"));
 
-                    b.Property<int?>("CompanyId")
+                    b.Property<int>("CompanyId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Name")
@@ -328,16 +328,16 @@ namespace StockService.Migrations
                     b.Property<DateTime>("CreateDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
-                        .HasDefaultValue(new DateTime(2024, 6, 29, 8, 54, 56, 553, DateTimeKind.Utc).AddTicks(1757));
+                        .HasDefaultValue(new DateTime(2024, 6, 29, 13, 4, 51, 973, DateTimeKind.Utc).AddTicks(6248));
 
                     b.Property<string>("DocumentNumber")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int?>("ProviderId")
+                    b.Property<int>("ProviderId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("ScanPdf")
+                    b.Property<string>("UpdPdfPath")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -345,7 +345,7 @@ namespace StockService.Migrations
 
                     b.HasIndex("ProviderId");
 
-                    b.ToTable("Upd");
+                    b.ToTable("Upds");
                 });
 
             modelBuilder.Entity("StockService.Models.Bill", b =>
@@ -353,7 +353,8 @@ namespace StockService.Migrations
                     b.HasOne("StockService.Models.Provider", "Provider")
                         .WithMany("Bills")
                         .HasForeignKey("ProviderId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Provider");
                 });
@@ -411,7 +412,8 @@ namespace StockService.Migrations
                     b.HasOne("StockService.Models.Company", "Company")
                         .WithMany("ProductCategories")
                         .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Company");
                 });
@@ -442,7 +444,8 @@ namespace StockService.Migrations
                     b.HasOne("StockService.Models.Provider", "Provider")
                         .WithMany("Upds")
                         .HasForeignKey("ProviderId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Provider");
                 });

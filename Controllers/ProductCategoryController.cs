@@ -21,7 +21,7 @@ namespace StockService.Controllers
         }
 
 
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<IActionResult> CreateProductCategory(ProductCategoryDto productCategoryDto)
         {
             try
@@ -43,7 +43,7 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpDelete("{productCategoryId}")]
+        [HttpDelete("dellById/{productCategoryId}")]
         public async Task<IActionResult> DeleteProductCategory(int productCategoryId)
         {
             try
@@ -59,7 +59,7 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpGet("byCompany/{companyId}")]
+        [HttpGet("getByCompany/{companyId}")]
         public async Task<IActionResult> GetStocksByCompanyId(int companyId)
         {
             try

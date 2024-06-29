@@ -1,6 +1,7 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using StockService;
+using StockService.Repository.BillRep;
 using StockService.Repository.CompanyRep;
 using StockService.Repository.CookieRep;
 using StockService.Repository.EmployeeRep;
@@ -8,6 +9,7 @@ using StockService.Repository.ProductCategoryRep;
 using StockService.Repository.ProviderRep;
 using StockService.Repository.StockRep;
 using StockService.Repository.StorageLocationRep;
+using StockService.Repository.UpdRep;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,9 +31,8 @@ builder.Services.AddScoped<IStockService, StockService.Repository.StockRep.Stock
 builder.Services.AddScoped<IProductCategoryService, ProductCategoryService>();
 builder.Services.AddScoped<IStorageLocationService, StorageLocationService>();
 builder.Services.AddScoped<IProviderService, ProviderService>();
-
-//builder.Services.AddScoped<IStockService, StockServise>();
-
+builder.Services.AddScoped<IBillService, BillService>();
+builder.Services.AddScoped<IUpdService, UpdService>();
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<ICookieService, CookieService>();

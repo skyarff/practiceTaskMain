@@ -4,6 +4,7 @@ namespace StockService.Models.dto
 {
     public class ProviderDto
     {
+        public int? ProviderId { get; set; }
         public string? Name { get; set; }
         public string? INN { get; set; }
         public string? LegalAdress { get; set; }

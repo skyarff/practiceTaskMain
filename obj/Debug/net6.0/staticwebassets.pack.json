@@ -1,6 +1,14 @@
 {
   "Files": [
     {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\BillPdfs\\Oao9LFl8O0U.jpg",
+      "PackagePath": "staticwebassets\\Images\\BillPdfs\\Oao9LFl8O0U.jpg"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\BillPdfs\\c873a2bc381b57447a355d10d6fd1eee-self-esteem-flower-cute-icon.png",
+      "PackagePath": "staticwebassets\\Images\\BillPdfs\\c873a2bc381b57447a355d10d6fd1eee-self-esteem-flower-cute-icon.png"
+    },
+    {
       "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\Oao9LFl8O0U.jpg",
       "PackagePath": "staticwebassets\\Images\\EmployeeImages\\Oao9LFl8O0U.jpg"
     },

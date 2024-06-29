@@ -91,9 +91,9 @@ namespace StockService.Repository.ProviderRep
             return _response;
         }
 
-        public async Task<Response> UpdateProviderAsync(int providerId, ProviderDto providerDto)
+        public async Task<Response> UpdateProviderAsync(ProviderDto providerDto)
         {
-            var provider = await _db.Providers.FindAsync(providerId);
+            var provider = await _db.Providers.FindAsync(providerDto.ProviderId);
 
             _response.IsSuccess = false;
             _response.Message = "Поставщик не найден.";

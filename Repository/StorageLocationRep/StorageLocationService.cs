@@ -50,7 +50,7 @@ namespace StockService.Repository.StorageLocationRep
 
                 _response.IsSuccess = true;
                 _response.Result = storageLocation;
-                _response.Message = "Место хранения добавлено добавлено.";
+                _response.Message = "Место хранения добавлено.";
             }
 
             return _response;
@@ -110,9 +110,9 @@ namespace StockService.Repository.StorageLocationRep
             return _response;
         }
 
-        public async Task<Response> UpdateStorageLocationAsync(int storageLocationId, StorageLocationDto storageLocationDto)
+        public async Task<Response> UpdateStorageLocationAsync(StorageLocationDto storageLocationDto)
         {
-            var storageLocation = await _db.StorageLocations.FindAsync(storageLocationId);
+            var storageLocation = await _db.StorageLocations.FindAsync(storageLocationDto.StorageLocationId);
 
             _response.IsSuccess = false;
             _response.Message = "Место хранения не найдено.";

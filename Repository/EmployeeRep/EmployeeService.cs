@@ -16,16 +16,16 @@ namespace StockService.Repository.EmployeeRep
             _mapper = mapper;
             _response = new Response();
         }
-        public async Task<Response> ChangeEmployeePassword(int employeeId, string? password)
+        public async Task<Response> ChangeEmployeePassword(EmployeeDto employeeDto)
         {
-            var employee = await _db.Employees.FindAsync(employeeId);
+            var employee = await _db.Employees.FindAsync(employeeDto.EmployeeId);
 
             _response.IsSuccess = false;
             _response.Message = "Не удалось установить новый пароль.";
 
             if (employee != null)
             {
-                employee.Password = password;
+                employee.Password = employeeDto.Password;
 
                 await _db.SaveChangesAsync();
 
@@ -34,7 +34,7 @@ namespace StockService.Repository.EmployeeRep
 
                 _response.Message = "Пароль установлен в null.";
 
-                if (password != null)
+                if (employeeDto.Password != null)
                 {
                     _response.Message = "Пароль успешно изменен.";
                 }
@@ -98,11 +98,29 @@ namespace StockService.Repository.EmployeeRep
             return _response;
         }
 
-        public async Task<Response> GetEmployeesByStockIdAsync(int stockId)
+        public async Task<Response> GetAllEmployessAsync()
+        {
+            var employees = await _db.Employees.ToListAsync();
+
+            _response.IsSuccess = false;
+            _response.Message = "Сотрудники не найдены.";
+
+            if (employees.Any())
+            {
+                _response.IsSuccess = true;
+                _response.Result = employees;
+                _response.Message = "Сотрудники получены.";
+            }
+
+            return _response;
+        }
+
+        public async Task<Response> GetEmployeesByStockIdAsync(int? stockId)
         {
             _response.IsSuccess = false;
             _response.Message = "Сотрудники не найдены.";
 
+            if (stockId == 0) stockId = null;
             var employees = await _db.Employees
                     .Where(e => e.StockId == stockId)
                     .ToListAsync();
@@ -154,9 +172,9 @@ namespace StockService.Repository.EmployeeRep
             return _response;
         }
 
-        public async Task<Response> UpdateEmployeeAsync(int employeeId, EmployeeDto employeeDto)
+        public async Task<Response> UpdateEmployeeAsync(EmployeeDto employeeDto)
         {
-            var employee = await _db.Employees.FindAsync(employeeId);
+            var employee = await _db.Employees.FindAsync(employeeDto.EmployeeId);
 
             _response.IsSuccess = false;
             _response.Message = "Сотрудник не найден.";

@@ -4,6 +4,7 @@ namespace StockService.Models.dto
 {
     public class EmployeeDto
     {
+        public int? EmployeeId { get; set; }
         public string? FullName { get; set; }
         public string? JobTitle { get; set; }
 

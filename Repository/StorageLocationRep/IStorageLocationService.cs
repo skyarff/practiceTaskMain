@@ -8,7 +8,7 @@ namespace StockService.Repository.StorageLocationRep
         Task<Response> GetStorageLocationsByStockIdAsync(int stockId);
         Task<Response> GetStorageLocationByIdAsync(int StorageLocationId);
         Task<Response> CreateStorageLocationAsync(StorageLocationDto storageLocation);
-        Task<Response> UpdateStorageLocationAsync(int StorageLocationId, StorageLocationDto storageLocation);
+        Task<Response> UpdateStorageLocationAsync(StorageLocationDto storageLocation);
         Task<Response> DeletesStorageLocationAsync(int StorageLocationId);
     }
 }
