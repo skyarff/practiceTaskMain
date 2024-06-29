@@ -6,6 +6,7 @@ namespace StockService.Repository.EmployeeRep
 {
     public interface IEmployeeService
     {
+        Task<Response> ChangeEmployeePassword(int employeeId, string? password);
         Task<Response> GetEmployeesByStockIdAsync(int stockId);
         Task<Response> GetEmployeesByCompanyIdAsync(int companyId);
         Task<Response> GetEmployeeByIdAsync(int id);

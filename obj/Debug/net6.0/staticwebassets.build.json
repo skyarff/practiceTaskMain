@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "xbhQhtWAmyCMWWkZQquTYSQPRzPKFwEjA1oH2UT3ETk=",
+  "Hash": "NWh2yy7lGQLmNOTU7B0kZRKGO+458jMnVH/C9/gPR3M=",
   "Source": "StockService",
   "BasePath": "_content/StockService",
   "Mode": "Default",
@@ -49,6 +49,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Images\\EmployeeImages\\c873a2bc381b57447a355d10d6fd1eee-self-esteem-flower-cute-icon.png"
+    },
+    {
+      "Identity": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\Oao9LFl8O0U.jpg",
+      "SourceId": "StockService",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\",
+      "BasePath": "_content/StockService",
+      "RelativePath": "Images/EmployeeImages/Oao9LFl8O0U.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\EmployeeImages\\Oao9LFl8O0U.jpg"
     }
   ]
 }

@@ -15,9 +15,9 @@ namespace StockService
         public DbSet<Company> Companies { get; set; }
         public DbSet<Employee> Employees { get; set; }
         //public DbSet<Product> Products { get; set; }
-        //public DbSet<Provider> Providers { get; set; }
+        public DbSet<Provider> Providers { get; set; }
         public DbSet<Stock> Stocks { get; set; }
-        //public DbSet<Storage> Storages { get; set; }
+        public DbSet<StorageLocation> StorageLocations { get; set; }
         //public DbSet<UPD> UPDs { get; set; }
 
         //public ApplicationContext() => Database.EnsureCreated();
@@ -51,7 +51,7 @@ namespace StockService
 
                 entity.HasOne(s => s.Company)
                     .WithMany(c => c.Stocks)
-                    .OnDelete(DeleteBehavior.Cascade)
+                    .OnDelete(DeleteBehavior.SetNull)
                     .HasForeignKey(s => s.CompanyId);
             });
 
@@ -87,7 +87,7 @@ namespace StockService
 
                 entity.HasOne(b => b.Provider)
                     .WithMany(p => p.Bills)
-                    .OnDelete(DeleteBehavior.Cascade)
+                    .OnDelete(DeleteBehavior.Restrict)
                     .HasForeignKey(p => p.ProviderId);
             });
 
@@ -100,7 +100,7 @@ namespace StockService
 
                 entity.HasOne(u => u.Provider)
                     .WithMany(p => p.Upds)
-                    .OnDelete(DeleteBehavior.Cascade)
+                    .OnDelete(DeleteBehavior.Restrict)
                     .HasForeignKey(u => u.ProviderId);
             });
 
@@ -119,7 +119,7 @@ namespace StockService
 
                 entity.HasOne(p => p.ProductCategory)
                     .WithMany(pc => pc.Products)
-                    .OnDelete(DeleteBehavior.Cascade)
+                    .OnDelete(DeleteBehavior.SetNull)
                     .HasForeignKey(p => p.ProductCategoryId);
 
                 entity.HasOne(p => p.StorageLocation)

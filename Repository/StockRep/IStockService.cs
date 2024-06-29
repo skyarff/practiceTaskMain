@@ -9,7 +9,7 @@ namespace StockService.Repository.StockRep
         Task<Response> GetStocksByCompanyIdAsync(int companyId);
         Task<Response> GetStockByIdAsync(int stockId);
         Task<Response> CreateStockAsync(StockDto stockDto);
-        Task<Response> UpdateStockAsync(int stockId, StockDto stockDto);
+        Task<Response> ChangeStockCompanyAsync(int stockId, int companyId);
         Task<Response> DeleteStockAsync(int stockId);
     }
 }

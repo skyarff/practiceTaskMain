@@ -1,31 +1,32 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using StockService.Models;
 using StockService.Models.dto;
+using StockService.Repository.CookieRep;
 using StockService.Repository.EmployeeRep;
-using StockService.Repository.ProviderRep;
+using StockService.Repository.StorageLocationRep;
 
 namespace StockService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProviderController : ControllerBase
+    public class StorageLocationController : ControllerBase
     {
-        private readonly IProviderService _providerService;
+        private readonly IStorageLocationService _storageLocationService;
         private Response _response;
 
-        public ProviderController(IProviderService providerService)
+        public StorageLocationController(IStorageLocationService storageLocationService)
         {
-            _providerService = providerService;
+            _storageLocationService = storageLocationService;
             this._response = new Response();
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateEmployee(ProviderDto providerDto)
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> CreateStorageLocation([FromForm] StorageLocationDto storageLocationDto)
         {
             try
             {
-                _response = await _providerService.CreateProviderAsync(providerDto);
+                _response = await _storageLocationService.CreateStorageLocationAsync(storageLocationDto);
                 return Ok(_response);
             }
             catch (Exception ex)
@@ -36,12 +37,12 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpDelete("{providerId}")]
-        public async Task<IActionResult> DeleteEmployeeAsync(int providerId)
+        [HttpDelete("{storageLocationId}")]
+        public async Task<IActionResult> DeletesStorageLocationAsync(int storageLocationId)
         {
             try
             {
-                _response = await _providerService.DeleteProviderAsync(providerId);
+                _response = await _storageLocationService.DeletesStorageLocationAsync(storageLocationId);
                 return Ok(_response);
             }
             catch (Exception ex)
@@ -52,12 +53,12 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAllEmployees()
+        [HttpGet("{storageLocationId}")]
+        public async Task<IActionResult> GetStorageLocationById(int storageLocationId)
         {
             try
             {
-                _response = await _providerService.GetAllProvidersAsync();
+                _response = await _storageLocationService.GetStorageLocationByIdAsync(storageLocationId);
 
                 if (_response.IsSuccess)
                 {
@@ -76,13 +77,12 @@ namespace StockService.Controllers
             }
         }
 
-
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetEmployeeById(int id)
+        [HttpGet("byStock/{stockId}")]
+        public async Task<IActionResult> GetStorageLocationsByStockIdAsync(int stockId)
         {
             try
             {
-                _response = await _providerService.GetProviderByIdAsync(id);
+                _response = await _storageLocationService.GetStorageLocationsByStockIdAsync(stockId);
 
                 if (_response.IsSuccess)
                 {
@@ -101,12 +101,13 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateEmployeeAsync(int id, ProviderDto providerDto)
+        [HttpPut("{storageLocationId}")]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> UpdateStorageLocationAsync(int storageLocationId, [FromForm] StorageLocationDto storageLocationDto)
         {
             try
             {
-                var response = await _providerService.UpdateProviderAsync(id, providerDto);
+                var response = await _storageLocationService.UpdateStorageLocationAsync(storageLocationId, storageLocationDto);
                 if (response.IsSuccess)
                 {
                     return Ok(response);
@@ -123,5 +124,6 @@ namespace StockService.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
+
     }
 }

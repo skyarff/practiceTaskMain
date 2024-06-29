@@ -124,12 +124,12 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpPut("{stockId}")]
-        public async Task<IActionResult> UpdateStockAsync(int stockId, StockDto stockDto)
+        [HttpPut("changeCompany/{stockId}")]
+        public async Task<IActionResult> UpdateStockAsync(int stockId, int companyId)
         {
             try
             {
-                var response = await _stockService.UpdateStockAsync(stockId, stockDto);
+                var response = await _stockService.ChangeStockCompanyAsync(stockId, companyId);
                 if (response.IsSuccess)
                 {
                     return Ok(response);

@@ -26,12 +26,13 @@ namespace StockService.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Provider",
+                name: "Providers",
                 columns: table => new
                 {
                     ProviderId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
+                    Phone = table.Column<string>(type: "text", nullable: false),
                     INN = table.Column<string>(type: "text", nullable: true),
                     LegalAdress = table.Column<string>(type: "text", nullable: true),
                     CheckingAccount = table.Column<string>(type: "text", nullable: true),
@@ -39,12 +40,11 @@ namespace StockService.Migrations
                     BIK = table.Column<string>(type: "text", nullable: true),
                     CorrespondentAccount = table.Column<string>(type: "text", nullable: true),
                     ManagerFullname = table.Column<string>(type: "text", nullable: true),
-                    Email = table.Column<string>(type: "text", nullable: true),
-                    Phone = table.Column<string>(type: "text", nullable: false)
+                    Email = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Provider", x => x.ProviderId);
+                    table.PrimaryKey("PK_Providers", x => x.ProviderId);
                 });
 
             migrationBuilder.CreateTable(
@@ -84,7 +84,7 @@ namespace StockService.Migrations
                         column: x => x.CompanyId,
                         principalTable: "Companies",
                         principalColumn: "CompanyId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -97,17 +97,17 @@ namespace StockService.Migrations
                     BillPdf = table.Column<string>(type: "text", nullable: false),
                     ProviderId = table.Column<int>(type: "integer", nullable: true),
                     BillTotal = table.Column<decimal>(type: "numeric", nullable: false, defaultValue: 0m),
-                    CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTime(2024, 6, 28, 14, 11, 0, 21, DateTimeKind.Utc).AddTicks(718))
+                    CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTime(2024, 6, 29, 8, 54, 56, 552, DateTimeKind.Utc).AddTicks(9618))
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Bill", x => x.BillId);
                     table.ForeignKey(
-                        name: "FK_Bill_Provider_ProviderId",
+                        name: "FK_Bill_Providers_ProviderId",
                         column: x => x.ProviderId,
-                        principalTable: "Provider",
+                        principalTable: "Providers",
                         principalColumn: "ProviderId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -119,17 +119,17 @@ namespace StockService.Migrations
                     DocumentNumber = table.Column<string>(type: "text", nullable: false),
                     ScanPdf = table.Column<string>(type: "text", nullable: false),
                     ProviderId = table.Column<int>(type: "integer", nullable: true),
-                    CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTime(2024, 6, 28, 14, 11, 0, 21, DateTimeKind.Utc).AddTicks(3335))
+                    CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTime(2024, 6, 29, 8, 54, 56, 553, DateTimeKind.Utc).AddTicks(1757))
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Upd", x => x.UpdId);
                     table.ForeignKey(
-                        name: "FK_Upd_Provider_ProviderId",
+                        name: "FK_Upd_Providers_ProviderId",
                         column: x => x.ProviderId,
-                        principalTable: "Provider",
+                        principalTable: "Providers",
                         principalColumn: "ProviderId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -141,7 +141,7 @@ namespace StockService.Migrations
                     FullName = table.Column<string>(type: "text", nullable: false),
                     JobTitle = table.Column<string>(type: "text", nullable: false, defaultValue: "Junior"),
                     Login = table.Column<string>(type: "text", nullable: false),
-                    Password = table.Column<string>(type: "text", nullable: false),
+                    Password = table.Column<string>(type: "text", nullable: true),
                     StockId = table.Column<int>(type: "integer", nullable: true),
                     ImagePath = table.Column<string>(type: "text", nullable: true),
                     Email = table.Column<string>(type: "text", nullable: true),
@@ -159,7 +159,7 @@ namespace StockService.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "StorageLocation",
+                name: "StorageLocations",
                 columns: table => new
                 {
                     StorageLocationId = table.Column<int>(type: "integer", nullable: false)
@@ -167,14 +167,14 @@ namespace StockService.Migrations
                     RackCode = table.Column<int>(type: "integer", nullable: false),
                     ShelfCode = table.Column<int>(type: "integer", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: true),
-                    LocationPhoto = table.Column<string>(type: "text", nullable: true),
-                    StockId = table.Column<int>(type: "integer", nullable: true)
+                    ImagePath = table.Column<string>(type: "text", nullable: true),
+                    StockId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StorageLocation", x => x.StorageLocationId);
+                    table.PrimaryKey("PK_StorageLocations", x => x.StorageLocationId);
                     table.ForeignKey(
-                        name: "FK_StorageLocation_Stocks_StockId",
+                        name: "FK_StorageLocations_Stocks_StockId",
                         column: x => x.StockId,
                         principalTable: "Stocks",
                         principalColumn: "StockId",
@@ -194,7 +194,7 @@ namespace StockService.Migrations
                     Photo = table.Column<string>(type: "text", nullable: true),
                     Price = table.Column<decimal>(type: "numeric", nullable: false, defaultValue: 0m),
                     FactoryNumber = table.Column<string>(type: "text", nullable: true),
-                    CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTime(2024, 6, 28, 14, 11, 0, 21, DateTimeKind.Utc).AddTicks(6383)),
+                    CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTime(2024, 6, 29, 8, 54, 56, 553, DateTimeKind.Utc).AddTicks(4434)),
                     BillId = table.Column<int>(type: "integer", nullable: true),
                     UpdId = table.Column<int>(type: "integer", nullable: true),
                     ProductCategoryId = table.Column<int>(type: "integer", nullable: true),
@@ -220,11 +220,11 @@ namespace StockService.Migrations
                         column: x => x.ProductCategoryId,
                         principalTable: "ProductCategories",
                         principalColumn: "ProductCategoryId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
-                        name: "FK_Product_StorageLocation_StorageLocationId",
+                        name: "FK_Product_StorageLocations_StorageLocationId",
                         column: x => x.StorageLocationId,
-                        principalTable: "StorageLocation",
+                        principalTable: "StorageLocations",
                         principalColumn: "StorageLocationId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -287,8 +287,8 @@ namespace StockService.Migrations
                 column: "CompanyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StorageLocation_StockId",
-                table: "StorageLocation",
+                name: "IX_StorageLocations_StockId",
+                table: "StorageLocations",
                 column: "StockId");
 
             migrationBuilder.CreateIndex(
@@ -312,7 +312,7 @@ namespace StockService.Migrations
                 name: "ProductCategories");
 
             migrationBuilder.DropTable(
-                name: "StorageLocation");
+                name: "StorageLocations");
 
             migrationBuilder.DropTable(
                 name: "Upd");
@@ -321,7 +321,7 @@ namespace StockService.Migrations
                 name: "Stocks");
 
             migrationBuilder.DropTable(
-                name: "Provider");
+                name: "Providers");
 
             migrationBuilder.DropTable(
                 name: "Companies");

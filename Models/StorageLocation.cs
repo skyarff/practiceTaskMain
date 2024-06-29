@@ -8,9 +8,9 @@ namespace StockService.Models
         public int RackCode { get; set; }
         public int ShelfCode { get; set; }
         public string? Description { get; set; }
-        public string? LocationPhoto { get; set; }
+        public string? ImagePath { get; set; }
 
-        public int? StockId { get; set; }
+        public int StockId { get; set; }
         [JsonIgnore]
         public Stock? Stock { get; set; }
         [JsonIgnore]

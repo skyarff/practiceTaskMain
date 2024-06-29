@@ -125,11 +125,35 @@ namespace StockService.Controllers
         }
 
         [HttpPut("{employeeId}")]
-        public async Task<IActionResult> UpdateEmployeeAsync(int employeeId, EmployeeDto employeeDto)
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> UpdateEmployeeAsync(int employeeId, [FromForm] EmployeeDto employeeDto)
         {
             try
             {
                 var response = await _employeeService.UpdateEmployeeAsync(employeeId, employeeDto);
+                if (response.IsSuccess)
+                {
+                    return Ok(response);
+                }
+                else
+                {
+                    return NotFound(response);
+                }
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.Errors.Add(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, _response);
+            }
+        }
+
+        [HttpPut("changePassword/{employeeId}")]
+        public async Task<IActionResult> SetEmployeePassword(int employeeId, string? password)
+        {
+            try
+            {
+                var response = await _employeeService.ChangeEmployeePassword(employeeId, password);
                 if (response.IsSuccess)
                 {
                     return Ok(response);

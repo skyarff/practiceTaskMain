@@ -16,6 +16,33 @@ namespace StockService.Repository.EmployeeRep
             _mapper = mapper;
             _response = new Response();
         }
+        public async Task<Response> ChangeEmployeePassword(int employeeId, string? password)
+        {
+            var employee = await _db.Employees.FindAsync(employeeId);
+
+            _response.IsSuccess = false;
+            _response.Message = "Не удалось установить новый пароль.";
+
+            if (employee != null)
+            {
+                employee.Password = password;
+
+                await _db.SaveChangesAsync();
+
+                _response.IsSuccess = true;
+                _response.Result = employee;
+
+                _response.Message = "Пароль установлен в null.";
+
+                if (password != null)
+                {
+                    _response.Message = "Пароль успешно изменен.";
+                }
+                
+            }
+
+            return _response;
+        }
 
         public async Task<Response> CreateEmployeeAsync(EmployeeDto employeeDto)
         {
@@ -52,9 +79,9 @@ namespace StockService.Repository.EmployeeRep
             return _response;
         }
 
-        public async Task<Response> DeleteEmployeeAsync(int id)
+        public async Task<Response> DeleteEmployeeAsync(int employeeId)
         {
-            var employee = await _db.Employees.FindAsync(id);
+            var employee = await _db.Employees.FindAsync(employeeId);
 
             _response.IsSuccess = true;
             _response.Message = "Сотрудник не найден.";
@@ -95,10 +122,10 @@ namespace StockService.Repository.EmployeeRep
             _response.IsSuccess = false;
             _response.Message = "Сотрудники не найдены для указанной компании.";
 
-            var employees = _db.Companies
+            var employees = await _db.Companies
                 .Where(c => c.CompanyId == companyId)
                 .SelectMany(c => c.Stocks.SelectMany(w => w.Employees))
-                .ToList();
+                .ToListAsync();
 
             if (employees.Any())
             {
@@ -110,9 +137,9 @@ namespace StockService.Repository.EmployeeRep
             return _response;
         }
 
-        public async Task<Response> GetEmployeeByIdAsync(int id)
+        public async Task<Response> GetEmployeeByIdAsync(int employeeId)
         {
-            var employee = await _db.Employees.FirstOrDefaultAsync(e => e.EmployeeId == id);
+            var employee = await _db.Employees.FindAsync(employeeId);
 
             _response.IsSuccess = false;
             _response.Message = "Сотрудник не найден.";
@@ -127,9 +154,9 @@ namespace StockService.Repository.EmployeeRep
             return _response;
         }
 
-        public async Task<Response> UpdateEmployeeAsync(int id, EmployeeDto employeeDto)
+        public async Task<Response> UpdateEmployeeAsync(int employeeId, EmployeeDto employeeDto)
         {
-            var employee = await _db.Employees.FirstOrDefaultAsync(e => e.EmployeeId == id);
+            var employee = await _db.Employees.FindAsync(employeeId);
 
             _response.IsSuccess = false;
             _response.Message = "Сотрудник не найден.";
@@ -145,8 +172,30 @@ namespace StockService.Repository.EmployeeRep
                 if (!string.IsNullOrEmpty(employeeDto.Password))
                     employee.Password = employeeDto.Password;
 
-                //if (!string.IsNullOrEmpty(employeeDto.Photo))
-                //    employee.Photo = employeeDto.Photo;
+                if (employeeDto.Image != null && employeeDto.Image.Length > 0)
+                {
+
+                    if (!string.IsNullOrEmpty(employee.ImagePath))
+                    {
+                        var oldImagePath = Path.Combine("wwwroot", employee.ImagePath.TrimStart('\\'));
+                        if (File.Exists(oldImagePath))
+                        {
+                            File.Delete(oldImagePath);
+                        }
+                    }
+
+
+                    var fileName = Path.GetFileName(employeeDto.Image.FileName);
+                    var filePath = Path.Combine("\\Images\\EmployeeImages", fileName);
+
+
+                    using (var stream = new FileStream(Path.Combine("wwwroot\\Images\\EmployeeImages", fileName), FileMode.Create))
+                    {
+                        await employeeDto.Image.CopyToAsync(stream);
+                    }
+
+                    employee.ImagePath = filePath;
+                }
 
                 if (!string.IsNullOrEmpty(employeeDto.Email))
                     employee.Email = employeeDto.Email;

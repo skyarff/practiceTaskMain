@@ -7,6 +7,7 @@ using StockService.Repository.EmployeeRep;
 using StockService.Repository.ProductCategoryRep;
 using StockService.Repository.ProviderRep;
 using StockService.Repository.StockRep;
+using StockService.Repository.StorageLocationRep;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,7 +27,9 @@ builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<ICompanyService, CompanyService>();
 builder.Services.AddScoped<IStockService, StockService.Repository.StockRep.StockService>();
 builder.Services.AddScoped<IProductCategoryService, ProductCategoryService>();
-//builder.Services.AddScoped<IProviderService, ProviderService>();
+builder.Services.AddScoped<IStorageLocationService, StorageLocationService>();
+builder.Services.AddScoped<IProviderService, ProviderService>();
+
 //builder.Services.AddScoped<IStockService, StockServise>();
 
 

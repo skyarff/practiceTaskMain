@@ -19,7 +19,7 @@ namespace StockService.Repository.StockRep
 
         public async Task<Response> CreateStockAsync(StockDto stockDto)
         {
-            var stockIsExists = await _db.Stocks.AnyAsync(s => s.Name == stockDto.Name && s.CompanyId == stockDto.CompanyId);
+            var stockIsExists = await _db.Stocks.AnyAsync(s => s.Name == stockDto.Name);
 
             _response.IsSuccess = false;
             _response.Message = "Склад уже существует.";
@@ -111,26 +111,29 @@ namespace StockService.Repository.StockRep
             return _response;
         }
 
-        public async Task<Response> UpdateStockAsync(int stockId, StockDto stockDto)
+        public async Task<Response> ChangeStockCompanyAsync(int stockId, int companyId)
         {
             var stock = await _db.Stocks.FindAsync(stockId);
 
             _response.IsSuccess = false;
-            _response.Message = "Склад не найден.";
+            _response.Message = "Не удалось установить новую компанию для склада.";
 
             if (stock != null)
             {
-                if (!string.IsNullOrEmpty(stockDto.Name))
-                    stock.Name = stockDto.Name;
-
-                if (stockDto.CompanyId != null && stockDto.CompanyId > 0)
-                    stock.CompanyId = stockDto.CompanyId;
+                stock.CompanyId = companyId;
 
                 await _db.SaveChangesAsync();
 
                 _response.IsSuccess = true;
                 _response.Result = stock;
-                _response.Message = "Данные склада обновлены.";
+
+                _response.Message = "Компания установлена в null.";
+
+                if (stock != null)
+                {
+                    _response.Message = "Компания успешно изменена.";
+                }
+
             }
 
             return _response;

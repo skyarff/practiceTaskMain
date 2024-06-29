@@ -6,9 +6,9 @@ namespace StockService.Repository.ProviderRep
     public interface IProviderService
     {
         Task<Response> GetAllProvidersAsync();
-        Task<Response> GetProviderByIdAsync(int id);
-        Task<Response> CreateProviderAsync(ProviderDto providerDto);
-        Task<Response> UpdateProviderAsync(int id, ProviderDto providerDto);
-        Task<Response> DeleteProviderAsync(int id);
+        Task<Response> GetProviderByIdAsync(int providerId);
+        Task<Response> CreateProviderAsync(ProviderDto providerId);
+        Task<Response> UpdateProviderAsync(int providerId, ProviderDto providerDto);
+        Task<Response> DeleteProviderAsync(int iproviderId);
     }
 }
