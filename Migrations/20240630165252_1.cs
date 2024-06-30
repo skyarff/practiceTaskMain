@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace StockService.Migrations
 {
-    public partial class cls : Migration
+    public partial class _1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -18,7 +18,7 @@ namespace StockService.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
                     INN = table.Column<string>(type: "text", nullable: true),
-                    Logo = table.Column<string>(type: "text", nullable: true)
+                    LogoPath = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -94,7 +94,7 @@ namespace StockService.Migrations
                     BillId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     BillNumber = table.Column<string>(type: "text", nullable: false),
-                    BillPdfPath = table.Column<string>(type: "text", nullable: true),
+                    BillPdfPath = table.Column<string>(type: "text", nullable: false),
                     ProviderId = table.Column<int>(type: "integer", nullable: false),
                     BillTotal = table.Column<decimal>(type: "numeric", nullable: false, defaultValue: 0m),
                     CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
@@ -117,7 +117,7 @@ namespace StockService.Migrations
                     UpdId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     DocumentNumber = table.Column<string>(type: "text", nullable: false),
-                    UpdPdfPath = table.Column<string>(type: "text", nullable: true),
+                    UpdPdfPath = table.Column<string>(type: "text", nullable: false),
                     ProviderId = table.Column<int>(type: "integer", nullable: false),
                     CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },

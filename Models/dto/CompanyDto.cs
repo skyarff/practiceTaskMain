@@ -7,6 +7,6 @@ namespace StockService.Models.dto
         public int? CompanyId { get; set; }
         public string? Name { get; set; }
         public string? INN { get; set; }
-        public string? Logo { get; set; }
+        public IFormFile? Image { get; set; }
     }
 }

@@ -19,9 +19,10 @@ namespace StockService.Controllers
             this._response = new Response();
         }
 
-        
-        [HttpPost("create")]
-        public async Task<IActionResult> CreateCompany(CompanyDto companyDto)
+
+        [HttpPost("Create")]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> CreateCompany([FromForm] CompanyDto companyDto)
         {
             try
             {
@@ -95,7 +96,8 @@ namespace StockService.Controllers
         }
 
         [HttpPut("update")]
-        public async Task<IActionResult> UpdateEmployeeAsync(CompanyDto companyDto)
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> UpdateEmployeeAsync([FromForm] CompanyDto companyDto)
         {
             try
             {

@@ -7,7 +7,7 @@ namespace StockService.Models
         public int CompanyId { get; set; }
         public string Name { get; set; }
         public string? INN { get; set; }
-        public string? Logo { get; set; }
+        public string? LogoPath { get; set; }
 
         [JsonIgnore]
         public List<Stock>? Stocks { get; set; }

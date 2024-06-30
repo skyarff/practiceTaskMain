@@ -12,8 +12,8 @@ using StockService;
 namespace StockService.Migrations
 {
     [DbContext(typeof(StockContext))]
-    [Migration("20240630133059_cls")]
-    partial class cls
+    [Migration("20240630165252_1")]
+    partial class _1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,6 +37,7 @@ namespace StockService.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("BillPdfPath")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<decimal>("BillTotal")
@@ -71,7 +72,7 @@ namespace StockService.Migrations
                     b.Property<string>("INN")
                         .HasColumnType("text");
 
-                    b.Property<string>("Logo")
+                    b.Property<string>("LogoPath")
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
@@ -345,6 +346,7 @@ namespace StockService.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("UpdPdfPath")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("UpdId");

@@ -1,7 +1,9 @@
-﻿using AutoMapper;
+﻿using AppSettings;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using StockService.Models;
 using StockService.Models.dto;
+using System.Security.Cryptography.X509Certificates;
 
 namespace StockService.Repository.CompanyRep
 {
@@ -10,6 +12,7 @@ namespace StockService.Repository.CompanyRep
         private readonly StockContext _db;
         private readonly IMapper _mapper;
         private Response _response;
+        private string _imagePath = PathSettings.ImagePaths["CompanyLogos"];
 
         public CompanyService(IMapper mapper, StockContext db)
         {
@@ -27,6 +30,21 @@ namespace StockService.Repository.CompanyRep
             if (!companyIsExists)
             {
                 var company = _mapper.Map<CompanyDto, Company>(companyDto);
+
+                if (companyDto.Image != null && companyDto.Image.Length > 0)
+                {
+                    var fileName = Path.GetFileName(companyDto.Image.FileName);
+                    var filePath = $"{_imagePath}/{fileName}";
+
+
+                    using (var stream = new FileStream("wwwroot/" + filePath, FileMode.Create))
+                    {
+                        await companyDto.Image.CopyToAsync(stream);
+                    }
+
+                    company.LogoPath = filePath;
+                }
+
                 _db.Companies.Add(company);
                 await _db.SaveChangesAsync();
 
@@ -104,8 +122,27 @@ namespace StockService.Repository.CompanyRep
                 if (!string.IsNullOrEmpty(companyDto.INN))
                     company.INN = companyDto.INN;
 
-                if (!string.IsNullOrEmpty(companyDto.Logo))
-                    company.Logo = companyDto.Logo;
+                if (companyDto.Image != null && companyDto.Image.Length > 0)
+                {
+                    if (!string.IsNullOrEmpty(company.LogoPath))
+                    {
+                        var oldImagePath = Path.Combine("wwwroot", company.LogoPath.TrimStart('\\'));
+                        if (File.Exists(oldImagePath))
+                        {
+                            File.Delete(oldImagePath);
+                        }
+                    }
+
+                    var fileName = Path.GetFileName(companyDto.Image.FileName);
+                    var filePath = $"{_imagePath}/{fileName}";
+
+
+                    using (var stream = new FileStream("wwwroot/" + filePath, FileMode.Create))
+                    {
+                        await companyDto.Image.CopyToAsync(stream);
+                    }
+                    company.LogoPath = filePath;
+                }
 
 
                 await _db.SaveChangesAsync();

@@ -35,6 +35,7 @@ namespace StockService.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("BillPdfPath")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<decimal>("BillTotal")
@@ -69,7 +70,7 @@ namespace StockService.Migrations
                     b.Property<string>("INN")
                         .HasColumnType("text");
 
-                    b.Property<string>("Logo")
+                    b.Property<string>("LogoPath")
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
@@ -343,6 +344,7 @@ namespace StockService.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("UpdPdfPath")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("UpdId");

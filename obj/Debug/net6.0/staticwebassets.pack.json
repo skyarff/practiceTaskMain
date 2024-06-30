@@ -1,6 +1,10 @@
 {
   "Files": [
     {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\BillPdfs\\274px-Strelnikova_AN.jpg",
+      "PackagePath": "staticwebassets\\Images\\BillPdfs\\274px-Strelnikova_AN.jpg"
+    },
+    {
       "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\BillPdfs\\5.png",
       "PackagePath": "staticwebassets\\Images\\BillPdfs\\5.png"
     },
@@ -9,8 +13,28 @@
       "PackagePath": "staticwebassets\\Images\\BillPdfs\\6f8c6a0c.jpeg.jpg"
     },
     {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\1521194388_igra-tri-kotai-kompot.webp",
+      "PackagePath": "staticwebassets\\Images\\CompanyLogos\\1521194388_igra-tri-kotai-kompot.webp"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\Dyxatelnaya-gimnastika-strelnikovoj9.png",
+      "PackagePath": "staticwebassets\\Images\\CompanyLogos\\Dyxatelnaya-gimnastika-strelnikovoj9.png"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\content_дыхание7.jpg",
+      "PackagePath": "staticwebassets\\Images\\CompanyLogos\\content_дыхание7.jpg"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\photo_5447183739231783068_y.jpg",
+      "PackagePath": "staticwebassets\\Images\\CompanyLogos\\photo_5447183739231783068_y.jpg"
+    },
+    {
       "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\1521194388_igra-tri-kotai-kompot.webp",
       "PackagePath": "staticwebassets\\Images\\EmployeeImages\\1521194388_igra-tri-kotai-kompot.webp"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\GDv6p6ERVH4.jpg",
+      "PackagePath": "staticwebassets\\Images\\EmployeeImages\\GDv6p6ERVH4.jpg"
     },
     {
       "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\photo_5217718870855498380_y.jpg",
