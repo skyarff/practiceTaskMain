@@ -87,7 +87,7 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpGet("getProductsFiltered")]
+        [HttpPost("getProductsFiltered")]
         public async Task<IActionResult> GetProductsFiltered(ProductDto productDto)
         {
             try

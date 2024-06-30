@@ -21,6 +21,18 @@
       "PackagePath": "staticwebassets\\Images\\EmployeeImages\\рол.png"
     },
     {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\ProductImages\\12321415.png",
+      "PackagePath": "staticwebassets\\Images\\ProductImages\\12321415.png"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\ProductImages\\i (2).png",
+      "PackagePath": "staticwebassets\\Images\\ProductImages\\i (2).png"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\ProductImages\\images.jpg",
+      "PackagePath": "staticwebassets\\Images\\ProductImages\\images.jpg"
+    },
+    {
       "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\StorageLocationImages\\1521194388_igra-tri-kotai-kompot.webp",
       "PackagePath": "staticwebassets\\Images\\StorageLocationImages\\1521194388_igra-tri-kotai-kompot.webp"
     },

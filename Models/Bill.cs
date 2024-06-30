@@ -6,7 +6,7 @@ namespace StockService.Models
     {
         public int BillId { get; set; }
         public string BillNumber { get; set; }
-        public string? BillPdfPath { get; set; }
+        public string BillPdfPath { get; set; }
         public int ProviderId { get; set; }
         [JsonIgnore]
         public Provider? Provider { get; set; }

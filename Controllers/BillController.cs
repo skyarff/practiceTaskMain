@@ -1,10 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using StockService.Models;
 using StockService.Models.dto;
-using StockService.Repository.EmployeeRep;
 using StockService.Repository.BillRep;
-using StockService.Repository.UpdRep;
 
 namespace StockService.Controllers
 {

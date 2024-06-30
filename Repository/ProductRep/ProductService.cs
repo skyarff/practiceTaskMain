@@ -24,7 +24,7 @@ namespace StockService.Repository.ProductRep
             var productIsExists = await _db.Products.AnyAsync(p => p.StorageLocationId == productDto.StorageLocationId);
 
             _response.IsSuccess = false;
-            _response.Message = "Место хранения уже используется.";
+            _response.Message = "Место хранения уже используется или данные конфликтуют.";
             if (!productIsExists)
             {
                 var product = _mapper.Map<ProductDto, Product>(productDto);
@@ -188,6 +188,16 @@ namespace StockService.Repository.ProductRep
             _response.Message = "Продукты не найдены по указанным критериям.";
 
             var query = _db.Products.AsQueryable();
+
+            if (productDto.EmployeeId != null)
+                query = query.Where(p => p.EmployeeId == productDto.EmployeeId);
+
+            if (productDto.StorageLocationId != null)
+                query = query.Where(p => p.StorageLocationId == productDto.StorageLocationId);
+
+            if (productDto.ProductCategoryId != null)
+                query = query.Where(p => p.ProductCategoryId == productDto.ProductCategoryId);
+
 
             if (productDto.StockId != null)
                 query = query.Where(p => p.StorageLocation.StockId == productDto.StockId);

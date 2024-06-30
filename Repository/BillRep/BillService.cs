@@ -1,10 +1,8 @@
-﻿using AutoMapper;
+﻿using AppSettings;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using StockService.Models;
 using StockService.Models.dto;
-using System.Linq;
-using AppSettings;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace StockService.Repository.BillRep
 {
