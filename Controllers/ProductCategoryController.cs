@@ -27,7 +27,8 @@ namespace StockService.Controllers
             try
             {
                 _response = await _productCategoryService.CreateProductCategoryAsync(productCategoryDto);
-                return Ok(_response);
+                if (_response.IsSuccess) return Ok(_response);
+                return NotFound(_response);
             }
             catch (Exception ex)
             {
@@ -43,13 +44,14 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpDelete("dellById/{productCategoryId}")]
-        public async Task<IActionResult> DeleteProductCategory(int productCategoryId)
+        [HttpDelete("dellById")]
+        public async Task<IActionResult> DeleteProductCategory([FromQuery] int productCategoryId)
         {
             try
             {
                 _response = await _productCategoryService.DeleteProductCategoryAsync(productCategoryId);
-                return Ok(_response);
+                if (_response.IsSuccess) return Ok(_response);
+                return NotFound(_response);
             }
             catch (Exception ex)
             {
@@ -59,21 +61,14 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpGet("getByCompany/{companyId}")]
-        public async Task<IActionResult> GetStocksByCompanyId(int companyId)
+        [HttpGet("getByCompany")]
+        public async Task<IActionResult> GetStocksByCompanyId([FromQuery] int companyId)
         {
             try
             {
                 _response = await _productCategoryService.GetProductCategoriesByCompanyIdAsync(companyId);
-
-                if (_response.IsSuccess)
-                {
-                    return Ok(_response);
-                }
-                else
-                {
-                    return NotFound(_response);
-                }
+                if (_response.IsSuccess) return Ok(_response);
+                return NotFound(_response);
             }
             catch (Exception ex)
             {

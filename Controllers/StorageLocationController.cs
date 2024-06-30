@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StockService.Models;
 using StockService.Models.dto;
-using StockService.Repository.CookieRep;
-using StockService.Repository.EmployeeRep;
 using StockService.Repository.StorageLocationRep;
 
 namespace StockService.Controllers
@@ -27,7 +25,8 @@ namespace StockService.Controllers
             try
             {
                 _response = await _storageLocationService.CreateStorageLocationAsync(storageLocationDto);
-                return Ok(_response);
+                if (_response.IsSuccess) return Ok(_response);
+                return NotFound(_response);
             }
             catch (Exception ex)
             {
@@ -37,13 +36,14 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpDelete("dellById/{storageLocationId}")]
-        public async Task<IActionResult> DeletesStorageLocationAsync(int storageLocationId)
+        [HttpDelete("dellById")]
+        public async Task<IActionResult> DeletesStorageLocation([FromQuery] int storageLocationId)
         {
             try
             {
-                _response = await _storageLocationService.DeletesStorageLocationAsync(storageLocationId);
-                return Ok(_response);
+                _response = await _storageLocationService.DeleteStorageLocationAsync(storageLocationId);
+                if (_response.IsSuccess) return Ok(_response);
+                return NotFound(_response);
             }
             catch (Exception ex)
             {
@@ -53,21 +53,14 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpGet("getById/{storageLocationId}")]
-        public async Task<IActionResult> GetStorageLocationById(int storageLocationId)
+        [HttpGet("getById")]
+        public async Task<IActionResult> GetStorageLocationById([FromQuery] int storageLocationId)
         {
             try
             {
                 _response = await _storageLocationService.GetStorageLocationByIdAsync(storageLocationId);
-
-                if (_response.IsSuccess)
-                {
-                    return Ok(_response);
-                }
-                else
-                {
-                    return NotFound(_response);
-                }
+                if (_response.IsSuccess) return Ok(_response);
+                return NotFound(_response);
             }
             catch (Exception ex)
             {
@@ -77,21 +70,33 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpGet("getByStockId/{stockId}")]
-        public async Task<IActionResult> GetStorageLocationsByStockIdAsync(int stockId)
+        [HttpGet("getByStockId")]
+        public async Task<IActionResult> GetStorageLocationsByStockIdAsync([FromQuery] int stockId)
         {
             try
             {
                 _response = await _storageLocationService.GetStorageLocationsByStockIdAsync(stockId);
+                if (_response.IsSuccess) return Ok(_response);
+                return NotFound(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.Errors.Add(ex.Message);
+                return BadRequest(_response);
+            }
+        }
 
-                if (_response.IsSuccess)
-                {
-                    return Ok(_response);
-                }
-                else
-                {
-                    return NotFound(_response);
-                }
+        [HttpGet("getStorageLocationsFiltered")]
+        public async Task<IActionResult> GetStorageLocationsFiltered([FromQuery] int? stockId, bool? isBusy)
+        {
+            try
+            {
+                StorageLocationDto storageLocationDto = new StorageLocationDto { StockId = stockId, IsBusy = isBusy };
+
+                _response = await _storageLocationService.GetStorageLocationsFilteredAsync(storageLocationDto);
+                if (_response.IsSuccess) return Ok(_response);
+                return NotFound(_response);
             }
             catch (Exception ex)
             {
@@ -107,15 +112,9 @@ namespace StockService.Controllers
         {
             try
             {
-                var response = await _storageLocationService.UpdateStorageLocationAsync(storageLocationDto);
-                if (response.IsSuccess)
-                {
-                    return Ok(response);
-                }
-                else
-                {
-                    return NotFound(response);
-                }
+                _response = await _storageLocationService.UpdateStorageLocationAsync(storageLocationDto);
+                if (_response.IsSuccess) return Ok(_response);
+                return NotFound(_response);
             }
             catch (Exception ex)
             {

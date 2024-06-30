@@ -16,5 +16,6 @@ namespace StockService.Models.dto
         public string? Phone { get; set; }
 
         public int? StockId { get; set; }
+        public int? CompanyId { get; set; }
     }
 }

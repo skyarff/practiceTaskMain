@@ -3,6 +3,7 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using StockService.Models;
 using StockService.Models.dto;
+using System.ComponentModel.Design;
 
 namespace StockService.Repository.EmployeeRep
 {
@@ -85,22 +86,22 @@ namespace StockService.Repository.EmployeeRep
         {
             var employee = await _db.Employees.FindAsync(employeeId);
 
-            _response.IsSuccess = true;
+            _response.IsSuccess = false;
             _response.Message = "Сотрудник не найден.";
 
             if (employee != null)
             {
-                _response.IsSuccess = false;
-                _response.Message = "Сотрудник успешно удален.";
-
                 _db.Employees.Remove(employee);
                 await _db.SaveChangesAsync();
+
+                _response.IsSuccess = true;
+                _response.Message = "Сотрудник успешно удален.";
             }
 
             return _response;
         }
 
-        public async Task<Response> GetAllEmployessAsync()
+        public async Task<Response> GetAllEmployeesAsync()
         {
             var employees = await _db.Employees.ToListAsync();
 
@@ -122,10 +123,9 @@ namespace StockService.Repository.EmployeeRep
             _response.IsSuccess = false;
             _response.Message = "Сотрудники не найдены.";
 
-            if (stockId == 0) stockId = null;
             var employees = await _db.Employees
-                    .Where(e => e.StockId == stockId)
-                    .ToListAsync();
+                .Where(e => e.StockId == stockId)
+                .ToListAsync();
 
             if (employees.Any())
             {
@@ -137,14 +137,13 @@ namespace StockService.Repository.EmployeeRep
             return _response;
         }
 
-        public async Task<Response> GetEmployeesByCompanyIdAsync(int companyId)
+        public async Task<Response> GetEmployeesByCompanyIdAsync(int? companyId)
         {
             _response.IsSuccess = false;
             _response.Message = "Сотрудники не найдены для указанной компании.";
 
-            var employees = await _db.Companies
-                .Where(c => c.CompanyId == companyId)
-                .SelectMany(c => c.Stocks.SelectMany(w => w.Employees))
+            var employees = await _db.Employees
+                .Where(e => e.Stock.Company.CompanyId == companyId)
                 .ToListAsync();
 
             if (employees.Any())
@@ -152,6 +151,31 @@ namespace StockService.Repository.EmployeeRep
                 _response.IsSuccess = true;
                 _response.Result = employees;
                 _response.Message = $"Сотрудники для компании с ID {companyId} успешно получены.";
+            }
+
+            return _response;
+        }
+
+        public async Task<Response> GetEmployeesFilteredAsync(EmployeeDto employeeDto)
+        {
+            _response.IsSuccess = false;
+            _response.Message = "Сотрудники не найдены по указанным критериям.";
+
+            var query = _db.Employees.AsQueryable();
+
+            if (employeeDto.StockId != null)
+                query = query.Where(e => e.StockId == employeeDto.StockId);
+
+            else if (employeeDto.CompanyId != null)
+                query = query.Where(e => e.Stock.CompanyId == employeeDto.CompanyId);
+
+            var products = await query.ToListAsync();
+
+            if (products.Any())
+            {
+                _response.IsSuccess = true;
+                _response.Result = products;
+                _response.Message = "Сотрудники успешно найдены по указанным критериям.";
             }
 
             return _response;

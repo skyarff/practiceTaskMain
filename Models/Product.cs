@@ -10,7 +10,7 @@ namespace StockService.Models
         public string? Manufacturer { get; set; }
         public string? ProductionArticle { get; set; }
         public string? InnerArticle { get; set; }
-        public string? Photo { get; set; }
+        public string? ImagePath { get; set; }
         public decimal Price { get; set; }
         public string? FactoryNumber { get; set; }
         public DateTime CreateDate { get; set; }
@@ -18,17 +18,21 @@ namespace StockService.Models
         public int? BillId { get; set; }
         [JsonIgnore]
         public Bill? Bill { get; set; }
+
         public int? UpdId { get; set; }
         [JsonIgnore]
         public Upd? Upd { get; set; }
+
         public int? ProductCategoryId { get; set; }
         [JsonIgnore]
         public ProductCategory? ProductCategory { get; set; }
+
         public int StorageLocationId { get; set; }
         [JsonIgnore]
-        public StorageLocation StorageLocation { get; set; }
-        public int EmployeeId { get; set; }
+        public StorageLocation? StorageLocation { get; set; }
+
+        public int? EmployeeId { get; set; }
         [JsonIgnore]
-        public Employee Employee { get; set; }
+        public Employee? Employee { get; set; }
     }
 }

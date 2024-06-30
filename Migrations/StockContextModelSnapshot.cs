@@ -35,7 +35,6 @@ namespace StockService.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("BillPdfPath")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<decimal>("BillTotal")
@@ -50,6 +49,9 @@ namespace StockService.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("BillId");
+
+                    b.HasIndex("BillNumber")
+                        .IsUnique();
 
                     b.HasIndex("ProviderId");
 
@@ -75,6 +77,9 @@ namespace StockService.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("CompanyId");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Companies");
                 });
@@ -138,14 +143,15 @@ namespace StockService.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("CreateDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValue(new DateTime(2024, 6, 29, 17, 6, 22, 553, DateTimeKind.Utc).AddTicks(4029));
+                        .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("EmployeeId")
+                    b.Property<int?>("EmployeeId")
                         .HasColumnType("integer");
 
                     b.Property<string>("FactoryNumber")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ImagePath")
                         .HasColumnType("text");
 
                     b.Property<string>("InnerArticle")
@@ -156,9 +162,6 @@ namespace StockService.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Photo")
                         .HasColumnType("text");
 
                     b.Property<decimal>("Price")
@@ -191,7 +194,7 @@ namespace StockService.Migrations
 
                     b.HasIndex("UpdId");
 
-                    b.ToTable("Product");
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("StockService.Models.ProductCategory", b =>
@@ -258,6 +261,9 @@ namespace StockService.Migrations
 
                     b.HasKey("ProviderId");
 
+                    b.HasIndex("Name")
+                        .IsUnique();
+
                     b.ToTable("Providers");
                 });
 
@@ -280,6 +286,9 @@ namespace StockService.Migrations
 
                     b.HasIndex("CompanyId");
 
+                    b.HasIndex("Name")
+                        .IsUnique();
+
                     b.ToTable("Stocks");
                 });
 
@@ -297,11 +306,13 @@ namespace StockService.Migrations
                     b.Property<string>("ImagePath")
                         .HasColumnType("text");
 
-                    b.Property<int>("RackCode")
-                        .HasColumnType("integer");
+                    b.Property<string>("RackCode")
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                    b.Property<int>("ShelfCode")
-                        .HasColumnType("integer");
+                    b.Property<string>("ShelfCode")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<int>("StockId")
                         .HasColumnType("integer");
@@ -332,10 +343,12 @@ namespace StockService.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("UpdPdfPath")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("UpdId");
+
+                    b.HasIndex("DocumentNumber")
+                        .IsUnique();
 
                     b.HasIndex("ProviderId");
 
@@ -367,13 +380,13 @@ namespace StockService.Migrations
                 {
                     b.HasOne("StockService.Models.Bill", "Bill")
                         .WithMany("Products")
-                        .HasForeignKey("BillId");
+                        .HasForeignKey("BillId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("StockService.Models.Employee", "Employee")
                         .WithMany("Products")
                         .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("StockService.Models.ProductCategory", "ProductCategory")
                         .WithMany("Products")
@@ -388,7 +401,8 @@ namespace StockService.Migrations
 
                     b.HasOne("StockService.Models.Upd", "Upd")
                         .WithMany("Products")
-                        .HasForeignKey("UpdId");
+                        .HasForeignKey("UpdId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Bill");
 

@@ -26,7 +26,8 @@ namespace StockService.Controllers
             try
             {
                 _response = await _stockService.CreateStockAsync(stockDto);
-                return Ok(_response);
+                if (_response.IsSuccess) return Ok(_response);
+                return NotFound(_response);
             }
             catch (Exception ex)
             {
@@ -36,13 +37,14 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpDelete("dellById/{stockId}")]
-        public async Task<IActionResult> DeleteStockAsync(int stockId)
+        [HttpDelete("dellById")]
+        public async Task<IActionResult> DeleteStock([FromQuery] int stockId)
         {
             try
             {
                 _response = await _stockService.DeleteStockAsync(stockId);
-                return Ok(_response);
+                if (_response.IsSuccess) return Ok(_response);
+                return NotFound(_response);
             }
             catch (Exception ex)
             {
@@ -58,15 +60,8 @@ namespace StockService.Controllers
             try
             {
                 _response = await _stockService.GetAllStocksAsync();
-
-                if (_response.IsSuccess)
-                {
-                    return Ok(_response);
-                }
-                else
-                {
-                    return NotFound(_response);
-                }
+                if (_response.IsSuccess) return Ok(_response);
+                return NotFound(_response);
             }
             catch (Exception ex)
             {
@@ -76,21 +71,14 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpGet("getByCompanyId/{companyId}")]
-        public async Task<IActionResult> GetStocksByCompanyId(int companyId)
+        [HttpGet("getByCompanyId")]
+        public async Task<IActionResult> GetStocksByCompanyId([FromQuery] int? companyId)
         {
             try
             {
                 _response = await _stockService.GetStocksByCompanyIdAsync(companyId);
-
-                if (_response.IsSuccess)
-                {
-                    return Ok(_response);
-                }
-                else
-                {
-                    return NotFound(_response);
-                }
+                if (_response.IsSuccess) return Ok(_response);
+                return NotFound(_response);
             }
             catch (Exception ex)
             {
@@ -100,21 +88,14 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpGet("getById{stockId}")]
-        public async Task<IActionResult> GetStockByIdAsync(int stockId)
+        [HttpGet("getById")]
+        public async Task<IActionResult> GetStockByIdAsync([FromQuery] int stockId)
         {
             try
             {
                 _response = await _stockService.GetStockByIdAsync(stockId);
-
-                if (_response.IsSuccess)
-                {
-                    return Ok(_response);
-                }
-                else
-                {
-                    return NotFound(_response);
-                }
+                if (_response.IsSuccess) return Ok(_response);
+                return NotFound(_response);
             }
             catch (Exception ex)
             {
@@ -129,15 +110,9 @@ namespace StockService.Controllers
         {
             try
             {
-                var response = await _stockService.ChangeStockCompanyAsync(stockDto);
-                if (response.IsSuccess)
-                {
-                    return Ok(response);
-                }
-                else
-                {
-                    return NotFound(response);
-                }
+                _response = await _stockService.UpdateEmployeeAsync(stockDto);
+                if (_response.IsSuccess) return Ok(_response);
+                return NotFound(_response);
             }
             catch (Exception ex)
             {

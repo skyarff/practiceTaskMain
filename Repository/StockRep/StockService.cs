@@ -74,7 +74,7 @@ namespace StockService.Repository.StockRep
             return _response;
         }
 
-        public async Task<Response> GetStocksByCompanyIdAsync(int companyId)
+        public async Task<Response> GetStocksByCompanyIdAsync(int? companyId)
         {
             _response.IsSuccess = false;
             _response.Message = "Склады не найдены для указанной компании.";
@@ -111,7 +111,7 @@ namespace StockService.Repository.StockRep
             return _response;
         }
 
-        public async Task<Response> ChangeStockCompanyAsync(StockDto stockDto)
+        public async Task<Response> UpdateEmployeeAsync(StockDto stockDto)
         {
             var stock = await _db.Stocks.FindAsync(stockDto.StockId);
 
@@ -120,20 +120,19 @@ namespace StockService.Repository.StockRep
 
             if (stock != null)
             {
-                stock.CompanyId = stockDto.CompanyId;
+
+                if (!string.IsNullOrEmpty(stockDto.Name))
+                    stock.Name = stockDto.Name;
+
+                if (stockDto.StockId != null)
+                    stock.StockId = (int)stockDto.StockId;
+
 
                 await _db.SaveChangesAsync();
 
                 _response.IsSuccess = true;
                 _response.Result = stock;
-
-                _response.Message = "Компания установлена в null.";
-
-                if (stock != null)
-                {
-                    _response.Message = "Компания успешно изменена.";
-                }
-
+                _response.Message = "Компания успешно изменена.";
             }
 
             return _response;

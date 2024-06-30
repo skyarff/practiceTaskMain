@@ -58,20 +58,20 @@ namespace StockService.Repository.StorageLocationRep
             return _response;
         }
 
-        public async Task<Response> DeletesStorageLocationAsync(int storageLocationId)
+        public async Task<Response> DeleteStorageLocationAsync(int storageLocationId)
         {
             var storageLocation = await _db.StorageLocations.FindAsync(storageLocationId);
 
-            _response.IsSuccess = true;
+            _response.IsSuccess = false;
             _response.Message = "Место хранения не найдено.";
 
             if (storageLocation != null)
             {
-                _response.IsSuccess = false;
-                _response.Message = "Место хранения успешно удалено.";
-
                 _db.StorageLocations.Remove(storageLocation);
                 await _db.SaveChangesAsync();
+
+                _response.IsSuccess = true;
+                _response.Message = "Место хранения успешно удалено.";
             }
 
             return _response;
@@ -95,6 +95,34 @@ namespace StockService.Repository.StorageLocationRep
 
             return _response;
         }
+
+        public async Task<Response> GetStorageLocationsFilteredAsync(StorageLocationDto storageLocationDto)
+        {
+            _response.IsSuccess = false;
+            _response.Message = "Места храненения не найдены по указанным критериям.";
+
+            var query = _db.StorageLocations.AsQueryable();
+
+            if (storageLocationDto.StockId != null)
+                query = query.Where(sl => sl.StockId == storageLocationDto.StockId);
+
+            if (storageLocationDto.IsBusy != null)
+                query = query.Where(sl => (sl.Product != null) == (bool)storageLocationDto.IsBusy);
+
+
+            var storageLocations = await query.ToListAsync();
+
+
+            if (storageLocations.Any())
+            {
+                _response.IsSuccess = true;
+                _response.Result = storageLocations;
+                _response.Message = "Места хранения успешно найдены по указанным критериям.";
+            }
+
+            return _response;
+        }
+
 
         public async Task<Response> GetStorageLocationByIdAsync(int storageLocationId)
         {

@@ -4,6 +4,7 @@ using StockService.Models;
 using StockService.Models.dto;
 using System.Linq;
 using AppSettings;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace StockService.Repository.BillRep
 {
@@ -103,7 +104,7 @@ namespace StockService.Repository.BillRep
             if (billDto.EndDate != null)
                 query = query.Where(b => b.CreateDate <= billDto.EndDate.Value);
 
-            bool ascending = billDto.Ascending == null ? true : false;
+            bool ascending = billDto.Ascending == null ? true : (bool)billDto.Ascending;
             query = ascending
                 ? query.OrderBy(b => b.CreateDate)
                 : query.OrderByDescending(b => b.CreateDate);

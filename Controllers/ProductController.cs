@@ -1,30 +1,30 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StockService.Models;
 using StockService.Models.dto;
-using StockService.Repository.UpdRep;
+using StockService.Repository.ProductRep;
 
 namespace StockService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UpdController : ControllerBase
+    public class ProductController : ControllerBase
     {
-        private readonly IUpdService _updService;
+        private readonly IProductService _productService;
         private Response _response;
 
-        public UpdController(IUpdService updService)
+        public ProductController(IProductService productService)
         {
-            _updService = updService;
+            _productService = productService;
             this._response = new Response();
         }
 
         [HttpPost("create")]
         [Consumes("multipart/form-data")]
-        public async Task<IActionResult> CreateUpd([FromForm] UpdDto updDto)
+        public async Task<IActionResult> CreateProduct([FromForm] ProductDto productDto)
         {
             try
             {
-                _response = await _updService.CreateUpdAsync(updDto);
+                _response = await _productService.CreateProductAsync(productDto);
                 if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }
@@ -36,12 +36,12 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpDelete("delById")]
-        public async Task<IActionResult> DeleteUpd([FromQuery] int updId)
+        [HttpDelete("dellById/")]
+        public async Task<IActionResult> DeleteProduct([FromQuery] int productId)
         {
             try
             {
-                _response = await _updService.DeleteUpdAsync(updId);
+                _response = await _productService.DeleteProductAsync(productId);
                 if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }
@@ -54,47 +54,11 @@ namespace StockService.Controllers
         }
 
         [HttpGet("getAll")]
-        public async Task<IActionResult> GetAllUpds()
+        public async Task<IActionResult> GetAllProducts()
         {
             try
             {
-                _response = await _updService.GetAllUpdsAsync();
-                if (_response.IsSuccess) return Ok(_response);
-                return NotFound(_response);
-            }
-            catch (Exception ex)
-            {
-                _response.IsSuccess = false;
-                _response.Errors.Add(ex.Message);
-                return BadRequest(_response);
-            }
-        }
-
-        [HttpGet("getInRange")]
-        public async Task<IActionResult> GetUpdsInRange([FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate, bool ascending = true)
-        {
-            try
-            {
-                var updDto = new UpdDto { StartDate = startDate, EndDate = endDate, Ascending = ascending };
-
-                _response = await _updService.GetUpdsInRangeAsync(updDto);
-                if (_response.IsSuccess) return Ok(_response);
-                return NotFound(_response);
-            }
-            catch (Exception ex)
-            {
-                _response.IsSuccess = false;
-                _response.Errors.Add(ex.Message);
-                return BadRequest(_response);
-            }
-        }
-
-        [HttpGet("getByProviderId")]
-        public async Task<IActionResult> GetUpdsByProviderId([FromQuery] int providerId)
-        {
-            try
-            {
-                _response = await _updService.GetUpdsByProviderIdAsync(providerId);
+                _response = await _productService.GetAllProductsAsync();
                 if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }
@@ -107,11 +71,11 @@ namespace StockService.Controllers
         }
 
         [HttpGet("getById")]
-        public async Task<IActionResult> GetUpdByIdAsync([FromQuery] int updId)
+        public async Task<IActionResult> GetProductById([FromQuery] int productId)
         {
             try
             {
-                _response = await _updService.GetUpdByIdAsync(updId);
+                _response = await _productService.GetProductByIdAsync(productId);
                 if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }
@@ -120,6 +84,41 @@ namespace StockService.Controllers
                 _response.IsSuccess = false;
                 _response.Errors.Add(ex.Message);
                 return BadRequest(_response);
+            }
+        }
+
+        [HttpGet("getProductsFiltered")]
+        public async Task<IActionResult> GetProductsFiltered(ProductDto productDto)
+        {
+            try
+            {
+                _response = await _productService.GetProductsFilteredAsync(productDto);
+                if (_response.IsSuccess) return Ok(_response);
+                return NotFound(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.Errors.Add(ex.Message);
+                return BadRequest(_response);
+            }
+        }
+
+        [HttpPut("update")]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> UpdateProductAsync([FromForm] ProductDto productDto)
+        {
+            try
+            {
+                _response = await _productService.UpdateProductAsync(productDto);
+                if (_response.IsSuccess) return Ok(_response);
+                return NotFound(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.Errors.Add(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
     }

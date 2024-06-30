@@ -47,22 +47,7 @@ namespace StockService.Repository.CompanyRep
             if (company != null)
             {
                 _db.Companies.Remove(company);
-
-                try
-                {
-                    await _db.SaveChangesAsync();
-                }
-                catch (Exception ex)
-                {
-
-                    Console.WriteLine(ex.Message);
-
-                    _response.Errors.Add(ex.Message);
-
-                    throw;
-                }
-
-                
+                await _db.SaveChangesAsync();
 
                 _response.IsSuccess = true;
                 _response.Message = "Компания успешно удалена.";

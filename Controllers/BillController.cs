@@ -4,6 +4,7 @@ using StockService.Models;
 using StockService.Models.dto;
 using StockService.Repository.EmployeeRep;
 using StockService.Repository.BillRep;
+using StockService.Repository.UpdRep;
 
 namespace StockService.Controllers
 {
@@ -27,7 +28,8 @@ namespace StockService.Controllers
             try
             {
                 _response = await _billService.CreateBillAsync(billDto);
-                return Ok(_response);
+                if (_response.IsSuccess) return Ok(_response);
+                return NotFound(_response);
             }
             catch (Exception ex)
             {
@@ -37,13 +39,14 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpDelete("delById/{billId}")]
-        public async Task<IActionResult> DeleteBill(int billId)
+        [HttpDelete("delById")]
+        public async Task<IActionResult> DeleteBill([FromQuery] int billId)
         {
             try
             {
                 _response = await _billService.DeleteBillAsync(billId);
-                return Ok(_response);
+                if (_response.IsSuccess) return Ok(_response);
+                return NotFound(_response);
             }
             catch (Exception ex)
             {
@@ -59,15 +62,8 @@ namespace StockService.Controllers
             try
             {
                 _response = await _billService.GetAllBillsAsync();
-
-                if (_response.IsSuccess)
-                {
-                    return Ok(_response);
-                }
-                else
-                {
-                    return NotFound(_response);
-                }
+                if (_response.IsSuccess) return Ok(_response);
+                return NotFound(_response);
             }
             catch (Exception ex)
             {
@@ -77,21 +73,15 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpPost("getInRange")]
-        public async Task<IActionResult> GetBillsInRange(BillDto billDto)
+        [HttpGet("getInRange")]
+        public async Task<IActionResult> GetBillsInRange([FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate, bool ascending = true)
         {
             try
             {
+                var billDto = new BillDto { StartDate = startDate, EndDate = endDate, Ascending = ascending };
                 _response = await _billService.GetBillsInRangeAsync(billDto);
-
-                if (_response.IsSuccess)
-                {
-                    return Ok(_response);
-                }
-                else
-                {
-                    return NotFound(_response);
-                }
+                if (_response.IsSuccess) return Ok(_response);
+                return NotFound(_response);
             }
             catch (Exception ex)
             {
@@ -101,21 +91,14 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpGet("getByProviderId/{providerId}")]
-        public async Task<IActionResult> GetBillsByProviderId(int providerId)
+        [HttpGet("getByProviderId")]
+        public async Task<IActionResult> GetBillsByProviderId([FromQuery] int providerId)
         {
             try
             {
                 _response = await _billService.GetBillsByProviderIdAsync(providerId);
-
-                if (_response.IsSuccess)
-                {
-                    return Ok(_response);
-                }
-                else
-                {
-                    return NotFound(_response);
-                }
+                if (_response.IsSuccess) return Ok(_response);
+                return NotFound(_response);
             }
             catch (Exception ex)
             {
@@ -125,21 +108,14 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpGet("getById/{billId}")]
-        public async Task<IActionResult> GetBillByIdAsync(int billId)
+        [HttpGet("getById")]
+        public async Task<IActionResult> GetBillByIdAsync([FromQuery] int billId)
         {
             try
             {
                 _response = await _billService.GetBillByIdAsync(billId);
-
-                if (_response.IsSuccess)
-                {
-                    return Ok(_response);
-                }
-                else
-                {
-                    return NotFound(_response);
-                }
+                if (_response.IsSuccess) return Ok(_response);
+                return NotFound(_response);
             }
             catch (Exception ex)
             {

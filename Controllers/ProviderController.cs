@@ -26,7 +26,8 @@ namespace StockService.Controllers
             try
             {
                 _response = await _providerService.CreateProviderAsync(providerDto);
-                return Ok(_response);
+                if (_response.IsSuccess) return Ok(_response);
+                return NotFound(_response);
             }
             catch (Exception ex)
             {
@@ -36,13 +37,14 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpDelete("dellById/{providerId}")]
-        public async Task<IActionResult> DeleteProviderAsync(int providerId)
+        [HttpDelete("dellById")]
+        public async Task<IActionResult> DeleteProvider([FromQuery] int providerId)
         {
             try
             {
                 _response = await _providerService.DeleteProviderAsync(providerId);
-                return Ok(_response);
+                if (_response.IsSuccess) return Ok(_response);
+                return NotFound(_response);
             }
             catch (Exception ex)
             {
@@ -58,15 +60,8 @@ namespace StockService.Controllers
             try
             {
                 _response = await _providerService.GetAllProvidersAsync();
-
-                if (_response.IsSuccess)
-                {
-                    return Ok(_response);
-                }
-                else
-                {
-                    return NotFound(_response);
-                }
+                if (_response.IsSuccess) return Ok(_response);
+                return NotFound(_response);
             }
             catch (Exception ex)
             {
@@ -76,22 +71,14 @@ namespace StockService.Controllers
             }
         }
 
-
-        [HttpGet("getById/{id}")]
-        public async Task<IActionResult> GetProviderById(int id)
+        [HttpGet("getById")]
+        public async Task<IActionResult> GetProviderById([FromQuery] int id)
         {
             try
             {
                 _response = await _providerService.GetProviderByIdAsync(id);
-
-                if (_response.IsSuccess)
-                {
-                    return Ok(_response);
-                }
-                else
-                {
-                    return NotFound(_response);
-                }
+                if (_response.IsSuccess) return Ok(_response);
+                return NotFound(_response);
             }
             catch (Exception ex)
             {
@@ -106,15 +93,9 @@ namespace StockService.Controllers
         {
             try
             {
-                var response = await _providerService.UpdateProviderAsync(providerDto);
-                if (response.IsSuccess)
-                {
-                    return Ok(response);
-                }
-                else
-                {
-                    return NotFound(response);
-                }
+                _response = await _providerService.UpdateProviderAsync(providerDto);
+                if (_response.IsSuccess) return Ok(_response);
+                return NotFound(_response);
             }
             catch (Exception ex)
             {

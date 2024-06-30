@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using StockService.Models;
 using StockService.Models.dto;
 using StockService.Repository.CompanyRep;
@@ -27,7 +26,8 @@ namespace StockService.Controllers
             try
             {
                 _response = await _companyService.CreateCompanyAsync(companyDto);
-                return Ok(_response);
+                if (_response.IsSuccess) return Ok(_response);
+                return NotFound(_response);
             }
             catch (Exception ex)
             {
@@ -43,13 +43,14 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpDelete("dellById/{companyId}")]
-        public async Task<IActionResult> DeleteCompanyAsync(int companyId)
+        [HttpDelete("dellById")]
+        public async Task<IActionResult> DeleteCompany([FromQuery] int companyId)
         {
             try
             {
                 _response = await _companyService.DeleteCompanyAsync(companyId);
-                return Ok(_response);
+                if (_response.IsSuccess) return Ok(_response);
+                return NotFound(_response);
             }
             catch (Exception ex)
             {
@@ -65,15 +66,8 @@ namespace StockService.Controllers
             try
             {
                 _response = await _companyService.GetAllCompaniesAsync();
-
-                if (_response.IsSuccess)
-                {
-                    return Ok(_response);
-                }
-                else
-                {
-                    return NotFound(_response);
-                }
+                if (_response.IsSuccess) return Ok(_response);
+                return NotFound(_response);
             }
             catch (Exception ex)
             {
@@ -84,20 +78,13 @@ namespace StockService.Controllers
         }
 
         [HttpGet("getById")]
-        public async Task<IActionResult> GetCompanyById(int companyId)
+        public async Task<IActionResult> GetCompanyById([FromQuery] int companyId)
         {
             try
             {
                 _response = await _companyService.GetCompanyByIdAsync(companyId);
-
-                if (_response.IsSuccess)
-                {
-                    return Ok(_response);
-                }
-                else
-                {
-                    return NotFound(_response);
-                }
+                if (_response.IsSuccess) return Ok(_response);
+                return NotFound(_response);
             }
             catch (Exception ex)
             {
@@ -106,20 +93,15 @@ namespace StockService.Controllers
                 return BadRequest(_response);
             }
         }
+
         [HttpPut("update")]
         public async Task<IActionResult> UpdateEmployeeAsync(CompanyDto companyDto)
         {
             try
             {
-                var response = await _companyService.UpdateCompanyAsync(companyDto);
-                if (response.IsSuccess)
-                {
-                    return Ok(response);
-                }
-                else
-                {
-                    return NotFound(response);
-                }
+                _response = await _companyService.UpdateCompanyAsync(companyDto);
+                if (_response.IsSuccess) return Ok(_response);
+                return NotFound(_response);
             }
             catch (Exception ex)
             {

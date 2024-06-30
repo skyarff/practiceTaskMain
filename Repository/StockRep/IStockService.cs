@@ -6,10 +6,10 @@ namespace StockService.Repository.StockRep
     public interface IStockService
     {
         Task<Response> GetAllStocksAsync();
-        Task<Response> GetStocksByCompanyIdAsync(int companyId);
+        Task<Response> GetStocksByCompanyIdAsync(int? companyId);
         Task<Response> GetStockByIdAsync(int stockId);
         Task<Response> CreateStockAsync(StockDto stockDto);
-        Task<Response> ChangeStockCompanyAsync(StockDto stockDto);
+        Task<Response> UpdateEmployeeAsync(StockDto stockDto);
         Task<Response> DeleteStockAsync(int stockId);
     }
 }

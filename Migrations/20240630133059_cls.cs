@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace StockService.Migrations
 {
-    public partial class addmigration1 : Migration
+    public partial class cls : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -94,7 +94,7 @@ namespace StockService.Migrations
                     BillId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     BillNumber = table.Column<string>(type: "text", nullable: false),
-                    BillPdfPath = table.Column<string>(type: "text", nullable: false),
+                    BillPdfPath = table.Column<string>(type: "text", nullable: true),
                     ProviderId = table.Column<int>(type: "integer", nullable: false),
                     BillTotal = table.Column<decimal>(type: "numeric", nullable: false, defaultValue: 0m),
                     CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
@@ -117,7 +117,7 @@ namespace StockService.Migrations
                     UpdId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     DocumentNumber = table.Column<string>(type: "text", nullable: false),
-                    UpdPdfPath = table.Column<string>(type: "text", nullable: false),
+                    UpdPdfPath = table.Column<string>(type: "text", nullable: true),
                     ProviderId = table.Column<int>(type: "integer", nullable: false),
                     CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
@@ -164,8 +164,8 @@ namespace StockService.Migrations
                 {
                     StorageLocationId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    RackCode = table.Column<int>(type: "integer", nullable: false),
-                    ShelfCode = table.Column<int>(type: "integer", nullable: false),
+                    RackCode = table.Column<string>(type: "text", nullable: false),
+                    ShelfCode = table.Column<string>(type: "text", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: true),
                     ImagePath = table.Column<string>(type: "text", nullable: true),
                     StockId = table.Column<int>(type: "integer", nullable: false)
@@ -182,7 +182,7 @@ namespace StockService.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Product",
+                name: "Products",
                 columns: table => new
                 {
                     ProductId = table.Column<int>(type: "integer", nullable: false)
@@ -191,53 +191,67 @@ namespace StockService.Migrations
                     Manufacturer = table.Column<string>(type: "text", nullable: true),
                     ProductionArticle = table.Column<string>(type: "text", nullable: true),
                     InnerArticle = table.Column<string>(type: "text", nullable: true),
-                    Photo = table.Column<string>(type: "text", nullable: true),
+                    ImagePath = table.Column<string>(type: "text", nullable: true),
                     Price = table.Column<decimal>(type: "numeric", nullable: false, defaultValue: 0m),
                     FactoryNumber = table.Column<string>(type: "text", nullable: true),
-                    CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValue: new DateTime(2024, 6, 29, 17, 6, 22, 553, DateTimeKind.Utc).AddTicks(4029)),
+                    CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     BillId = table.Column<int>(type: "integer", nullable: true),
                     UpdId = table.Column<int>(type: "integer", nullable: true),
                     ProductCategoryId = table.Column<int>(type: "integer", nullable: true),
                     StorageLocationId = table.Column<int>(type: "integer", nullable: false),
-                    EmployeeId = table.Column<int>(type: "integer", nullable: false)
+                    EmployeeId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Product", x => x.ProductId);
+                    table.PrimaryKey("PK_Products", x => x.ProductId);
                     table.ForeignKey(
-                        name: "FK_Product_Bills_BillId",
+                        name: "FK_Products_Bills_BillId",
                         column: x => x.BillId,
                         principalTable: "Bills",
-                        principalColumn: "BillId");
+                        principalColumn: "BillId",
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
-                        name: "FK_Product_Employees_EmployeeId",
+                        name: "FK_Products_Employees_EmployeeId",
                         column: x => x.EmployeeId,
                         principalTable: "Employees",
                         principalColumn: "EmployeeId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
-                        name: "FK_Product_ProductCategories_ProductCategoryId",
+                        name: "FK_Products_ProductCategories_ProductCategoryId",
                         column: x => x.ProductCategoryId,
                         principalTable: "ProductCategories",
                         principalColumn: "ProductCategoryId",
                         onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
-                        name: "FK_Product_StorageLocations_StorageLocationId",
+                        name: "FK_Products_StorageLocations_StorageLocationId",
                         column: x => x.StorageLocationId,
                         principalTable: "StorageLocations",
                         principalColumn: "StorageLocationId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Product_Upds_UpdId",
+                        name: "FK_Products_Upds_UpdId",
                         column: x => x.UpdId,
                         principalTable: "Upds",
-                        principalColumn: "UpdId");
+                        principalColumn: "UpdId",
+                        onDelete: ReferentialAction.SetNull);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bills_BillNumber",
+                table: "Bills",
+                column: "BillNumber",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Bills_ProviderId",
                 table: "Bills",
                 column: "ProviderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Companies_Name",
+                table: "Companies",
+                column: "Name",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employees_Login",
@@ -251,35 +265,41 @@ namespace StockService.Migrations
                 column: "StockId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Product_BillId",
-                table: "Product",
+                name: "IX_ProductCategories_CompanyId",
+                table: "ProductCategories",
+                column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_BillId",
+                table: "Products",
                 column: "BillId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Product_EmployeeId",
-                table: "Product",
+                name: "IX_Products_EmployeeId",
+                table: "Products",
                 column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Product_ProductCategoryId",
-                table: "Product",
+                name: "IX_Products_ProductCategoryId",
+                table: "Products",
                 column: "ProductCategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Product_StorageLocationId",
-                table: "Product",
+                name: "IX_Products_StorageLocationId",
+                table: "Products",
                 column: "StorageLocationId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Product_UpdId",
-                table: "Product",
+                name: "IX_Products_UpdId",
+                table: "Products",
                 column: "UpdId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductCategories_CompanyId",
-                table: "ProductCategories",
-                column: "CompanyId");
+                name: "IX_Providers_Name",
+                table: "Providers",
+                column: "Name",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Stocks_CompanyId",
@@ -287,9 +307,21 @@ namespace StockService.Migrations
                 column: "CompanyId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Stocks_Name",
+                table: "Stocks",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_StorageLocations_StockId",
                 table: "StorageLocations",
                 column: "StockId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Upds_DocumentNumber",
+                table: "Upds",
+                column: "DocumentNumber",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Upds_ProviderId",
@@ -300,7 +332,7 @@ namespace StockService.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Product");
+                name: "Products");
 
             migrationBuilder.DropTable(
                 name: "Bills");

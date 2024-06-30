@@ -5,8 +5,8 @@ namespace StockService.Models
     public class StorageLocation
     {
         public int StorageLocationId { get; set; }
-        public int RackCode { get; set; }
-        public int ShelfCode { get; set; }
+        public string RackCode { get; set; }
+        public string ShelfCode { get; set; }
         public string? Description { get; set; }
         public string? ImagePath { get; set; }
 

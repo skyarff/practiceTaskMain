@@ -44,16 +44,16 @@ namespace StockService.Repository.ProviderRep
         {
             var provider = await _db.Providers.FindAsync(providerId);
 
-            _response.IsSuccess = true;
+            _response.IsSuccess = false;
             _response.Message = "Поставщик не найден.";
 
             if (provider != null)
             {
-                _response.IsSuccess = false;
-                _response.Message = "Поставщик успешно удален.";
-
                 _db.Providers.Remove(provider);
                 await _db.SaveChangesAsync();
+
+                _response.IsSuccess = true;
+                _response.Message = "Поставщик успешно удален.";
             }
 
             return _response;

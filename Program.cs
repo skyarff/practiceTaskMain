@@ -6,6 +6,7 @@ using StockService.Repository.CompanyRep;
 using StockService.Repository.CookieRep;
 using StockService.Repository.EmployeeRep;
 using StockService.Repository.ProductCategoryRep;
+using StockService.Repository.ProductRep;
 using StockService.Repository.ProviderRep;
 using StockService.Repository.StockRep;
 using StockService.Repository.StorageLocationRep;
@@ -26,6 +27,7 @@ builder.Services.AddSingleton(mapper);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICompanyService, CompanyService>();
 builder.Services.AddScoped<IStockService, StockService.Repository.StockRep.StockService>();
 builder.Services.AddScoped<IProductCategoryService, ProductCategoryService>();
