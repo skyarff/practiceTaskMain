@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using StockService.Models;
 using StockService.Models.dto;
 using System.ComponentModel.Design;
+using System.Text.RegularExpressions;
 
 namespace StockService.Repository.EmployeeRep
 {
@@ -156,31 +157,6 @@ namespace StockService.Repository.EmployeeRep
             return _response;
         }
 
-        public async Task<Response> GetEmployeesFilteredAsync(EmployeeDto employeeDto)
-        {
-            _response.IsSuccess = false;
-            _response.Message = "Сотрудники не найдены по указанным критериям.";
-
-            var query = _db.Employees.AsQueryable();
-
-            if (employeeDto.StockId != null)
-                query = query.Where(e => e.StockId == employeeDto.StockId);
-
-            else if (employeeDto.CompanyId != null)
-                query = query.Where(e => e.Stock.CompanyId == employeeDto.CompanyId);
-
-            var products = await query.ToListAsync();
-
-            if (products.Any())
-            {
-                _response.IsSuccess = true;
-                _response.Result = products;
-                _response.Message = "Сотрудники успешно найдены по указанным критериям.";
-            }
-
-            return _response;
-        }
-
         public async Task<Response> GetEmployeeByIdAsync(int employeeId)
         {
             var employee = await _db.Employees.FindAsync(employeeId);
@@ -253,6 +229,39 @@ namespace StockService.Repository.EmployeeRep
                 _response.IsSuccess = true;
                 _response.Result = employee;
                 _response.Message = "Данные сотрудника обновлены.";
+            }
+
+            return _response;
+        }
+
+        public async Task<Response> GetEmployeesFilteredAsync(EmployeeDto employeeDto)
+        {
+            _response.IsSuccess = false;
+            _response.Message = "Сотрудники не найдены по указанным критериям.";
+
+            var query = _db.Employees.AsQueryable();
+
+
+            if (!string.IsNullOrEmpty(employeeDto.Login))
+                query = query.Where(e => Regex.IsMatch(e.Login, Regex.Escape(employeeDto.Login), RegexOptions.IgnoreCase));
+            if (!string.IsNullOrEmpty(employeeDto.FullName))
+                query = query.Where(e => Regex.IsMatch(e.FullName, Regex.Escape(employeeDto.FullName), RegexOptions.IgnoreCase));
+            if (!string.IsNullOrEmpty(employeeDto.JobTitle))
+                query = query.Where(e => Regex.IsMatch(e.JobTitle, Regex.Escape(employeeDto.JobTitle), RegexOptions.IgnoreCase));
+
+
+            if (employeeDto.StockId != null)
+                query = query.Where(e => e.StockId == employeeDto.StockId);
+            else if (employeeDto.CompanyId != null)
+                query = query.Where(e => e.Stock.CompanyId == employeeDto.CompanyId);
+
+            var products = await query.ToListAsync();
+
+            if (products.Any())
+            {
+                _response.IsSuccess = true;
+                _response.Result = products;
+                _response.Message = "Сотрудники успешно найдены по указанным критериям.";
             }
 
             return _response;

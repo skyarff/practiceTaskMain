@@ -17,7 +17,7 @@ namespace StockService.Migrations
                     CompanyId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    INN = table.Column<string>(type: "text", nullable: true),
+                    Inn = table.Column<string>(type: "text", nullable: true),
                     LogoPath = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -33,11 +33,11 @@ namespace StockService.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Phone = table.Column<string>(type: "text", nullable: false),
-                    INN = table.Column<string>(type: "text", nullable: true),
+                    Inn = table.Column<string>(type: "text", nullable: true),
                     LegalAdress = table.Column<string>(type: "text", nullable: true),
                     CheckingAccount = table.Column<string>(type: "text", nullable: true),
                     Bank = table.Column<string>(type: "text", nullable: true),
-                    BIK = table.Column<string>(type: "text", nullable: true),
+                    Bik = table.Column<string>(type: "text", nullable: true),
                     CorrespondentAccount = table.Column<string>(type: "text", nullable: true),
                     ManagerFullname = table.Column<string>(type: "text", nullable: true),
                     Email = table.Column<string>(type: "text", nullable: true)
@@ -191,9 +191,9 @@ namespace StockService.Migrations
                     Manufacturer = table.Column<string>(type: "text", nullable: true),
                     ProductionArticle = table.Column<string>(type: "text", nullable: true),
                     InnerArticle = table.Column<string>(type: "text", nullable: true),
-                    ImagePath = table.Column<string>(type: "text", nullable: true),
-                    Price = table.Column<decimal>(type: "numeric", nullable: false, defaultValue: 0m),
                     FactoryNumber = table.Column<string>(type: "text", nullable: true),
+                    Price = table.Column<decimal>(type: "numeric", nullable: false, defaultValue: 0m),
+                    ImagePath = table.Column<string>(type: "text", nullable: true),
                     CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     BillId = table.Column<int>(type: "integer", nullable: true),
                     UpdId = table.Column<int>(type: "integer", nullable: true),

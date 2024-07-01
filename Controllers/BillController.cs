@@ -121,5 +121,22 @@ namespace StockService.Controllers
                 return BadRequest(_response);
             }
         }
+
+        [HttpPost("getBillsFiltered")]
+        public async Task<IActionResult> GetBillsFiltered(BillDto billDto)
+        {
+            try
+            {
+                _response = await _billService.GetBillsFilteredAsync(billDto);
+                if (_response.IsSuccess) return Ok(_response);
+                return NotFound(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.Errors.Add(ex.Message);
+                return BadRequest(_response);
+            }
+        }
     }
 }

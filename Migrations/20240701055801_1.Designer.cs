@@ -12,7 +12,7 @@ using StockService;
 namespace StockService.Migrations
 {
     [DbContext(typeof(StockContext))]
-    [Migration("20240630165252_1")]
+    [Migration("20240701055801_1")]
     partial class _1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -69,7 +69,7 @@ namespace StockService.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("CompanyId"));
 
-                    b.Property<string>("INN")
+                    b.Property<string>("Inn")
                         .HasColumnType("text");
 
                     b.Property<string>("LogoPath")
@@ -230,10 +230,10 @@ namespace StockService.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ProviderId"));
 
-                    b.Property<string>("BIK")
+                    b.Property<string>("Bank")
                         .HasColumnType("text");
 
-                    b.Property<string>("Bank")
+                    b.Property<string>("Bik")
                         .HasColumnType("text");
 
                     b.Property<string>("CheckingAccount")
@@ -245,7 +245,7 @@ namespace StockService.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("text");
 
-                    b.Property<string>("INN")
+                    b.Property<string>("Inn")
                         .HasColumnType("text");
 
                     b.Property<string>("LegalAdress")

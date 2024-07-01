@@ -61,11 +61,28 @@ namespace StockService.Controllers
         }
 
         [HttpGet("getByCompany")]
-        public async Task<IActionResult> GetStocksByCompanyId([FromQuery] int companyId)
+        public async Task<IActionResult> GetProductCategoriesByCompanyId([FromQuery] int companyId)
         {
             try
             {
                 _response = await _productCategoryService.GetProductCategoriesByCompanyIdAsync(companyId);
+                if (_response.IsSuccess) return Ok(_response);
+                return NotFound(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.Errors.Add(ex.Message);
+                return BadRequest(_response);
+            }
+        }
+
+        [HttpPost("getProductCategoriesFiltered")]
+        public async Task<IActionResult> GetProductCategoriesFiltered(ProductCategoryDto productCategoryDto)
+        {
+            try
+            {
+                _response = await _productCategoryService.GetCategoriesFilteredAsync(productCategoryDto);
                 if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }

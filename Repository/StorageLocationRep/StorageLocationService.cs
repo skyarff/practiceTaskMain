@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using StockService.Models;
 using StockService.Models.dto;
 using AppSettings;
+using System.Text.RegularExpressions;
 
 namespace StockService.Repository.StorageLocationRep
 {
@@ -96,34 +97,6 @@ namespace StockService.Repository.StorageLocationRep
             return _response;
         }
 
-        public async Task<Response> GetStorageLocationsFilteredAsync(StorageLocationDto storageLocationDto)
-        {
-            _response.IsSuccess = false;
-            _response.Message = "Места храненения не найдены по указанным критериям.";
-
-            var query = _db.StorageLocations.AsQueryable();
-
-            if (storageLocationDto.StockId != null)
-                query = query.Where(sl => sl.StockId == storageLocationDto.StockId);
-
-            if (storageLocationDto.IsBusy != null)
-                query = query.Where(sl => (sl.Product != null) == (bool)storageLocationDto.IsBusy);
-
-
-            var storageLocations = await query.ToListAsync();
-
-
-            if (storageLocations.Any())
-            {
-                _response.IsSuccess = true;
-                _response.Result = storageLocations;
-                _response.Message = "Места хранения успешно найдены по указанным критериям.";
-            }
-
-            return _response;
-        }
-
-
         public async Task<Response> GetStorageLocationByIdAsync(int storageLocationId)
         {
             var storageLocation = await _db.StorageLocations.FindAsync(storageLocationId);
@@ -184,5 +157,36 @@ namespace StockService.Repository.StorageLocationRep
             return _response;
         }
 
+        public async Task<Response> GetStorageLocationsFilteredAsync(StorageLocationDto storageLocationDto)
+        {
+            _response.IsSuccess = false;
+            _response.Message = "Места храненения не найдены по указанным критериям.";
+
+            var query = _db.StorageLocations.AsQueryable();
+
+            if (storageLocationDto.StockId != null)
+                query = query.Where(sl => sl.StockId == storageLocationDto.StockId);
+            if (storageLocationDto.IsBusy != null)
+                query = query.Where(sl => (sl.Product != null) == (bool)storageLocationDto.IsBusy);
+
+            if (!string.IsNullOrEmpty(storageLocationDto.Description))
+                query = query.Where(sl => Regex.IsMatch(sl.Description, Regex.Escape(storageLocationDto.Description), RegexOptions.IgnoreCase));
+            if (!string.IsNullOrEmpty(storageLocationDto.RackCode))
+                query = query.Where(sl => sl.RackCode == storageLocationDto.RackCode);
+            if (!string.IsNullOrEmpty(storageLocationDto.ShelfCode))
+                query = query.Where(sl => sl.ShelfCode == storageLocationDto.ShelfCode);
+
+            var storageLocations = await query.ToListAsync();
+
+
+            if (storageLocations.Any())
+            {
+                _response.IsSuccess = true;
+                _response.Result = storageLocations;
+                _response.Message = "Места хранения успешно найдены по указанным критериям.";
+            }
+
+            return _response;
+        }
     }
 }

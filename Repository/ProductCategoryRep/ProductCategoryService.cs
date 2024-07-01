@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using StockService.Models;
 using StockService.Models.dto;
+using System.Text.RegularExpressions;
 
 namespace StockService.Repository.ProductCategoryRep
 {
@@ -71,6 +72,31 @@ namespace StockService.Repository.ProductCategoryRep
                 _response.IsSuccess = true;
                 _response.Result = stocks;
                 _response.Message = $"Склады для компании с ID {companyId} успешно получены.";
+            }
+
+            return _response;
+        }
+
+        public async Task<Response> GetCategoriesFilteredAsync(ProductCategoryDto productCategoryDto)
+        {
+            _response.IsSuccess = false;
+            _response.Message = "Категории продуктов не найдены по указанным критериям.";
+
+            var query = _db.Companies.AsQueryable();
+
+
+            if (!string.IsNullOrEmpty(productCategoryDto.Name))
+                query = query.Where(pc => Regex.IsMatch(pc.Name, Regex.Escape(productCategoryDto.Name), RegexOptions.IgnoreCase));
+            if (productCategoryDto.CompanyId != null)
+                query = query.Where(pc => pc.CompanyId == productCategoryDto.CompanyId);
+
+
+            var companies = await query.ToListAsync();
+            if (companies.Any())
+            {
+                _response.IsSuccess = true;
+                _response.Result = companies;
+                _response.Message = "Категории продуктов успешно найдены по указанным критериям.";
             }
 
             return _response;

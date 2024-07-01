@@ -121,24 +121,6 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpGet("getEmployeesFiltered")]
-        public async Task<IActionResult> GetEmployeesFiltered([FromQuery] int? stockId, int? companyId)
-        {
-            try
-            {
-                EmployeeDto employeeDto = new EmployeeDto{ StockId = stockId, CompanyId = companyId };
-                _response = await _employeeService.GetEmployeesFilteredAsync(employeeDto);
-                if (_response.IsSuccess) return Ok(_response);
-                return NotFound(_response);
-            }
-            catch (Exception ex)
-            {
-                _response.IsSuccess = false;
-                _response.Errors.Add(ex.Message);
-                return BadRequest(_response);
-            }
-        }
-
         [HttpPut("update")]
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> UpdateEmployeeAsync([FromForm] EmployeeDto employeeDto)
@@ -171,6 +153,23 @@ namespace StockService.Controllers
                 _response.IsSuccess = false;
                 _response.Errors.Add(ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
+            }
+        }
+
+        [HttpPost("getEmployeesFiltered")]
+        public async Task<IActionResult> GetCompaniesFiltered(EmployeeDto employeeDto)
+        {
+            try
+            {
+                _response = await _employeeService.GetEmployeesFilteredAsync(employeeDto);
+                if (_response.IsSuccess) return Ok(_response);
+                return NotFound(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.Errors.Add(ex.Message);
+                return BadRequest(_response);
             }
         }
     }

@@ -3,6 +3,7 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using StockService.Models;
 using StockService.Models.dto;
+using System.Text.RegularExpressions;
 
 namespace StockService.Repository.BillRep
 {
@@ -154,6 +155,42 @@ namespace StockService.Repository.BillRep
                 _response.Result = bill;
                 _response.Message = "Счет найден.";
 
+            }
+
+            return _response;
+        }
+
+        public async Task<Response> GetBillsFilteredAsync(BillDto billDto)
+        {
+            _response.IsSuccess = false;
+            _response.Message = "Счета не найдены по указанным критериям.";
+
+            var query = _db.Bills.AsQueryable();
+
+
+            if (!string.IsNullOrEmpty(billDto.BillNumber))
+                query = query.Where(b => b.BillNumber == billDto.BillNumber);
+            if (billDto.ProviderId != null)
+                query = query.Where(b => b.ProviderId == billDto.ProviderId);
+
+
+            if (billDto.LowerBillTotalLimit != null)
+                query = query.Where(b => b.BillTotal >= billDto.LowerBillTotalLimit);
+            if (billDto.UpperBillTotalLimit != null)
+                query = query.Where(b => b.BillTotal <= billDto.UpperBillTotalLimit);
+
+
+            if (billDto.StartDate != null)
+                query = query.Where(b => b.CreateDate >= billDto.StartDate.Value);
+            if (billDto.EndDate != null)
+                query = query.Where(b => b.CreateDate <= billDto.EndDate.Value);
+
+            var companies = await query.ToListAsync();
+            if (companies.Any())
+            {
+                _response.IsSuccess = true;
+                _response.Result = companies;
+                _response.Message = "Счета успешно найдены по указанным критериям.";
             }
 
             return _response;

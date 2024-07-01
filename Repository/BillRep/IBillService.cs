@@ -11,5 +11,6 @@ namespace StockService.Repository.BillRep
         Task<Response> CreateBillAsync(BillDto billDto);
         Task<Response> DeleteBillAsync(int billId);
         Task<Response> GetBillsInRangeAsync(BillDto billDto);
+        Task<Response> GetBillsFilteredAsync(BillDto billDto);
     }
 }

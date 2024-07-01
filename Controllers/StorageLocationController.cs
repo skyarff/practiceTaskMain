@@ -87,25 +87,6 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpGet("getStorageLocationsFiltered")]
-        public async Task<IActionResult> GetStorageLocationsFiltered([FromQuery] int? stockId, bool? isBusy)
-        {
-            try
-            {
-                StorageLocationDto storageLocationDto = new StorageLocationDto { StockId = stockId, IsBusy = isBusy };
-
-                _response = await _storageLocationService.GetStorageLocationsFilteredAsync(storageLocationDto);
-                if (_response.IsSuccess) return Ok(_response);
-                return NotFound(_response);
-            }
-            catch (Exception ex)
-            {
-                _response.IsSuccess = false;
-                _response.Errors.Add(ex.Message);
-                return BadRequest(_response);
-            }
-        }
-
         [HttpPut("update")]
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> UpdateStorageLocationAsync([FromForm] StorageLocationDto storageLocationDto)
@@ -124,5 +105,21 @@ namespace StockService.Controllers
             }
         }
 
+        [HttpPost("getCompaniesFiltered")]
+        public async Task<IActionResult> GetCompaniesFiltered(StorageLocationDto storageLocationDto)
+        {
+            try
+            {
+                _response = await _storageLocationService.GetStorageLocationsFilteredAsync(storageLocationDto);
+                if (_response.IsSuccess) return Ok(_response);
+                return NotFound(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.Errors.Add(ex.Message);
+                return BadRequest(_response);
+            }
+        }
     }
 }

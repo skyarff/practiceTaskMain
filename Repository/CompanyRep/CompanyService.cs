@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using StockService.Models;
 using StockService.Models.dto;
 using System.Security.Cryptography.X509Certificates;
+using System.Text.RegularExpressions;
 
 namespace StockService.Repository.CompanyRep
 {
@@ -119,8 +120,8 @@ namespace StockService.Repository.CompanyRep
                 if (!string.IsNullOrEmpty(companyDto.Name))
                     company.Name = companyDto.Name;
 
-                if (!string.IsNullOrEmpty(companyDto.INN))
-                    company.INN = companyDto.INN;
+                if (!string.IsNullOrEmpty(companyDto.Inn))
+                    company.Inn = companyDto.Inn;
 
                 if (companyDto.Image != null && companyDto.Image.Length > 0)
                 {
@@ -155,5 +156,29 @@ namespace StockService.Repository.CompanyRep
             return _response;
         }
 
+        public async Task<Response> GetCompaniesFilteredAsync(CompanyDto companyDto)
+        {
+            _response.IsSuccess = false;
+            _response.Message = "Компании не найдены по указанным критериям.";
+
+            var query = _db.Companies.AsQueryable();
+
+
+            if (!string.IsNullOrEmpty(companyDto.Name))
+                query = query.Where(c => Regex.IsMatch(c.Name, Regex.Escape(companyDto.Name), RegexOptions.IgnoreCase));
+            if (!string.IsNullOrEmpty(companyDto.Inn))
+                query = query.Where(c => Regex.IsMatch(c.Inn, Regex.Escape(companyDto.Inn), RegexOptions.IgnoreCase));
+
+
+            var companies = await query.ToListAsync();
+            if (companies.Any())
+            {
+                _response.IsSuccess = true;
+                _response.Result = companies;
+                _response.Message = "Компании успешно найдены по указанным критериям.";
+            }
+
+            return _response;
+        }
     }
 }

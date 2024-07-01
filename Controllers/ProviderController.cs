@@ -102,5 +102,22 @@ namespace StockService.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
+
+        [HttpPost("getProvidersFiltered")]
+        public async Task<IActionResult> GetProvidersFiltered(ProviderDto providerDto)
+        {
+            try
+            {
+                _response = await _providerService.GetProvidersFilteredAsync(providerDto);
+                if (_response.IsSuccess) return Ok(_response);
+                return NotFound(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.Errors.Add(ex.Message);
+                return BadRequest(_response);
+            }
+        }
     }
 }

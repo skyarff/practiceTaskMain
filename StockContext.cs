@@ -20,8 +20,6 @@ namespace StockService
         public DbSet<Provider> Providers { get; set; }
         
 
-        //public ApplicationContext() => Database.EnsureCreated();
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Company>(entity =>

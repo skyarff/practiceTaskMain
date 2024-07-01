@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using StockService.Models;
 using StockService.Models.dto;
+using System.Text.RegularExpressions;
 
 namespace StockService.Repository.ProviderRep
 {
@@ -103,8 +104,8 @@ namespace StockService.Repository.ProviderRep
                 if (!string.IsNullOrEmpty(providerDto.Name))
                     provider.Name = providerDto.Name;
 
-                if (!string.IsNullOrEmpty(providerDto.INN))
-                    provider.INN = providerDto.INN;
+                if (!string.IsNullOrEmpty(providerDto.Inn))
+                    provider.Inn = providerDto.Inn;
 
                 if (!string.IsNullOrEmpty(providerDto.LegalAdress))
                     provider.LegalAdress = providerDto.LegalAdress;
@@ -115,8 +116,8 @@ namespace StockService.Repository.ProviderRep
                 if (!string.IsNullOrEmpty(providerDto.Bank))
                     provider.Bank = providerDto.Bank;
 
-                if (!string.IsNullOrEmpty(providerDto.BIK))
-                    provider.BIK = providerDto.BIK;
+                if (!string.IsNullOrEmpty(providerDto.Bik))
+                    provider.Bik = providerDto.Bik;
 
                 if (!string.IsNullOrEmpty(providerDto.CorrespondentAccount))
                     provider.CorrespondentAccount = providerDto.CorrespondentAccount;
@@ -136,6 +137,42 @@ namespace StockService.Repository.ProviderRep
                 _response.IsSuccess = true;
                 _response.Result = provider;
                 _response.Message = "Данные поставщика обновлены.";
+            }
+
+            return _response;
+        }
+
+        public async Task<Response> GetProvidersFilteredAsync(ProviderDto providerDto)
+        {
+            _response.IsSuccess = false;
+            _response.Message = "Поставщики не найдены по указанным критериям.";
+
+            var query = _db.Providers.AsQueryable();
+
+
+            if (!string.IsNullOrEmpty(providerDto.Name))
+                query = query.Where(p => Regex.IsMatch(p.Name, Regex.Escape(providerDto.Name), RegexOptions.IgnoreCase));
+            if (!string.IsNullOrEmpty(providerDto.Inn))
+                query = query.Where(p => Regex.IsMatch(p.Inn, Regex.Escape(providerDto.Inn), RegexOptions.IgnoreCase));
+            if (!string.IsNullOrEmpty(providerDto.LegalAdress))
+                query = query.Where(p => Regex.IsMatch(p.LegalAdress, Regex.Escape(providerDto.LegalAdress), RegexOptions.IgnoreCase));
+            if (!string.IsNullOrEmpty(providerDto.CheckingAccount))
+                query = query.Where(p => Regex.IsMatch(p.CheckingAccount, Regex.Escape(providerDto.CheckingAccount), RegexOptions.IgnoreCase));
+            if (!string.IsNullOrEmpty(providerDto.Bank))
+                query = query.Where(p => Regex.IsMatch(p.Bank, Regex.Escape(providerDto.Bank), RegexOptions.IgnoreCase));
+            if (!string.IsNullOrEmpty(providerDto.Bik))
+                query = query.Where(p => Regex.IsMatch(p.Bik, Regex.Escape(providerDto.Bik), RegexOptions.IgnoreCase));
+            if (!string.IsNullOrEmpty(providerDto.CorrespondentAccount))
+                query = query.Where(p => Regex.IsMatch(p.CorrespondentAccount, Regex.Escape(providerDto.CorrespondentAccount), RegexOptions.IgnoreCase));
+            if (!string.IsNullOrEmpty(providerDto.ManagerFullname))
+                query = query.Where(p => Regex.IsMatch(p.ManagerFullname, Regex.Escape(providerDto.ManagerFullname), RegexOptions.IgnoreCase));
+
+            var companies = await query.ToListAsync();
+            if (companies.Any())
+            {
+                _response.IsSuccess = true;
+                _response.Result = companies;
+                _response.Message = "Поставщики успешно найдены по указанным критериям.";
             }
 
             return _response;

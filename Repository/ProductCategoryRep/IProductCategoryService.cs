@@ -8,5 +8,6 @@ namespace StockService.Repository.ProductCategoryRep
         Task<Response> GetProductCategoriesByCompanyIdAsync(int companyId);
         Task<Response> CreateProductCategoryAsync(ProductCategoryDto productCategoryDto);
         Task<Response> DeleteProductCategoryAsync(int productCategoryId);
+        Task<Response> GetCategoriesFilteredAsync(ProductCategoryDto productCategoryDto);
     }
 }

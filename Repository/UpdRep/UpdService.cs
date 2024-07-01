@@ -160,5 +160,36 @@ namespace StockService.Repository.BillRep
 
             return _response;
         }
+
+        public async Task<Response> GetUpdsFilteredAsync(UpdDto updDto)
+        {
+            _response.IsSuccess = false;
+            _response.Message = "УПД не найдены по указанным критериям.";
+
+            var query = _db.Bills.AsQueryable();
+
+
+            if (!string.IsNullOrEmpty(updDto.DocumentNumber))
+                query = query.Where(b => b.BillNumber == updDto.DocumentNumber);
+            if (updDto.ProviderId != null)
+                query = query.Where(b => b.ProviderId == updDto.ProviderId);
+
+
+            if (updDto.StartDate != null)
+                query = query.Where(b => b.CreateDate >= updDto.StartDate.Value);
+            if (updDto.EndDate != null)
+                query = query.Where(b => b.CreateDate <= updDto.EndDate.Value);
+
+
+            var companies = await query.ToListAsync();
+            if (companies.Any())
+            {
+                _response.IsSuccess = true;
+                _response.Result = companies;
+                _response.Message = "УПД успешно найдены по указанным критериям.";
+            }
+
+            return _response;
+        }
     }
 }

@@ -10,9 +10,9 @@ namespace StockService.Models
         public string? Manufacturer { get; set; }
         public string? ProductionArticle { get; set; }
         public string? InnerArticle { get; set; }
-        public string? ImagePath { get; set; }
-        public decimal Price { get; set; }
         public string? FactoryNumber { get; set; }
+        public decimal Price { get; set; }
+        public string? ImagePath { get; set; }
         public DateTime CreateDate { get; set; }
 
         public int? BillId { get; set; }

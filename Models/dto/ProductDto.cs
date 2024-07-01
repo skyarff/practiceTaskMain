@@ -1,4 +1,5 @@
-﻿using StockService.Models;
+﻿using Microsoft.Extensions.Logging;
+using StockService.Models;
 using System.Text.Json.Serialization;
 
 namespace StockService.Models.dto
@@ -11,8 +12,11 @@ namespace StockService.Models.dto
         public string? ProductionArticle { get; set; }
         public string? InnerArticle { get; set; }
         public IFormFile? Image { get; set; }
-        public decimal Price { get; set; }
         public string? FactoryNumber { get; set; }
+
+        public decimal? LowerPriceLimit { get; set; }
+        public decimal? Price { get; set; }
+        public decimal? UpperPriceLimit { get; set; }
 
         public int? BillId { get; set; }
         public int? UpdId { get; set; }

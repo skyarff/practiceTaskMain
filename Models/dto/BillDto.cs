@@ -9,6 +9,8 @@ namespace StockService.Models.dto
         public IFormFile? BillPdf { get; set; }
         public int? ProviderId { get; set; }
 
+        public decimal? LowerBillTotalLimit { get; set; }
+        public decimal? UpperBillTotalLimit { get; set; }
         public decimal? BillTotal { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }

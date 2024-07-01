@@ -3,6 +3,7 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using StockService.Models;
 using StockService.Models.dto;
+using System.Text.RegularExpressions;
 
 namespace StockService.Repository.ProductRep
 {
@@ -124,7 +125,7 @@ namespace StockService.Repository.ProductRep
                 }
                   
                 if (productDto.Price != null) 
-                    product.Price = productDto.Price;
+                    product.Price = (decimal)productDto.Price;
 
                 if (!string.IsNullOrEmpty(productDto.Name))
                     product.Name = productDto.Name;
@@ -189,35 +190,53 @@ namespace StockService.Repository.ProductRep
 
             var query = _db.Products.AsQueryable();
 
+
+            if (productDto.LowerPriceLimit != null)
+                query = query.Where(p => p.Price >= productDto.LowerPriceLimit);
+            if (productDto.UpperPriceLimit != null)
+                query = query.Where(p => p.Price <= productDto.UpperPriceLimit);
+
+            if (!string.IsNullOrEmpty(productDto.Name))
+                query = query.Where(p => Regex.IsMatch(p.Name, Regex.Escape(productDto.Name), RegexOptions.IgnoreCase));
+            if (!string.IsNullOrEmpty(productDto.Manufacturer))
+                query = query.Where(p => Regex.IsMatch(p.Manufacturer, Regex.Escape(productDto.Manufacturer), RegexOptions.IgnoreCase));
+            if (!string.IsNullOrEmpty(productDto.ProductionArticle))
+                query = query.Where(p => Regex.IsMatch(p.ProductionArticle, Regex.Escape(productDto.ProductionArticle), RegexOptions.IgnoreCase));
+            if (!string.IsNullOrEmpty(productDto.InnerArticle))
+                query = query.Where(p => Regex.IsMatch(p.InnerArticle, Regex.Escape(productDto.InnerArticle), RegexOptions.IgnoreCase));
+            if (!string.IsNullOrEmpty(productDto.FactoryNumber))
+                query = query.Where(p => Regex.IsMatch(p.FactoryNumber, Regex.Escape(productDto.FactoryNumber), RegexOptions.IgnoreCase));
+
+
+            if (productDto.StartDate != null)
+                query = query.Where(p => p.CreateDate >= productDto.StartDate.Value);
+            if (productDto.EndDate != null)
+                query = query.Where(p => p.CreateDate <= productDto.EndDate.Value);
+
+
             if (productDto.EmployeeId != null)
                 query = query.Where(p => p.EmployeeId == productDto.EmployeeId);
-
             if (productDto.StorageLocationId != null)
                 query = query.Where(p => p.StorageLocationId == productDto.StorageLocationId);
-
             if (productDto.ProductCategoryId != null)
                 query = query.Where(p => p.ProductCategoryId == productDto.ProductCategoryId);
 
 
             if (productDto.StockId != null)
                 query = query.Where(p => p.StorageLocation.StockId == productDto.StockId);
-
             else if(productDto.CompanyId != null)
                 query = query.Where(p => p.StorageLocation.Stock.CompanyId == productDto.CompanyId);
 
 
             if (productDto.BillId != null)
                 query = query.Where(p => p.BillId == productDto.BillId);
-
             else if (productDto.UpdId != null)
                 query = query.Where(p => p.UpdId == productDto.UpdId);
-
             else if (productDto.ProviderId != null)
                 query = query.Where(p => p.Bill.ProviderId == productDto.ProviderId || p.Upd.ProviderId == productDto.ProviderId);
 
+
             var products = await query.ToListAsync();
-
-
             if (products.Any())
             {
                 _response.IsSuccess = true;

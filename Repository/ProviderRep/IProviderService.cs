@@ -10,5 +10,6 @@ namespace StockService.Repository.ProviderRep
         Task<Response> CreateProviderAsync(ProviderDto providerId);
         Task<Response> UpdateProviderAsync(ProviderDto providerDto);
         Task<Response> DeleteProviderAsync(int iproviderId);
+        Task<Response> GetProvidersFilteredAsync(ProviderDto providerDto);
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using StockService.Models;
 using StockService.Models.dto;
+using System.Text.RegularExpressions;
 
 namespace StockService.Repository.StockRep
 {
@@ -133,6 +134,31 @@ namespace StockService.Repository.StockRep
                 _response.IsSuccess = true;
                 _response.Result = stock;
                 _response.Message = "Компания успешно изменена.";
+            }
+
+            return _response;
+        }
+
+        public async Task<Response> GetStocksFilteredAsync(StockDto stockDto)
+        {
+            _response.IsSuccess = false;
+            _response.Message = "Склады не найдены по указанным критериям.";
+
+            var query = _db.Companies.AsQueryable();
+
+
+            if (!string.IsNullOrEmpty(stockDto.Name))
+                query = query.Where(s => Regex.IsMatch(s.Name, Regex.Escape(stockDto.Name), RegexOptions.IgnoreCase));
+            if (stockDto.CompanyId != null)
+                query = query.Where(s => s.CompanyId == stockDto.CompanyId);
+
+
+            var companies = await query.ToListAsync();
+            if (companies.Any())
+            {
+                _response.IsSuccess = true;
+                _response.Result = companies;
+                _response.Message = "Склады успешно найдены по указанным критериям.";
             }
 
             return _response;

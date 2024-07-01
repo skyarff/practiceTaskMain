@@ -112,5 +112,22 @@ namespace StockService.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
+
+        [HttpPost("getCompaniesFiltered")]
+        public async Task<IActionResult> GetCompaniesFiltered(CompanyDto companyDto)
+        {
+            try
+            {
+                _response = await _companyService.GetCompaniesFilteredAsync(companyDto);
+                if (_response.IsSuccess) return Ok(_response);
+                return NotFound(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.Errors.Add(ex.Message);
+                return BadRequest(_response);
+            }
+        }
     }
 }

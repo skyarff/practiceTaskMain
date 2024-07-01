@@ -11,5 +11,6 @@ namespace StockService.Repository.UpdRep
         Task<Response> GetUpdByIdAsync(int updId);
         Task<Response> CreateUpdAsync(UpdDto updDto);
         Task<Response> DeleteUpdAsync(int updId);
+        Task<Response> GetUpdsFilteredAsync(UpdDto updDto);
     }
 }

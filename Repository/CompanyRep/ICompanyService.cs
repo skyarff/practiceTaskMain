@@ -10,5 +10,6 @@ namespace StockService.Repository.CompanyRep
         Task<Response> CreateCompanyAsync(CompanyDto companyDto);
         Task<Response> UpdateCompanyAsync(CompanyDto companyDto);
         Task<Response> DeleteCompanyAsync(int CompanyId);
+        Task<Response> GetCompaniesFilteredAsync(CompanyDto companyDto);
     }
 }

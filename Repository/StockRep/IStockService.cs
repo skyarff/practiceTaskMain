@@ -11,5 +11,6 @@ namespace StockService.Repository.StockRep
         Task<Response> CreateStockAsync(StockDto stockDto);
         Task<Response> UpdateEmployeeAsync(StockDto stockDto);
         Task<Response> DeleteStockAsync(int stockId);
+        Task<Response> GetStocksFilteredAsync(StockDto stockDto);
     }
 }
