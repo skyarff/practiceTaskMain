@@ -190,6 +190,8 @@ namespace StockService.Repository.ProductRep
 
             var query = _db.Products.AsQueryable();
 
+            if (productDto.ProductId != null)
+                query = query.Where(p => p.ProductId == productDto.ProductId);
 
             if (productDto.LowerPriceLimit != null)
                 query = query.Where(p => p.Price >= productDto.LowerPriceLimit);

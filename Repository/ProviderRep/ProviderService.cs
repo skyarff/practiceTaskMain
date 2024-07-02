@@ -149,6 +149,8 @@ namespace StockService.Repository.ProviderRep
 
             var query = _db.Providers.AsQueryable();
 
+            if (providerDto.ProviderId != null)
+                query = query.Where(p => p.ProviderId == providerDto.ProviderId);
 
             if (!string.IsNullOrEmpty(providerDto.Name))
                 query = query.Where(p => Regex.IsMatch(p.Name, Regex.Escape(providerDto.Name), RegexOptions.IgnoreCase));

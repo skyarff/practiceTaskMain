@@ -166,13 +166,15 @@ namespace StockService.Repository.BillRep
             _response.IsSuccess = false;
             _response.Message = "УПД не найдены по указанным критериям.";
 
-            var query = _db.Bills.AsQueryable();
+            var query = _db.Upds.AsQueryable();
 
+            if (updDto.UpdId != null)
+                query = query.Where(u => u.UpdId == updDto.UpdId);
 
             if (!string.IsNullOrEmpty(updDto.DocumentNumber))
-                query = query.Where(b => b.BillNumber == updDto.DocumentNumber);
+                query = query.Where(u => u.DocumentNumber == updDto.DocumentNumber);
             if (updDto.ProviderId != null)
-                query = query.Where(b => b.ProviderId == updDto.ProviderId);
+                query = query.Where(u => u.ProviderId == updDto.ProviderId);
 
 
             if (updDto.StartDate != null)

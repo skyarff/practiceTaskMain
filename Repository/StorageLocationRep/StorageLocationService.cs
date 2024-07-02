@@ -164,6 +164,9 @@ namespace StockService.Repository.StorageLocationRep
 
             var query = _db.StorageLocations.AsQueryable();
 
+            if (storageLocationDto.StorageLocationId != null)
+                query = query.Where(sl => sl.StorageLocationId == storageLocationDto.StorageLocationId);
+
             if (storageLocationDto.StockId != null)
                 query = query.Where(sl => sl.StockId == storageLocationDto.StockId);
             if (storageLocationDto.IsBusy != null)

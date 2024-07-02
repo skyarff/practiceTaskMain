@@ -241,6 +241,8 @@ namespace StockService.Repository.EmployeeRep
 
             var query = _db.Employees.AsQueryable();
 
+            if (employeeDto.EmployeeId != null)
+                query = query.Where(e => e.EmployeeId == employeeDto.EmployeeId);
 
             if (!string.IsNullOrEmpty(employeeDto.Login))
                 query = query.Where(e => Regex.IsMatch(e.Login, Regex.Escape(employeeDto.Login), RegexOptions.IgnoreCase));

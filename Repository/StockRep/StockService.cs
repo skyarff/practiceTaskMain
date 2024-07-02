@@ -144,8 +144,10 @@ namespace StockService.Repository.StockRep
             _response.IsSuccess = false;
             _response.Message = "Склады не найдены по указанным критериям.";
 
-            var query = _db.Companies.AsQueryable();
+            var query = _db.Stocks.AsQueryable();
 
+            if (stockDto.StockId != null)
+                query = query.Where(s => s.StockId == stockDto.StockId);
 
             if (!string.IsNullOrEmpty(stockDto.Name))
                 query = query.Where(s => Regex.IsMatch(s.Name, Regex.Escape(stockDto.Name), RegexOptions.IgnoreCase));

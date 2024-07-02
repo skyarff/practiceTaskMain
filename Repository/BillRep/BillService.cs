@@ -167,6 +167,8 @@ namespace StockService.Repository.BillRep
 
             var query = _db.Bills.AsQueryable();
 
+            if (billDto.BillId != null)
+                query = query.Where(b => b.BillId == billDto.BillId);
 
             if (!string.IsNullOrEmpty(billDto.BillNumber))
                 query = query.Where(b => b.BillNumber == billDto.BillNumber);

@@ -82,8 +82,10 @@ namespace StockService.Repository.ProductCategoryRep
             _response.IsSuccess = false;
             _response.Message = "Категории продуктов не найдены по указанным критериям.";
 
-            var query = _db.Companies.AsQueryable();
+            var query = _db.ProductCategories.AsQueryable();
 
+            if (productCategoryDto.ProductCategoryId != null)
+                query = query.Where(pc => pc.ProductCategoryId == productCategoryDto.ProductCategoryId);
 
             if (!string.IsNullOrEmpty(productCategoryDto.Name))
                 query = query.Where(pc => Regex.IsMatch(pc.Name, Regex.Escape(productCategoryDto.Name), RegexOptions.IgnoreCase));
