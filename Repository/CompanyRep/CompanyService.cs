@@ -163,7 +163,8 @@ namespace StockService.Repository.CompanyRep
 
             var query = _db.Companies.AsQueryable();
 
-
+            if (companyDto.CompanyId != null)
+                query = query.Where(c => c.CompanyId == companyDto.CompanyId);
             if (!string.IsNullOrEmpty(companyDto.Name))
                 query = query.Where(c => Regex.IsMatch(c.Name, Regex.Escape(companyDto.Name), RegexOptions.IgnoreCase));
             if (!string.IsNullOrEmpty(companyDto.Inn))
