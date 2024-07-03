@@ -13,12 +13,20 @@
       "PackagePath": "staticwebassets\\Images\\CompanyLogos\\274px-Strelnikova_AN.jpg"
     },
     {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\Dopamine_serotonin_rus.png",
+      "PackagePath": "staticwebassets\\Images\\CompanyLogos\\Dopamine_serotonin_rus.png"
+    },
+    {
       "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\dfg.jpg",
       "PackagePath": "staticwebassets\\Images\\CompanyLogos\\dfg.jpg"
     },
     {
       "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\download.jpg",
       "PackagePath": "staticwebassets\\Images\\CompanyLogos\\download.jpg"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\i.png",
+      "PackagePath": "staticwebassets\\Images\\CompanyLogos\\i.png"
     },
     {
       "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\images.jpg",
@@ -43,6 +51,10 @@
     {
       "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\Тамплиеры-самый-богатый-рыцарский-орден.jpg",
       "PackagePath": "staticwebassets\\Images\\CompanyLogos\\Тамплиеры-самый-богатый-рыцарский-орден.jpg"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\кирпич.jpg",
+      "PackagePath": "staticwebassets\\Images\\CompanyLogos\\кирпич.jpg"
     },
     {
       "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\рол.png",

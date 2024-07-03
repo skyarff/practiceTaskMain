@@ -199,15 +199,15 @@ namespace StockService.Repository.ProductRep
                 query = query.Where(p => p.Price <= productDto.UpperPriceLimit);
 
             if (!string.IsNullOrEmpty(productDto.Name))
-                query = query.Where(p => Regex.IsMatch(p.Name, Regex.Escape(productDto.Name), RegexOptions.IgnoreCase));
+                query = query.Where(p => EF.Functions.ILike(p.Name, $"%{productDto.Name}%"));
             if (!string.IsNullOrEmpty(productDto.Manufacturer))
-                query = query.Where(p => Regex.IsMatch(p.Manufacturer, Regex.Escape(productDto.Manufacturer), RegexOptions.IgnoreCase));
+                query = query.Where(p => EF.Functions.ILike(p.Manufacturer, $"%{productDto.Manufacturer}%"));
             if (!string.IsNullOrEmpty(productDto.ProductionArticle))
-                query = query.Where(p => Regex.IsMatch(p.ProductionArticle, Regex.Escape(productDto.ProductionArticle), RegexOptions.IgnoreCase));
+                query = query.Where(p => EF.Functions.ILike(p.ProductionArticle, $"%{productDto.ProductionArticle}%"));
             if (!string.IsNullOrEmpty(productDto.InnerArticle))
-                query = query.Where(p => Regex.IsMatch(p.InnerArticle, Regex.Escape(productDto.InnerArticle), RegexOptions.IgnoreCase));
+                query = query.Where(p => EF.Functions.ILike(p.InnerArticle, $"%{productDto.InnerArticle}%"));
             if (!string.IsNullOrEmpty(productDto.FactoryNumber))
-                query = query.Where(p => Regex.IsMatch(p.FactoryNumber, Regex.Escape(productDto.FactoryNumber), RegexOptions.IgnoreCase));
+                query = query.Where(p => EF.Functions.ILike(p.FactoryNumber, $"%{productDto.FactoryNumber}%"));
 
 
             if (productDto.StartDate != null)

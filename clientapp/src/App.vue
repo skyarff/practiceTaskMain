@@ -6,11 +6,7 @@
     <NavDrawer />
 
     <v-main>
-
-      <router-view 
-      class="pa-4"
-      />
-
+      <router-view class="pa-4" />
     </v-main>
 
 

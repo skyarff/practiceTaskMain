@@ -164,10 +164,11 @@ namespace StockService.Repository.CompanyRep
 
             if (companyDto.CompanyId != null)
                 query = query.Where(c => c.CompanyId == companyDto.CompanyId);
+
             if (!string.IsNullOrEmpty(companyDto.Name))
-                query = query.Where(c => Regex.IsMatch(c.Name, Regex.Escape(companyDto.Name), RegexOptions.IgnoreCase));
+                query = query.Where(c => EF.Functions.ILike(c.Name, $"%{companyDto.Name}%"));
             if (!string.IsNullOrEmpty(companyDto.Inn))
-                query = query.Where(c => Regex.IsMatch(c.Inn, Regex.Escape(companyDto.Inn), RegexOptions.IgnoreCase));
+                query = query.Where(c => EF.Functions.ILike(c.Inn, $"%{companyDto.Inn}%"));
 
 
             var companies = await query.ToListAsync();

@@ -20,9 +20,11 @@
               <td>{{ item.name }}</td>
               <td>{{ item.inn }}</td>
               <td>
-                <v-icon>
-                  mdi-image
-                </v-icon>
+                <v-img
+                    :src="`${apiBaseUrl}//${item.logoPath}`"
+                    class="full-size-image"
+                    style="max-width: 40px; max-height: 40px"
+                  ></v-img>
                 <v-tooltip 
                   v-if="item.logoPath"
                   activator="parent" 
@@ -103,7 +105,8 @@
                   <v-col cols="12" sm="6">
                     <v-text-field
                       v-model="selectedCompany.companyId"
-                      label="ID"
+                      label="ID компании"
+                      type="number"
                       prepend-icon="mdi-identifier"
                     ></v-text-field>
                   </v-col>

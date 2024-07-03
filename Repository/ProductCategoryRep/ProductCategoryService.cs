@@ -88,7 +88,7 @@ namespace StockService.Repository.ProductCategoryRep
                 query = query.Where(pc => pc.ProductCategoryId == productCategoryDto.ProductCategoryId);
 
             if (!string.IsNullOrEmpty(productCategoryDto.Name))
-                query = query.Where(pc => Regex.IsMatch(pc.Name, Regex.Escape(productCategoryDto.Name), RegexOptions.IgnoreCase));
+                query = query.Where(pc => EF.Functions.ILike(pc.Name, $"%{productCategoryDto.Name}%"));
             if (productCategoryDto.CompanyId != null)
                 query = query.Where(pc => pc.CompanyId == productCategoryDto.CompanyId);
 

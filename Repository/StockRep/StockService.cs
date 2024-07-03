@@ -125,8 +125,8 @@ namespace StockService.Repository.StockRep
                 if (!string.IsNullOrEmpty(stockDto.Name))
                     stock.Name = stockDto.Name;
 
-                if (stockDto.StockId != null)
-                    stock.StockId = (int)stockDto.StockId;
+                if (stockDto.CompanyId != null)
+                    stock.CompanyId = (int)stockDto.CompanyId;
 
 
                 await _db.SaveChangesAsync();
@@ -150,7 +150,8 @@ namespace StockService.Repository.StockRep
                 query = query.Where(s => s.StockId == stockDto.StockId);
 
             if (!string.IsNullOrEmpty(stockDto.Name))
-                query = query.Where(s => Regex.IsMatch(s.Name, Regex.Escape(stockDto.Name), RegexOptions.IgnoreCase));
+                query = query.Where(s => EF.Functions.ILike(s.Name, $"%{stockDto.Name}%"));
+
             if (stockDto.CompanyId != null)
                 query = query.Where(s => s.CompanyId == stockDto.CompanyId);
 

@@ -173,7 +173,8 @@ namespace StockService.Repository.StorageLocationRep
                 query = query.Where(sl => (sl.Product != null) == (bool)storageLocationDto.IsBusy);
 
             if (!string.IsNullOrEmpty(storageLocationDto.Description))
-                query = query.Where(sl => Regex.IsMatch(sl.Description, Regex.Escape(storageLocationDto.Description), RegexOptions.IgnoreCase));
+                query = query.Where(sl => EF.Functions.ILike(sl.Description, $"%{storageLocationDto.Description}%"));
+
             if (!string.IsNullOrEmpty(storageLocationDto.RackCode))
                 query = query.Where(sl => sl.RackCode == storageLocationDto.RackCode);
             if (!string.IsNullOrEmpty(storageLocationDto.ShelfCode))

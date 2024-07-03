@@ -153,21 +153,21 @@ namespace StockService.Repository.ProviderRep
                 query = query.Where(p => p.ProviderId == providerDto.ProviderId);
 
             if (!string.IsNullOrEmpty(providerDto.Name))
-                query = query.Where(p => Regex.IsMatch(p.Name, Regex.Escape(providerDto.Name), RegexOptions.IgnoreCase));
+                query = query.Where(p => EF.Functions.ILike(p.Name, $"%{providerDto.Name}%"));
             if (!string.IsNullOrEmpty(providerDto.Inn))
-                query = query.Where(p => Regex.IsMatch(p.Inn, Regex.Escape(providerDto.Inn), RegexOptions.IgnoreCase));
+                query = query.Where(p => EF.Functions.ILike(p.Inn, $"%{providerDto.Inn}%"));
             if (!string.IsNullOrEmpty(providerDto.LegalAdress))
-                query = query.Where(p => Regex.IsMatch(p.LegalAdress, Regex.Escape(providerDto.LegalAdress), RegexOptions.IgnoreCase));
+                query = query.Where(p => EF.Functions.ILike(p.LegalAdress, $"%{providerDto.LegalAdress}%"));
             if (!string.IsNullOrEmpty(providerDto.CheckingAccount))
-                query = query.Where(p => Regex.IsMatch(p.CheckingAccount, Regex.Escape(providerDto.CheckingAccount), RegexOptions.IgnoreCase));
+                query = query.Where(p => EF.Functions.ILike(p.CheckingAccount, $"%{providerDto.CheckingAccount}%"));
             if (!string.IsNullOrEmpty(providerDto.Bank))
-                query = query.Where(p => Regex.IsMatch(p.Bank, Regex.Escape(providerDto.Bank), RegexOptions.IgnoreCase));
+                query = query.Where(p => EF.Functions.ILike(p.Bank, $"%{providerDto.Bank}%"));
             if (!string.IsNullOrEmpty(providerDto.Bik))
-                query = query.Where(p => Regex.IsMatch(p.Bik, Regex.Escape(providerDto.Bik), RegexOptions.IgnoreCase));
+                query = query.Where(p => EF.Functions.ILike(p.Bik, $"%{providerDto.Bik}%"));
             if (!string.IsNullOrEmpty(providerDto.CorrespondentAccount))
-                query = query.Where(p => Regex.IsMatch(p.CorrespondentAccount, Regex.Escape(providerDto.CorrespondentAccount), RegexOptions.IgnoreCase));
+                query = query.Where(p => EF.Functions.ILike(p.CorrespondentAccount, $"%{providerDto.CorrespondentAccount}%"));
             if (!string.IsNullOrEmpty(providerDto.ManagerFullname))
-                query = query.Where(p => Regex.IsMatch(p.ManagerFullname, Regex.Escape(providerDto.ManagerFullname), RegexOptions.IgnoreCase));
+                query = query.Where(p => EF.Functions.ILike(p.ManagerFullname, $"%{providerDto.ManagerFullname}%"));
 
             var companies = await query.ToListAsync();
             if (companies.Any())

@@ -245,11 +245,11 @@ namespace StockService.Repository.EmployeeRep
                 query = query.Where(e => e.EmployeeId == employeeDto.EmployeeId);
 
             if (!string.IsNullOrEmpty(employeeDto.Login))
-                query = query.Where(e => Regex.IsMatch(e.Login, Regex.Escape(employeeDto.Login), RegexOptions.IgnoreCase));
+                query = query.Where(e => EF.Functions.ILike(e.Login, $"%{employeeDto.Login}%"));
             if (!string.IsNullOrEmpty(employeeDto.FullName))
-                query = query.Where(e => Regex.IsMatch(e.FullName, Regex.Escape(employeeDto.FullName), RegexOptions.IgnoreCase));
+                query = query.Where(e => EF.Functions.ILike(e.FullName, $"%{employeeDto.FullName}%"));
             if (!string.IsNullOrEmpty(employeeDto.JobTitle))
-                query = query.Where(e => Regex.IsMatch(e.JobTitle, Regex.Escape(employeeDto.JobTitle), RegexOptions.IgnoreCase));
+                query = query.Where(e => EF.Functions.ILike(e.JobTitle, $"%{employeeDto.JobTitle}%"));
 
 
             if (employeeDto.StockId != null)

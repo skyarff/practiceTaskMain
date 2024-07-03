@@ -13,7 +13,7 @@
           :class="{ 'selected-row': selectedStock.stockId === item.stockId }" 
           @click="handleRowClick(item)">
             <td 
-            @dblclick="navigate(item)" 
+            @dblclick="navigateStockId(item)" 
             class="navigation-column ">
               {{ item.stockId}}
             </td>
@@ -23,7 +23,6 @@
         </template>
       </v-data-table>
     </v-card>
-
 
     <!-- Секция фильтров -->
     <v-expansion-panels class="mb-4">
@@ -36,7 +35,7 @@
           <v-row>
             <v-col cols="12" sm="6" md="4">
               <v-text-field
-                label="ID компании"
+                label="ID склада"
                 v-model="filters.stockId"
                 type="number"
                 prepend-icon="mdi-identifier"
@@ -44,16 +43,17 @@
             </v-col>
             <v-col cols="12" sm="6" md="4">
               <v-text-field
-                label="Название компании"
+                label="Название склада"
                 v-model="filters.name"
-                prepend-icon="mdi-domain"
+                prepend-icon="mdi-package-variant-closed"
               ></v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="4">
               <v-text-field
-                label="ИНН"
-                v-model="filters.inn"
-                prepend-icon="mdi-card-account-details"
+                label="ID компании"
+                v-model="filters.companyId"
+                type="number"
+                prepend-icon="mdi-identifier"
               ></v-text-field>
             </v-col>
             <v-col cols="12">
@@ -82,19 +82,19 @@
         <div v-if="selectedStock.stockId !== undefined || isEditing">
           <v-card-title>Редактирование/удаление</v-card-title>
           <v-card-text>
-            <v-form @submit.prevent="saveCompany">
+            <v-form @submit.prevent="saveStock">
               <v-row>
                 <v-col cols="12" sm="6">
                   <v-text-field
-                    v-model="selectedCompany.companyId"
-                    label="ID"
-                    readonly
+                    v-model="selectedStock.stockId"
+                    label="ID склада"
+                    type="number"
                     prepend-icon="mdi-identifier"
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6">
                   <v-text-field
-                    v-model="selectedCompany.name"
+                    v-model="selectedStock.name"
                     label="Название"
                     prepend-icon="mdi-domain"
                   ></v-text-field>
@@ -103,18 +103,11 @@
               <v-row>
                 <v-col cols="12" sm="6">
                   <v-text-field
-                    v-model="selectedCompany.inn"
-                    label="ИНН"
+                    v-model="selectedStock.companyId"
+                    label="ID компании"
+                    type="number"
                     prepend-icon="mdi-card-account-details"
                   ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6">
-                  <v-file-input
-                    v-model="selectedCompany.image"
-                    label="Логотип"
-                    accept="image/*"
-                    prepend-icon="mdi-image"
-                  ></v-file-input>
                 </v-col>
               </v-row>
               <v-row>
@@ -122,7 +115,7 @@
                   <v-btn class="mr-4" type="submit" color="primary" prepend-icon="mdi-content-save">
                     Редактировать
                   </v-btn>
-                  <v-btn @click="deleteCompany" color="secondary" prepend-icon="mdi-delete">
+                  <v-btn @click="deleteStock" color="secondary" prepend-icon="mdi-delete">
                     Удалить
                   </v-btn>
                 </v-col>
@@ -139,14 +132,15 @@
                     <v-text-field
                       v-model="selectedStock.name"
                       label="Название"
-                      prepend-icon="mdi-domain"
+                      prepend-icon="mdi-package-variant-closed"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6">
                     <v-text-field
                       v-model="selectedStock.companyId"
-                      label="ИНН"
-                      prepend-icon="mdi-card-account-details"
+                      label="ID компании"
+                      type="number"
+                      prepend-icon="mdi-identifier"
                     ></v-text-field>
                   </v-col>
                 </v-row>
@@ -213,7 +207,7 @@ export default {
       const url = '/api/Stock/getStocksFiltered';
       const data = {}
       
-      if(this.filters.stockId)
+        if(this.filters.stockId)
           data.stockId = this.filters.stockId
         if(this.filters.name)
           data.name = this.filters.name
@@ -227,7 +221,7 @@ export default {
             'Content-Type': 'application/json'
           }
         });
-        this.companies = Array.from(response.data.result);
+        this.stocks = Array.from(response.data.result);
       } catch (error) {
         console.error('Ошибка при выполнении запроса:', error);
       }
@@ -236,29 +230,29 @@ export default {
       this.filters = {}
       this.applyFilters();
     },
-    async saveCompany() {
-      const formData = new FormData();
+    async saveStock() {
+      const data = {};
 
         if(this.selectedStock.stockId)
-          formData.append('StockId', this.selectedStock.stockId);
+          data.StockId = this.selectedStock.stockId
         if(this.selectedStock.name)
-          formData.append('Name', this.selectedStock.name);
+          data.Name = this.selectedStock.name
         if(this.selectedStock.companyId)
-          formData.append('CompanyId', this.selectedStock.companyId);
+          data.CompanyId = this.selectedStock.companyId
 
 
       try {
         let response;
         if (this.selectedStock.stockId !== undefined || this.isEditing) {
-          response = await api.put('api/Stock/update', formData, {
+          response = await api.put('api/Stock/update', data, {
             headers: {
-              'Content-Type': 'multipart/form-data'
+              'Content-Type': 'application/json'
             }
           });
         } else {
-          response = await api.post('api/Stock/Create', formData, {
+          response = await api.post('api/Stock/Create', data, {
             headers: {
-              'Content-Type': 'multipart/form-data'
+              'Content-Type': 'application/json'
             }
           });
         } 
@@ -268,9 +262,9 @@ export default {
         console.error('Ошибка при сохранении компании:', error);
       }
     },
-    async deleteCompany() {
+    async deleteStock() {
       try {
-        await api.delete(`api/Stock/dellById?companyId=${this.selectedStock.stockId}`);
+        await api.delete(`api/Stock/dellById?stockId=${this.selectedStock.stockId}`);
         
         this.applyFilters();
       } catch (error) {
