@@ -1,5 +1,5 @@
 import axios from 'axios';
-// import store from '@/store/store'
+import store from '@/store/index'
 
 
 const api = axios.create({
@@ -48,7 +48,7 @@ api.interceptors.response.use((response) => {
 //     }
 //   }
 
-  console.log('ERROR', error)
+  store.commit('setErrorMessage', error.response.data.message)
 })
 
 export default api;

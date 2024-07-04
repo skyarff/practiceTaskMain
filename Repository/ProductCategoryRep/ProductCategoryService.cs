@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using StockService.Models;
 using StockService.Models.dto;
-using System.Text.RegularExpressions;
 
 namespace StockService.Repository.ProductCategoryRep
 {
@@ -93,11 +92,11 @@ namespace StockService.Repository.ProductCategoryRep
                 query = query.Where(pc => pc.CompanyId == productCategoryDto.CompanyId);
 
 
-            var companies = await query.ToListAsync();
-            if (companies.Any())
+            var productCategories = await query.ToListAsync();
+            if (productCategories.Any())
             {
                 _response.IsSuccess = true;
-                _response.Result = companies;
+                _response.Result = productCategories;
                 _response.Message = "Категории продуктов успешно найдены по указанным критериям.";
             }
 

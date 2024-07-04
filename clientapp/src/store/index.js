@@ -1,9 +1,15 @@
 import { createStore } from "vuex";
 
 export default createStore({
-  state: {},
+  state: {
+    errorMessage: '',
+  },
   getters: {},
-  mutations: {},
+  mutations: {
+    setErrorMessage(state, message) {
+      state.errorMessage = message
+    }
+  },
   actions: {},
   modules: {},
 });

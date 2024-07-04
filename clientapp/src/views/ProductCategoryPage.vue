@@ -5,17 +5,17 @@
     <v-card v-if="!isLoading" class="mb-4">
       <v-data-table
         :headers="headers"
-        :items="stocks"
+        :items="productCategories"
         class="elevation-1 bordered-table"
       >
         <template v-slot:item="{ item }">
           <tr 
-          :class="{ 'selected-row': selectedStock.stockId === item.stockId }" 
+          :class="{ 'selected-row': selectedProductCategory.productCategoryId === item.productCategoryId }" 
           @click="handleRowClick(item)">
             <td 
-            @dblclick="navigateStockId(item)" 
+            @dblclick="navigateProductCategoryId(item)" 
             class="navigation-column ">
-              {{ item.stockId}}
+              {{ item.productCategoryId}}
             </td>
             <td>{{ item.name }}</td>
             <td>{{ item.companyId }}</td>
@@ -37,17 +37,17 @@
           <v-row>
             <v-col cols="12" sm="6" md="4">
               <v-text-field
-                label="ID склада"
-                v-model="filters.stockId"
+                label="ID категории продуктов"
+                v-model="filters.productCategoryId"
                 type="number"
                 prepend-icon="mdi-identifier"
               ></v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="4">
               <v-text-field
-                label="Название склада"
+                label="Название категории продуктов"
                 v-model="filters.name"
-                prepend-icon="mdi-package-variant-closed"
+                prepend-icon="mdi-tag-multiple"
               ></v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="4">
@@ -77,46 +77,28 @@
         <v-switch
           :model-value="isEditing"
           color="primary"
-          label="Редактирование"
+          label="Удаление"
           @click="switchEditingMode"
         ></v-switch>
       </v-card-text>
-        <div v-if="selectedStock.stockId !== undefined || isEditing">
-          <v-card-title>Редактирование/удаление</v-card-title>
+        <div v-if="selectedProductCategory.productCategoryId !== undefined || isEditing">
           <v-card-text>
-            <v-form @submit.prevent="saveStock">
+            <v-form @submit.prevent="saveProductCategory">
+                <v-card-title>
+                    Удаление
+                </v-card-title>
               <v-row>
                 <v-col cols="12" sm="6">
                   <v-text-field
-                    v-model="selectedStock.stockId"
+                    v-model="selectedProductCategory.productCategoryId"
                     label="ID склада"
                     type="number"
                     prepend-icon="mdi-identifier"
                   ></v-text-field>
                 </v-col>
-                <v-col cols="12" sm="6">
-                  <v-text-field
-                    v-model="selectedStock.name"
-                    label="Название"
-                    prepend-icon="mdi-package-variant-closed"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="12" sm="6">
-                  <v-text-field
-                    v-model="selectedStock.companyId"
-                    label="ID компании"
-                    type="number"
-                    prepend-icon="mdi-domain"
-                  ></v-text-field>
-                </v-col>
               </v-row>
               <v-row>
                 <v-col>
-                  <v-btn class="mr-4" type="submit" color="primary" prepend-icon="mdi-content-save">
-                    Редактировать
-                  </v-btn>
                   <v-btn @click="deleteStock" color="secondary" prepend-icon="mdi-delete">
                     Удалить
                   </v-btn>
@@ -128,18 +110,18 @@
         <div v-else>
           <v-card-title>Добавление</v-card-title>
             <v-card-text>
-              <v-form @submit.prevent="saveStock">
+              <v-form @submit.prevent="saveProductCategory">
                 <v-row>
                   <v-col cols="12" sm="6">
                     <v-text-field
-                      v-model="selectedStock.name"
+                      v-model="selectedProductCategory.name"
                       label="Название"
-                      prepend-icon="mdi-package-variant-closed"
+                      prepend-icon="mdi-tag-multiple"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6">
                     <v-text-field
-                      v-model="selectedStock.companyId"
+                      v-model="selectedProductCategory.companyId"
                       label="ID компании"
                       type="number"
                       prepend-icon="mdi-identifier"
@@ -176,12 +158,12 @@ export default {
       apiBaseUrl: import.meta.env.VITE_API_BASE_URL,
       filters: {},
       headers: [
-        { title: 'ID склада*', key: 'stockId', align: 'start', sortable: true },
+        { title: 'ID категории продуктов*', key: 'productCategoryId', align: 'start', sortable: true },
         { title: 'Название', key: 'name', align: 'start', sortable: true },
         { title: 'ID компании*', key: 'companyId', align: 'start', sortable: true },
       ],
-      stocks: [],
-      selectedStock: {},
+      productCategories: [],
+      selectedProductCategory: {},
       isEditing: false,
       isLoading: true
     }
@@ -190,10 +172,10 @@ export default {
     this.applyFilters();
   },
   methods: {
-    navigateStockId(item) {
-      this.filters = {stockId: item.stockId}
+    navigateProductCategoryId(item) {
+      this.filters = {productCategoryId: item.productCategoryId}
       this.isEditing = true
-      this.selectedStock = item
+      this.selectedProductCategory = item
       this.applyFilters();
     },
     navigateCompanyId(item) {
@@ -205,16 +187,16 @@ export default {
     switchEditingMode() {
         this.isEditing = !this.isEditing
         if (!this.isEditing) {
-          this.selectedStock.stockId = undefined
+          this.selectedProductCategory.productCategoryId = undefined
         }
     },
     async applyFilters() {
       this.isLoading = true;
-      const url = '/api/Stock/getStocksFiltered';
+      const url = '/api/ProductCategory/getProductCategoriesFiltered';
       const data = {}
       
-        if(this.filters.stockId)
-          data.stockId = this.filters.stockId
+        if(this.filters.productCategoryId)
+          data.productCategoryId = this.filters.productCategoryId
         if(this.filters.name)
           data.name = this.filters.name
         if(this.filters.companyId)
@@ -227,7 +209,7 @@ export default {
             'Content-Type': 'application/json'
           }
         });
-        this.stocks = Array.from(response.data.result);
+        this.productCategories = Array.from(response.data.result);
       } catch (error) {
         console.error('Ошибка при выполнении запроса:', error);
       } finally {
@@ -238,27 +220,27 @@ export default {
       this.filters = {}
       this.applyFilters();
     },
-    async saveStock() {
+    async saveProductCategory() {
       const data = {};
 
-        if(this.selectedStock.stockId)
-          data.StockId = this.selectedStock.stockId
-        if(this.selectedStock.name)
-          data.Name = this.selectedStock.name
-        if(this.selectedStock.companyId)
-          data.CompanyId = this.selectedStock.companyId
+        if(this.selectedProductCategory.productCategoryId)
+          data.ProductCategoryId = this.selectedProductCategory.productCategoryId
+        if(this.selectedProductCategory.name)
+          data.Name = this.selectedProductCategory.name
+        if(this.selectedProductCategory.companyId)
+          data.CompanyId = this.selectedProductCategory.companyId
 
 
       try {
         let response;
-        if (this.selectedStock.stockId !== undefined || this.isEditing) {
-          response = await api.put('api/Stock/update', data, {
+        if (this.selectedProductCategory.productCategoryId !== undefined || this.isEditing) {
+          response = await api.put('api/ProductCategory/update', data, {
             headers: {
               'Content-Type': 'application/json'
             }
           });
         } else {
-          response = await api.post('api/Stock/Create', data, {
+          response = await api.post('/api/ProductCategory/create', data, {
             headers: {
               'Content-Type': 'application/json'
             }
@@ -272,7 +254,7 @@ export default {
     },
     async deleteStock() {
       try {
-        await api.delete(`api/Stock/dellById?stockId=${this.selectedStock.stockId}`);
+        await api.delete(`api/ProductCategory/dellById?productCategoryId=${this.selectedProductCategory.productCategoryId}`);
         
         this.applyFilters();
       } catch (error) {
@@ -280,12 +262,11 @@ export default {
       }
     },
     async handleRowClick(item) {
-      
-      if (this.selectedStock.stockId === item.stockId) {
-        delete this.selectedStock.stockId
+      if (this.selectedProductCategory.productCategoryId === item.productCategoryId) {
+        delete this.selectedProductCategory.productCategoryId
         this.isEditing = false
       } else {
-        this.selectedStock = {...item};
+        this.selectedProductCategory = {...item};
         this.isEditing = true
       }
     }

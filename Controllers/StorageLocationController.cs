@@ -105,7 +105,7 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpPost("getCompaniesFiltered")]
+        [HttpPost("getStorageLocationsFiltered")]
         public async Task<IActionResult> GetCompaniesFiltered(StorageLocationDto storageLocationDto)
         {
             try

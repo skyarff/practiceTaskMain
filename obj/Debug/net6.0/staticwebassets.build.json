@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "D99DpUyLq1aOmSBVey6gKrXmTQfIDm9Qsfq3MyCukiM=",
+  "Hash": "e6a9tTsk/3jCnLJVPWoYgG1IcRwE5oNqdtbIaY0xDs8=",
   "Source": "StockService",
   "BasePath": "_content/StockService",
   "Mode": "Default",
@@ -32,6 +32,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Images\\CompanyLogos\\1.png"
+    },
+    {
+      "Identity": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\1458904097120070126.jpg",
+      "SourceId": "StockService",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\",
+      "BasePath": "_content/StockService",
+      "RelativePath": "Images/CompanyLogos/1458904097120070126.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\CompanyLogos\\1458904097120070126.jpg"
     },
     {
       "Identity": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\1521194388_igra-tri-kotai-kompot.webp",
@@ -66,6 +83,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Images\\CompanyLogos\\274px-Strelnikova_AN.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\2df.png",
+      "SourceId": "StockService",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\",
+      "BasePath": "_content/StockService",
+      "RelativePath": "Images/CompanyLogos/2df.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\CompanyLogos\\2df.png"
     },
     {
       "Identity": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\dfg.jpg",

@@ -10,6 +10,8 @@
     </v-main>
 
 
+    <ErrorOutput />
+    
   </v-app>
 
 
@@ -18,16 +20,15 @@
 <script>
 import NavBar from '@/components/NavBar.vue'
 import NavDrawer from '@/components/NavDrawer.vue'
+import ErrorOutput from '@/components/ErrorOutput.vue'
 
 export default {
   name: "App",
 
   components: {
     NavBar,
-    NavDrawer
+    NavDrawer,
+    ErrorOutput
   },
-  data: () => ({
-    //
-  }),
 };
 </script>

@@ -2,7 +2,7 @@
     <v-container fluid>
       
       <!-- Секция таблицы -->
-      <v-card class="mb-4">
+      <v-card v-if="!isLoading" class="mb-4">
         <v-data-table
           :headers="headers"
           :items="companies"
@@ -20,28 +20,29 @@
               <td>{{ item.name }}</td>
               <td>{{ item.inn }}</td>
               <td>
-                <v-img
+                  <v-img v-if="item.logoPath"
                     :src="`${apiBaseUrl}//${item.logoPath}`"
                     class="full-size-image"
                     style="max-width: 40px; max-height: 40px"
                   ></v-img>
-                <v-tooltip 
-                  v-if="item.logoPath"
-                  activator="parent" 
-                  location="start"
-                  content-class="image-tooltip"
-                >
-                  <v-img
-                    :src="`${apiBaseUrl}//${item.logoPath}`"
-                    class="full-size-image"
-                  ></v-img>
-                </v-tooltip>
+                  <v-tooltip 
+                    v-if="item.logoPath"
+                    activator="parent" 
+                    location="start"
+                    content-class="image-tooltip"
+                  >
+                    <v-img
+                      :src="`${apiBaseUrl}//${item.logoPath}`"
+                      class="full-size-image"
+                    ></v-img>
+                  </v-tooltip>
               </td>
             </tr>
           </template>
         </v-data-table>
       </v-card>
   
+      <Loader v-else />
 
       <!-- Секция фильтров -->
       <v-expansion-panels class="mb-4">
@@ -94,7 +95,7 @@
             :model-value="isEditing"
             color="primary"
             label="Редактирование"
-            @click="editModeSwitch"
+            @click="switchEditingMode"
           ></v-switch>
         </v-card-text>
           <div v-if="selectedCompany.companyId !== undefined || isEditing">
@@ -199,8 +200,12 @@
 
 <script>
 import api from '@/api';
+import Loader from '@/components/TableLoader.vue'
 
   export default {
+    components: {
+      Loader
+    },
     data() {
       return {
         apiBaseUrl: import.meta.env.VITE_API_BASE_URL,
@@ -214,6 +219,7 @@ import api from '@/api';
         companies: [],
         selectedCompany: {},
         isEditing: false,
+        isLoading: true
       }
     },
     mounted() {
@@ -227,13 +233,14 @@ import api from '@/api';
         this.applyFilters();
         window.scrollTo(0, document.body.scrollHeight);
       },
-      editModeSwitch() {
+      switchEditingMode() {
           this.isEditing = !this.isEditing
           if (!this.isEditing) {
             this.selectedCompany.companyId = undefined
           }
       },
       async applyFilters() {
+        this.isLoading = true;
         const url = '/api/Company/getCompaniesFiltered';
         const data = {}
 
@@ -254,6 +261,8 @@ import api from '@/api';
           this.companies = Array.from(response.data.result);
         } catch (error) {
           console.error('Ошибка при выполнении запроса:', error);
+        } finally {
+          this.isLoading = false;
         }
       },
       resetFilters() {
@@ -261,7 +270,6 @@ import api from '@/api';
         this.applyFilters();
       },
       async saveCompany() {
-
         const formData = new FormData();
         if(this.selectedCompany.companyId)
           formData.append('CompanyId', this.selectedCompany.companyId);
@@ -269,9 +277,8 @@ import api from '@/api';
           formData.append('Name', this.selectedCompany.name);
         if(this.selectedCompany.inn)
           formData.append('Inn', this.selectedCompany.inn);
-        if (this.selectedCompany.image) {
+        if (this.selectedCompany.image)
           formData.append('Image', this.selectedCompany.image);
-        }
 
         try {
           let response;

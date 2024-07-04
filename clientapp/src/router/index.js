@@ -12,6 +12,18 @@ const routes = [
     component: () =>
       import("@/views/StocksPage.vue"),
   },
+  {
+    path: "/ProductCategoryPage",
+    name: "ProductCategoryPage",
+    component: () =>
+      import("@/views/ProductCategoryPage.vue"),
+  },
+  {
+    path: "/StorageLocationPage",
+    name: "StorageLocationPage",
+    component: () =>
+      import("@/views/StorageLocationPage.vue"),
+  },
 ];
 
 const router = createRouter({
