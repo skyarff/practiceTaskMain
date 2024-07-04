@@ -1,9 +1,8 @@
-﻿using AutoMapper;
+﻿using AppSettings;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using StockService.Models;
 using StockService.Models.dto;
-using AppSettings;
-using System.Text.RegularExpressions;
 
 namespace StockService.Repository.StorageLocationRep
 {

@@ -306,15 +306,4 @@ background-color: rgba(234, 234, 234, 0.21);
 .bordered-table :deep() td {
 border-right: 1px solid rgba(222, 222, 222, 0.22);
 }
-
-:deep(.image-tooltip) {
-padding: 0 !important;
-background-color: transparent !important;
-opacity: 1 !important;
-}
-.full-size-image {
-width: 200px;
-height: 200px; 
-object-fit: cover;
-}
 </style>

@@ -251,6 +251,11 @@ namespace StockService.Repository.EmployeeRep
             if (!string.IsNullOrEmpty(employeeDto.JobTitle))
                 query = query.Where(e => EF.Functions.ILike(e.JobTitle, $"%{employeeDto.JobTitle}%"));
 
+            if (!string.IsNullOrEmpty(employeeDto.Email))
+                query = query.Where(e => EF.Functions.ILike(e.Email, $"%{employeeDto.Email}%"));
+            if (!string.IsNullOrEmpty(employeeDto.Phone))
+                query = query.Where(e => EF.Functions.ILike(e.Phone, $"%{employeeDto.Phone}%"));
+
 
             if (employeeDto.StockId != null)
                 query = query.Where(e => e.StockId == employeeDto.StockId);

@@ -343,6 +343,7 @@ import Loader from '@/components/TableLoader.vue'
   background-color: transparent !important;
   opacity: 1 !important;
 }
+
 .full-size-image {
   width: 200px;
   height: 200px; 

@@ -13,16 +13,22 @@ const routes = [
       import("@/views/StocksPage.vue"),
   },
   {
-    path: "/ProductCategoryPage",
-    name: "ProductCategoryPage",
+    path: "/ProductCategoriesPage",
+    name: "ProductCategoriesPage",
     component: () =>
-      import("@/views/ProductCategoryPage.vue"),
+      import("@/views/ProductCategoriesPage.vue"),
   },
   {
-    path: "/StorageLocationPage",
-    name: "StorageLocationPage",
+    path: "/StorageLocationsPage",
+    name: "StorageLocationsPage",
     component: () =>
-      import("@/views/StorageLocationPage.vue"),
+      import("@/views/StorageLocationsPage.vue"),
+  },
+  {
+    path: "/EmployeesPage",
+    name: "EmployeesPage",
+    component: () =>
+      import("@/views/EmployeesPage.vue"),
   },
 ];
 

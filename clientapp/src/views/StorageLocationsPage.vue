@@ -95,6 +95,17 @@
                   prepend-icon="mdi-identifier"
                 ></v-text-field>
               </v-col>
+
+              <v-col cols="6">
+                <v-container>
+                  <v-chip-group v-model="filters.isBusy" column mandatory>
+                    <v-chip filter value="">Все</v-chip>
+                    <v-chip filter :value="false">Свободные</v-chip>
+                    <v-chip filter :value="true">Занятые</v-chip>
+                  </v-chip-group>
+                </v-container>
+              </v-col>
+
             </v-row>
             <v-row>
               <v-col cols="12">
@@ -250,7 +261,14 @@ import Loader from '@/components/TableLoader.vue'
     data() {
       return {
         apiBaseUrl: import.meta.env.VITE_API_BASE_URL,
-        filters: {},
+        filters: {
+          isBusy: ''
+        },
+        filterOptions: [
+          { title: 'Все места хранения', value: '' },
+          { title: 'Свободные', value: false },
+          { title: 'Занятые', value: true }
+        ],
         headers: [
           { title: 'ID места хранения*', key: 'storageLocationId', align: 'start', sortable: true },
           { title: 'Код стеллажа', key: 'rackCode', align: 'start', sortable: true },
@@ -270,7 +288,10 @@ import Loader from '@/components/TableLoader.vue'
     },
     methods: {
       navigateStorageLocationId(item) {
-        this.filters = {storageLocationId: item.storageLocationId}
+        this.filters = {
+          storageLocationId: item.storageLocationId,
+          isBusy: ''
+        }
         this.isEditing = true
         this.selectedStorageLocation = item
         this.applyFilters();
@@ -297,6 +318,8 @@ import Loader from '@/components/TableLoader.vue'
           data.description = this.filters.description
         if(this.filters.stockId)
           data.stockId = this.filters.stockId
+        if(this.filters.isBusy !== '')
+          data.isBusy = this.filters.isBusy
         
         try {
           const response = await api.post(url, data, {
@@ -313,7 +336,7 @@ import Loader from '@/components/TableLoader.vue'
         }
       },
       resetFilters() {
-        this.filters = {}
+        this.filters = {isBusy: ''}
         this.applyFilters();
       },
       async saveStorageLocation() {
@@ -358,7 +381,6 @@ import Loader from '@/components/TableLoader.vue'
           
           this.applyFilters();
         } catch (error) {
-          console.log('22222222222')
           console.error('Ошибка при удалении компании:', error);
         }
       },
