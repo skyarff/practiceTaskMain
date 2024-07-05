@@ -30,6 +30,12 @@ const routes = [
     component: () =>
       import("@/views/EmployeesPage.vue"),
   },
+  {
+    path: "/ProvidersPage",
+    name: "ProvidersPage",
+    component: () =>
+      import("@/views/ProvidersPage.vue"),
+  },
 ];
 
 const router = createRouter({

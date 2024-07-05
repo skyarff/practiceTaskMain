@@ -13,7 +13,7 @@
             :class="{ 'selected-row': selectedEmployee.employeeId === item.employeeId }" 
             @click="handleRowClick(item)">
               <td 
-              @dblclick="navigateCompanyId(item)" 
+              @dblclick="navigateEmployeeId(item)" 
               class="navigation-column">
                 {{ item.employeeId}}
               </td>
@@ -124,6 +124,7 @@
                 <v-text-field
                   label="ID склада"
                   v-model="filters.stockId"
+                  type="number"
                   prepend-icon="mdi-identifier"
                 ></v-text-field>
               </v-col>
@@ -131,6 +132,7 @@
               <v-col cols="12" sm="6" md="4">
                 <v-text-field
                   label="ID компании"
+                  type="number"
                   v-model="filters.companyId"
                   prepend-icon="mdi-identifier"
                 ></v-text-field>
@@ -155,12 +157,29 @@
       <!-- Секция редактирования -->
       <v-card >
         <v-card-text>
-          <v-switch
-            :model-value="isEditing"
-            color="primary"
-            label="Редактирование"
-            @click="switchEditingMode"
-          ></v-switch>
+          <v-row align="center" no-gutters>
+            <v-col class="mr-4" cols="auto">
+              <v-switch
+                :model-value="isEditing"
+                color="primary"
+                label="Редактирование"
+                @click="switchEditingMode"
+                hide-details
+              ></v-switch>
+            </v-col>
+            <v-col cols="auto">
+              <v-btn
+                icon
+                elevation="0"
+                color="grey"
+                variant="text"
+                size="x-large"
+                @click="selectedEmployee = {}"
+              >
+                <v-icon>mdi-broom</v-icon>
+              </v-btn>
+            </v-col>
+          </v-row>
         </v-card-text>
           <div v-if="selectedEmployee.employeeId !== undefined || isEditing">
             <v-card-title>Редактирование/удаление</v-card-title>
@@ -235,12 +254,12 @@
                   </v-row>
 
 
-                <v-row>
+                  <v-row>
                   <v-col>
-                    <v-btn class="mr-4" type="submit" color="primary" prepend-icon="mdi-content-save">
+                    <v-btn class="mr-4" type="submit" color="primary" prepend-icon="mdi-plus-circle">
                       Редактировать
                     </v-btn>
-                    <v-btn @click="deleteCompany" color="secondary" prepend-icon="mdi-delete">
+                    <v-btn @click="deleteEmployee" color="teal" prepend-icon="mdi-delete">
                       Удалить
                     </v-btn>
                   </v-col>
@@ -312,6 +331,7 @@
                     <v-col cols="12" sm="6" md="4">
                       <v-text-field
                         label="ID склада"
+                        type="number"
                         v-model="selectedEmployee.stockId"
                         prepend-icon="mdi-identifier"
                       ></v-text-field>
@@ -327,12 +347,12 @@
                     </v-col>
                   </v-row>
                   <v-row>
-                    <v-col>
-                      <v-btn type="submit" color="primary" prepend-icon="mdi-plus-circle">
-                        Добавить
-                      </v-btn>
-                    </v-col>
-                  </v-row>
+                  <v-col>
+                    <v-btn class="mr-4" type="submit" color="primary" prepend-icon="mdi-plus-circle">
+                      Редактировать
+                    </v-btn>
+                  </v-col>
+                </v-row>
                 </v-form>
               </v-card-text>
           </div>
@@ -473,7 +493,7 @@ import Loader from '@/components/TableLoader.vue'
           this.$store.commit('setErrorMessage', 'Не удалось установить соедение с сервером.')
         }
       },
-      async deleteCompany() {
+      async deleteEmployee() {
         try {
           await api.delete(`api/Employee/dellById?employeeId=${this.selectedEmployee.employeeId}`);
           

@@ -168,6 +168,10 @@ namespace StockService.Repository.ProviderRep
                 query = query.Where(p => EF.Functions.ILike(p.CorrespondentAccount, $"%{providerDto.CorrespondentAccount}%"));
             if (!string.IsNullOrEmpty(providerDto.ManagerFullname))
                 query = query.Where(p => EF.Functions.ILike(p.ManagerFullname, $"%{providerDto.ManagerFullname}%"));
+            if (!string.IsNullOrEmpty(providerDto.Email))
+                query = query.Where(p => EF.Functions.ILike(p.Email, $"%{providerDto.Email}%"));
+            if (!string.IsNullOrEmpty(providerDto.Phone))
+                query = query.Where(p => EF.Functions.ILike(p.Phone, $"%{providerDto.Phone}%"));
 
             var companies = await query.ToListAsync();
             if (companies.Any())

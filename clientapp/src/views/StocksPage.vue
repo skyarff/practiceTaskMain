@@ -74,12 +74,29 @@
     <!-- Секция редактирования -->
     <v-card >
       <v-card-text>
-        <v-switch
-          :model-value="isEditing"
-          color="primary"
-          label="Редактирование"
-          @click="switchEditingMode"
-        ></v-switch>
+        <v-row align="center" no-gutters>
+            <v-col class="mr-4" cols="auto">
+              <v-switch
+                :model-value="isEditing"
+                color="primary"
+                label="Редактирование"
+                @click="switchEditingMode"
+                hide-details
+              ></v-switch>
+            </v-col>
+            <v-col cols="auto">
+              <v-btn
+                icon
+                elevation="0"
+                color="grey"
+                variant="text"
+                size="x-large"
+                @click="selectedStock = {}"
+              >
+                <v-icon>mdi-broom</v-icon>
+              </v-btn>
+            </v-col>
+          </v-row>
       </v-card-text>
         <div v-if="selectedStock.stockId !== undefined || isEditing">
           <v-card-title>Редактирование/удаление</v-card-title>

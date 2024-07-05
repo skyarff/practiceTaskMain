@@ -28,20 +28,21 @@ namespace StockService.Repository.EmployeeRep
 
             if (employee != null)
             {
-                employee.Password = employeeDto.Password;
+                if (string.IsNullOrEmpty(employeeDto.Password))
+                {
+                    employee.Password = null;
+                    _response.Message = "Пароль установлен в null.";
+                }
+                else
+                {
+                    employee.Password = Sha256.ComputeSha256Hash(employeeDto.Password);
+                    _response.Message = "Пароль успешно изменен.";
+                }
 
                 await _db.SaveChangesAsync();
 
                 _response.IsSuccess = true;
                 _response.Result = employee;
-
-                _response.Message = "Пароль установлен в null.";
-
-                if (employeeDto.Password != null)
-                {
-                    _response.Message = "Пароль успешно изменен.";
-                }
-                
             }
 
             return _response;
@@ -56,6 +57,9 @@ namespace StockService.Repository.EmployeeRep
             if (!employeeIsExists)
             {
                 var employee = _mapper.Map<EmployeeDto, Employee>(employeeDto);
+
+                if (!string.IsNullOrEmpty(employeeDto.Password))
+                    employee.Password = Sha256.ComputeSha256Hash(employeeDto.Password);
 
                 if (employeeDto.Image != null && employeeDto.Image.Length > 0)
                 {
@@ -189,7 +193,7 @@ namespace StockService.Repository.EmployeeRep
                     employee.JobTitle = employeeDto.JobTitle;
 
                 if (!string.IsNullOrEmpty(employeeDto.Password))
-                    employee.Password = employeeDto.Password;
+                    employee.Password = Sha256.ComputeSha256Hash(employeeDto.Password);
 
                 if (employeeDto.Image != null && employeeDto.Image.Length > 0)
                 {
