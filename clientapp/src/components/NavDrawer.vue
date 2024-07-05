@@ -36,6 +36,7 @@
           <v-list-item prepend-icon="mdi-locker-multiple" title="Места хранения" value="storage locations" to="/StorageLocationsPage"></v-list-item>
           <v-list-item prepend-icon="mdi-account-tie" title="Сотрудники" value="employees" to="/EmployeesPage"></v-list-item>
           <v-list-item prepend-icon="mdi-truck-delivery" title="Поставщики" value="providers" to="/ProvidersPage"></v-list-item>
+          <v-list-item prepend-icon="mdi-receipt" title="Счета" value="bills" to="/BillsPage"></v-list-item>
 
         </v-list>
 

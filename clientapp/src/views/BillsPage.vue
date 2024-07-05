@@ -1,0 +1,378 @@
+<template>
+    <v-container fluid>
+      
+      <!-- Секция таблицы -->
+      <v-card v-if="!isLoading" class="mb-4">
+        <v-data-table
+          :headers="headers"
+          :items="bills"
+          class="elevation-1 bordered-table"
+        >
+          <template v-slot:item="{ item }">
+            <tr 
+            :class="{ 'selected-row': selectedBill.billId === item.billId }" 
+            @click="handleRowClick(item)">
+              <td 
+              @dblclick="navigateBillId(item)" 
+              class="navigation-column">
+                {{ item.billId}}
+              </td>
+              <td>{{ item.billNumber }}</td>
+              <td>
+                  <div v-if="item.billPdfPath">
+                    <v-img 
+                    :src="`${apiBaseUrl}//${item.billPdfPath}`"
+                    class="full-size-image"
+                    style="max-width: 40px; max-height: 40px"
+                  ></v-img>
+                  <v-tooltip 
+                    activator="parent" 
+                    location="start"
+                    content-class="image-tooltip"
+                  >
+                    <v-img
+                      :src="`${apiBaseUrl}//${item.billPdfPath}`"
+                      class="full-size-image"
+                    ></v-img>
+                  </v-tooltip>
+                  </div>
+                  <div v-else>
+                    <v-icon>
+                      mdi-image
+                    </v-icon>
+                  </div>
+              </td>
+              <td>{{ item.providerId }}</td>
+            </tr>
+          </template>
+        </v-data-table>
+      </v-card>
+  
+      <Loader v-else />
+
+      <!-- Секция фильтров -->
+      <v-expansion-panels class="mb-4">
+        <v-expansion-panel>
+          <v-expansion-panel-title>
+            <v-icon start icon="mdi-filter"></v-icon>
+            Фильтры
+          </v-expansion-panel-title>
+          <v-expansion-panel-text class="pt-6">
+            <v-row>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field
+                  label="ID счета"
+                  v-model="filters.billId"
+                  type="number"
+                  prepend-icon="mdi-identifier"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field
+                  label="Номер счета"
+                  v-model="filters.billNumber"
+                  prepend-icon="mdi-domain"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field
+                  label="ID провайдера"
+                  v-model="filters.providerId"
+                  prepend-icon="mdi-card-account-details"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-btn class="mr-4" color="primary" @click="applyFilters" prepend-icon="mdi-magnify">
+                  Применить фильтры
+                </v-btn>
+                <v-btn color="secondary" @click="resetFilters" prepend-icon="mdi-eraser">
+                  Очистить фильтры
+                </v-btn>
+              </v-col>
+            </v-row>
+          </v-expansion-panel-text>
+        </v-expansion-panel>
+      </v-expansion-panels>
+  
+      <!-- Секция редактирования -->
+      <v-card >
+        <v-card-text>
+          <v-row align="center" no-gutters>
+            <v-col class="mr-4" cols="auto">
+              <v-switch
+                :model-value="isEditing"
+                color="primary"
+                label="Редактирование"
+                @click="switchEditingMode"
+                hide-details
+              ></v-switch>
+            </v-col>
+            <v-col cols="auto">
+              <v-btn
+                icon
+                elevation="0"
+                color="grey"
+                variant="text"
+                size="x-large"
+                @click="selectedBill = {}"
+              >
+                <v-icon>mdi-broom</v-icon>
+              </v-btn>
+            </v-col>
+          </v-row>
+          
+        </v-card-text>
+          <div v-if="selectedBill.billId !== undefined || isEditing">
+            <v-card-title>Редактирование/удаление</v-card-title>
+            <v-card-text>
+              <v-form @submit.prevent="saveBill">
+                <v-row>
+                  <v-col cols="12" sm="6">
+                    <v-text-field
+                      v-model="selectedBill.billId"
+                      label="ID счета"
+                      type="number"
+                      prepend-icon="mdi-identifier"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6">
+                    <v-text-field
+                      v-model="selectedBill.billNumber"
+                      label="Номер счета"
+                      prepend-icon="mdi-domain"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+                <v-row>
+                    <v-col cols="12" sm="6">
+                    <v-file-input
+                      v-model="selectedBill.billPdf"
+                      label="Скан PDF счета"
+                      accept="image/*"
+                      prepend-icon="mdi-image"
+                    ></v-file-input>
+                  </v-col>
+                  <v-col cols="12" sm="6">
+                    <v-text-field
+                      v-model="selectedBill.providerId"
+                      label="ID поставщика"
+                      type="number"
+                      prepend-icon="mdi-card-account-details"
+                    ></v-text-field>
+                  </v-col>
+                  
+                </v-row>
+                <v-row>
+                  <v-col>
+                    <v-btn class="mr-4" type="submit" color="primary" prepend-icon="mdi-content-save">
+                      Редактировать
+                    </v-btn>
+                    <v-btn @click="deleteBill" color="secondary" prepend-icon="mdi-delete">
+                      Удалить
+                    </v-btn>
+                  </v-col>
+                </v-row>
+              </v-form>
+            </v-card-text>
+          </div>
+          <div v-else>
+            <v-card-title>Добавление</v-card-title>
+              <v-card-text>
+                <v-form @submit.prevent="saveBill">
+                  <v-row>
+                    <v-col cols="4">
+                      <v-text-field
+                        v-model="selectedBill.billNumber"
+                        label="Номер счета*"
+                        prepend-icon="mdi-domain"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="4">
+                      <v-file-input
+                        v-model="selectedBill.billPdf"
+                        label="Скан PDF счета*"
+                        accept="image/*"
+                        prepend-icon="mdi-image"
+                      ></v-file-input>
+                    </v-col>
+                    <v-col cols="4">
+                      <v-text-field
+                        v-model="selectedBill.providerId"
+                        label="ID поставщика*"
+                        type="number"
+                        prepend-icon="mdi-domain"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+                  
+                  <v-row>
+                    <v-col>
+                      <v-btn class="mr-4" type="submit" color="primary" prepend-icon="mdi-plus-circle">
+                        Добавить
+                      </v-btn>
+                    </v-col>
+                  </v-row>
+                </v-form>
+              </v-card-text>
+          </div>
+      </v-card>
+
+    </v-container>
+  </template>
+  
+
+ 
+
+
+<script>
+import api from '@/api';
+import Loader from '@/components/TableLoader.vue'
+
+  export default {
+    components: {
+      Loader
+    },
+    data() {
+      return {
+        apiBaseUrl: import.meta.env.VITE_API_BASE_URL,
+        filters: {},
+        headers: [
+          { title: 'ID счета*', key: 'billId', align: 'start', sortable: true },
+          { title: 'Номер счёта', key: 'billNumber', align: 'start', sortable: true },
+          { title: 'Скан. PDF счета', key: 'billPdfPath', align: 'start', sortable: true },
+          { title: 'ID провайдера*', key: 'providerId', align: 'start', sortable: false },
+        ],
+        bills: [],
+        selectedBill: {},
+        isEditing: false,
+        isLoading: true
+      }
+    },
+    mounted() {
+      this.applyFilters();
+    },
+    methods: {
+      navigateBillId(item) {
+        this.filters = {billId: item.billId}
+        this.isEditing = true
+        this.selectedBill = item
+        this.applyFilters();
+        window.scrollTo(0, document.body.scrollHeight);
+      },
+      switchEditingMode() {
+          this.isEditing = !this.isEditing
+          if (!this.isEditing) {
+            this.selectedBill.billId = undefined
+          }
+      },
+      async applyFilters() {
+        this.isLoading = true;
+        const url = '/api/Bill/getBillsFiltered';
+        const data = {}
+
+        if(this.filters.billId)
+          data.billId = this.filters.billId
+        if(this.filters.billNumber)
+          data.billNumber = this.filters.billNumber
+        if(this.filters.providerId)
+          data.providerId = this.filters.providerId
+        
+        try {
+          const response = await api.post(url, data, {
+            headers: {
+              'accept': '*/*',
+              'Content-Type': 'application/json'
+            }
+          });
+          this.bills = Array.from(response.data.result);
+        } catch (error) {
+          this.$store.commit('setErrorMessage', 'Не удалось установить соедение с сервером.')
+        } finally {
+          this.isLoading = false;
+        }
+      },
+      resetFilters() {
+        this.filters = {}
+        this.applyFilters();
+      },
+      async saveBill() {
+        const formData = new FormData();
+        if(this.selectedBill.billId)
+          formData.append('BillId', this.selectedBill.billId);
+        if(this.selectedBill.billNumber)
+          formData.append('BillNumber', this.selectedBill.billNumber);
+        if(this.selectedBill.providerId)
+          formData.append('ProviderId', this.selectedBill.providerId);
+        if (this.selectedBill.billPdf)
+          formData.append('BillPdf', this.selectedBill.billPdf);
+
+        try {
+          let response;
+          if (this.selectedBill.billId !== undefined || this.isEditing) {
+            response = await api.put('api/Bill/update', formData, {
+              headers: {
+                'Content-Type': 'multipart/form-data'
+              }
+            });
+          } else {
+            response = await api.post('api/Bill/Create', formData, {
+              headers: {
+                'Content-Type': 'multipart/form-data'
+              }
+            });
+          } 
+          
+          this.applyFilters();
+        } catch (error) {
+          this.$store.commit('setErrorMessage', 'Не удалось установить соедение с сервером.')
+        }
+      },
+      async deleteBill() {
+        try {
+          await api.delete(`/api/Bill/delById?billId=${this.selectedBill.billId}`);
+          
+          this.applyFilters();
+        } catch (error) {
+          this.$store.commit('setErrorMessage', 'Не удалось установить соедение с сервером.')
+        }
+      },
+      async handleRowClick(item) {
+        
+        if (this.selectedBill.billId === item.billId) {
+          delete this.selectedBill.billId
+          this.isEditing = false
+        } else {
+          this.selectedBill = {...item};
+          this.isEditing = true
+        }
+      }
+  },
+}
+</script>
+
+
+<style scoped>
+.selected-row {
+  outline: 2px solid rgba(130, 184, 179, 0.81);
+  outline-offset: -2px;
+  border-radius: 0%;
+}
+.navigation-column {
+  background-color: rgba(234, 234, 234, 0.21);
+}
+.bordered-table :deep() td {
+  border-right: 1px solid rgba(222, 222, 222, 0.22);
+}
+
+:deep(.image-tooltip) {
+  padding: 0 !important;
+  background-color: transparent !important;
+  opacity: 1 !important;
+}
+
+.full-size-image {
+  width: 200px;
+  height: 200px; 
+  object-fit: cover;
+}
+</style>

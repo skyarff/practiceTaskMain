@@ -3,7 +3,6 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using StockService.Models;
 using StockService.Models.dto;
-using System.Text.RegularExpressions;
 
 namespace StockService.Repository.BillRep
 {
@@ -171,10 +170,12 @@ namespace StockService.Repository.BillRep
                 query = query.Where(b => b.BillId == billDto.BillId);
 
             if (!string.IsNullOrEmpty(billDto.BillNumber))
-                query = query.Where(b => b.BillNumber == billDto.BillNumber);
+                query = query.Where(b => EF.Functions.ILike(b.BillNumber, $"%{billDto.BillNumber}%"));
+
             if (billDto.ProviderId != null)
                 query = query.Where(b => b.ProviderId == billDto.ProviderId);
 
+            
 
             if (billDto.LowerBillTotalLimit != null)
                 query = query.Where(b => b.BillTotal >= billDto.LowerBillTotalLimit);
@@ -187,11 +188,11 @@ namespace StockService.Repository.BillRep
             if (billDto.EndDate != null)
                 query = query.Where(b => b.CreateDate <= billDto.EndDate.Value);
 
-            var companies = await query.ToListAsync();
-            if (companies.Any())
+            var bills = await query.ToListAsync();
+            if (bills.Any())
             {
                 _response.IsSuccess = true;
-                _response.Result = companies;
+                _response.Result = bills;
                 _response.Message = "Счета успешно найдены по указанным критериям.";
             }
 
