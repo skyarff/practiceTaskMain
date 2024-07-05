@@ -133,7 +133,7 @@
                   <v-col cols="12" sm="6">
                     <v-text-field
                       v-model="selectedStock.name"
-                      label="Название"
+                      label="Название*"
                       prepend-icon="mdi-package-variant-closed"
                     ></v-text-field>
                   </v-col>
@@ -229,7 +229,7 @@ export default {
         });
         this.stocks = Array.from(response.data.result);
       } catch (error) {
-        console.error('Ошибка при выполнении запроса:', error);
+        this.$store.commit('setErrorMessage', 'Не удалось установить соедение с сервером.')
       } finally {
         this.isLoading = false;
       }
@@ -267,7 +267,7 @@ export default {
         
         this.applyFilters();
       } catch (error) {
-        console.error('Ошибка при сохранении компании:', error);
+        this.$store.commit('setErrorMessage', 'Не удалось установить соедение с сервером.')
       }
     },
     async deleteStock() {
@@ -276,7 +276,7 @@ export default {
         
         this.applyFilters();
       } catch (error) {
-        console.error('Ошибка при удалении компании:', error);
+        this.$store.commit('setErrorMessage', 'Не удалось установить соедение с сервером.')
       }
     },
     async handleRowClick(item) {

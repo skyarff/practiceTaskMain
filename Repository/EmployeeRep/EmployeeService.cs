@@ -3,8 +3,7 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using StockService.Models;
 using StockService.Models.dto;
-using System.ComponentModel.Design;
-using System.Text.RegularExpressions;
+
 
 namespace StockService.Repository.EmployeeRep
 {

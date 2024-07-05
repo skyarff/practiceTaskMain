@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace StockService.Models.dto
+﻿namespace StockService.Models.dto
 {
     public class EmployeeDto
     {

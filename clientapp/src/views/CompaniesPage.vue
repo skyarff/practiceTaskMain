@@ -20,13 +20,13 @@
               <td>{{ item.name }}</td>
               <td>{{ item.inn }}</td>
               <td>
-                  <v-img v-if="item.logoPath"
+                  <div v-if="item.logoPath">
+                    <v-img 
                     :src="`${apiBaseUrl}//${item.logoPath}`"
                     class="full-size-image"
                     style="max-width: 40px; max-height: 40px"
                   ></v-img>
                   <v-tooltip 
-                    v-if="item.logoPath"
                     activator="parent" 
                     location="start"
                     content-class="image-tooltip"
@@ -36,6 +36,12 @@
                       class="full-size-image"
                     ></v-img>
                   </v-tooltip>
+                  </div>
+                  <div v-else>
+                    <v-icon>
+                      mdi-image
+                    </v-icon>
+                  </div>
               </td>
             </tr>
           </template>
@@ -157,7 +163,7 @@
                     <v-col cols="12" sm="6">
                       <v-text-field
                         v-model="selectedCompany.name"
-                        label="Название"
+                        label="Название*"
                         prepend-icon="mdi-domain"
                       ></v-text-field>
                     </v-col>
@@ -260,7 +266,7 @@ import Loader from '@/components/TableLoader.vue'
           });
           this.companies = Array.from(response.data.result);
         } catch (error) {
-          console.error('Ошибка при выполнении запроса:', error);
+          this.$store.commit('setErrorMessage', 'Не удалось установить соедение с сервером.')
         } finally {
           this.isLoading = false;
         }
@@ -298,7 +304,7 @@ import Loader from '@/components/TableLoader.vue'
           
           this.applyFilters();
         } catch (error) {
-          console.error('Ошибка при сохранении компании:', error);
+          this.$store.commit('setErrorMessage', 'Не удалось установить соедение с сервером.')
         }
       },
       async deleteCompany() {
@@ -307,7 +313,7 @@ import Loader from '@/components/TableLoader.vue'
           
           this.applyFilters();
         } catch (error) {
-          console.error('Ошибка при удалении компании:', error);
+          this.$store.commit('setErrorMessage', 'Не удалось установить соедение с сервером.')
         }
       },
       async handleRowClick(item) {

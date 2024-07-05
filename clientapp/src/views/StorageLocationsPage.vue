@@ -21,13 +21,13 @@
               <td>{{ item.shelfCode }}</td>
               <td>{{ item.description }}</td>
               <td>
-                  <v-img v-if="item.imagePath"
+                  <div v-if="item.imagePath">
+                    <v-img 
                     :src="`${apiBaseUrl}//${item.imagePath}`"
                     class="full-size-image"
                     style="max-width: 40px; max-height: 40px"
                   ></v-img>
                   <v-tooltip 
-                    v-if="item.imagePath"
                     activator="parent" 
                     location="start"
                     content-class="image-tooltip"
@@ -37,6 +37,12 @@
                       class="full-size-image"
                     ></v-img>
                   </v-tooltip>
+                  </div>
+                  <div v-else>
+                    <v-icon>
+                      mdi-image
+                    </v-icon>
+                  </div>
               </td>
               <td>{{ item.stockId }}</td>
             </tr>
@@ -188,14 +194,14 @@
                     <v-col cols="12" sm="6">
                       <v-text-field
                         v-model="selectedStorageLocation.rackCode"
-                        label="Код стеллажа"
+                        label="Код стеллажа*"
                         prepend-icon="mdi-file-cabinet"
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="6">
                       <v-text-field
                         v-model="selectedStorageLocation.shelfCode"
-                        label="Код полки"
+                        label="Код полки*"
                         prepend-icon="mdi-bookshelf"
                       ></v-text-field>
                     </v-col>
@@ -224,7 +230,7 @@
                     <v-col cols="6" sm="6">
                       <v-text-field
                         v-model="selectedStorageLocation.stockId"
-                        label="ID склада"
+                        label="ID склада*"
                         prepend-icon="mdi-identifier"
                       ></v-text-field>
                     </v-col>
@@ -330,7 +336,7 @@ import Loader from '@/components/TableLoader.vue'
           });
           this.storageLocations = Array.from(response.data.result);
         } catch (error) {
-          console.error('Ошибка при выполнении запроса:', error.data);
+          this.$store.commit('setErrorMessage', 'Не удалось установить соедение с сервером.')
         } finally {
           this.isLoading = false;
         }
@@ -372,7 +378,7 @@ import Loader from '@/components/TableLoader.vue'
           
           this.applyFilters();
         } catch (error) {
-          console.error('Ошибка при сохранении компании:', error);
+          this.$store.commit('setErrorMessage', 'Не удалось установить соедение с сервером.')
         }
       },
       async deleteStorageLocation() {
@@ -381,7 +387,7 @@ import Loader from '@/components/TableLoader.vue'
           
           this.applyFilters();
         } catch (error) {
-          console.error('Ошибка при удалении компании:', error);
+          this.$store.commit('setErrorMessage', 'Не удалось установить соедение с сервером.')
         }
       },
       async handleRowClick(item) {

@@ -21,7 +21,6 @@
               <td>{{ item.jobTitle }}</td>
 
               <td>{{ item.login }}</td>
-              <td>{{ item.password }}</td>
               <td>
                   <div v-if="item.imagePath">
                     <v-img 
@@ -78,7 +77,7 @@
               <v-col cols="12" sm="6" md="4">
                 <v-text-field
                   label="ФИО"
-                  v-model="filters.name"
+                  v-model="filters.fullName"
                   prepend-icon="mdi-account"
                 ></v-text-field>
               </v-col>
@@ -103,22 +102,12 @@
 
               <v-col cols="12" sm="6" md="4">
                 <v-text-field
-                  label="Пароль"
-                  v-model="filters.password"
-                  prepend-icon="mdi-account-key"
-                ></v-text-field>
-              </v-col>
-
-              <v-col cols="12" sm="6" md="4">
-                <v-text-field
                   label="Почта"
                   v-model="filters.email"
                   prepend-icon="mdi-email"
                 ></v-text-field>
               </v-col>
-            </v-row>
 
-            <v-row>
               <v-col cols="12" sm="6" md="4">
                 <v-text-field
                   label="Телефон"
@@ -127,6 +116,10 @@
                 ></v-text-field>
               </v-col>
 
+            </v-row>
+
+            <v-row>
+              
               <v-col cols="12" sm="6" md="4">
                 <v-text-field
                   label="ID склада"
@@ -172,7 +165,7 @@
           <div v-if="selectedEmployee.employeeId !== undefined || isEditing">
             <v-card-title>Редактирование/удаление</v-card-title>
             <v-card-text>
-              <v-form @submit.prevent="saveCompany">
+              <v-form @submit.prevent="saveEmployee">
 
                 <v-row>
                     <v-col cols="12" sm="6" md="4">
@@ -187,7 +180,7 @@
                     <v-col cols="12" sm="6" md="4">
                       <v-text-field
                         label="ФИО"
-                        v-model="selectedEmployee.name"
+                        v-model="selectedEmployee.fullName"
                         prepend-icon="mdi-account"
                       ></v-text-field>
                     </v-col>
@@ -202,11 +195,20 @@
                   </v-row>
                   
                   <v-row>
+
                     <v-col cols="12" sm="6" md="4">
                       <v-text-field
-                        label="Логин"
-                        v-model="selectedEmployee.login"
-                        prepend-icon="mdi-account-circle"
+                        label="Почта"
+                        v-model="selectedEmployee.email"
+                        prepend-icon="mdi-email"
+                      ></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field
+                        label="Телефон"
+                        v-model="selectedEmployee.phone"
+                        prepend-icon="mdi-phone"
                       ></v-text-field>
                     </v-col>
 
@@ -218,42 +220,21 @@
                       ></v-text-field>
                     </v-col>
 
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field
-                        label="Почта"
-                        v-model="selectedEmployee.email"
-                        prepend-icon="mdi-email"
-                      ></v-text-field>
-                    </v-col>
                   </v-row>
 
                   <v-row>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field
-                        label="Телефон"
-                        v-model="selectedEmployee.phone"
-                        prepend-icon="mdi-phone"
-                      ></v-text-field>
-                    </v-col>
 
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field
-                        label="ID склада"
-                        v-model="selectedEmployee.stockId"
-                        prepend-icon="mdi-identifier"
-                      ></v-text-field>
-                    </v-col>
-
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field
-                        label="ID компании"
-                        v-model="selectedEmployee.companyId"
-                        prepend-icon="mdi-identifier"
-                      ></v-text-field>
+                    <v-col cols="4" sm="4">
+                      <v-file-input
+                        v-model="selectedEmployee.image"
+                        label="Фото сотрудника"
+                        accept="image/*"
+                        prepend-icon="mdi-image"
+                      ></v-file-input>
                     </v-col>
                   </v-row>
 
-                
+
                 <v-row>
                   <v-col>
                     <v-btn class="mr-4" type="submit" color="primary" prepend-icon="mdi-content-save">
@@ -276,7 +257,7 @@
 
                     <v-col cols="12" sm="6" md="4">
                       <v-text-field
-                        label="ФИО"
+                        label="ФИО*"
                         v-model="selectedEmployee.fullName"
                         prepend-icon="mdi-account"
                       ></v-text-field>
@@ -284,7 +265,7 @@
 
                     <v-col cols="12" sm="6" md="4">
                       <v-text-field
-                        label="Должность"
+                        label="Должность*"
                         v-model="selectedEmployee.jobTitle"
                         prepend-icon="mdi-briefcase"
                       ></v-text-field>
@@ -292,7 +273,7 @@
 
                     <v-col cols="12" sm="6" md="4">
                       <v-text-field
-                        label="Логин"
+                        label="Логин*"
                         v-model="selectedEmployee.login"
                         prepend-icon="mdi-account-circle"
                       ></v-text-field>
@@ -345,11 +326,6 @@
                       ></v-file-input>
                     </v-col>
                   </v-row>
-
-
-
-
-
                   <v-row>
                     <v-col>
                       <v-btn type="submit" color="primary" prepend-icon="mdi-plus-circle">
@@ -386,7 +362,6 @@ import Loader from '@/components/TableLoader.vue'
           { title: 'ФИО', key: 'fullName', align: 'start', sortable: true },
           { title: 'Должность', key: 'jobTitile', align: 'start', sortable: true },
           { title: 'Логин', key: 'login', align: 'start', sortable: true },
-          { title: 'Пароль', key: 'password', align: 'start', sortable: true },
           { title: 'Фото сотудника', key: 'imagePath', align: 'start', sortable: false },
           { title: 'ID склада*', key: 'stockId', align: 'start', sortable: true },
           { title: 'Почта', key: 'email', align: 'start', sortable: true },
@@ -424,17 +399,17 @@ import Loader from '@/components/TableLoader.vue'
           data.employeeId = this.filters.employeeId
         if(this.filters.login)
           data.login = this.filters.login
-        if(this.filters.fullname)
-          data.fullname = this.filters.fullname
-        if(this.filters.jobtitle)
-          data.jobtitle = this.filters.jobtitle
+        if(this.filters.fullName)
+          data.fullName = this.filters.fullName
+        if(this.filters.jobTitle)
+          data.jobTitle = this.filters.jobTitle
         if(this.filters.email)
           data.email = this.filters.email
         if(this.filters.phone)
           data.phone = this.filters.phone
 
         if(this.filters.stockId)
-          data.companyId = this.filters.companyId
+          data.stockId = this.filters.stockId
         if(this.filters.companyId)
           data.companyId = this.filters.companyId
         
@@ -447,7 +422,7 @@ import Loader from '@/components/TableLoader.vue'
           });
           this.employees = Array.from(response.data.result);
         } catch (error) {
-          console.error('Ошибка при выполнении запроса:', error);
+          this.$store.commit('setErrorMessage', 'Не удалось установить соедение с сервером.')
         } finally {
           this.isLoading = false;
         }
@@ -495,7 +470,7 @@ import Loader from '@/components/TableLoader.vue'
           
           this.applyFilters();
         } catch (error) {
-          console.error('Ошибка при сохранении компании:', error);
+          this.$store.commit('setErrorMessage', 'Не удалось установить соедение с сервером.')
         }
       },
       async deleteCompany() {
@@ -504,7 +479,7 @@ import Loader from '@/components/TableLoader.vue'
           
           this.applyFilters();
         } catch (error) {
-          console.error('Ошибка при удалении компании:', error);
+          this.$store.commit('setErrorMessage', 'Не удалось установить соедение с сервером.')
         }
       },
       async handleRowClick(item) {
@@ -514,6 +489,7 @@ import Loader from '@/components/TableLoader.vue'
           this.isEditing = false
         } else {
           this.selectedEmployee = {...item};
+          delete this.selectedEmployee.password
           this.isEditing = true
         }
       }
