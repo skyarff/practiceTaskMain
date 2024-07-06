@@ -94,6 +94,7 @@ namespace StockService.Repository.BillRep
 
         public async Task<Response> GetBillsInRangeAsync(BillDto billDto)
         {
+
             var query = _db.Bills.AsQueryable();
 
             if (billDto.StartDate != null)
@@ -102,8 +103,8 @@ namespace StockService.Repository.BillRep
             if (billDto.EndDate != null)
                 query = query.Where(b => b.CreateDate <= billDto.EndDate.Value);
 
-            bool ascending = billDto.Ascending == null ? true : (bool)billDto.Ascending;
-            query = ascending
+            //bool ascending = billDto.Ascending == null ? true : (bool)billDto.Ascending;
+            query = true
                 ? query.OrderBy(b => b.CreateDate)
                 : query.OrderByDescending(b => b.CreateDate);
 

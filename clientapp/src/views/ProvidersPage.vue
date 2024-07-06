@@ -504,7 +504,7 @@ import Loader from '@/components/TableLoader.vue'
           });
           this.providers = Array.from(response.data.result);
         } catch (error) {
-          this.$store.commit('setErrorMessage', 'Не удалось установить соедение с сервером.')
+          this.$store.commit('setErrorMessage', error)
         } finally {
           this.isLoading = false;
         }
@@ -540,15 +540,14 @@ import Loader from '@/components/TableLoader.vue'
           data.phone = this.selectedProvider.phone
 
         try {
-          let response;
           if (this.selectedProvider.providerId !== undefined || this.isEditing) {
-            response = await api.put('api/Provider/update', data, {
+            await api.put('api/Provider/update', data, {
               headers: {
                 'Content-Type': 'application/json'
               }
             });
           } else {
-            response = await api.post('api/Provider/Create', data, {
+            await api.post('api/Provider/Create', data, {
               headers: {
                 'Content-Type': 'application/json'
               }
@@ -557,7 +556,7 @@ import Loader from '@/components/TableLoader.vue'
           
           this.applyFilters();
         } catch (error) {
-          this.$store.commit('setErrorMessage', 'Не удалось установить соедение с сервером.')
+          this.$store.commit('setErrorMessage', error)
         }
       },
       async deleteProvider() {
@@ -566,7 +565,7 @@ import Loader from '@/components/TableLoader.vue'
           
           this.applyFilters();
         } catch (error) {
-          this.$store.commit('setErrorMessage', 'Не удалось установить соедение с сервером.')
+          this.$store.commit('setErrorMessage', error)
         }
       },
       async handleRowClick(item) {

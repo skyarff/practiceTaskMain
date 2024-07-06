@@ -75,10 +75,10 @@ namespace StockService.Controllers
         {
             try
             {
-                var updDto = new UpdDto { StartDate = startDate, EndDate = endDate, Ascending = ascending };
+                //var updDto = new UpdDto { StartDate = startDate, EndDate = endDate, Ascending = ascending };
 
-                _response = await _updService.GetUpdsInRangeAsync(updDto);
-                if (_response.IsSuccess) return Ok(_response);
+                //_response = await _updService.GetUpdsInRangeAsync(updDto);
+                //if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }
             catch (Exception ex)

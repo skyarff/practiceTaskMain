@@ -44,6 +44,7 @@ namespace StockService.Repository.ProductRep
                     product.ImagePath = filePath;
                 }
 
+                product.CreateDate = DateTime.UtcNow;
                 _db.Products.Add(product);
                 await _db.SaveChangesAsync();
 
@@ -120,7 +121,6 @@ namespace StockService.Repository.ProductRep
                 if (productDto.ProductCategoryId != null)
                 {
                     var pc = await _db.ProductCategories.FindAsync(productDto.ProductCategoryId);
-
                     if (pc != null) product.ProductCategoryId = productDto.ProductCategoryId;
                 }
                   

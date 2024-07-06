@@ -356,7 +356,7 @@ import Loader from '@/components/TableLoader.vue'
           });
           this.storageLocations = Array.from(response.data.result);
         } catch (error) {
-          this.$store.commit('setErrorMessage', 'Не удалось установить соедение с сервером.')
+          this.$store.commit('setErrorMessage', error)
         } finally {
           this.isLoading = false;
         }
@@ -381,15 +381,14 @@ import Loader from '@/components/TableLoader.vue'
           formData.append('StockId', this.selectedStorageLocation.stockId);
 
         try {
-          let response;
           if (this.selectedStorageLocation.storageLocationId !== undefined || this.isEditing) {
-            response = await api.put('/api/StorageLocation/update', formData, {
+            await api.put('/api/StorageLocation/update', formData, {
               headers: {
                 'Content-Type': 'multipart/form-data'
               }
             });
           } else {
-            response = await api.post('/api/StorageLocation/create', formData, {
+            await api.post('/api/StorageLocation/create', formData, {
               headers: {
                 'Content-Type': 'multipart/form-data'
               }
@@ -398,7 +397,7 @@ import Loader from '@/components/TableLoader.vue'
           
           this.applyFilters();
         } catch (error) {
-          this.$store.commit('setErrorMessage', 'Не удалось установить соедение с сервером.')
+          this.$store.commit('setErrorMessage', error)
         }
       },
       async deleteStorageLocation() {
@@ -407,7 +406,7 @@ import Loader from '@/components/TableLoader.vue'
           
           this.applyFilters();
         } catch (error) {
-          this.$store.commit('setErrorMessage', 'Не удалось установить соедение с сервером.')
+          this.$store.commit('setErrorMessage', error)
         }
       },
       async handleRowClick(item) {

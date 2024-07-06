@@ -14,6 +14,5 @@ namespace StockService.Models.dto
         public decimal? BillTotal { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
-        public bool? Ascending { get; set; }
     }
 }

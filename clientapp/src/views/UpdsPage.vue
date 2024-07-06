@@ -5,24 +5,23 @@
       <v-card v-if="!isLoading" class="mb-4">
         <v-data-table
           :headers="headers"
-          :items="companies"
+          :items="upds"
           class="elevation-1 bordered-table"
         >
           <template v-slot:item="{ item }">
             <tr 
-            :class="{ 'selected-row': selectedCompany.companyId === item.companyId }" 
+            :class="{ 'selected-row': selectedUpd.updId === item.updId }" 
             @click="handleRowClick(item)">
               <td 
-              @dblclick="navigateCompanyId(item)" 
+              @dblclick="navigateUpdId(item)" 
               class="navigation-column">
-                {{ item.companyId}}
+                {{ item.updId}}
               </td>
-              <td>{{ item.name }}</td>
-              <td>{{ item.inn }}</td>
+              <td>{{ item.documentNumber }}</td>
               <td>
-                  <div v-if="item.logoPath">
+                  <div v-if="item.updPdfPath">
                     <v-img 
-                    :src="`${apiBaseUrl}//${item.logoPath}`"
+                    :src="`${apiBaseUrl}//${item.updPdfPath}`"
                     class="full-size-image"
                     style="max-width: 40px; max-height: 40px"
                   ></v-img>
@@ -32,7 +31,7 @@
                     content-class="image-tooltip"
                   >
                     <v-img
-                      :src="`${apiBaseUrl}//${item.logoPath}`"
+                      :src="`${apiBaseUrl}//${item.updPdfPath}`"
                       class="full-size-image"
                     ></v-img>
                   </v-tooltip>
@@ -43,6 +42,8 @@
                     </v-icon>
                   </div>
               </td>
+              <td>{{ item.providerId }}</td>
+              <td>{{ formatDate(item.createDate) }}</td>
             </tr>
           </template>
         </v-data-table>
@@ -61,26 +62,49 @@
             <v-row>
               <v-col cols="12" sm="6" md="4">
                 <v-text-field
-                  label="ID компании"
-                  v-model="filters.companyId"
+                  label="ID УПД"
+                  v-model="filters.updId"
                   type="number"
                   prepend-icon="mdi-identifier"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="6" md="4">
                 <v-text-field
-                  label="Название компании"
-                  v-model="filters.name"
-                  prepend-icon="mdi-domain"
+                  label="Номер документа"
+                  v-model="filters.documentNumber"
+                  prepend-icon="mdi-file-document-outline"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="6" md="4">
                 <v-text-field
-                  label="ИНН"
-                  v-model="filters.inn"
-                  prepend-icon="mdi-card-account-details"
+                  label="ID провайдера"
+                  v-model="filters.providerId"
+                  prepend-icon="mdi-identifier"
                 ></v-text-field>
               </v-col>
+            </v-row>
+
+            <v-row>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field
+                  label="От даты и времени"
+                  v-model="filters.startDate"
+                  type="datetime-local"
+                  prepend-icon="mdi-calendar-clock"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field
+                  label="До даты и времени"
+                  v-model="filters.endDate"
+                  type="datetime-local"
+                  prepend-icon="mdi-calendar-clock"
+                ></v-text-field>
+              </v-col>
+
+            </v-row>
+
+            <v-row>
               <v-col cols="12">
                 <v-btn class="mr-4" color="primary" @click="applyFilters" prepend-icon="mdi-magnify">
                   Применить фильтры
@@ -102,7 +126,7 @@
               <v-switch
                 :model-value="isEditing"
                 color="primary"
-                label="Редактирование"
+                label="Удаление"
                 @click="switchEditingMode"
                 hide-details
               ></v-switch>
@@ -114,7 +138,7 @@
                 color="grey"
                 variant="text"
                 size="x-large"
-                @click="selectedCompany = {}"
+                @click="selectedUpd = {}"
               >
                 <v-icon>mdi-broom</v-icon>
               </v-btn>
@@ -122,50 +146,24 @@
           </v-row>
           
         </v-card-text>
-          <div v-if="selectedCompany.companyId !== undefined || isEditing">
-            <v-card-title>Редактирование/удаление</v-card-title>
+          <div v-if="selectedUpd.updId !== undefined || isEditing">
+            <v-card-title>Удаление</v-card-title>
             <v-card-text>
-              <v-form @submit.prevent="saveCompany">
+              <v-form @submit.prevent="saveUpd">
                 <v-row>
                   <v-col cols="12" sm="6">
                     <v-text-field
-                      v-model="selectedCompany.companyId"
-                      label="ID компании"
+                      v-model="selectedUpd.updId"
+                      label="ID УПД"
                       type="number"
                       prepend-icon="mdi-identifier"
                     ></v-text-field>
                   </v-col>
-                  <v-col cols="12" sm="6">
-                    <v-text-field
-                      v-model="selectedCompany.name"
-                      label="Название"
-                      prepend-icon="mdi-domain"
-                    ></v-text-field>
-                  </v-col>
                 </v-row>
-                <v-row>
-                  <v-col cols="12" sm="6">
-                    <v-text-field
-                      v-model="selectedCompany.inn"
-                      label="ИНН"
-                      prepend-icon="mdi-card-account-details"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6">
-                    <v-file-input
-                      v-model="selectedCompany.image"
-                      label="Логотип"
-                      accept="image/*"
-                      prepend-icon="mdi-image"
-                    ></v-file-input>
-                  </v-col>
-                </v-row>
+
                 <v-row>
                   <v-col>
-                    <v-btn class="mr-4" type="submit" color="primary" prepend-icon="mdi-content-save">
-                      Редактировать
-                    </v-btn>
-                    <v-btn @click="deleteCompany" color="secondary" prepend-icon="mdi-delete">
+                    <v-btn @click="deleteUpd" color="secondary" prepend-icon="mdi-delete">
                       Удалить
                     </v-btn>
                   </v-col>
@@ -176,33 +174,33 @@
           <div v-else>
             <v-card-title>Добавление</v-card-title>
               <v-card-text>
-                <v-form @submit.prevent="saveCompany">
+                <v-form @submit.prevent="saveUpd">
                   <v-row>
-                    <v-col cols="12" sm="6">
+                    <v-col cols="4">
                       <v-text-field
-                        v-model="selectedCompany.name"
-                        label="Название*"
-                        prepend-icon="mdi-domain"
+                        v-model="selectedUpd.documentNumber"
+                        label="Номер документа*"
+                        prepend-icon="mdi-file-document-outline"
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="12" sm="6">
-                      <v-text-field
-                        v-model="selectedCompany.inn"
-                        label="ИНН"
-                        prepend-icon="mdi-card-account-details"
-                      ></v-text-field>
-                    </v-col>
-                  </v-row>
-                  <v-row>
-                    <v-col cols="12">
+                    <v-col cols="4">
                       <v-file-input
-                        v-model="selectedCompany.image"
-                        label="Логотип"
+                        v-model="selectedUpd.updPdf"
+                        label="Скан PDF УПД*"
                         accept="image/*"
                         prepend-icon="mdi-image"
                       ></v-file-input>
                     </v-col>
+                    <v-col cols="4">
+                      <v-text-field
+                        v-model="selectedUpd.providerId"
+                        label="ID поставщика*"
+                        type="number"
+                        prepend-icon="mdi-identifier"
+                      ></v-text-field>
+                    </v-col>
                   </v-row>
+                  
                   <v-row>
                     <v-col>
                       <v-btn class="mr-4" type="submit" color="primary" prepend-icon="mdi-plus-circle">
@@ -235,13 +233,14 @@ import Loader from '@/components/TableLoader.vue'
         apiBaseUrl: import.meta.env.VITE_API_BASE_URL,
         filters: {},
         headers: [
-          { title: 'ID компании*', key: 'companyId', align: 'start', sortable: true },
-          { title: 'Название', key: 'name', align: 'start', sortable: true },
-          { title: 'ИНН', key: 'inn', align: 'start', sortable: true },
-          { title: 'Логотип', key: 'logoPath', align: 'start', sortable: false },
+          { title: 'ID УПД*', key: 'updId', align: 'start', sortable: true },
+          { title: 'Номер документа', key: 'documentNumber', align: 'start', sortable: true },
+          { title: 'Скан. УПД', key: 'updPdfPath', align: 'start', sortable: true },
+          { title: 'ID провайдера*', key: 'providerId', align: 'start', sortable: false },
+          { title: 'Дата добавления', key: 'createDate', align: 'start', sortable: false },
         ],
-        companies: [],
-        selectedCompany: {},
+        upds: [],
+        selectedUpd: {},
         isEditing: false,
         isLoading: true
       }
@@ -250,30 +249,35 @@ import Loader from '@/components/TableLoader.vue'
       this.applyFilters();
     },
     methods: {
-      navigateCompanyId(item) {
-        this.filters = {companyId: item.companyId}
+      navigateUpdId(item) {
+        this.filters = {updId: item.updId}
         this.isEditing = true
-        this.selectedCompany = item
+        this.selectedUpd = item
         this.applyFilters();
         window.scrollTo(0, document.body.scrollHeight);
       },
       switchEditingMode() {
           this.isEditing = !this.isEditing
           if (!this.isEditing) {
-            this.selectedCompany.companyId = undefined
+            this.selectedUpd.updId = undefined
           }
       },
       async applyFilters() {
         this.isLoading = true;
-        const url = '/api/Company/getCompaniesFiltered';
+        const url = '/api/Upd/getUpdsFiltered';
         const data = {}
 
-        if(this.filters.companyId)
-          data.companyId = this.filters.companyId
-        if(this.filters.name)
-          data.name = this.filters.name
-        if(this.filters.inn)
-          data.inn = this.filters.inn
+        if(this.filters.updId)
+          data.updId = this.filters.updId
+        if(this.filters.documentNumber)
+          data.documentNumber = this.filters.documentNumber
+        if(this.filters.providerId)
+          data.providerId = this.filters.providerId
+        if (this.filters.startDate)
+            data.startDate = new Date(this.filters.startDate).toISOString();
+        if(this.filters.endDate)
+          data.endDate = new Date(this.filters.endDate).toISOString();
+
         
         try {
           const response = await api.post(url, data, {
@@ -282,7 +286,7 @@ import Loader from '@/components/TableLoader.vue'
               'Content-Type': 'application/json'
             }
           });
-          this.companies = Array.from(response.data.result);
+          this.upds = Array.from(response.data.result);
         } catch (error) {
           this.$store.commit('setErrorMessage', error)
         } finally {
@@ -293,40 +297,31 @@ import Loader from '@/components/TableLoader.vue'
         this.filters = {}
         this.applyFilters();
       },
-      async saveCompany() {
+      async saveUpd() {
         const formData = new FormData();
-        if(this.selectedCompany.companyId)
-          formData.append('CompanyId', this.selectedCompany.companyId);
-        if(this.selectedCompany.name)
-          formData.append('Name', this.selectedCompany.name);
-        if(this.selectedCompany.inn)
-          formData.append('Inn', this.selectedCompany.inn);
-        if (this.selectedCompany.image)
-          formData.append('Image', this.selectedCompany.image);
+        if(this.selectedUpd.updId)
+          formData.append('updId', this.selectedUpd.updId);
+        if(this.selectedUpd.documentNumber)
+          formData.append('DocumentNumber', this.selectedUpd.documentNumber);
+        if(this.selectedUpd.providerId)
+          formData.append('ProviderId', this.selectedUpd.providerId);
+        if (this.selectedUpd.updPdf)
+          formData.append('UpdPdf', this.selectedUpd.updPdf);
 
         try {
-          if (this.selectedCompany.companyId !== undefined || this.isEditing) {
-            await api.put('api/Company/update', formData, {
+          await api.post('api/Upd/Create', formData, {
               headers: {
                 'Content-Type': 'multipart/form-data'
               }
             });
-          } else {
-            await api.post('api/Company/Create', formData, {
-              headers: {
-                'Content-Type': 'multipart/form-data'
-              }
-            });
-          } 
-          
           this.applyFilters();
         } catch (error) {
           this.$store.commit('setErrorMessage', error)
         }
       },
-      async deleteCompany() {
+      async deleteUpd() {
         try {
-          await api.delete(`api/Company/dellById?companyId=${this.selectedCompany.companyId}`);
+          await api.delete(`/api/Upd/delById?updId=${this.selectedUpd.updId}`);
           
           this.applyFilters();
         } catch (error) {
@@ -335,14 +330,18 @@ import Loader from '@/components/TableLoader.vue'
       },
       async handleRowClick(item) {
         
-        if (this.selectedCompany.companyId === item.companyId) {
-          delete this.selectedCompany.companyId
+        if (this.selectedUpd.updId === item.updId) {
+          delete this.selectedUpd.updId
           this.isEditing = false
         } else {
-          this.selectedCompany = {...item};
+          this.selectedUpd = {...item};
           this.isEditing = true
         }
-      }
+      },
+      formatDate(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleString();
+    }
   },
 }
 </script>

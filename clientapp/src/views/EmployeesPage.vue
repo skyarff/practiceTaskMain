@@ -346,13 +346,15 @@
                       ></v-file-input>
                     </v-col>
                   </v-row>
+
                   <v-row>
-                  <v-col>
-                    <v-btn class="mr-4" type="submit" color="primary" prepend-icon="mdi-plus-circle">
-                      Редактировать
-                    </v-btn>
-                  </v-col>
+                    <v-col>
+                      <v-btn class="mr-4" type="submit" color="primary" prepend-icon="mdi-plus-circle">
+                        Добавить
+                      </v-btn>
+                    </v-col>
                 </v-row>
+
                 </v-form>
               </v-card-text>
           </div>
@@ -442,7 +444,7 @@ import Loader from '@/components/TableLoader.vue'
           });
           this.employees = Array.from(response.data.result);
         } catch (error) {
-          this.$store.commit('setErrorMessage', 'Не удалось установить соедение с сервером.')
+          this.$store.commit('setErrorMessage', error)
         } finally {
           this.isLoading = false;
         }
@@ -473,15 +475,14 @@ import Loader from '@/components/TableLoader.vue'
           formData.append('Image', this.selectedEmployee.image);
 
         try {
-          let response;
           if (this.selectedEmployee.employeeId !== undefined || this.isEditing) {
-            response = await api.put('api/Employee/update', formData, {
+            await api.put('api/Employee/update', formData, {
               headers: {
                 'Content-Type': 'multipart/form-data'
               }
             });
           } else {
-            response = await api.post('api/Employee/Create', formData, {
+            await api.post('api/Employee/Create', formData, {
               headers: {
                 'Content-Type': 'multipart/form-data'
               }
@@ -490,7 +491,7 @@ import Loader from '@/components/TableLoader.vue'
           
           this.applyFilters();
         } catch (error) {
-          this.$store.commit('setErrorMessage', 'Не удалось установить соедение с сервером.')
+          this.$store.commit('setErrorMessage', error)
         }
       },
       async deleteEmployee() {
@@ -499,7 +500,7 @@ import Loader from '@/components/TableLoader.vue'
           
           this.applyFilters();
         } catch (error) {
-          this.$store.commit('setErrorMessage', 'Не удалось установить соедение с сервером.')
+          this.$store.commit('setErrorMessage', error)
         }
       },
       async handleRowClick(item) {

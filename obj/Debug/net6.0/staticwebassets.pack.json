@@ -1,8 +1,32 @@
 {
   "Files": [
     {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\BillPdfs\\2df.png",
+      "PackagePath": "staticwebassets\\Images\\BillPdfs\\2df.png"
+    },
+    {
       "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\BillPdfs\\8INAFoRLpHE.jpg",
       "PackagePath": "staticwebassets\\Images\\BillPdfs\\8INAFoRLpHE.jpg"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\BillPdfs\\Dopamine_serotonin_rus.png",
+      "PackagePath": "staticwebassets\\Images\\BillPdfs\\Dopamine_serotonin_rus.png"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\BillPdfs\\Новый точечный рисунок (5).bmp",
+      "PackagePath": "staticwebassets\\Images\\BillPdfs\\Новый точечный рисунок (5).bmp"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\Common\\1.jpg",
+      "PackagePath": "staticwebassets\\Images\\Common\\1.jpg"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\Common\\2.png",
+      "PackagePath": "staticwebassets\\Images\\Common\\2.png"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\Common\\склад-склад.jpg",
+      "PackagePath": "staticwebassets\\Images\\Common\\склад-склад.jpg"
     },
     {
       "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\1.png",
@@ -101,6 +125,10 @@
       "PackagePath": "staticwebassets\\Images\\EmployeeImages\\кирпич.jpg"
     },
     {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\ProductImages\\download.jpg",
+      "PackagePath": "staticwebassets\\Images\\ProductImages\\download.jpg"
+    },
+    {
       "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\StorageLocationImages\\1458904097120070126.jpg",
       "PackagePath": "staticwebassets\\Images\\StorageLocationImages\\1458904097120070126.jpg"
     },
@@ -115,6 +143,14 @@
     {
       "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\StorageLocationImages\\Новый точечный рисунок (5).bmp",
       "PackagePath": "staticwebassets\\Images\\StorageLocationImages\\Новый точечный рисунок (5).bmp"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\UpdPdfs\\1458904097120070126.jpg",
+      "PackagePath": "staticwebassets\\Images\\UpdPdfs\\1458904097120070126.jpg"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\UpdPdfs\\Новый точечный рисунок (4).bmp",
+      "PackagePath": "staticwebassets\\Images\\UpdPdfs\\Новый точечный рисунок (4).bmp"
     },
     {
       "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.StockService.Microsoft.AspNetCore.StaticWebAssets.props",

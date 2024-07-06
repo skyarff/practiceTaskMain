@@ -104,8 +104,8 @@ namespace StockService.Repository.BillRep
             if (updDto.EndDate != null)
                 query = query.Where(b => b.CreateDate <= updDto.EndDate.Value);
 
-            bool ascending = updDto.Ascending == null ? true : (bool)updDto.Ascending;
-            query = ascending
+            //bool ascending = updDto.Ascending == null ? true : (bool)updDto.Ascending;
+            query = true
                 ? query.OrderBy(b => b.CreateDate)
                 : query.OrderByDescending(b => b.CreateDate);
 

@@ -75,9 +75,9 @@ namespace StockService.Controllers
         {
             try
             {
-                var billDto = new BillDto { StartDate = startDate, EndDate = endDate, Ascending = ascending };
-                _response = await _billService.GetBillsInRangeAsync(billDto);
-                if (_response.IsSuccess) return Ok(_response);
+                //var billDto = new BillDto { StartDate = startDate, EndDate = endDate, Ascending = ascending };
+                //_response = await _billService.GetBillsInRangeAsync(billDto);
+                //if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }
             catch (Exception ex)

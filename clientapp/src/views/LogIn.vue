@@ -1,8 +1,8 @@
 <template>
-    <v-container fluid class="d-flex justify-center align-start" style="height: 100vh;">
+    <v-container fluid class="d-flex justify-center" style="height: 100vh;">
         <!-- <span>{{ $store.state.auth.isLoggedIn }}</span> -->
 
-   <div style="display: flex; flex-direction: column;">
+   <div style="display: flex; flex-direction: column; margin-top: 6%;">
     <v-card 
         class="pa-8 ma-0"
         elevation="16"
@@ -46,6 +46,7 @@
                     icon
                     @click="showPassword = !showPassword"
                     class="mr-1"
+                    elevation="0"
                 >
                     <v-icon>{{ showPassword ? 'mdi-eye' : 'mdi-eye-off' }}</v-icon>
                 </v-btn>
@@ -128,19 +129,19 @@ export default {
         async signIn() {
             const t = true
 
-            if (t || this.$refs.signForm.validate()) {
+            // if (t || this.$refs.signForm.validate()) {
 
-                const payLoad = {
-                    email: this.email,
-                    password: this.password,
-                    type: 'signInWithPassword'
-                }
+            //     const payLoad = {
+            //         email: this.email,
+            //         password: this.password,
+            //         type: 'signInWithPassword'
+            //     }
 
 
-                await this.$store.dispatch('auth/auth', payLoad);
+            //     await this.$store.dispatch('auth/auth', payLoad);
 
-                this.$router.push('/items')
-            }
+            //     this.$router.push('/items')
+            // }
             
         },
         clear() {
@@ -149,16 +150,16 @@ export default {
             this.password = ''
         },
         closeErrorMessage() {
-            this.$store.state.auth.error = ''
+            // this.$store.state.auth.error = ''
         }
     },
     computed: {
-        loading() {
-            return this.$store.state.auth.loading
-        },
-        errorMessage() {
-            return this.$store.state.auth.error
-        },
+        // loading() {
+        //     return this.$store.state.auth.loading
+        // },
+        // errorMessage() {
+        //     return this.$store.state.auth.error
+        // },
     }
     
 }

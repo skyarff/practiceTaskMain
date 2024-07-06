@@ -79,7 +79,7 @@
               <v-switch
                 :model-value="isEditing"
                 color="primary"
-                label="Редактирование"
+                label="Удаление"
                 @click="switchEditingMode"
                 hide-details
               ></v-switch>
@@ -228,7 +228,7 @@ export default {
         });
         this.productCategories = Array.from(response.data.result);
       } catch (error) {
-        this.$store.commit('setErrorMessage', 'Не удалось установить соедение с сервером.')
+        this.$store.commit('setErrorMessage', error)
       } finally {
         this.isLoading = false;
       }
@@ -249,24 +249,15 @@ export default {
 
 
       try {
-        let response;
-        if (this.selectedProductCategory.productCategoryId !== undefined || this.isEditing) {
-          response = await api.put('api/ProductCategory/update', data, {
+         await api.post('/api/ProductCategory/create', data, {
             headers: {
               'Content-Type': 'application/json'
             }
           });
-        } else {
-          response = await api.post('/api/ProductCategory/create', data, {
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          });
-        } 
         
         this.applyFilters();
       } catch (error) {
-        this.$store.commit('setErrorMessage', 'Не удалось установить соедение с сервером.')
+        this.$store.commit('setErrorMessage', error)
       }
     },
     async deleteStock() {
@@ -275,7 +266,7 @@ export default {
         
         this.applyFilters();
       } catch (error) {
-        this.$store.commit('setErrorMessage', 'Не удалось установить соедение с сервером.')
+        this.$store.commit('setErrorMessage', error)
       }
     },
     async handleRowClick(item) {

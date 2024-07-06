@@ -43,6 +43,8 @@
                   </div>
               </td>
               <td>{{ item.providerId }}</td>
+              <td>{{ item.billTotal }}</td>
+              <td>{{ formatDate(item.createDate) }}</td>
             </tr>
           </template>
         </v-data-table>
@@ -71,16 +73,56 @@
                 <v-text-field
                   label="Номер счета"
                   v-model="filters.billNumber"
-                  prepend-icon="mdi-domain"
+                  prepend-icon="mdi-receipt"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="6" md="4">
                 <v-text-field
                   label="ID провайдера"
                   v-model="filters.providerId"
-                  prepend-icon="mdi-card-account-details"
+                  prepend-icon="mdi-identifier"
                 ></v-text-field>
               </v-col>
+            </v-row>
+
+            <v-row>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field
+                  label="От даты и времени"
+                  v-model="filters.startDate"
+                  type="datetime-local"
+                  prepend-icon="mdi-calendar-clock"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field
+                  label="До даты и времени"
+                  v-model="filters.endDate"
+                  type="datetime-local"
+                  prepend-icon="mdi-calendar-clock"
+                ></v-text-field>
+              </v-col>
+
+
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field
+                  label="Минимальная сумма"
+                  v-model="filters.lowerBillTotalLimit"
+                  type="number"
+                  prepend-icon="mdi-currency-usd"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field
+                  label="Максимальная сумма"
+                  v-model="filters.upperBillTotalLimit"
+                  type="number"
+                  prepend-icon="mdi-currency-usd"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+
+            <v-row>
               <v-col cols="12">
                 <v-btn class="mr-4" color="primary" @click="applyFilters" prepend-icon="mdi-magnify">
                   Применить фильтры
@@ -102,7 +144,7 @@
               <v-switch
                 :model-value="isEditing"
                 color="primary"
-                label="Редактирование"
+                label="Удаление"
                 @click="switchEditingMode"
                 hide-details
               ></v-switch>
@@ -123,7 +165,7 @@
           
         </v-card-text>
           <div v-if="selectedBill.billId !== undefined || isEditing">
-            <v-card-title>Редактирование/удаление</v-card-title>
+            <v-card-title>Удаление</v-card-title>
             <v-card-text>
               <v-form @submit.prevent="saveBill">
                 <v-row>
@@ -135,38 +177,10 @@
                       prepend-icon="mdi-identifier"
                     ></v-text-field>
                   </v-col>
-                  <v-col cols="12" sm="6">
-                    <v-text-field
-                      v-model="selectedBill.billNumber"
-                      label="Номер счета"
-                      prepend-icon="mdi-domain"
-                    ></v-text-field>
-                  </v-col>
                 </v-row>
-                <v-row>
-                    <v-col cols="12" sm="6">
-                    <v-file-input
-                      v-model="selectedBill.billPdf"
-                      label="Скан PDF счета"
-                      accept="image/*"
-                      prepend-icon="mdi-image"
-                    ></v-file-input>
-                  </v-col>
-                  <v-col cols="12" sm="6">
-                    <v-text-field
-                      v-model="selectedBill.providerId"
-                      label="ID поставщика"
-                      type="number"
-                      prepend-icon="mdi-card-account-details"
-                    ></v-text-field>
-                  </v-col>
-                  
-                </v-row>
+
                 <v-row>
                   <v-col>
-                    <v-btn class="mr-4" type="submit" color="primary" prepend-icon="mdi-content-save">
-                      Редактировать
-                    </v-btn>
                     <v-btn @click="deleteBill" color="secondary" prepend-icon="mdi-delete">
                       Удалить
                     </v-btn>
@@ -184,7 +198,7 @@
                       <v-text-field
                         v-model="selectedBill.billNumber"
                         label="Номер счета*"
-                        prepend-icon="mdi-domain"
+                        prepend-icon="mdi-receipt"
                       ></v-text-field>
                     </v-col>
                     <v-col cols="4">
@@ -200,7 +214,18 @@
                         v-model="selectedBill.providerId"
                         label="ID поставщика*"
                         type="number"
-                        prepend-icon="mdi-domain"
+                        prepend-icon="mdi-identifier"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+
+                  <v-row>
+                    <v-col cols="4">
+                      <v-text-field
+                        v-model="selectedBill.billTotal"
+                        label="Сумма счета"
+                        type="number"
+                        prepend-icon="mdi-currency-usd"
                       ></v-text-field>
                     </v-col>
                   </v-row>
@@ -241,6 +266,8 @@ import Loader from '@/components/TableLoader.vue'
           { title: 'Номер счёта', key: 'billNumber', align: 'start', sortable: true },
           { title: 'Скан. PDF счета', key: 'billPdfPath', align: 'start', sortable: true },
           { title: 'ID провайдера*', key: 'providerId', align: 'start', sortable: false },
+          { title: 'Сумма счета', key: 'billTotal', align: 'start', sortable: false },
+          { title: 'Дата добавления', key: 'createDate', align: 'start', sortable: false },
         ],
         bills: [],
         selectedBill: {},
@@ -276,6 +303,15 @@ import Loader from '@/components/TableLoader.vue'
           data.billNumber = this.filters.billNumber
         if(this.filters.providerId)
           data.providerId = this.filters.providerId
+        if(this.filters.lowerBillTotalLimit)
+          data.lowerBillTotalLimit = this.filters.lowerBillTotalLimit
+        if(this.filters.upperBillTotalLimit)
+          data.upperBillTotalLimit = this.filters.upperBillTotalLimit
+        if (this.filters.startDate)
+            data.startDate = new Date(this.filters.startDate).toISOString();
+        if(this.filters.endDate)
+          data.endDate = new Date(this.filters.endDate).toISOString();
+
         
         try {
           const response = await api.post(url, data, {
@@ -286,7 +322,7 @@ import Loader from '@/components/TableLoader.vue'
           });
           this.bills = Array.from(response.data.result);
         } catch (error) {
-          this.$store.commit('setErrorMessage', 'Не удалось установить соедение с сервером.')
+          this.$store.commit('setErrorMessage', error)
         } finally {
           this.isLoading = false;
         }
@@ -305,26 +341,18 @@ import Loader from '@/components/TableLoader.vue'
           formData.append('ProviderId', this.selectedBill.providerId);
         if (this.selectedBill.billPdf)
           formData.append('BillPdf', this.selectedBill.billPdf);
+        if (this.selectedBill.billTotal)
+          formData.append('BillTotal', this.selectedBill.billTotal);
 
         try {
-          let response;
-          if (this.selectedBill.billId !== undefined || this.isEditing) {
-            response = await api.put('api/Bill/update', formData, {
+          await api.post('api/Bill/Create', formData, {
               headers: {
                 'Content-Type': 'multipart/form-data'
               }
             });
-          } else {
-            response = await api.post('api/Bill/Create', formData, {
-              headers: {
-                'Content-Type': 'multipart/form-data'
-              }
-            });
-          } 
-          
           this.applyFilters();
         } catch (error) {
-          this.$store.commit('setErrorMessage', 'Не удалось установить соедение с сервером.')
+          this.$store.commit('setErrorMessage', error)
         }
       },
       async deleteBill() {
@@ -333,7 +361,7 @@ import Loader from '@/components/TableLoader.vue'
           
           this.applyFilters();
         } catch (error) {
-          this.$store.commit('setErrorMessage', 'Не удалось установить соедение с сервером.')
+          this.$store.commit('setErrorMessage', error)
         }
       },
       async handleRowClick(item) {
@@ -345,6 +373,10 @@ import Loader from '@/components/TableLoader.vue'
           this.selectedBill = {...item};
           this.isEditing = true
         }
+      },
+      formatDate(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleString();
       }
   },
 }

@@ -122,6 +122,7 @@ namespace StockService
                 entity.HasIndex(b => b.BillNumber).IsUnique();
 
                 entity.HasKey(b => b.BillId);
+                entity.HasIndex(b => b.BillNumber).IsUnique();
                 entity.HasIndex(b => b.ProviderId);
 
                 entity.HasOne(b => b.Provider)

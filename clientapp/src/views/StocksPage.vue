@@ -246,7 +246,7 @@ export default {
         });
         this.stocks = Array.from(response.data.result);
       } catch (error) {
-        this.$store.commit('setErrorMessage', 'Не удалось установить соедение с сервером.')
+        this.$store.commit('setErrorMessage', error)
       } finally {
         this.isLoading = false;
       }
@@ -267,15 +267,14 @@ export default {
 
 
       try {
-        let response;
         if (this.selectedStock.stockId !== undefined || this.isEditing) {
-          response = await api.put('api/Stock/update', data, {
+          await api.put('api/Stock/update', data, {
             headers: {
               'Content-Type': 'application/json'
             }
           });
         } else {
-          response = await api.post('api/Stock/Create', data, {
+          await api.post('api/Stock/Create', data, {
             headers: {
               'Content-Type': 'application/json'
             }
@@ -284,7 +283,7 @@ export default {
         
         this.applyFilters();
       } catch (error) {
-        this.$store.commit('setErrorMessage', 'Не удалось установить соедение с сервером.')
+        this.$store.commit('setErrorMessage', error)
       }
     },
     async deleteStock() {
@@ -293,7 +292,7 @@ export default {
         
         this.applyFilters();
       } catch (error) {
-        this.$store.commit('setErrorMessage', 'Не удалось установить соедение с сервером.')
+        this.$store.commit('setErrorMessage', error)
       }
     },
     async handleRowClick(item) {

@@ -42,6 +42,30 @@ const routes = [
     component: () =>
       import("@/views/BillsPage.vue"),
   },
+  {
+    path: "/UpdsPage",
+    name: "UpdsPage",
+    component: () =>
+      import("@/views/UpdsPage.vue"),
+  },
+  {
+    path: "/ProductsPage",
+    name: "ProductsPage",
+    component: () =>
+      import("@/views/ProductsPage.vue"),
+  },
+  {
+    path: "/AuthPage",
+    name: "AuthPage",
+    component: () =>
+      import("@/views/LogIn.vue"),
+  },
+  {
+    path: "/SchemaPage",
+    name: "SchemaPage",
+    component: () =>
+      import("@/views/SchemaPage.vue"),
+  },
 ];
 
 const router = createRouter({
