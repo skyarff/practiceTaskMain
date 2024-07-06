@@ -3,6 +3,7 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using StockService.Models;
 using StockService.Models.dto;
+using System.Security.Cryptography.X509Certificates;
 using System.Text.RegularExpressions;
 
 namespace StockService.Repository.CompanyRep
@@ -31,6 +32,9 @@ namespace StockService.Repository.CompanyRep
             {
                 var company = _mapper.Map<CompanyDto, Company>(companyDto);
 
+                _db.Companies.Add(company);
+                await _db.SaveChangesAsync();
+
                 if (companyDto.Image != null && companyDto.Image.Length > 0)
                 {
                     var fileName = Path.GetFileName(companyDto.Image.FileName);
@@ -44,9 +48,6 @@ namespace StockService.Repository.CompanyRep
 
                     company.LogoPath = filePath;
                 }
-
-                _db.Companies.Add(company);
-                await _db.SaveChangesAsync();
 
                 _response.IsSuccess = true;
                 _response.Result = company;
@@ -65,6 +66,10 @@ namespace StockService.Repository.CompanyRep
             if (company != null)
             {
                 _db.Companies.Remove(company);
+
+                if (File.Exists("wwwroot//" + company.LogoPath))
+                    File.Delete("wwwroot//" + company.LogoPath);
+
                 await _db.SaveChangesAsync();
 
                 _response.IsSuccess = true;
@@ -126,11 +131,8 @@ namespace StockService.Repository.CompanyRep
                 {
                     if (!string.IsNullOrEmpty(company.LogoPath))
                     {
-                        var oldImagePath = Path.Combine("wwwroot", company.LogoPath.TrimStart('\\'));
-                        if (File.Exists(oldImagePath))
-                        {
-                            File.Delete(oldImagePath);
-                        }
+                        if (File.Exists("wwwroot//" + company.LogoPath))
+                            File.Delete("wwwroot//" + company.LogoPath);
                     }
 
                     var fileName = Path.GetFileName(companyDto.Image.FileName);

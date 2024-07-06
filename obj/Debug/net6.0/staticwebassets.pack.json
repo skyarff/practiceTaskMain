@@ -5,10 +5,6 @@
       "PackagePath": "staticwebassets\\Images\\BillPdfs\\2df.png"
     },
     {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\BillPdfs\\8INAFoRLpHE.jpg",
-      "PackagePath": "staticwebassets\\Images\\BillPdfs\\8INAFoRLpHE.jpg"
-    },
-    {
       "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\BillPdfs\\Dopamine_serotonin_rus.png",
       "PackagePath": "staticwebassets\\Images\\BillPdfs\\Dopamine_serotonin_rus.png"
     },
@@ -23,6 +19,14 @@
     {
       "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\Common\\2.png",
       "PackagePath": "staticwebassets\\Images\\Common\\2.png"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\Common\\schemaAccess.png",
+      "PackagePath": "staticwebassets\\Images\\Common\\schemaAccess.png"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\Common\\schemaGpt.png",
+      "PackagePath": "staticwebassets\\Images\\Common\\schemaGpt.png"
     },
     {
       "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\Common\\склад-склад.jpg",
@@ -105,22 +109,6 @@
       "PackagePath": "staticwebassets\\Images\\EmployeeImages\\1458904097120070126.jpg"
     },
     {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\BmZnuFiWeP4.jpg",
-      "PackagePath": "staticwebassets\\Images\\EmployeeImages\\BmZnuFiWeP4.jpg"
-    },
-    {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\BoG1SE-rCFk.jpg",
-      "PackagePath": "staticwebassets\\Images\\EmployeeImages\\BoG1SE-rCFk.jpg"
-    },
-    {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\Lim_dMM-2s0.jpg",
-      "PackagePath": "staticwebassets\\Images\\EmployeeImages\\Lim_dMM-2s0.jpg"
-    },
-    {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\dGpivIzalf4.jpg",
-      "PackagePath": "staticwebassets\\Images\\EmployeeImages\\dGpivIzalf4.jpg"
-    },
-    {
       "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\кирпич.jpg",
       "PackagePath": "staticwebassets\\Images\\EmployeeImages\\кирпич.jpg"
     },
@@ -129,8 +117,16 @@
       "PackagePath": "staticwebassets\\Images\\ProductImages\\download.jpg"
     },
     {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\ProductImages\\Новый точечный рисунок (5).bmp",
+      "PackagePath": "staticwebassets\\Images\\ProductImages\\Новый точечный рисунок (5).bmp"
+    },
+    {
       "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\StorageLocationImages\\1458904097120070126.jpg",
       "PackagePath": "staticwebassets\\Images\\StorageLocationImages\\1458904097120070126.jpg"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\StorageLocationImages\\1521194388_igra-tri-kotai-kompot.webp",
+      "PackagePath": "staticwebassets\\Images\\StorageLocationImages\\1521194388_igra-tri-kotai-kompot.webp"
     },
     {
       "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\StorageLocationImages\\download.jpg",
@@ -139,6 +135,10 @@
     {
       "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\StorageLocationImages\\sm.jpg",
       "PackagePath": "staticwebassets\\Images\\StorageLocationImages\\sm.jpg"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\StorageLocationImages\\target.png",
+      "PackagePath": "staticwebassets\\Images\\StorageLocationImages\\target.png"
     },
     {
       "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\StorageLocationImages\\Новый точечный рисунок (5).bmp",

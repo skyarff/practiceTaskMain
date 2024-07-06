@@ -31,6 +31,10 @@ namespace StockService.Repository.BillRep
             {
                 var upd = _mapper.Map<UpdDto, Upd>(updDto);
 
+                upd.CreateDate = DateTime.UtcNow;
+                _db.Upds.Add(upd);
+                await _db.SaveChangesAsync();
+
                 if (updDto.UpdPdf != null && updDto.UpdPdf.Length > 0)
                 {
 
@@ -45,10 +49,6 @@ namespace StockService.Repository.BillRep
 
                     upd.UpdPdfPath = filePath;
                 }
-
-                upd.CreateDate = DateTime.UtcNow;
-                _db.Upds.Add(upd);
-                await _db.SaveChangesAsync();
 
                 _response.IsSuccess = true;
                 _response.Result = upd;
@@ -68,6 +68,10 @@ namespace StockService.Repository.BillRep
             if (upd != null)
             {
                 _db.Upds.Remove(upd);
+
+                if (File.Exists("wwwroot//" + upd.UpdPdfPath))
+                    File.Delete("wwwroot//" + upd.UpdPdfPath);
+
                 await _db.SaveChangesAsync();
 
                 _response.IsSuccess = true;

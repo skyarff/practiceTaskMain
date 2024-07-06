@@ -33,6 +33,9 @@ namespace StockService.Repository.StorageLocationRep
             {
                 var storageLocation = _mapper.Map<StorageLocationDto, StorageLocation>(storageLocationDto);
 
+                _db.StorageLocations.Add(storageLocation);
+                await _db.SaveChangesAsync();
+
                 if (storageLocationDto.Image != null && storageLocationDto.Image.Length > 0)
                 {
                     var fileName = Path.GetFileName(storageLocationDto.Image.FileName);
@@ -46,9 +49,6 @@ namespace StockService.Repository.StorageLocationRep
 
                     storageLocation.ImagePath = filePath;
                 }
-
-                _db.StorageLocations.Add(storageLocation);
-                await _db.SaveChangesAsync();
 
                 _response.IsSuccess = true;
                 _response.Result = storageLocation;
@@ -68,6 +68,10 @@ namespace StockService.Repository.StorageLocationRep
             if (storageLocation != null)
             {
                 _db.StorageLocations.Remove(storageLocation);
+
+                if (File.Exists("wwwroot//" + storageLocation.ImagePath))
+                    File.Delete("wwwroot//" + storageLocation.ImagePath);
+
                 await _db.SaveChangesAsync();
 
                 _response.IsSuccess = true;
@@ -128,11 +132,8 @@ namespace StockService.Repository.StorageLocationRep
                 {
                     if (!string.IsNullOrEmpty(storageLocation.ImagePath))
                     {
-                        var oldImagePath = Path.Combine("wwwroot", storageLocation.ImagePath.TrimStart('\\'));
-                        if (File.Exists(oldImagePath))
-                        {
-                            File.Delete(oldImagePath);
-                        }
+                        if (File.Exists("wwwroot//" + storageLocation.ImagePath))
+                            File.Delete("wwwroot//" + storageLocation.ImagePath);
                     }
 
                     var fileName = Path.GetFileName(storageLocationDto.Image.FileName);

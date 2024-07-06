@@ -3,6 +3,7 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using StockService.Models;
 using StockService.Models.dto;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 
 namespace StockService.Repository.EmployeeRep
@@ -61,6 +62,9 @@ namespace StockService.Repository.EmployeeRep
                 if (!string.IsNullOrEmpty(employeeDto.Password))
                     employee.Password = Sha256.ComputeSha256Hash(employeeDto.Password);
 
+                _db.Employees.Add(employee);
+                await _db.SaveChangesAsync();
+
                 if (employeeDto.Image != null && employeeDto.Image.Length > 0)
                 {
                     var fileName = Path.GetFileName(employeeDto.Image.FileName);
@@ -74,9 +78,6 @@ namespace StockService.Repository.EmployeeRep
 
                     employee.ImagePath = filePath;
                 }
-
-                _db.Employees.Add(employee);
-                await _db.SaveChangesAsync();
 
                 _response.IsSuccess = true;
                 _response.Result = employee;
@@ -96,6 +97,10 @@ namespace StockService.Repository.EmployeeRep
             if (employee != null)
             {
                 _db.Employees.Remove(employee);
+
+                if (File.Exists("wwwroot//" + employee.ImagePath))
+                    File.Delete("wwwroot//" + employee.ImagePath);
+
                 await _db.SaveChangesAsync();
 
                 _response.IsSuccess = true;
@@ -200,11 +205,8 @@ namespace StockService.Repository.EmployeeRep
 
                     if (!string.IsNullOrEmpty(employee.ImagePath))
                     {
-                        var oldImagePath = Path.Combine("wwwroot", employee.ImagePath.TrimStart('\\'));
-                        if (File.Exists(oldImagePath))
-                        {
-                            File.Delete(oldImagePath);
-                        }
+                        if (File.Exists("wwwroot//" + employee.ImagePath))
+                            File.Delete("wwwroot//" + employee.ImagePath);
                     }
 
 

@@ -30,6 +30,10 @@ namespace StockService.Repository.BillRep
             {
                 var bill = _mapper.Map<BillDto, Bill>(billDto);
 
+                bill.CreateDate = DateTime.UtcNow;
+                _db.Bills.Add(bill);
+                await _db.SaveChangesAsync();
+
                 if (billDto.BillPdf != null && billDto.BillPdf.Length > 0)
                 {
                     var fileName = Path.GetFileName(billDto.BillPdf.FileName);
@@ -43,10 +47,6 @@ namespace StockService.Repository.BillRep
 
                     bill.BillPdfPath = filePath;
                 }
-
-                bill.CreateDate = DateTime.UtcNow;
-                _db.Bills.Add(bill);
-                await _db.SaveChangesAsync();
 
                 _response.IsSuccess = true;
                 _response.Result = bill;
@@ -66,6 +66,10 @@ namespace StockService.Repository.BillRep
             if (bill != null)
             {
                 _db.Bills.Remove(bill);
+
+                if (File.Exists("wwwroot//" + bill.BillPdfPath))
+                    File.Delete("wwwroot//" + bill.BillPdfPath);
+
                 await _db.SaveChangesAsync();
 
                 _response.IsSuccess = true;
