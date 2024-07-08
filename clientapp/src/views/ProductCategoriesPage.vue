@@ -18,7 +18,7 @@
               {{ item.productCategoryId}}
             </td>
             <td>{{ item.name }}</td>
-            <td>{{ item.companyName }}</td>
+            <td>{{ getCompanyName(item.companyId) }}</td>
           </tr>
         </template>
       </v-data-table>
@@ -50,14 +50,17 @@
                 prepend-icon="mdi-tag-multiple"
               ></v-text-field>
             </v-col>
-            <v-col cols="12" sm="6" md="4">
-              <v-text-field
-                label="ID компании"
-                v-model="filters.companyId"
-                type="number"
-                prepend-icon="mdi-identifier"
-              ></v-text-field>
-            </v-col>
+            <v-col cols="4">
+                    <v-select
+                      v-model="filters.companyId"
+                      :items="[{ companyId: null, name: 'Все компании' }, ...companies]"
+                      item-title="name"
+                      item-value="companyId"
+                      label="Компания"
+                      prepend-icon="mdi-domain"
+                      dense
+                    ></v-select>
+                  </v-col>
             <v-col cols="12">
               <v-btn class="mr-4" color="primary" @click="applyFilters" prepend-icon="mdi-magnify">
                 Применить фильтры
@@ -137,13 +140,16 @@
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6">
-                    <v-text-field
-                      v-model="selectedProductCategory.companyId"
-                      label="ID компании*"
-                      type="number"
-                      prepend-icon="mdi-identifier"
-                    ></v-text-field>
-                  </v-col>
+                    <v-select
+                      v-model="selectedCompanyId"
+                      :items="companies"
+                      item-title="name"
+                      item-value="companyId"
+                      label="Компания"
+                      prepend-icon="mdi-domain"
+                      dense
+                    ></v-select>
+                </v-col>
                 </v-row>
                 <v-row>
                   <v-col>
@@ -177,8 +183,9 @@ export default {
       headers: [
         { title: 'ID категории продуктов*', key: 'productCategoryId', align: 'start', sortable: true },
         { title: 'Название', key: 'name', align: 'start', sortable: true },
-        { title: 'Наименование компании*', key: 'companyName', align: 'start', sortable: true },
+        { title: 'Компания', key: 'companyName', align: 'start', sortable: true },
       ],
+      companies: [],
       productCategories: [],
       selectedProductCategory: {},
       isEditing: false,
@@ -187,8 +194,28 @@ export default {
   },
   mounted() {
     this.applyFilters();
+    this.getAllCompanies();
   },
   methods: {
+    async getAllCompanies() {
+    const url = '/api/Company/getAll';
+
+      try {
+        const response = await api.get(url, {
+          headers: {
+            'accept': '*/*'
+          }
+        });
+
+        this.companies = response.data.result.map(company => ({
+          name: company.name,
+          companyId: company.companyId.toString(),
+        }));
+
+      } catch (error) {
+        // this.$store.commit('setErrorMessage', error);
+      }
+    },
     navigateProductCategoryId(item) {
       this.filters = {productCategoryId: item.productCategoryId}
       this.isEditing = true
@@ -220,9 +247,12 @@ export default {
             'Content-Type': 'application/json'
           }
         });
+
+        console.log(response)
+
         this.productCategories = Array.from(response.data.result);
       } catch (error) {
-        this.$store.commit('setErrorMessage', error)
+        this.$store.commit('setErrorMessage', 'Записи, соответствующие заданным фильтрам, отсутствуют.')
       } finally {
         this.isLoading = false;
       }
@@ -271,8 +301,23 @@ export default {
         this.selectedProductCategory = {...item};
         this.isEditing = true
       }
-    }
+    },
+    getCompanyName(companyId) {
+      const company = this.companies.find(c => c.companyId === companyId.toString());
+      return company ? company.name : 'Не указано';
+    },
 },
+computed: {
+  selectedCompanyId: {
+    get() {
+      const company = this.companies.find(c => c.companyId === this.selectedProductCategory.companyId?.toString());
+      return company ? company.companyId : null;
+    },
+    set(value) {
+      this.selectedProductCategory.companyId = value;
+    }
+  }
+}
 }
 </script>
 

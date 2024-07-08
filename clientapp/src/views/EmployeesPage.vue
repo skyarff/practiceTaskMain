@@ -45,7 +45,7 @@
                     </v-icon>
                   </div>
               </td>
-              <td>{{ item.stockId }}</td>
+              <td>{{ getStockName(item.stockId) }}</td>
               <td>{{ item.email }}</td>
               <td>{{ item.phone }}</td>
             </tr>
@@ -120,23 +120,30 @@
 
             <v-row>
               
-              <v-col cols="12" sm="6" md="4">
-                <v-text-field
-                  label="ID склада"
-                  v-model="filters.stockId"
-                  type="number"
-                  prepend-icon="mdi-identifier"
-                ></v-text-field>
-              </v-col>
+              <v-col cols="4">
+                    <v-select
+                      v-model="filters.stockId"
+                      :items="[{ stockId: null, name: stocksByCompanyId.length !== 0 ? 'Все склады': '' }, ...stocksByCompanyId]"
+                      item-title="name"
+                      item-value="stockId"
+                      label="Склад"
+                      prepend-icon="mdi-package-variant-closed"
+                      dense
+                    ></v-select>
+                  </v-col>
 
-              <v-col cols="12" sm="6" md="4">
-                <v-text-field
-                  label="ID компании"
-                  type="number"
-                  v-model="filters.companyId"
-                  prepend-icon="mdi-identifier"
-                ></v-text-field>
-              </v-col>
+              <v-col cols="4">
+                    <v-select
+                      v-model="filters.companyId"
+                      @update:modelValue="getStocksByCompanyId(filters.companyId)"
+                      :items="[{ companyId: null, name: 'Все компании' }, ...companies]"
+                      item-title="name"
+                      item-value="companyId"
+                      label="Компания"
+                      prepend-icon="mdi-domain"
+                      dense
+                    ></v-select>
+                  </v-col>
             </v-row>
 
             <v-row>
@@ -385,11 +392,14 @@ import Loader from '@/components/TableLoader.vue'
           { title: 'Должность', key: 'jobTitile', align: 'start', sortable: true },
           { title: 'Логин', key: 'login', align: 'start', sortable: true },
           { title: 'Фото сотудника', key: 'imagePath', align: 'start', sortable: false },
-          { title: 'ID склада*', key: 'stockId', align: 'start', sortable: true },
+          { title: 'Склад', key: 'stockName', align: 'start', sortable: true },
           { title: 'Почта', key: 'email', align: 'start', sortable: true },
           { title: 'Телефон', key: 'phone', align: 'start', sortable: true },
         ],
         employees: [],
+        companies: [],
+        stocks: [],
+        stocksByCompanyId: [],
         selectedEmployee: {},
         isEditing: false,
         isLoading: true
@@ -397,8 +407,72 @@ import Loader from '@/components/TableLoader.vue'
     },
     mounted() {
       this.applyFilters();
+      this.getAllCompanies();
+      this.getAllStocks();
     },
     methods: {
+      async getAllCompanies() {
+        const url = '/api/Company/getAll';
+
+          try {
+            const response = await api.get(url, {
+              headers: {
+                'accept': '*/*'
+              }
+            });
+
+            this.companies = response.data.result.map(company => ({
+              name: company.name,
+              companyId: company.companyId.toString(),
+            }));
+
+          } catch (error) {
+            // this.$store.commit('setErrorMessage', error);
+          } 
+      },
+      async getAllStocks() {
+        const url = '/api/Stock/getAll';
+
+          try {
+            const response = await api.get(url, {
+              headers: {
+                'accept': '*/*'
+              }
+            });
+
+
+            this.stocks = response.data.result.map(stock => ({
+              name: stock.name,
+              stockId: stock.stockId.toString(),
+            }));
+
+          } catch (error) {
+            // this.$store.commit('setErrorMessage', error);
+          }
+      },
+      async getStocksByCompanyId(companyId) {
+        this.stocksByCompanyId = [];
+        delete this.filters.stockId
+        const url = `/api/Stock/getByCompanyId?companyId=${companyId}`;
+
+        try {
+          const response = await api.get(url, {
+            headers: {
+              'accept': '*/*'
+            }
+          });
+
+          this.stocksByCompanyId = response.data.result.map(stock => ({
+            name: stock.name,
+            stockId: stock.stockId.toString(),
+          }));
+
+          console.log(this.filters)
+        } catch (error) {
+          console.error('Error fetching stocks by company ID:', error);
+          // this.$store.commit('setErrorMessage', error);
+        }
+      },
       navigateEmployeeId(item) {
         this.filters = {employeeId: item.employeeId}
         this.isEditing = true
@@ -444,7 +518,7 @@ import Loader from '@/components/TableLoader.vue'
           });
           this.employees = Array.from(response.data.result);
         } catch (error) {
-          this.$store.commit('setErrorMessage', error)
+          this.$store.commit('setErrorMessage', 'Записи, соответствующие заданным фильтрам, отсутствуют.')
         } finally {
           this.isLoading = false;
         }
@@ -513,8 +587,32 @@ import Loader from '@/components/TableLoader.vue'
           delete this.selectedEmployee.password
           this.isEditing = true
         }
-      }
+      },
+      getStockName(stockId) {
+        const stock = this.stocks.find(s => s.stockId === stockId.toString());
+        return stock ? stock.name : 'Не указано';
+      },
   },
+  computed: {
+  selectedCompanyId: {
+    get() {
+      const company = this.companies.find(c => c.companyId === this.selectedStock.companyId?.toString());
+      return company ? company.companyId : null;
+    },
+    set(value) {
+      this.selectedStock.companyId = value;
+    }
+  },
+  selectedStockId: {
+    get() {
+      const stock = this.stocks.find(s => s.stockId === this.selectedEmployee.stockId?.toString());
+      return stock ? stock.stockId : null;
+    },
+    set(value) {
+      this.selectedEmployee.stockId = value;
+    }
+  }
+}
 }
 </script>
 

@@ -17,16 +17,14 @@ namespace StockService
 
 
 
-                config.CreateMap<Stock, StockDto>()
-                    .ForMember(dest => dest.CompanyName, opt => opt.MapFrom(src => src.Company.Name));
+                config.CreateMap<Stock, StockDto>();
                 config.CreateMap<StockDto, Stock>()
                     .ForMember(dest => dest.StockId, opt => opt.Ignore());
 
 
 
 
-                config.CreateMap<ProductCategory, ProductCategoryDto>()
-                    .ForMember(dest => dest.CompanyName, opt => opt.MapFrom(src => src.Company.Name));
+                config.CreateMap<ProductCategory, ProductCategoryDto>();
                 config.CreateMap<ProductCategoryDto, ProductCategory>()
                     .ForMember(dest => dest.ProductCategoryId, opt => opt.Ignore());
 

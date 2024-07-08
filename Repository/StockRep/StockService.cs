@@ -155,15 +155,13 @@ namespace StockService.Repository.StockRep
             if (stockDto.CompanyId != null)
                 query = query.Where(s => s.CompanyId == stockDto.CompanyId);
 
-            query = query.Include(s => s.Company);
-
 
             var stocks = await query.ToListAsync();
 
             if (stocks.Any())
             {
                 _response.IsSuccess = true;
-                _response.Result = _mapper.Map<List<Stock>, List<StockDto>>(stocks);
+                _response.Result = stocks;
                 _response.Message = "Склады успешно найдены по указанным критериям.";
             }
 

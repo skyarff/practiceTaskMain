@@ -1,83 +1,83 @@
 {
   "Files": [
     {
-      "Id": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\wwwroot\\Images\\BillPdfs\\download.png",
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\BillPdfs\\download.png",
       "PackagePath": "staticwebassets\\Images\\BillPdfs\\download.png"
     },
     {
-      "Id": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\wwwroot\\Images\\BillPdfs\\images.jpg",
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\BillPdfs\\images.jpg",
       "PackagePath": "staticwebassets\\Images\\BillPdfs\\images.jpg"
     },
     {
-      "Id": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\wwwroot\\Images\\Common\\1.jpg",
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\Common\\1.jpg",
       "PackagePath": "staticwebassets\\Images\\Common\\1.jpg"
     },
     {
-      "Id": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\wwwroot\\Images\\Common\\2.png",
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\Common\\2.png",
       "PackagePath": "staticwebassets\\Images\\Common\\2.png"
     },
     {
-      "Id": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\wwwroot\\Images\\Common\\schemaAccess.png",
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\Common\\schemaAccess.png",
       "PackagePath": "staticwebassets\\Images\\Common\\schemaAccess.png"
     },
     {
-      "Id": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\wwwroot\\Images\\Common\\schemaGpt.png",
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\Common\\schemaGpt.png",
       "PackagePath": "staticwebassets\\Images\\Common\\schemaGpt.png"
     },
     {
-      "Id": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\wwwroot\\Images\\Common\\склад-склад.jpg",
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\Common\\склад-склад.jpg",
       "PackagePath": "staticwebassets\\Images\\Common\\склад-склад.jpg"
     },
     {
-      "Id": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\download.jpg",
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\download.jpg",
       "PackagePath": "staticwebassets\\Images\\CompanyLogos\\download.jpg"
     },
     {
-      "Id": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\scale_1200.jpg",
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\scale_1200.jpg",
       "PackagePath": "staticwebassets\\Images\\CompanyLogos\\scale_1200.jpg"
     },
     {
-      "Id": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\download.png",
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\download.png",
       "PackagePath": "staticwebassets\\Images\\EmployeeImages\\download.png"
     },
     {
-      "Id": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\images.png",
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\images.png",
       "PackagePath": "staticwebassets\\Images\\EmployeeImages\\images.png"
     },
     {
-      "Id": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\wwwroot\\Images\\ProductImages\\3e272044-e10c-4661-830a-d6f1f275e26e.png",
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\ProductImages\\3e272044-e10c-4661-830a-d6f1f275e26e.png",
       "PackagePath": "staticwebassets\\Images\\ProductImages\\3e272044-e10c-4661-830a-d6f1f275e26e.png"
     },
     {
-      "Id": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\wwwroot\\Images\\ProductImages\\download.png",
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\ProductImages\\download.png",
       "PackagePath": "staticwebassets\\Images\\ProductImages\\download.png"
     },
     {
-      "Id": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\wwwroot\\Images\\ProductImages\\images.jpg",
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\ProductImages\\images.jpg",
       "PackagePath": "staticwebassets\\Images\\ProductImages\\images.jpg"
     },
     {
-      "Id": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\wwwroot\\Images\\ProductImages\\images.png",
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\ProductImages\\images.png",
       "PackagePath": "staticwebassets\\Images\\ProductImages\\images.png"
     },
     {
-      "Id": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\wwwroot\\Images\\StorageLocationImages\\download.jpg",
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\StorageLocationImages\\download.jpg",
       "PackagePath": "staticwebassets\\Images\\StorageLocationImages\\download.jpg"
     },
     {
-      "Id": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\wwwroot\\Images\\StorageLocationImages\\download.png",
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\StorageLocationImages\\download.png",
       "PackagePath": "staticwebassets\\Images\\StorageLocationImages\\download.png"
     },
     {
-      "Id": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\wwwroot\\Images\\StorageLocationImages\\images.png",
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\StorageLocationImages\\images.png",
       "PackagePath": "staticwebassets\\Images\\StorageLocationImages\\images.png"
     },
     {
-      "Id": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\wwwroot\\Images\\UpdPdfs\\download.jpg",
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\UpdPdfs\\download.jpg",
       "PackagePath": "staticwebassets\\Images\\UpdPdfs\\download.jpg"
     },
     {
-      "Id": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\wwwroot\\Images\\UpdPdfs\\scale_1200.jpg",
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\UpdPdfs\\scale_1200.jpg",
       "PackagePath": "staticwebassets\\Images\\UpdPdfs\\scale_1200.jpg"
     },
     {

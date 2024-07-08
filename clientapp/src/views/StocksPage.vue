@@ -18,7 +18,7 @@
               {{ item.stockId}}
             </td>
             <td>{{ item.name }}</td>
-            <td>{{ item.companyName }}</td>
+            <td>{{ getCompanyName(item.companyId) }}</td>
           </tr>
         </template>
       </v-data-table>
@@ -35,7 +35,7 @@
         </v-expansion-panel-title>
         <v-expansion-panel-text class="pt-6">
           <v-row>
-            <v-col cols="12" sm="6" md="4">
+            <v-col cols="4">
               <v-text-field
                 label="ID склада"
                 v-model="filters.stockId"
@@ -43,21 +43,26 @@
                 prepend-icon="mdi-identifier"
               ></v-text-field>
             </v-col>
-            <v-col cols="12" sm="6" md="4">
+            <v-col cols="4">
               <v-text-field
                 label="Название склада"
                 v-model="filters.name"
                 prepend-icon="mdi-package-variant-closed"
               ></v-text-field>
             </v-col>
-            <v-col cols="12" sm="6" md="4">
-              <v-text-field
-                label="ID компании"
-                v-model="filters.companyId"
-                type="number"
-                prepend-icon="mdi-identifier"
-              ></v-text-field>
-            </v-col>
+            
+                  <v-col cols="4">
+                    <v-select
+                      v-model="filters.companyId"
+                      :items="companies"
+                      item-title="name"
+                      item-value="companyId"
+                      label="Компания"
+                      prepend-icon="mdi-domain"
+                      dense
+                    ></v-select>
+                  </v-col>
+                  
             <v-col cols="12">
               <v-btn class="mr-4" color="primary" @click="applyFilters" prepend-icon="mdi-magnify">
                 Применить фильтры
@@ -121,12 +126,15 @@
               </v-row>
               <v-row>
                 <v-col cols="12" sm="6">
-                  <v-text-field
-                    v-model="selectedStock.companyId"
-                    label="ID компании"
-                    type="number"
+                  <v-select
+                    v-model="selectedCompanyId"
+                    :items="companies"
+                    item-title="name"
+                    item-value="companyId"
+                    label="Компания"
                     prepend-icon="mdi-domain"
-                  ></v-text-field>
+                    dense
+                  ></v-select>
                 </v-col>
               </v-row>
               <v-row>
@@ -154,14 +162,19 @@
                       prepend-icon="mdi-package-variant-closed"
                     ></v-text-field>
                   </v-col>
+
                   <v-col cols="12" sm="6">
-                    <v-text-field
-                      v-model="selectedStock.companyId"
-                      label="ID компании"
-                      type="number"
-                      prepend-icon="mdi-identifier"
-                    ></v-text-field>
+                    <v-select
+                      v-model="selectedCompanyId"
+                      :items="[{ companyId: null, name: 'Все компании' }, ...companies]"
+                      item-title="name"
+                      item-value="companyId"
+                      label="Компания"
+                      prepend-icon="mdi-domain"
+                      dense
+                    ></v-select>
                   </v-col>
+
                 </v-row>
                 <v-row>
                   <v-col>
@@ -195,18 +208,40 @@ export default {
       headers: [
         { title: 'ID склада*', key: 'stockId', align: 'start', sortable: true },
         { title: 'Название', key: 'name', align: 'start', sortable: true },
-        { title: 'Наименование компании', key: 'companyName', align: 'start', sortable: true },
+        { title: 'Компания', key: 'companyName', align: 'start', sortable: true },
       ],
       stocks: [],
       selectedStock: {},
+      companies: [],
       isEditing: false,
       isLoading: true
     }
   },
   mounted() {
     this.applyFilters();
+    this.getAllCompanies();
   },
   methods: {
+    async getAllCompanies() {
+    const url = '/api/Company/getAll';
+
+      try {
+        const response = await api.get(url, {
+          headers: {
+            'accept': '*/*'
+          }
+        });
+
+        this.companies = response.data.result.map(company => ({
+          name: company.name,
+          companyId: company.companyId.toString(),
+        }));
+
+
+      } catch (error) {
+        // this.$store.commit('setErrorMessage', error);
+      }
+    },
     navigateStockId(item) {
       this.filters = {stockId: item.stockId}
       this.isEditing = true
@@ -220,7 +255,6 @@ export default {
         }
     },
     async applyFilters() {
-
       this.isLoading = true;
       const url = '/api/Stock/getStocksFiltered';
       const data = {}
@@ -239,10 +273,9 @@ export default {
             'Content-Type': 'application/json'
           }
         });
-        console.log(response.data)
         this.stocks = Array.from(response.data.result);
       } catch (error) {
-        this.$store.commit('setErrorMessage', error)
+        this.$store.commit('setErrorMessage', 'Записи, соответствующие заданным фильтрам, отсутствуют.')
       } finally {
         this.isLoading = false;
       }
@@ -297,11 +330,27 @@ export default {
         delete this.selectedStock.stockId
         this.isEditing = false
       } else {
+        console.log(item)
         this.selectedStock = {...item};
         this.isEditing = true
       }
-    }
+    },
+    getCompanyName(companyId) {
+      const company = this.companies.find(c => c.companyId === companyId.toString());
+      return company ? company.name : 'Не указано';
+    },
 },
+computed: {
+  selectedCompanyId: {
+    get() {
+      const company = this.companies.find(c => c.companyId === this.selectedStock.companyId?.toString());
+      return company ? company.companyId : null;
+    },
+    set(value) {
+      this.selectedStock.companyId = value;
+    }
+  }
+}
 }
 </script>
 
