@@ -62,13 +62,10 @@ namespace StockService.Repository.EmployeeRep
                 if (!string.IsNullOrEmpty(employeeDto.Password))
                     employee.Password = Sha256.ComputeSha256Hash(employeeDto.Password);
 
-                _db.Employees.Add(employee);
-                await _db.SaveChangesAsync();
-
                 if (employeeDto.Image != null && employeeDto.Image.Length > 0)
                 {
-                    var fileName = Path.GetFileName(employeeDto.Image.FileName);
-                    var filePath = $"{_imagePath}/{fileName}";
+                    var fileName = $"{Guid.NewGuid()}{Path.GetExtension(employeeDto.Image.FileName)}";
+                    var filePath = Path.Combine(_imagePath, fileName);
 
 
                     using (var stream = new FileStream("wwwroot/" + filePath, FileMode.Create))
@@ -78,6 +75,9 @@ namespace StockService.Repository.EmployeeRep
 
                     employee.ImagePath = filePath;
                 }
+
+                _db.Employees.Add(employee);
+                await _db.SaveChangesAsync();
 
                 _response.IsSuccess = true;
                 _response.Result = employee;
@@ -210,8 +210,8 @@ namespace StockService.Repository.EmployeeRep
                     }
 
 
-                    var fileName = Path.GetFileName(employeeDto.Image.FileName);
-                    var filePath = $"{_imagePath}/{fileName}";
+                    var fileName = $"{Guid.NewGuid()}{Path.GetExtension(employeeDto.Image.FileName)}";
+                    var filePath = Path.Combine(_imagePath, fileName);
 
 
                     using (var stream = new FileStream("wwwroot/" + filePath, FileMode.Create))

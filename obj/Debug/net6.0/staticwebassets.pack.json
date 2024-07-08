@@ -1,156 +1,84 @@
 {
   "Files": [
     {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\BillPdfs\\2df.png",
-      "PackagePath": "staticwebassets\\Images\\BillPdfs\\2df.png"
+      "Id": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\wwwroot\\Images\\BillPdfs\\download.png",
+      "PackagePath": "staticwebassets\\Images\\BillPdfs\\download.png"
     },
     {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\BillPdfs\\Dopamine_serotonin_rus.png",
-      "PackagePath": "staticwebassets\\Images\\BillPdfs\\Dopamine_serotonin_rus.png"
+      "Id": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\wwwroot\\Images\\BillPdfs\\images.jpg",
+      "PackagePath": "staticwebassets\\Images\\BillPdfs\\images.jpg"
     },
     {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\BillPdfs\\Новый точечный рисунок (5).bmp",
-      "PackagePath": "staticwebassets\\Images\\BillPdfs\\Новый точечный рисунок (5).bmp"
-    },
-    {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\Common\\1.jpg",
+      "Id": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\wwwroot\\Images\\Common\\1.jpg",
       "PackagePath": "staticwebassets\\Images\\Common\\1.jpg"
     },
     {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\Common\\2.png",
+      "Id": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\wwwroot\\Images\\Common\\2.png",
       "PackagePath": "staticwebassets\\Images\\Common\\2.png"
     },
     {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\Common\\schemaAccess.png",
+      "Id": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\wwwroot\\Images\\Common\\schemaAccess.png",
       "PackagePath": "staticwebassets\\Images\\Common\\schemaAccess.png"
     },
     {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\Common\\schemaGpt.png",
+      "Id": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\wwwroot\\Images\\Common\\schemaGpt.png",
       "PackagePath": "staticwebassets\\Images\\Common\\schemaGpt.png"
     },
     {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\Common\\склад-склад.jpg",
+      "Id": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\wwwroot\\Images\\Common\\склад-склад.jpg",
       "PackagePath": "staticwebassets\\Images\\Common\\склад-склад.jpg"
     },
     {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\1.png",
-      "PackagePath": "staticwebassets\\Images\\CompanyLogos\\1.png"
-    },
-    {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\1458904097120070126.jpg",
-      "PackagePath": "staticwebassets\\Images\\CompanyLogos\\1458904097120070126.jpg"
-    },
-    {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\1521194388_igra-tri-kotai-kompot.webp",
-      "PackagePath": "staticwebassets\\Images\\CompanyLogos\\1521194388_igra-tri-kotai-kompot.webp"
-    },
-    {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\274px-Strelnikova_AN.jpg",
-      "PackagePath": "staticwebassets\\Images\\CompanyLogos\\274px-Strelnikova_AN.jpg"
-    },
-    {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\2df.png",
-      "PackagePath": "staticwebassets\\Images\\CompanyLogos\\2df.png"
-    },
-    {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\Dopamine_serotonin_rus.png",
-      "PackagePath": "staticwebassets\\Images\\CompanyLogos\\Dopamine_serotonin_rus.png"
-    },
-    {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\dfg.jpg",
-      "PackagePath": "staticwebassets\\Images\\CompanyLogos\\dfg.jpg"
-    },
-    {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\download.jpg",
+      "Id": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\download.jpg",
       "PackagePath": "staticwebassets\\Images\\CompanyLogos\\download.jpg"
     },
     {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\i.png",
-      "PackagePath": "staticwebassets\\Images\\CompanyLogos\\i.png"
+      "Id": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\scale_1200.jpg",
+      "PackagePath": "staticwebassets\\Images\\CompanyLogos\\scale_1200.jpg"
     },
     {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\images.jpg",
-      "PackagePath": "staticwebassets\\Images\\CompanyLogos\\images.jpg"
+      "Id": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\download.png",
+      "PackagePath": "staticwebassets\\Images\\EmployeeImages\\download.png"
     },
     {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\photo_5217718870855498380_y.jpg",
-      "PackagePath": "staticwebassets\\Images\\CompanyLogos\\photo_5217718870855498380_y.jpg"
+      "Id": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\images.png",
+      "PackagePath": "staticwebassets\\Images\\EmployeeImages\\images.png"
     },
     {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\sherlock.png",
-      "PackagePath": "staticwebassets\\Images\\CompanyLogos\\sherlock.png"
+      "Id": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\wwwroot\\Images\\ProductImages\\3e272044-e10c-4661-830a-d6f1f275e26e.png",
+      "PackagePath": "staticwebassets\\Images\\ProductImages\\3e272044-e10c-4661-830a-d6f1f275e26e.png"
     },
     {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\sm.jpg",
-      "PackagePath": "staticwebassets\\Images\\CompanyLogos\\sm.jpg"
+      "Id": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\wwwroot\\Images\\ProductImages\\download.png",
+      "PackagePath": "staticwebassets\\Images\\ProductImages\\download.png"
     },
     {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\Новый точечный рисунок (5).bmp",
-      "PackagePath": "staticwebassets\\Images\\CompanyLogos\\Новый точечный рисунок (5).bmp"
+      "Id": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\wwwroot\\Images\\ProductImages\\images.jpg",
+      "PackagePath": "staticwebassets\\Images\\ProductImages\\images.jpg"
     },
     {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\Тамплиеры-самый-богатый-рыцарский-орден.jpg",
-      "PackagePath": "staticwebassets\\Images\\CompanyLogos\\Тамплиеры-самый-богатый-рыцарский-орден.jpg"
+      "Id": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\wwwroot\\Images\\ProductImages\\images.png",
+      "PackagePath": "staticwebassets\\Images\\ProductImages\\images.png"
     },
     {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\кирпич.jpg",
-      "PackagePath": "staticwebassets\\Images\\CompanyLogos\\кирпич.jpg"
-    },
-    {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\рол.png",
-      "PackagePath": "staticwebassets\\Images\\CompanyLogos\\рол.png"
-    },
-    {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\1.png",
-      "PackagePath": "staticwebassets\\Images\\EmployeeImages\\1.png"
-    },
-    {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\1458904097120070126.jpg",
-      "PackagePath": "staticwebassets\\Images\\EmployeeImages\\1458904097120070126.jpg"
-    },
-    {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\кирпич.jpg",
-      "PackagePath": "staticwebassets\\Images\\EmployeeImages\\кирпич.jpg"
-    },
-    {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\ProductImages\\download.jpg",
-      "PackagePath": "staticwebassets\\Images\\ProductImages\\download.jpg"
-    },
-    {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\ProductImages\\Новый точечный рисунок (5).bmp",
-      "PackagePath": "staticwebassets\\Images\\ProductImages\\Новый точечный рисунок (5).bmp"
-    },
-    {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\StorageLocationImages\\1458904097120070126.jpg",
-      "PackagePath": "staticwebassets\\Images\\StorageLocationImages\\1458904097120070126.jpg"
-    },
-    {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\StorageLocationImages\\1521194388_igra-tri-kotai-kompot.webp",
-      "PackagePath": "staticwebassets\\Images\\StorageLocationImages\\1521194388_igra-tri-kotai-kompot.webp"
-    },
-    {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\StorageLocationImages\\download.jpg",
+      "Id": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\wwwroot\\Images\\StorageLocationImages\\download.jpg",
       "PackagePath": "staticwebassets\\Images\\StorageLocationImages\\download.jpg"
     },
     {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\StorageLocationImages\\sm.jpg",
-      "PackagePath": "staticwebassets\\Images\\StorageLocationImages\\sm.jpg"
+      "Id": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\wwwroot\\Images\\StorageLocationImages\\download.png",
+      "PackagePath": "staticwebassets\\Images\\StorageLocationImages\\download.png"
     },
     {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\StorageLocationImages\\target.png",
-      "PackagePath": "staticwebassets\\Images\\StorageLocationImages\\target.png"
+      "Id": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\wwwroot\\Images\\StorageLocationImages\\images.png",
+      "PackagePath": "staticwebassets\\Images\\StorageLocationImages\\images.png"
     },
     {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\StorageLocationImages\\Новый точечный рисунок (5).bmp",
-      "PackagePath": "staticwebassets\\Images\\StorageLocationImages\\Новый точечный рисунок (5).bmp"
+      "Id": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\wwwroot\\Images\\UpdPdfs\\download.jpg",
+      "PackagePath": "staticwebassets\\Images\\UpdPdfs\\download.jpg"
     },
     {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\UpdPdfs\\1458904097120070126.jpg",
-      "PackagePath": "staticwebassets\\Images\\UpdPdfs\\1458904097120070126.jpg"
-    },
-    {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\UpdPdfs\\Новый точечный рисунок (4).bmp",
-      "PackagePath": "staticwebassets\\Images\\UpdPdfs\\Новый точечный рисунок (4).bmp"
+      "Id": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\wwwroot\\Images\\UpdPdfs\\scale_1200.jpg",
+      "PackagePath": "staticwebassets\\Images\\UpdPdfs\\scale_1200.jpg"
     },
     {
       "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.StockService.Microsoft.AspNetCore.StaticWebAssets.props",

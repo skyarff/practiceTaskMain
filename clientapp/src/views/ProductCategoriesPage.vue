@@ -18,7 +18,7 @@
               {{ item.productCategoryId}}
             </td>
             <td>{{ item.name }}</td>
-            <td>{{ item.companyId }}</td>
+            <td>{{ item.companyName }}</td>
           </tr>
         </template>
       </v-data-table>
@@ -177,7 +177,7 @@ export default {
       headers: [
         { title: 'ID категории продуктов*', key: 'productCategoryId', align: 'start', sortable: true },
         { title: 'Название', key: 'name', align: 'start', sortable: true },
-        { title: 'ID компании*', key: 'companyId', align: 'start', sortable: true },
+        { title: 'Наименование компании*', key: 'companyName', align: 'start', sortable: true },
       ],
       productCategories: [],
       selectedProductCategory: {},
@@ -194,12 +194,6 @@ export default {
       this.isEditing = true
       this.selectedProductCategory = item
       this.applyFilters();
-    },
-    navigateCompanyId(item) {
-      // this.filters = {companyId: item.companyId}
-      // this.isEditing = true
-      // this.selectedCompany = item
-      // this.applyFilters();
     },
     switchEditingMode() {
         this.isEditing = !this.isEditing

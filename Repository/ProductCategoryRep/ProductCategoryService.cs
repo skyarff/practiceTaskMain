@@ -92,11 +92,15 @@ namespace StockService.Repository.ProductCategoryRep
                 query = query.Where(pc => pc.CompanyId == productCategoryDto.CompanyId);
 
 
+            query = query.Include(s => s.Company);
             var productCategories = await query.ToListAsync();
+
+
+
             if (productCategories.Any())
             {
                 _response.IsSuccess = true;
-                _response.Result = productCategories;
+                _response.Result = _mapper.Map<List<ProductCategory>, List<ProductCategoryDto>>(productCategories);
                 _response.Message = "Категории продуктов успешно найдены по указанным критериям.";
             }
 

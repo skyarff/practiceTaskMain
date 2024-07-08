@@ -48,7 +48,7 @@ api.interceptors.response.use((response) => {
 //     }
 //   }
 
-  store.commit('setErrorMessage', error.response.data.message || error.message)
+  store.commit('setErrorMessage', error.response.data.message)
 })
 
 export default api;

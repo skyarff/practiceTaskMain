@@ -4,7 +4,7 @@
       <!-- Секция таблицы -->
       <v-card v-if="!isLoading" class="mb-4">
         <v-data-table
-          :headers="headers"
+          :headers="filteredHeaders"
           :items="products"
           class="elevation-1 bordered-table"
         >
@@ -52,7 +52,11 @@
               <td>{{ item.updId }}</td>
               <td>{{ item.productCategoryId }}</td>
               <td>{{ item.storageLocationId }}</td>
-              <td>{{ item.employeeId }}</td>
+
+              <td 
+              v-if="!stockId"
+              >
+                {{ item.employeeId }}</td>
             </tr>
           </template>
         </v-data-table>
@@ -512,6 +516,7 @@
 <script>
 import api from '@/api';
 import Loader from '@/components/TableLoader.vue'
+import store from '@/store/index'
 
   export default {
     components: {
@@ -521,6 +526,7 @@ import Loader from '@/components/TableLoader.vue'
       return {
         apiBaseUrl: import.meta.env.VITE_API_BASE_URL,
         filters: {},
+        defaultFilters: {},
         headers: [
           { title: 'ID продукта*', key: 'productId', align: 'start', sortable: true },
           { title: 'Наименование продутка', key: 'name', align: 'start', sortable: true },
@@ -545,6 +551,10 @@ import Loader from '@/components/TableLoader.vue'
     },
     mounted() {
       this.applyFilters();
+    },
+    created() {
+      this.filters.stockId = this.stockId;
+      this.defaultFilters.stockId = this.stockId;
     },
     methods: {
       navigateProductId(item) {
@@ -702,6 +712,19 @@ import Loader from '@/components/TableLoader.vue'
       return date.toLocaleString();
       }
   },
+  computed: {
+    stockId() {
+    return store.state.stockId;
+    },
+    filteredHeaders() {
+      return this.headers.filter(header => {
+        if (this.stockId && header.key === 'employeeId') 
+          return false;
+
+        return true;
+      });
+    }
+  }
 }
 </script>
 

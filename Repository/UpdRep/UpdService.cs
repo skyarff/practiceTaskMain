@@ -31,15 +31,12 @@ namespace StockService.Repository.BillRep
             {
                 var upd = _mapper.Map<UpdDto, Upd>(updDto);
 
-                upd.CreateDate = DateTime.UtcNow;
-                _db.Upds.Add(upd);
-                await _db.SaveChangesAsync();
 
                 if (updDto.UpdPdf != null && updDto.UpdPdf.Length > 0)
                 {
 
-                    var fileName = Path.GetFileName(updDto.UpdPdf.FileName);
-                    var filePath = $"{_imagePath}/{fileName}";
+                    var fileName = $"{Guid.NewGuid()}{Path.GetExtension(updDto.UpdPdf.FileName)}";
+                    var filePath = Path.Combine(_imagePath, fileName);
 
 
                     using (var stream = new FileStream("wwwroot/" + filePath, FileMode.Create))
@@ -49,6 +46,10 @@ namespace StockService.Repository.BillRep
 
                     upd.UpdPdfPath = filePath;
                 }
+
+                upd.CreateDate = DateTime.UtcNow;
+                _db.Upds.Add(upd);
+                await _db.SaveChangesAsync();
 
                 _response.IsSuccess = true;
                 _response.Result = upd;

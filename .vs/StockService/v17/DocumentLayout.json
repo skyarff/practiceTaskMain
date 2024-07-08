@@ -1,122 +1,181 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\InDrive\\source\\repos\\StockService\\",
+  "WorkspaceRootPath": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\source\\repos\\stockservice\\stockcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:stockcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\desktop\\practicetaskmain\\repository\\productcategoryrep\\productcategoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:repository\\productcategoryrep\\productcategoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\source\\repos\\stockservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\desktop\\practicetaskmain\\repository\\stockrep\\stockservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:repository\\stockrep\\stockservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\source\\repos\\stockservice\\mappingconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:mappingconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\desktop\\practicetaskmain\\repository\\productcategoryrep\\iproductcategoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:repository\\productcategoryrep\\iproductcategoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\source\\repos\\stockservice\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\source\\repos\\stockservice\\repository\\stockrep\\stockservise.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:repository\\stockrep\\stockservise.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\source\\repos\\stockservice\\repository\\stockrep\\istockservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:repository\\stockrep\\istockservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\source\\repos\\stockservice\\repository\\employeerep\\iemployeeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:repository\\employeerep\\iemployeeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\source\\repos\\stockservice\\repository\\employeerep\\employeeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:repository\\employeerep\\employeeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\source\\repos\\stockservice\\models\\upd.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:models\\upd.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\source\\repos\\stockservice\\models\\storagelocation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:models\\storagelocation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\source\\repos\\stockservice\\models\\stock.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:models\\stock.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\source\\repos\\stockservice\\models\\response.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:models\\response.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\source\\repos\\stockservice\\models\\provider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:models\\provider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\source\\repos\\stockservice\\models\\productcategory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:models\\productcategory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\source\\repos\\stockservice\\models\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:models\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\source\\repos\\stockservice\\models\\employee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:models\\employee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\source\\repos\\stockservice\\models\\company.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:models\\company.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\source\\repos\\stockservice\\models\\bill.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:models\\bill.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\source\\repos\\stockservice\\controllers\\stockcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:controllers\\stockcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\source\\repos\\stockservice\\controllers\\companycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:controllers\\companycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\source\\repos\\stockservice\\repository\\providerrep\\providerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:repository\\providerrep\\providerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\source\\repos\\stockservice\\stockservice.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
-      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:stockservice.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\source\\repos\\stockservice\\controllers\\employeecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:controllers\\employeecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\source\\repos\\stockservice\\controllers\\providercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:controllers\\providercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\source\\repos\\stockservice\\models\\dto\\stockdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\desktop\\practicetaskmain\\models\\dto\\stockdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:models\\dto\\stockdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\source\\repos\\stockservice\\models\\dto\\providerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\desktop\\practicetaskmain\\mappingconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:mappingconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\desktop\\practicetaskmain\\models\\dto\\productcategorydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:models\\dto\\productcategorydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\desktop\\practicetaskmain\\stockcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:stockcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\desktop\\practicetaskmain\\repository\\companyrep\\companyservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:repository\\companyrep\\companyservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\desktop\\practicetaskmain\\models\\company.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:models\\company.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\desktop\\practicetaskmain\\models\\stock.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:models\\stock.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\desktop\\practicetaskmain\\models\\dto\\billdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:models\\dto\\billdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\desktop\\practicetaskmain\\controllers\\providercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:controllers\\providercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\desktop\\practicetaskmain\\repository\\productrep\\productservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:repository\\productrep\\productservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\desktop\\practicetaskmain\\models\\dto\\employeedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:models\\dto\\employeedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\desktop\\practicetaskmain\\models\\dto\\companydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:models\\dto\\companydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\desktop\\practicetaskmain\\controllers\\stockcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:controllers\\stockcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\desktop\\practicetaskmain\\models\\dto\\productdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:models\\dto\\productdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\desktop\\practicetaskmain\\models\\dto\\storagelocationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:models\\dto\\storagelocationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\desktop\\practicetaskmain\\repository\\updrep\\updservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:repository\\updrep\\updservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\desktop\\practicetaskmain\\repository\\billrep\\billservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:repository\\billrep\\billservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\desktop\\practicetaskmain\\repository\\employeerep\\employeeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:repository\\employeerep\\employeeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\desktop\\practicetaskmain\\repository\\storagelocationrep\\storagelocationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:repository\\storagelocationrep\\storagelocationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\desktop\\practicetaskmain\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\desktop\\practicetaskmain\\models\\response.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:models\\response.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\desktop\\practicetaskmain\\models\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:models\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\desktop\\practicetaskmain\\controllers\\companycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:controllers\\companycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\desktop\\practicetaskmain\\repository\\employeerep\\iemployeeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:repository\\employeerep\\iemployeeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\desktop\\practicetaskmain\\controllers\\storagelocationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:controllers\\storagelocationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Migrations\\20240708060641_1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Migrations\\20240708060641_1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\desktop\\practicetaskmain\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\desktop\\practicetaskmain\\repository\\stockrep\\istockservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:repository\\stockrep\\istockservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\desktop\\practicetaskmain\\models\\upd.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:models\\upd.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\desktop\\practicetaskmain\\models\\storagelocation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:models\\storagelocation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\desktop\\practicetaskmain\\models\\provider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:models\\provider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\desktop\\practicetaskmain\\models\\productcategory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:models\\productcategory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\desktop\\practicetaskmain\\models\\employee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:models\\employee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\desktop\\practicetaskmain\\models\\bill.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:models\\bill.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\desktop\\practicetaskmain\\repository\\providerrep\\providerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:repository\\providerrep\\providerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\desktop\\practicetaskmain\\stockservice.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
+      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:stockservice.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\desktop\\practicetaskmain\\controllers\\employeecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:controllers\\employeecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\desktop\\practicetaskmain\\models\\dto\\providerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:models\\dto\\providerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\source\\repos\\stockservice\\repository\\providerrep\\iproviderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\desktop\\practicetaskmain\\repository\\providerrep\\iproviderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:repository\\providerrep\\iproviderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\source\\repos\\stockservice\\repository\\companyrep\\icompanyservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\desktop\\practicetaskmain\\repository\\companyrep\\icompanyservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:repository\\companyrep\\icompanyservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|c:\\users\\indrive\\source\\repos\\stockservice\\models\\dto\\companydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A562AF06-F037-4B16-95A0-828F211C259E}|StockService.csproj|solutionrelative:models\\dto\\companydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\InDrive\\source\\repos\\StockService\\Repository\\StockRep\\StockServise.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -126,7 +185,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -134,232 +193,193 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\InDrive\\source\\repos\\StockService\\appsettings.json",
-              "RelativeDocumentMoniker": "appsettings.json",
-              "ToolTip": "C:\\Users\\InDrive\\source\\repos\\StockService\\appsettings.json",
-              "RelativeToolTip": "appsettings.json",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-06-27T10:10:18.615Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Upd.cs",
-              "DocumentMoniker": "C:\\Users\\InDrive\\source\\repos\\StockService\\Models\\Upd.cs",
-              "RelativeDocumentMoniker": "Models\\Upd.cs",
-              "ToolTip": "C:\\Users\\InDrive\\source\\repos\\StockService\\Models\\Upd.cs",
-              "RelativeToolTip": "Models\\Upd.cs",
-              "ViewState": "AQIAAAUAAAAAAAAAAAAQwA4AAAApAAAA",
+              "DocumentIndex": 0,
+              "Title": "ProductCategoryService.cs",
+              "DocumentMoniker": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Repository\\ProductCategoryRep\\ProductCategoryService.cs",
+              "RelativeDocumentMoniker": "Repository\\ProductCategoryRep\\ProductCategoryService.cs",
+              "ToolTip": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Repository\\ProductCategoryRep\\ProductCategoryService.cs",
+              "RelativeToolTip": "Repository\\ProductCategoryRep\\ProductCategoryService.cs",
+              "ViewState": "AQIAAFgAAAAAAAAAAAAqwGIAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-27T08:29:56.808Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "EmployeeService.cs",
-              "DocumentMoniker": "C:\\Users\\InDrive\\source\\repos\\StockService\\Repository\\EmployeeRep\\EmployeeService.cs",
-              "RelativeDocumentMoniker": "Repository\\EmployeeRep\\EmployeeService.cs",
-              "ToolTip": "C:\\Users\\InDrive\\source\\repos\\StockService\\Repository\\EmployeeRep\\EmployeeService.cs",
-              "RelativeToolTip": "Repository\\EmployeeRep\\EmployeeService.cs",
-              "ViewState": "AQIAAGYAAAAAAAAAAAAtwHUAAAA9AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-26T08:59:26.593Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "IEmployeeService.cs",
-              "DocumentMoniker": "C:\\Users\\InDrive\\source\\repos\\StockService\\Repository\\EmployeeRep\\IEmployeeService.cs",
-              "RelativeDocumentMoniker": "Repository\\EmployeeRep\\IEmployeeService.cs",
-              "ToolTip": "C:\\Users\\InDrive\\source\\repos\\StockService\\Repository\\EmployeeRep\\IEmployeeService.cs",
-              "RelativeToolTip": "Repository\\EmployeeRep\\IEmployeeService.cs",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAwAAAAzAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-26T07:33:15.198Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "IStockService.cs",
-              "DocumentMoniker": "C:\\Users\\InDrive\\source\\repos\\StockService\\Repository\\StockRep\\IStockService.cs",
-              "RelativeDocumentMoniker": "Repository\\StockRep\\IStockService.cs",
-              "ToolTip": "C:\\Users\\InDrive\\source\\repos\\StockService\\Repository\\StockRep\\IStockService.cs",
-              "RelativeToolTip": "Repository\\StockRep\\IStockService.cs",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAswAYAAAAFAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-26T08:57:41.789Z",
+              "WhenOpened": "2024-07-08T10:57:10.73Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "IProductCategoryService.cs",
+              "DocumentMoniker": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Repository\\ProductCategoryRep\\IProductCategoryService.cs",
+              "RelativeDocumentMoniker": "Repository\\ProductCategoryRep\\IProductCategoryService.cs",
+              "ToolTip": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Repository\\ProductCategoryRep\\IProductCategoryService.cs",
+              "RelativeToolTip": "Repository\\ProductCategoryRep\\IProductCategoryService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-08T10:57:10.192Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "StockService.cs",
+              "DocumentMoniker": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Repository\\StockRep\\StockService.cs",
+              "RelativeDocumentMoniker": "Repository\\StockRep\\StockService.cs",
+              "ToolTip": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Repository\\StockRep\\StockService.cs",
+              "RelativeToolTip": "Repository\\StockRep\\StockService.cs",
+              "ViewState": "AQIAAJUAAAAAAAAAAAAQwKAAAAAzAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-08T09:43:46.976Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "ProductService.cs",
+              "DocumentMoniker": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Repository\\ProductRep\\ProductService.cs",
+              "RelativeDocumentMoniker": "Repository\\ProductRep\\ProductService.cs",
+              "ToolTip": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Repository\\ProductRep\\ProductService.cs",
+              "RelativeToolTip": "Repository\\ProductRep\\ProductService.cs",
+              "ViewState": "AQIAANMAAAAAAAAAAAAAAOEAAAA1AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-08T06:07:03.576Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "StockDto.cs",
+              "DocumentMoniker": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Models\\dto\\StockDto.cs",
+              "RelativeDocumentMoniker": "Models\\dto\\StockDto.cs",
+              "ToolTip": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Models\\dto\\StockDto.cs",
+              "RelativeToolTip": "Models\\dto\\StockDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-26T08:56:59.125Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "MappingConfig.cs",
-              "DocumentMoniker": "C:\\Users\\InDrive\\source\\repos\\StockService\\MappingConfig.cs",
+              "DocumentMoniker": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\MappingConfig.cs",
               "RelativeDocumentMoniker": "MappingConfig.cs",
-              "ToolTip": "C:\\Users\\InDrive\\source\\repos\\StockService\\MappingConfig.cs",
+              "ToolTip": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\MappingConfig.cs",
               "RelativeToolTip": "MappingConfig.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAABBAAAA",
+              "ViewState": "AQIAAA0AAAAAAAAAAAAgwBsAAABHAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-26T08:43:36.973Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\InDrive\\source\\repos\\StockService\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\InDrive\\source\\repos\\StockService\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AQIAAAQAAAAAAAAAAADgvxcAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-26T07:33:31.843Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "StockContext.cs",
-              "DocumentMoniker": "C:\\Users\\InDrive\\source\\repos\\StockService\\StockContext.cs",
-              "RelativeDocumentMoniker": "StockContext.cs",
-              "ToolTip": "C:\\Users\\InDrive\\source\\repos\\StockService\\StockContext.cs",
-              "RelativeToolTip": "StockContext.cs",
-              "ViewState": "AQIAAF0AAAAAAAAAAAAIwG0AAAAqAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-26T07:48:46.879Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 9,
-              "Title": "StorageLocation.cs",
-              "DocumentMoniker": "C:\\Users\\InDrive\\source\\repos\\StockService\\Models\\StorageLocation.cs",
-              "RelativeDocumentMoniker": "Models\\StorageLocation.cs",
-              "ToolTip": "C:\\Users\\InDrive\\source\\repos\\StockService\\Models\\StorageLocation.cs",
-              "RelativeToolTip": "Models\\StorageLocation.cs",
-              "ViewState": "AQIAAAcAAAAAAAAAAAAxwBAAAAAtAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-27T07:57:20.859Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
               "Title": "Stock.cs",
-              "DocumentMoniker": "C:\\Users\\InDrive\\source\\repos\\StockService\\Models\\Stock.cs",
+              "DocumentMoniker": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Models\\Stock.cs",
               "RelativeDocumentMoniker": "Models\\Stock.cs",
-              "ToolTip": "C:\\Users\\InDrive\\source\\repos\\StockService\\Models\\Stock.cs",
+              "ToolTip": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Models\\Stock.cs",
               "RelativeToolTip": "Models\\Stock.cs",
-              "ViewState": "AQIAAAcAAAAAAAAAAAA1wA4AAAAUAAAA",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAkwBcAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-26T09:00:53.78Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "Response.cs",
-              "DocumentMoniker": "C:\\Users\\InDrive\\source\\repos\\StockService\\Models\\Response.cs",
-              "RelativeDocumentMoniker": "Models\\Response.cs",
-              "ToolTip": "C:\\Users\\InDrive\\source\\repos\\StockService\\Models\\Response.cs",
-              "RelativeToolTip": "Models\\Response.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-27T10:10:00.574Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "StockServise.cs",
-              "DocumentMoniker": "C:\\Users\\InDrive\\source\\repos\\StockService\\Repository\\StockRep\\StockServise.cs",
-              "RelativeDocumentMoniker": "Repository\\StockRep\\StockServise.cs",
-              "ToolTip": "C:\\Users\\InDrive\\source\\repos\\StockService\\Repository\\StockRep\\StockServise.cs",
-              "RelativeToolTip": "Repository\\StockRep\\StockServise.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAGgAAABOAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-26T08:57:53.239Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "ProductCategory.cs",
-              "DocumentMoniker": "C:\\Users\\InDrive\\source\\repos\\StockService\\Models\\ProductCategory.cs",
-              "RelativeDocumentMoniker": "Models\\ProductCategory.cs",
-              "ToolTip": "C:\\Users\\InDrive\\source\\repos\\StockService\\Models\\ProductCategory.cs",
-              "RelativeToolTip": "Models\\ProductCategory.cs",
-              "ViewState": "AQIAAAUAAAAAAAAAAAAQwA4AAAAgAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-27T07:49:37.416Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "Product.cs",
-              "DocumentMoniker": "C:\\Users\\InDrive\\source\\repos\\StockService\\Models\\Product.cs",
-              "RelativeDocumentMoniker": "Models\\Product.cs",
-              "ToolTip": "C:\\Users\\InDrive\\source\\repos\\StockService\\Models\\Product.cs",
-              "RelativeToolTip": "Models\\Product.cs",
-              "ViewState": "AQIAAA4AAAAAAAAAAAA8wBQAAAAUAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-27T07:13:23.219Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "Employee.cs",
-              "DocumentMoniker": "C:\\Users\\InDrive\\source\\repos\\StockService\\Models\\Employee.cs",
-              "RelativeDocumentMoniker": "Models\\Employee.cs",
-              "ToolTip": "C:\\Users\\InDrive\\source\\repos\\StockService\\Models\\Employee.cs",
-              "RelativeToolTip": "Models\\Employee.cs",
-              "ViewState": "AQIAABMAAAAAAAAAAAAYwBwAAAAqAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-27T07:00:16.864Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 8,
               "Title": "Company.cs",
-              "DocumentMoniker": "C:\\Users\\InDrive\\source\\repos\\StockService\\Models\\Company.cs",
+              "DocumentMoniker": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Models\\Company.cs",
               "RelativeDocumentMoniker": "Models\\Company.cs",
-              "ToolTip": "C:\\Users\\InDrive\\source\\repos\\StockService\\Models\\Company.cs",
+              "ToolTip": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Models\\Company.cs",
               "RelativeToolTip": "Models\\Company.cs",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAAAA0AAAAUAAAA",
+              "ViewState": "AQIAAAUAAAAAAAAAAAAkwBAAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-27T07:11:13.54Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "Bill.cs",
-              "DocumentMoniker": "C:\\Users\\InDrive\\source\\repos\\StockService\\Models\\Bill.cs",
-              "RelativeDocumentMoniker": "Models\\Bill.cs",
-              "ToolTip": "C:\\Users\\InDrive\\source\\repos\\StockService\\Models\\Bill.cs",
-              "RelativeToolTip": "Models\\Bill.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAArAAAA",
+              "DocumentIndex": 5,
+              "Title": "ProductCategoryDto.cs",
+              "DocumentMoniker": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Models\\dto\\ProductCategoryDto.cs",
+              "RelativeDocumentMoniker": "Models\\dto\\ProductCategoryDto.cs",
+              "ToolTip": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Models\\dto\\ProductCategoryDto.cs",
+              "RelativeToolTip": "Models\\dto\\ProductCategoryDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAwAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-27T08:17:26.568Z",
+              "WhenOpened": "2024-07-08T07:15:35.174Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 6,
+              "Title": "StockContext.cs",
+              "DocumentMoniker": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\StockContext.cs",
+              "RelativeDocumentMoniker": "StockContext.cs",
+              "ToolTip": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\StockContext.cs",
+              "RelativeToolTip": "StockContext.cs",
+              "ViewState": "AQIAADIAAAAAAAAAAAAswGgAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-26T07:48:46.879Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "CompanyService.cs",
+              "DocumentMoniker": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Repository\\CompanyRep\\CompanyService.cs",
+              "RelativeDocumentMoniker": "Repository\\CompanyRep\\CompanyService.cs",
+              "ToolTip": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Repository\\CompanyRep\\CompanyService.cs",
+              "RelativeToolTip": "Repository\\CompanyRep\\CompanyService.cs",
+              "ViewState": "AQIAAJ4AAAAAAAAAAAAmwKAAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-08T06:28:59.604Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "ProviderController.cs",
+              "DocumentMoniker": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Controllers\\ProviderController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ProviderController.cs",
+              "ToolTip": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Controllers\\ProviderController.cs",
+              "RelativeToolTip": "Controllers\\ProviderController.cs",
+              "ViewState": "AQIAAAkAAAAAAAAAAAA0wBAAAAAvAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-26T07:28:45.438Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "BillDto.cs",
+              "DocumentMoniker": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Models\\dto\\BillDto.cs",
+              "RelativeDocumentMoniker": "Models\\dto\\BillDto.cs",
+              "ToolTip": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Models\\dto\\BillDto.cs",
+              "RelativeToolTip": "Models\\dto\\BillDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-08T09:41:42.086Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "EmployeeDto.cs",
+              "DocumentMoniker": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Models\\dto\\EmployeeDto.cs",
+              "RelativeDocumentMoniker": "Models\\dto\\EmployeeDto.cs",
+              "ToolTip": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Models\\dto\\EmployeeDto.cs",
+              "RelativeToolTip": "Models\\dto\\EmployeeDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-08T07:12:44.147Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
               "Title": "StockController.cs",
-              "DocumentMoniker": "C:\\Users\\InDrive\\source\\repos\\StockService\\Controllers\\StockController.cs",
+              "DocumentMoniker": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Controllers\\StockController.cs",
               "RelativeDocumentMoniker": "Controllers\\StockController.cs",
-              "ToolTip": "C:\\Users\\InDrive\\source\\repos\\StockService\\Controllers\\StockController.cs",
+              "ToolTip": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Controllers\\StockController.cs",
               "RelativeToolTip": "Controllers\\StockController.cs",
               "ViewState": "AQIAACEAAAAAAAAAAAAowAgAAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -368,97 +388,338 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "StorageLocationService.cs",
+              "DocumentMoniker": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Repository\\StorageLocationRep\\StorageLocationService.cs",
+              "RelativeDocumentMoniker": "Repository\\StorageLocationRep\\StorageLocationService.cs",
+              "ToolTip": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Repository\\StorageLocationRep\\StorageLocationService.cs",
+              "RelativeToolTip": "Repository\\StorageLocationRep\\StorageLocationService.cs",
+              "ViewState": "AQIAAHgAAAAAAAAAAAAmwIoAAAAUAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-08T06:41:46.605Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "ProductDto.cs",
+              "DocumentMoniker": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Models\\dto\\ProductDto.cs",
+              "RelativeDocumentMoniker": "Models\\dto\\ProductDto.cs",
+              "ToolTip": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Models\\dto\\ProductDto.cs",
+              "RelativeToolTip": "Models\\dto\\ProductDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAArAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-08T06:57:43.481Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "CompanyDto.cs",
+              "DocumentMoniker": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Models\\dto\\CompanyDto.cs",
+              "RelativeDocumentMoniker": "Models\\dto\\CompanyDto.cs",
+              "ToolTip": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Models\\dto\\CompanyDto.cs",
+              "RelativeToolTip": "Models\\dto\\CompanyDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAoAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-26T06:50:46.294Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "StorageLocationDto.cs",
+              "DocumentMoniker": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Models\\dto\\StorageLocationDto.cs",
+              "RelativeDocumentMoniker": "Models\\dto\\StorageLocationDto.cs",
+              "ToolTip": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Models\\dto\\StorageLocationDto.cs",
+              "RelativeToolTip": "Models\\dto\\StorageLocationDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-08T07:12:47.73Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "EmployeeService.cs",
+              "DocumentMoniker": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Repository\\EmployeeRep\\EmployeeService.cs",
+              "RelativeDocumentMoniker": "Repository\\EmployeeRep\\EmployeeService.cs",
+              "ToolTip": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Repository\\EmployeeRep\\EmployeeService.cs",
+              "RelativeToolTip": "Repository\\EmployeeRep\\EmployeeService.cs",
+              "ViewState": "AQIAALYAAAAAAAAAAAAmwNEAAAAVAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-26T08:59:26.593Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 19,
+              "Title": "BillService.cs",
+              "DocumentMoniker": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Repository\\BillRep\\BillService.cs",
+              "RelativeDocumentMoniker": "Repository\\BillRep\\BillService.cs",
+              "ToolTip": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Repository\\BillRep\\BillService.cs",
+              "RelativeToolTip": "Repository\\BillRep\\BillService.cs",
+              "ViewState": "AQIAABgAAAAAAAAAAAAowCMAAABXAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-08T06:43:08.977Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "UpdService.cs",
+              "DocumentMoniker": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Repository\\UpdRep\\UpdService.cs",
+              "RelativeDocumentMoniker": "Repository\\UpdRep\\UpdService.cs",
+              "ToolTip": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Repository\\UpdRep\\UpdService.cs",
+              "RelativeToolTip": "Repository\\UpdRep\\UpdService.cs",
+              "ViewState": "AQIAABgAAAAAAAAAAAAowCUAAABVAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-08T06:43:46.636Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AQIAACAAAAAAAAAAAAAgwCoAAAAzAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-26T07:33:31.843Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "Product.cs",
+              "DocumentMoniker": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Models\\Product.cs",
+              "RelativeDocumentMoniker": "Models\\Product.cs",
+              "ToolTip": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Models\\Product.cs",
+              "RelativeToolTip": "Models\\Product.cs",
+              "ViewState": "AQIAABoAAAAAAAAAAAAEwCEAAAAhAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-27T07:13:23.219Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "Response.cs",
+              "DocumentMoniker": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Models\\Response.cs",
+              "RelativeDocumentMoniker": "Models\\Response.cs",
+              "ToolTip": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Models\\Response.cs",
+              "RelativeToolTip": "Models\\Response.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAgAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-27T10:10:00.574Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
               "Title": "CompanyController.cs",
-              "DocumentMoniker": "C:\\Users\\InDrive\\source\\repos\\StockService\\Controllers\\CompanyController.cs",
+              "DocumentMoniker": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Controllers\\CompanyController.cs",
               "RelativeDocumentMoniker": "Controllers\\CompanyController.cs",
-              "ToolTip": "C:\\Users\\InDrive\\source\\repos\\StockService\\Controllers\\CompanyController.cs",
+              "ToolTip": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Controllers\\CompanyController.cs",
               "RelativeToolTip": "Controllers\\CompanyController.cs",
-              "ViewState": "AQIAAGwAAAAAAAAAAAAQwH4AAAAaAAAA",
+              "ViewState": "AQIAAA4AAAAAAAAAAAAAABkAAAAIAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-26T06:55:27.585Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 27,
+              "Title": "StorageLocationController.cs",
+              "DocumentMoniker": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Controllers\\StorageLocationController.cs",
+              "RelativeDocumentMoniker": "Controllers\\StorageLocationController.cs",
+              "ToolTip": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Controllers\\StorageLocationController.cs",
+              "RelativeToolTip": "Controllers\\StorageLocationController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-08T06:41:23.919Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "IEmployeeService.cs",
+              "DocumentMoniker": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Repository\\EmployeeRep\\IEmployeeService.cs",
+              "RelativeDocumentMoniker": "Repository\\EmployeeRep\\IEmployeeService.cs",
+              "ToolTip": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Repository\\EmployeeRep\\IEmployeeService.cs",
+              "RelativeToolTip": "Repository\\EmployeeRep\\IEmployeeService.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAwAAAAzAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-26T07:33:15.198Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "UPD.cs",
+              "DocumentMoniker": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Models\\UPD.cs",
+              "RelativeDocumentMoniker": "Models\\UPD.cs",
+              "ToolTip": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Models\\UPD.cs",
+              "RelativeToolTip": "Models\\UPD.cs",
+              "ViewState": "AQIAAAUAAAAAAAAAAAAQwA4AAAApAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-27T08:29:56.808Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "IStockService.cs",
+              "DocumentMoniker": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Repository\\StockRep\\IStockService.cs",
+              "RelativeDocumentMoniker": "Repository\\StockRep\\IStockService.cs",
+              "ToolTip": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Repository\\StockRep\\IStockService.cs",
+              "RelativeToolTip": "Repository\\StockRep\\IStockService.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAswAYAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-26T08:57:41.789Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAEAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-06-27T10:10:18.615Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "20240708060641_1.cs",
+              "DocumentMoniker": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Migrations\\20240708060641_1.cs",
+              "RelativeDocumentMoniker": "Migrations\\20240708060641_1.cs",
+              "ToolTip": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Migrations\\20240708060641_1.cs",
+              "RelativeToolTip": "Migrations\\20240708060641_1.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-08T06:06:41.874Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "StorageLocation.cs",
+              "DocumentMoniker": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Models\\StorageLocation.cs",
+              "RelativeDocumentMoniker": "Models\\StorageLocation.cs",
+              "ToolTip": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Models\\StorageLocation.cs",
+              "RelativeToolTip": "Models\\StorageLocation.cs",
+              "ViewState": "AQIAAAcAAAAAAAAAAAAxwBAAAAAtAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-27T07:57:20.859Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 43,
+              "Title": "StockServise.cs",
+              "DocumentMoniker": "C:\\Users\\InDrive\\source\\repos\\StockService\\Repository\\StockRep\\StockServise.cs",
+              "RelativeDocumentMoniker": "..\\..\\source\\repos\\StockService\\Repository\\StockRep\\StockServise.cs",
+              "ToolTip": "C:\\Users\\InDrive\\source\\repos\\StockService\\Repository\\StockRep\\StockServise.cs",
+              "RelativeToolTip": "..\\..\\source\\repos\\StockService\\Repository\\StockRep\\StockServise.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAGgAAABOAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-26T08:57:53.239Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "ProductCategory.cs",
+              "DocumentMoniker": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Models\\ProductCategory.cs",
+              "RelativeDocumentMoniker": "Models\\ProductCategory.cs",
+              "ToolTip": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Models\\ProductCategory.cs",
+              "RelativeToolTip": "Models\\ProductCategory.cs",
+              "ViewState": "AQIAAAUAAAAAAAAAAAAQwA4AAAAgAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-27T07:49:37.416Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "Employee.cs",
+              "DocumentMoniker": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Models\\Employee.cs",
+              "RelativeDocumentMoniker": "Models\\Employee.cs",
+              "ToolTip": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Models\\Employee.cs",
+              "RelativeToolTip": "Models\\Employee.cs",
+              "ViewState": "AQIAABMAAAAAAAAAAAAYwBwAAAAqAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-27T07:00:16.864Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 36,
+              "Title": "Bill.cs",
+              "DocumentMoniker": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Models\\Bill.cs",
+              "RelativeDocumentMoniker": "Models\\Bill.cs",
+              "ToolTip": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Models\\Bill.cs",
+              "RelativeToolTip": "Models\\Bill.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAArAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-27T08:17:26.568Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
               "Title": "Provider.cs",
-              "DocumentMoniker": "C:\\Users\\InDrive\\source\\repos\\StockService\\Models\\Provider.cs",
+              "DocumentMoniker": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Models\\Provider.cs",
               "RelativeDocumentMoniker": "Models\\Provider.cs",
-              "ToolTip": "C:\\Users\\InDrive\\source\\repos\\StockService\\Models\\Provider.cs",
+              "ToolTip": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Models\\Provider.cs",
               "RelativeToolTip": "Models\\Provider.cs",
               "ViewState": "AQIAAAsAAAAAAAAAAAAwwBMAAAAUAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-26T07:35:53.321Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-26T07:35:53.321Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 37,
               "Title": "ProviderService.cs",
-              "DocumentMoniker": "C:\\Users\\InDrive\\source\\repos\\StockService\\Repository\\ProviderRep\\ProviderService.cs",
+              "DocumentMoniker": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Repository\\ProviderRep\\ProviderService.cs",
               "RelativeDocumentMoniker": "Repository\\ProviderRep\\ProviderService.cs",
-              "ToolTip": "C:\\Users\\InDrive\\source\\repos\\StockService\\Repository\\ProviderRep\\ProviderService.cs",
+              "ToolTip": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Repository\\ProviderRep\\ProviderService.cs",
               "RelativeToolTip": "Repository\\ProviderRep\\ProviderService.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-26T07:35:35.897Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-26T07:35:35.897Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 38,
               "Title": "StockService",
-              "DocumentMoniker": "C:\\Users\\InDrive\\source\\repos\\StockService\\StockService.csproj",
+              "DocumentMoniker": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\StockService.csproj",
               "RelativeDocumentMoniker": "StockService.csproj",
-              "ToolTip": "C:\\Users\\InDrive\\source\\repos\\StockService\\StockService.csproj",
+              "ToolTip": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\StockService.csproj",
               "RelativeToolTip": "StockService.csproj",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
               "WhenOpened": "2024-06-27T06:49:07.521Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 39,
               "Title": "EmployeeController.cs",
-              "DocumentMoniker": "C:\\Users\\InDrive\\source\\repos\\StockService\\Controllers\\EmployeeController.cs",
+              "DocumentMoniker": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Controllers\\EmployeeController.cs",
               "RelativeDocumentMoniker": "Controllers\\EmployeeController.cs",
-              "ToolTip": "C:\\Users\\InDrive\\source\\repos\\StockService\\Controllers\\EmployeeController.cs",
+              "ToolTip": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Controllers\\EmployeeController.cs",
               "RelativeToolTip": "Controllers\\EmployeeController.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAIBJwBUAAAA3AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-26T05:34:23.745Z"
+              "WhenOpened": "2024-06-26T05:34:23.745Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
-              "Title": "ProviderController.cs",
-              "DocumentMoniker": "C:\\Users\\InDrive\\source\\repos\\StockService\\Controllers\\ProviderController.cs",
-              "RelativeDocumentMoniker": "Controllers\\ProviderController.cs",
-              "ToolTip": "C:\\Users\\InDrive\\source\\repos\\StockService\\Controllers\\ProviderController.cs",
-              "RelativeToolTip": "Controllers\\ProviderController.cs",
-              "ViewState": "AQIAAAkAAAAAAAAAAAAcwBAAAABDAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-26T07:28:45.438Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 24,
-              "Title": "StockDto.cs",
-              "DocumentMoniker": "C:\\Users\\InDrive\\source\\repos\\StockService\\Models\\dto\\StockDto.cs",
-              "RelativeDocumentMoniker": "Models\\dto\\StockDto.cs",
-              "ToolTip": "C:\\Users\\InDrive\\source\\repos\\StockService\\Models\\dto\\StockDto.cs",
-              "RelativeToolTip": "Models\\dto\\StockDto.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAqAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-26T08:56:59.125Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 40,
               "Title": "ProviderDto.cs",
-              "DocumentMoniker": "C:\\Users\\InDrive\\source\\repos\\StockService\\Models\\dto\\ProviderDto.cs",
+              "DocumentMoniker": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Models\\dto\\ProviderDto.cs",
               "RelativeDocumentMoniker": "Models\\dto\\ProviderDto.cs",
-              "ToolTip": "C:\\Users\\InDrive\\source\\repos\\StockService\\Models\\dto\\ProviderDto.cs",
+              "ToolTip": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Models\\dto\\ProviderDto.cs",
               "RelativeToolTip": "Models\\dto\\ProviderDto.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAApAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -466,11 +727,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 41,
               "Title": "IProviderService.cs",
-              "DocumentMoniker": "C:\\Users\\InDrive\\source\\repos\\StockService\\Repository\\ProviderRep\\IProviderService.cs",
+              "DocumentMoniker": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Repository\\ProviderRep\\IProviderService.cs",
               "RelativeDocumentMoniker": "Repository\\ProviderRep\\IProviderService.cs",
-              "ToolTip": "C:\\Users\\InDrive\\source\\repos\\StockService\\Repository\\ProviderRep\\IProviderService.cs",
+              "ToolTip": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Repository\\ProviderRep\\IProviderService.cs",
               "RelativeToolTip": "Repository\\ProviderRep\\IProviderService.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAzAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -478,27 +739,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 42,
               "Title": "ICompanyService.cs",
-              "DocumentMoniker": "C:\\Users\\InDrive\\source\\repos\\StockService\\Repository\\CompanyRep\\ICompanyService.cs",
+              "DocumentMoniker": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Repository\\CompanyRep\\ICompanyService.cs",
               "RelativeDocumentMoniker": "Repository\\CompanyRep\\ICompanyService.cs",
-              "ToolTip": "C:\\Users\\InDrive\\source\\repos\\StockService\\Repository\\CompanyRep\\ICompanyService.cs",
+              "ToolTip": "C:\\Users\\InDrive\\Desktop\\practiceTaskMain\\Repository\\CompanyRep\\ICompanyService.cs",
               "RelativeToolTip": "Repository\\CompanyRep\\ICompanyService.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAAsAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-26T05:23:21.657Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 28,
-              "Title": "CompanyDto.cs",
-              "DocumentMoniker": "C:\\Users\\InDrive\\source\\repos\\StockService\\Models\\dto\\CompanyDto.cs",
-              "RelativeDocumentMoniker": "Models\\dto\\CompanyDto.cs",
-              "ToolTip": "C:\\Users\\InDrive\\source\\repos\\StockService\\Models\\dto\\CompanyDto.cs",
-              "RelativeToolTip": "Models\\dto\\CompanyDto.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAoAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-26T06:50:46.294Z"
             }
           ]
         }

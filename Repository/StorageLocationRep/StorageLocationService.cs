@@ -33,13 +33,10 @@ namespace StockService.Repository.StorageLocationRep
             {
                 var storageLocation = _mapper.Map<StorageLocationDto, StorageLocation>(storageLocationDto);
 
-                _db.StorageLocations.Add(storageLocation);
-                await _db.SaveChangesAsync();
-
                 if (storageLocationDto.Image != null && storageLocationDto.Image.Length > 0)
                 {
-                    var fileName = Path.GetFileName(storageLocationDto.Image.FileName);
-                    var filePath = $"{_imagePath}/{fileName}";
+                    var fileName = $"{Guid.NewGuid()}{Path.GetExtension(storageLocationDto.Image.FileName)}";
+                    var filePath = Path.Combine(_imagePath, fileName);
 
 
                     using (var stream = new FileStream("wwwroot/" + filePath, FileMode.Create))
@@ -49,6 +46,9 @@ namespace StockService.Repository.StorageLocationRep
 
                     storageLocation.ImagePath = filePath;
                 }
+
+                _db.StorageLocations.Add(storageLocation);
+                await _db.SaveChangesAsync();
 
                 _response.IsSuccess = true;
                 _response.Result = storageLocation;
@@ -136,8 +136,8 @@ namespace StockService.Repository.StorageLocationRep
                             File.Delete("wwwroot//" + storageLocation.ImagePath);
                     }
 
-                    var fileName = Path.GetFileName(storageLocationDto.Image.FileName);
-                    var filePath = $"{_imagePath}/{fileName}";
+                    var fileName = $"{Guid.NewGuid()}{Path.GetExtension(storageLocationDto.Image.FileName)}";
+                    var filePath = Path.Combine(_imagePath, fileName);
 
 
                     using (var stream = new FileStream("wwwroot/" + filePath, FileMode.Create))

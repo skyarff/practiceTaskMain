@@ -30,16 +30,11 @@ namespace StockService.Repository.ProductRep
             {
                 var product = _mapper.Map<ProductDto, Product>(productDto);
 
-                
-
-                product.CreateDate = DateTime.UtcNow;
-                _db.Products.Add(product);
-                await _db.SaveChangesAsync();
 
                 if (productDto.Image != null && productDto.Image.Length > 0)
                 {
-                    var fileName = Path.GetFileName(productDto.Image.FileName);
-                    var filePath = $"{_imagePath}/{fileName}";
+                    var fileName = $"{Guid.NewGuid()}{Path.GetExtension(productDto.Image.FileName)}";
+                    var filePath = Path.Combine(_imagePath, fileName);
 
 
                     using (var stream = new FileStream("wwwroot/" + filePath, FileMode.Create))
@@ -49,6 +44,11 @@ namespace StockService.Repository.ProductRep
 
                     product.ImagePath = filePath;
                 }
+
+
+                product.CreateDate = DateTime.UtcNow;
+                _db.Products.Add(product);
+                await _db.SaveChangesAsync();
 
                 _response.IsSuccess = true;
                 _response.Result = product;
@@ -163,8 +163,8 @@ namespace StockService.Repository.ProductRep
                             File.Delete("wwwroot//" + product.ImagePath);
                     }
 
-                    var fileName = Path.GetFileName(productDto.Image.FileName);
-                    var filePath = $"{_imagePath}/{fileName}";
+                    var fileName = $"{Guid.NewGuid()}{Path.GetExtension(productDto.Image.FileName)}";
+                    var filePath = Path.Combine(_imagePath, fileName);
 
 
                     using (var stream = new FileStream("wwwroot/" + filePath, FileMode.Create))

@@ -4,7 +4,7 @@
       <!-- Секция таблицы -->
       <v-card v-if="!isLoading" class="mb-4">
         <v-data-table
-          :headers="headers"
+          :headers="filteredHeaders"
           :items="storageLocations"
           class="elevation-1 bordered-table"
         >
@@ -44,7 +44,11 @@
                     </v-icon>
                   </div>
               </td>
-              <td>{{ item.stockId }}</td>
+              <td
+              v-if="!stockId"
+              >
+              {{ item.stockId }}
+              </td>
             </tr>
           </template>
         </v-data-table>
@@ -279,6 +283,7 @@
 <script>
 import api from '@/api';
 import Loader from '@/components/TableLoader.vue'
+import store from '@/store/index'
 
   export default {
     components: {
@@ -287,9 +292,8 @@ import Loader from '@/components/TableLoader.vue'
     data() {
       return {
         apiBaseUrl: import.meta.env.VITE_API_BASE_URL,
-        filters: {
-          isBusy: ''
-        },
+        filters: {},
+        defaultFilters: {},
         filterOptions: [
           { title: 'Все места хранения', value: '' },
           { title: 'Свободные', value: false },
@@ -301,7 +305,7 @@ import Loader from '@/components/TableLoader.vue'
           { title: 'Код полки', key: 'shelfCode', align: 'start', sortable: true },
           { title: 'Описание', key: 'description', align: 'start', sortable: true },
           { title: 'Фото места хранения', key: 'imagePath', align: 'start', sortable: false },
-          { title: 'ID места склада*', key: 'stockId', align: 'start', sortable: false },
+          { title: 'ID склада*', key: 'stockId', align: 'start', sortable: false },
         ],
         storageLocations: [],
         selectedStorageLocation: {},
@@ -311,6 +315,12 @@ import Loader from '@/components/TableLoader.vue'
     },
     mounted() {
       this.applyFilters();
+    },
+    created() {
+      this.filters.stockId = this.stockId;
+      this.filters.isBusy = '';
+      this.defaultFilters.stockId = this.stockId;
+      this.defaultFilters.isBusy = '';
     },
     methods: {
       navigateStorageLocationId(item) {
@@ -420,6 +430,19 @@ import Loader from '@/components/TableLoader.vue'
         }
       },
   },
+  computed: {
+  stockId() {
+    return store.state.stockId;
+  },
+  filteredHeaders() {
+    return this.headers.filter(header => {
+      if (this.stockId && header.key === 'stockId') 
+        return false;
+
+      return true;
+    });
+  }
+}
 }
 </script>
 

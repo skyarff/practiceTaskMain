@@ -18,7 +18,7 @@
               {{ item.stockId}}
             </td>
             <td>{{ item.name }}</td>
-            <td>{{ item.companyId }}</td>
+            <td>{{ item.companyName }}</td>
           </tr>
         </template>
       </v-data-table>
@@ -195,7 +195,7 @@ export default {
       headers: [
         { title: 'ID склада*', key: 'stockId', align: 'start', sortable: true },
         { title: 'Название', key: 'name', align: 'start', sortable: true },
-        { title: 'ID компании*', key: 'companyId', align: 'start', sortable: true },
+        { title: 'Наименование компании', key: 'companyName', align: 'start', sortable: true },
       ],
       stocks: [],
       selectedStock: {},
@@ -213,12 +213,6 @@ export default {
       this.selectedStock = item
       this.applyFilters();
     },
-    navigateCompanyId(item) {
-      // this.filters = {companyId: item.companyId}
-      // this.isEditing = true
-      // this.selectedCompany = item
-      // this.applyFilters();
-    },
     switchEditingMode() {
         this.isEditing = !this.isEditing
         if (!this.isEditing) {
@@ -226,6 +220,7 @@ export default {
         }
     },
     async applyFilters() {
+
       this.isLoading = true;
       const url = '/api/Stock/getStocksFiltered';
       const data = {}
@@ -244,6 +239,7 @@ export default {
             'Content-Type': 'application/json'
           }
         });
+        console.log(response.data)
         this.stocks = Array.from(response.data.result);
       } catch (error) {
         this.$store.commit('setErrorMessage', error)

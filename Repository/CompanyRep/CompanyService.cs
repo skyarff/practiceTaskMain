@@ -32,13 +32,10 @@ namespace StockService.Repository.CompanyRep
             {
                 var company = _mapper.Map<CompanyDto, Company>(companyDto);
 
-                _db.Companies.Add(company);
-                await _db.SaveChangesAsync();
-
                 if (companyDto.Image != null && companyDto.Image.Length > 0)
                 {
-                    var fileName = Path.GetFileName(companyDto.Image.FileName);
-                    var filePath = $"{_imagePath}/{fileName}";
+                    var fileName = $"{Guid.NewGuid()}{Path.GetExtension(companyDto.Image.FileName)}";
+                    var filePath = Path.Combine(_imagePath, fileName);
 
 
                     using (var stream = new FileStream("wwwroot/" + filePath, FileMode.Create))
@@ -48,6 +45,9 @@ namespace StockService.Repository.CompanyRep
 
                     company.LogoPath = filePath;
                 }
+
+                _db.Companies.Add(company);
+                await _db.SaveChangesAsync();
 
                 _response.IsSuccess = true;
                 _response.Result = company;
@@ -135,8 +135,8 @@ namespace StockService.Repository.CompanyRep
                             File.Delete("wwwroot//" + company.LogoPath);
                     }
 
-                    var fileName = Path.GetFileName(companyDto.Image.FileName);
-                    var filePath = $"{_imagePath}/{fileName}";
+                    var fileName = $"{Guid.NewGuid()}{Path.GetExtension(companyDto.Image.FileName)}";
+                    var filePath = Path.Combine(_imagePath, fileName);
 
 
                     using (var stream = new FileStream("wwwroot/" + filePath, FileMode.Create))
