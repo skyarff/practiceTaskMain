@@ -42,7 +42,7 @@
                     </v-icon>
                   </div>
               </td>
-              <td>{{ item.providerId }}</td>
+              <td>{{ getProviderName(item.providerId) }}</td>
               <td>{{ formatDate(item.createDate) }}</td>
             </tr>
           </template>
@@ -75,13 +75,17 @@
                   prepend-icon="mdi-file-document-outline"
                 ></v-text-field>
               </v-col>
-              <v-col cols="12" sm="6" md="4">
-                <v-text-field
-                  label="ID провайдера"
-                  v-model="filters.providerId"
-                  prepend-icon="mdi-identifier"
-                ></v-text-field>
-              </v-col>
+                  <v-col cols="4">
+                    <v-select
+                      v-model="filters.providerId"                    
+                      :items="[{ providerId: null, name: 'Все поставщики' }, ...providers]"
+                      item-title="name"
+                      item-value="providerId"
+                      label="Поставщик"
+                      prepend-icon="mdi-domain"
+                      dense
+                    ></v-select>
+                  </v-col>
             </v-row>
 
             <v-row>
@@ -191,14 +195,21 @@
                         prepend-icon="mdi-image"
                       ></v-file-input>
                     </v-col>
+
+
+
                     <v-col cols="4">
-                      <v-text-field
-                        v-model="selectedUpd.providerId"
-                        label="ID поставщика*"
-                        type="number"
-                        prepend-icon="mdi-identifier"
-                      ></v-text-field>
-                    </v-col>
+                    <v-select
+                      v-model="selectedProviderId"                    
+                      :items="[{ providerId: null, name: 'Все поставщики' }, ...providers]"
+                      item-title="name"
+                      item-value="providerId"
+                      label="Поставщик"
+                      prepend-icon="mdi-domain"
+                      dense
+                    ></v-select>
+                  </v-col>
+
                   </v-row>
                   
                   <v-row>
@@ -236,10 +247,11 @@ import Loader from '@/components/TableLoader.vue'
           { title: 'ID УПД*', key: 'updId', align: 'start', sortable: true },
           { title: 'Номер документа', key: 'documentNumber', align: 'start', sortable: true },
           { title: 'Скан. УПД', key: 'updPdfPath', align: 'start', sortable: true },
-          { title: 'ID провайдера*', key: 'providerId', align: 'start', sortable: false },
+          { title: 'Поставщик', key: 'providerName', align: 'start', sortable: false },
           { title: 'Дата добавления', key: 'createDate', align: 'start', sortable: false },
         ],
         upds: [],
+        providers: [],
         selectedUpd: {},
         isEditing: false,
         isLoading: true
@@ -247,8 +259,28 @@ import Loader from '@/components/TableLoader.vue'
     },
     mounted() {
       this.applyFilters();
+      this.getAllProviders();
     },
     methods: {
+      async getAllProviders() {
+        const url = '/api/Provider/getAll';
+
+          try {
+            const response = await api.get(url, {
+              headers: {
+                'accept': '*/*'
+              }
+            });
+
+            this.providers = response.data.result.map(provider => ({
+              name: provider.name,
+              providerId: provider.providerId.toString(),
+            }));
+
+          } catch (error) {
+            // this.$store.commit('setErrorMessage', error);
+          } 
+      },
       navigateUpdId(item) {
         this.filters = {updId: item.updId}
         this.isEditing = true
@@ -341,8 +373,23 @@ import Loader from '@/components/TableLoader.vue'
       formatDate(dateString) {
       const date = new Date(dateString);
       return date.toLocaleString();
-    }
+    },
+    getProviderName(providerId) {
+        const provider = this.providers.find(p => p.providerId === providerId.toString());
+        return provider ? provider.name : 'Не указано';
+      },
   },
+  computed: {
+    selectedProviderId: {
+    get() {
+      const provider = this.providers.find(p => p.providerId === this.selectedUpd.providerId?.toString());
+      return provider ? provider.providerId : null;
+    },
+    set(value) {
+      this.selectedUpd.providerId = value;
+    }
+  }
+  }
 }
 </script>
 

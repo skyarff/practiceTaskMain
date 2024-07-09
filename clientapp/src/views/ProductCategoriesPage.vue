@@ -15,7 +15,7 @@
             <td 
             @dblclick="navigateProductCategoryId(item)" 
             class="navigation-column ">
-              {{ item.productCategoryId}}
+              {{ item.productCategoryId }}
             </td>
             <td>{{ item.name }}</td>
             <td>{{ getCompanyName(item.companyId) }}</td>
@@ -50,7 +50,7 @@
                 prepend-icon="mdi-tag-multiple"
               ></v-text-field>
             </v-col>
-            <v-col cols="4">
+                  <v-col cols="4">
                     <v-select
                       v-model="filters.companyId"
                       :items="[{ companyId: null, name: 'Все компании' }, ...companies]"
@@ -139,6 +139,7 @@
                       prepend-icon="mdi-tag-multiple"
                     ></v-text-field>
                   </v-col>
+
                   <v-col cols="12" sm="6">
                     <v-select
                       v-model="selectedCompanyId"

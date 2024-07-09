@@ -333,17 +333,34 @@
                     </v-col>
                   </v-row>
 
-                  <v-row>
-                    
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field
-                        label="ID склада"
-                        type="number"
-                        v-model="selectedEmployee.stockId"
-                        prepend-icon="mdi-identifier"
-                      ></v-text-field>
+                  <v-row>      
+                    <v-col cols="4">
+                      <v-select
+                        v-model="selectedCompanyId"
+                        :items="companies"
+                        item-title="name"
+                        item-value="companyId"
+                        label="Компания"
+                        prepend-icon="mdi-domain"
+                        dense
+                        @update:modelValue="getStocksByCompanyId(selectedEmployee.companyId)"
+                      ></v-select>
                     </v-col>
 
+                    <v-col cols="4">
+                      <v-select
+                        v-model="selectedStockId"
+                        :items="stocksByCompanyId"
+                        item-title="name"
+                        item-value="stockId"
+                        label="Склад"
+                        prepend-icon="mdi-package-variant-closed"
+                        dense
+                      ></v-select>
+                    </v-col>
+            </v-row>
+
+                <v-row>
                     <v-col cols="4" sm="4">
                       <v-file-input
                         v-model="selectedEmployee.image"
@@ -444,6 +461,7 @@ import Loader from '@/components/TableLoader.vue'
             this.stocks = response.data.result.map(stock => ({
               name: stock.name,
               stockId: stock.stockId.toString(),
+              companyId: stock.companyId.toString()
             }));
 
           } catch (error) {
@@ -466,8 +484,7 @@ import Loader from '@/components/TableLoader.vue'
             name: stock.name,
             stockId: stock.stockId.toString(),
           }));
-
-          console.log(this.filters)
+          
         } catch (error) {
           console.error('Error fetching stocks by company ID:', error);
           // this.$store.commit('setErrorMessage', error);
@@ -577,35 +594,39 @@ import Loader from '@/components/TableLoader.vue'
           this.$store.commit('setErrorMessage', error)
         }
       },
-      async handleRowClick(item) {
+      handleRowClick(item) {
         
         if (this.selectedEmployee.employeeId === item.employeeId) {
           delete this.selectedEmployee.employeeId
           this.isEditing = false
         } else {
-          this.selectedEmployee = {...item};
+           this.selectedEmployee = {companyId: 3, ...item};
           delete this.selectedEmployee.password
           this.isEditing = true
+
+
+          // const stock = this.stocks.find(s => s.stockId === this.selectedEmployee.stockId?.toString());
         }
       },
+      
       getStockName(stockId) {
         const stock = this.stocks.find(s => s.stockId === stockId.toString());
         return stock ? stock.name : 'Не указано';
       },
   },
   computed: {
-  selectedCompanyId: {
+    selectedCompanyId: {
     get() {
-      const company = this.companies.find(c => c.companyId === this.selectedStock.companyId?.toString());
+      const company = this.companies.find(c => c.companyId === this.selectedEmployee.companyId?.toString());
       return company ? company.companyId : null;
     },
     set(value) {
-      this.selectedStock.companyId = value;
+      this.selectedEmployee.companyId = value;
     }
   },
   selectedStockId: {
     get() {
-      const stock = this.stocks.find(s => s.stockId === this.selectedEmployee.stockId?.toString());
+      const stock = this.stocksByCompanyId.find(s => s.stockId === this.selectedEmployee.stockId?.toString());
       return stock ? stock.stockId : null;
     },
     set(value) {
