@@ -52,7 +52,7 @@
             </v-col>
                   <v-col cols="4">
                     <v-select
-                      v-model="filters.companyId"
+                      v-model="filtersCompanyId"
                       :items="companies"
                       item-title="name"
                       item-value="companyId"
@@ -289,6 +289,15 @@ computed: {
     },
     set(value) {
       this.selectedProductCategory.companyId = value;
+    }
+  },
+  filtersCompanyId: {
+    get() {
+      const company = this.companies.find(c => c.companyId === this.filters.companyId);
+      return company ? company.companyId : null;
+    },
+    set(value) {
+      this.filters.companyId = value;
     }
   },
   ...mapGetters(['companies'])

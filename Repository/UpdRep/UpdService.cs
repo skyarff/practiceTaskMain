@@ -30,7 +30,7 @@ namespace StockService.Repository.BillRep
             if (!updIsExists)
             {
                 var upd = _mapper.Map<UpdDto, Upd>(updDto);
-                var bill = await _db.Bills.FindAsync(upd.BillId);
+                var bill = await _db.Bills.FindAsync(updDto.BillId);
                 upd.ProviderId = bill.ProviderId;
                 upd.CompanyId = bill.CompanyId;
 
@@ -199,11 +199,11 @@ namespace StockService.Repository.BillRep
                 query = query.Where(b => b.CreateDate <= updDto.EndDate.Value);
 
 
-            var companies = await query.ToListAsync();
-            if (companies.Any())
+            var upds = await query.ToListAsync();
+            if (upds.Any())
             {
                 _response.IsSuccess = true;
-                _response.Result = companies;
+                _response.Result = upds;
                 _response.Message = "УПД успешно найдены по указанным критериям.";
             }
 

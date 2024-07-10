@@ -98,7 +98,7 @@
                     <v-select
                       v-model="filters.companyId"
                       @update:modelValue="getStocksByCompanyId(filters.companyId)"
-                      :items="[{ companyId: null, name: 'Все компании' }, ...companies]"
+                      :items="companies"
                       item-title="name"
                       item-value="companyId"
                       label="Компания"
@@ -106,18 +106,19 @@
                       dense
                     ></v-select>
                   </v-col>
+                
 
-              <v-col cols="4">
-                    <v-select
-                      v-model="filters.stockId"
-                      :items="[{ stockId: null, name: stocksByCompanyId.length !== 0 ? 'Все склады': '' }, ...stocksByCompanyId]"
-                      item-title="name"
-                      item-value="stockId"
-                      label="Склад"
-                      prepend-icon="mdi-package-variant-closed"
-                      dense
-                    ></v-select>
-                  </v-col>
+                  <v-col cols="4">
+                      <v-select
+                        v-model="filtersStockId"
+                        :items="stocksByCompanyId"
+                        item-title="name"
+                        item-value="stockId"
+                        label="Склад"
+                        prepend-icon="mdi-package-variant-closed"
+                        dense
+                      ></v-select>
+                    </v-col>
 
                   <v-col cols="4">
                     <v-select
@@ -277,8 +278,7 @@
                       ></v-select>
                     </v-col>
 
-                    <!-- name: company.name,
-                    companyId: company.companyId.toString(), -->
+   
 
                     <v-col cols="4">
                       <v-select
@@ -291,6 +291,7 @@
                         dense
                       ></v-select>
                     </v-col>
+
                   </v-row>
 
                   <v-row>
@@ -535,6 +536,15 @@ import store from '@/store/index'
     },
     set(value) {
       this.selectedStorageLocation.stockId = value;
+    }
+  },
+  filtersStockId: {
+    get() {
+      const stock = this.stocks.find(s => s.stockId === this.filters.stockId?.toString());
+      return stock ? stock : null;
+    },
+    set(value) {
+      this.filters.stockId = value;
     }
   }
   }

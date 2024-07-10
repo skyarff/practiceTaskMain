@@ -43,6 +43,8 @@
                   </div>
               </td>
               <td>{{ getProviderName(item.providerId) }}</td>
+              <td>{{ getCompanyName(item.companyId) }}</td>
+              <td>{{ getBillName(item.billId) }}</td>
               <td>{{ formatDate(item.createDate) }}</td>
             </tr>
           </template>
@@ -75,20 +77,51 @@
                   prepend-icon="mdi-file-document-outline"
                 ></v-text-field>
               </v-col>
-                  <v-col cols="4">
-                    <v-select
-                      v-model="filters.providerId"                    
+                  
+
+              <v-col cols="4">
+                      <v-select
+                      v-model="filtersCompanyId"
+                      @update:modelValue="this.$store.dispatch('updPage/getBillsByProviderAndCompanyId', 
+                      {providerId: filters.providerId, companyId: filters.companyId})"
+                      :items="companies"
+                      item-title="name"
+                      item-value="companyId"
+                      label="Компания"
+                      prepend-icon="mdi-domain"
+                      dense
+                    ></v-select>   
+                  </v-col>
+            </v-row>
+
+            <v-row>
+
+              <v-col cols="4">
+                      <v-select
+                      v-model="filtersProviderId"
+                      @update:modelValue="this.$store.dispatch('updPage/getBillsByProviderAndCompanyId', 
+                      {providerId: filters.providerId, companyId: filters.companyId})"
                       :items="providers"
                       item-title="name"
                       item-value="providerId"
                       label="Поставщик"
                       prepend-icon="mdi-domain"
                       dense
+                    ></v-select>   
+                  </v-col>
+
+              <v-col cols="4">
+                    <v-select
+                      v-model="filtersBillId"                    
+                      :items="billsByProviderAndCompanyId"
+                      item-title="name"
+                      item-value="billId"
+                      label="Счет"
+                      prepend-icon="mdi-domain"
+                      dense
                     ></v-select>
                   </v-col>
-            </v-row>
 
-            <v-row>
               <v-col cols="12" sm="6" md="4">
                 <v-text-field
                   label="От даты и времени"
@@ -187,6 +220,7 @@
                         prepend-icon="mdi-file-document-outline"
                       ></v-text-field>
                     </v-col>
+
                     <v-col cols="4">
                       <v-file-input
                         v-model="selectedUpd.updPdf"
@@ -195,22 +229,52 @@
                         prepend-icon="mdi-image"
                       ></v-file-input>
                     </v-col>
+  
+                  </v-row>
+                  <v-row>
 
+                    <v-col cols="4">
+                      <v-select
+                      v-model="selectedCompanyId"
+                      @update:modelValue="this.$store.dispatch('updPage/getBillsByProviderAndCompanyId', 
+                      {providerId: selectedUpd.providerId, companyId: selectedUpd.companyId})"
+                      :items="companies"
+                      item-title="name"
+                      item-value="companyId"
+                      label="Компания"
+                      prepend-icon="mdi-domain"
+                      dense
+                    ></v-select>   
+                  </v-col>
 
 
                     <v-col cols="4">
-                    <v-select
-                      v-model="selectedProviderId"                    
+                      <v-select
+                      v-model="selectedProviderId"
+                      @update:modelValue="this.$store.dispatch('updPage/getBillsByProviderAndCompanyId', 
+                      {providerId: selectedUpd.providerId, companyId: selectedUpd.companyId})"
                       :items="providers"
                       item-title="name"
                       item-value="providerId"
                       label="Поставщик"
                       prepend-icon="mdi-domain"
                       dense
-                    ></v-select>
+                    ></v-select>   
                   </v-col>
 
-                  </v-row>
+                  <v-col cols="4">
+                      <v-select
+                      v-model="selectedBillId"
+                      :items="billsByProviderAndCompanyId"
+                      item-title="name"
+                      item-value="billId"
+                      label="Счет"
+                      prepend-icon="mdi-domain"
+                      dense
+                    ></v-select>   
+                  </v-col>
+                </v-row>
+                  
                   
                   <v-row>
                     <v-col>
@@ -249,6 +313,8 @@ import { mapGetters } from 'vuex';
           { title: 'Номер документа', key: 'documentNumber', align: 'start', sortable: true },
           { title: 'Скан. УПД', key: 'updPdfPath', align: 'start', sortable: true },
           { title: 'Поставщик', key: 'providerName', align: 'start', sortable: false },
+          { title: 'Компания', key: 'companyName', align: 'start', sortable: false },
+          { title: 'Счет', key: 'billName', align: 'start', sortable: false },
           { title: 'Дата добавления', key: 'createDate', align: 'start', sortable: false },
         ],
         upds: [],
@@ -259,8 +325,9 @@ import { mapGetters } from 'vuex';
     },
     mounted() {
       this.applyFilters();
-      // this.$store.dispatch('getAllCompanies');
+      this.$store.dispatch('getAllCompanies');
       this.$store.dispatch('getAllProviders');
+      this.$store.dispatch('getAllBills');
     },
     methods: {
       async getAllProviders() {
@@ -290,6 +357,7 @@ import { mapGetters } from 'vuex';
         window.scrollTo(0, document.body.scrollHeight);
       },
       switchEditingMode() {
+
           this.isEditing = !this.isEditing
           if (!this.isEditing) {
             this.selectedUpd.updId = undefined
@@ -316,6 +384,7 @@ import { mapGetters } from 'vuex';
       resetFilters() {
         this.filters = {}
         this.applyFilters();
+
       },
       async saveUpd() {
         const formData = new FormData();
@@ -323,10 +392,10 @@ import { mapGetters } from 'vuex';
           formData.append('updId', this.selectedUpd.updId);
         if(this.selectedUpd.documentNumber)
           formData.append('DocumentNumber', this.selectedUpd.documentNumber);
-        if(this.selectedUpd.providerId)
-          formData.append('ProviderId', this.selectedUpd.providerId);
         if (this.selectedUpd.updPdf)
           formData.append('UpdPdf', this.selectedUpd.updPdf);
+        if (this.selectedUpd.billId)
+          formData.append('BillId', this.selectedUpd.billId);
 
         try {
           await api.post('api/Upd/Create', formData, {
@@ -361,17 +430,25 @@ import { mapGetters } from 'vuex';
       formatDate(dateString) {
       const date = new Date(dateString);
       return date.toLocaleString();
-    },
-    getProviderName(providerId) {
-        const provider = this.providers.find(p => p.providerId === providerId.toString());
-        return provider ? provider.name : 'Не указано';
+      },
+      getProviderName(providerId) {
+          const provider = this.providers.find(p => p.providerId === providerId);
+          return provider ? provider.name : 'Не указано';
+      },
+      getCompanyName(companyId) {
+        const company = this.companies.find(c => c.companyId === companyId);
+        return company ? company.name : 'Не указано';
+      },
+      getBillName(billId) {
+        const bill = this.bills.find(b => b.billId === billId);
+        return bill ? bill.name : 'Не указано';
       },
   },
   computed: {
     selectedProviderId: {
     get() {
       const provider = this.providers.find(p => p.providerId === this.selectedUpd.providerId);
-      return provider ? provider.providerId : null;
+      return provider ? provider.name : null;
     },
     set(value) {
       this.selectedUpd.providerId = value;
@@ -386,10 +463,48 @@ import { mapGetters } from 'vuex';
       this.selectedUpd.companyId = value;
     }
     },
+    selectedBillId: {
+    get() {
+      const bill = this.bills.find(b => b.billId === this.selectedUpd.billId);
+      return bill ? bill.name : null;
+    },
+    set(value) {
+      this.selectedUpd.billId = value;
+    }
+    },
+    filtersProviderId: {
+    get() {
+      const provider = this.providers.find(p => p.providerId === this.filters.providerId);
+      return provider ? provider.name : null;
+    },
+    set(value) {
+      this.filters.providerId = value;
+    }
+    },
+    filtersCompanyId: {
+    get() {
+      const company = this.companies.find(c => c.companyId === this.filters.companyId);
+      return company ? company.name : null;
+    },
+    set(value) {
+      this.filters.companyId = value;
+    }
+    },
+    filtersBillId: {
+    get() {
+      const bill = this.bills.find(b => b.billId === this.filters.billId);
+      return bill ? bill.name : null;
+    },
+    set(value) {
+      this.filters.billId = value;
+    }
+    },
     ...mapGetters([
       'companies',
-      'providers'
-    ])
+      'providers',
+      'bills'
+    ]),
+    ...mapGetters('updPage', ['billsByProviderAndCompanyId']) 
   }
 }
 </script>

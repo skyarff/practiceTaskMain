@@ -6,7 +6,7 @@ namespace StockService.Repository.BillRep
     public interface IBillService
     {
         Task<Response> GetAllBillsAsync();
-        Task<Response> GetBillsByProviderIdAsync(int providerId);
+        Task<Response> GetBillsByProviderAndCompanyIdAsync(int? providerId, int? companyId);
         Task<Response> GetBillByIdAsync(int billId);
         Task<Response> CreateBillAsync(BillDto billDto);
         Task<Response> DeleteBillAsync(int billId);

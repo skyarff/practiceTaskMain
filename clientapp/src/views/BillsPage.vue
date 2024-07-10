@@ -79,7 +79,7 @@
               </v-col>
                   <v-col cols="4">
                     <v-select
-                      v-model="filters.providerId"                    
+                      v-model="filtersProviderId"                    
                       :items="providers"
                       item-title="name"
                       item-value="providerId"
@@ -93,7 +93,7 @@
             <v-row>
               <v-col cols="4">
                     <v-select
-                      v-model="filters.companyId"                    
+                      v-model="filtersCompanyId"                    
                       :items="companies"
                       item-title="name"
                       item-value="companyId"
@@ -430,6 +430,24 @@ import { mapGetters } from 'vuex';
     },
     set(value) {
       this.selectedBill.companyId = value;
+    }
+    },
+    filtersProviderId: {
+    get() {
+      const provider = this.providers.find(p => p.providerId === this.filters.providerId);
+      return provider ? provider.providerId : null;
+    },
+    set(value) {
+      this.filters.providerId = value;
+    }
+    },
+    filtersCompanyId: {
+    get() {
+      const company = this.companies.find(c => c.companyId === this.filters.companyId);
+      return company ? company.name : null;
+    },
+    set(value) {
+      this.filters.companyId = value;
     }
     },
     ...mapGetters([

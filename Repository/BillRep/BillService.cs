@@ -128,20 +128,25 @@ namespace StockService.Repository.BillRep
             return _response;
         }
 
-        public async Task<Response> GetBillsByProviderIdAsync(int providerId)
+        public async Task<Response> GetBillsByProviderAndCompanyIdAsync(int? providerId, int? companyId)
         {
             _response.IsSuccess = false;
-            _response.Message = "Счета не найдены для указанного поставщика.";
+            _response.Message = "Счета не найдены для указанного поставщика и компании.";
 
-            var bills = await _db.Bills
-                    .Where(p => p.ProviderId == providerId)
-                    .ToListAsync();
+            var query = _db.Bills.AsQueryable();
+
+            if (providerId != null)
+                query = query.Where(b => b.ProviderId == providerId);
+            if (companyId != null)
+                query = query.Where(b => b.CompanyId == companyId);
+
+            var bills = await query.ToListAsync();
 
             if (bills.Any())
             {
                 _response.IsSuccess = true;
                 _response.Result = bills;
-                _response.Message = $"Счета от поставщика с ID {providerId} успешно получены.";
+                _response.Message = $"Счета от поставщика с ID {providerId} и компании с ID {companyId} успешно получены.";
             }
 
             return _response;

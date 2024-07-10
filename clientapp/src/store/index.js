@@ -1,5 +1,6 @@
 import { createStore } from "vuex";
 import api from '@/api'
+import updPageModule from '@/store/updPage'
 
 export default createStore({
   state: {
@@ -8,7 +9,8 @@ export default createStore({
     employeeId: 5,
     stockId: 4,
     companies: [],
-    providers: []
+    providers: [],
+    bills: [],
   },
   getters: {
     companies(state) {
@@ -16,6 +18,9 @@ export default createStore({
     },
     providers(state) {
       return state.providers;
+    },
+    bills(state) {
+      return state.bills;
     },
   },
   mutations: {
@@ -27,6 +32,9 @@ export default createStore({
     },
     setProviders(state, providers) {
       state.providers = providers
+    },
+    setBills(state, bills) {
+      state.bills = bills
     },
   },
   actions: {
@@ -75,6 +83,32 @@ export default createStore({
             // this.$store.commit('setErrorMessage', error);
           } 
       },
+      async getAllBills({commit}) {
+
+        const url = '/api/Bill/getAll';
+
+          try {
+            const response = await api.get(url, {
+              headers: {
+                'accept': '*/*'
+              }
+            });
+
+            const bills = response.data.result.map(bill => ({
+              name: bill.billNumber,
+              billId: bill.billId,
+            }));
+
+            bills.unshift({ name: 'Все счета', billId: null });
+
+            commit('setBills', bills)
+
+          } catch (error) {
+            // this.$store.commit('setErrorMessage', error);
+          } 
+      },
   },
-  modules: {},
+  modules: {
+    updPage: updPageModule
+  },
 });

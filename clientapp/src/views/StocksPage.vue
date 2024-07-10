@@ -53,7 +53,7 @@
             
                   <v-col cols="4">
                     <v-select
-                      v-model="filters.companyId"
+                      v-model="filtersCompanyId"
                       :items="companies"
                       item-title="name"
                       item-value="companyId"
@@ -248,7 +248,6 @@ export default {
           }
         });
         this.stocks = Array.from(response.data.result);
-        console.log(this.stocks)
       } catch (error) {
         this.$store.commit('setErrorMessage', 'Записи, соответствующие заданным фильтрам, отсутствуют.')
       } finally {
@@ -322,6 +321,15 @@ computed: {
     },
     set(value) {
       this.selectedStock.companyId = value;
+    }
+  },
+  filtersCompanyId: {
+    get() {
+      const company = this.companies.find(c => c?.companyId === this.filters.companyId);
+      return company ? company.companyId : null;
+    },
+    set(value) {
+      this.filters.companyId = value;
     }
   },
   ...mapGetters(['companies'])

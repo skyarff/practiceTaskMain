@@ -71,13 +71,13 @@ namespace StockService.Controllers
         }
 
         [HttpGet("getInRange")]
-        public async Task<IActionResult> GetBillsInRange([FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate, bool ascending = true)
+        public async Task<IActionResult> GetBillsInRange([FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate)
         {
             try
             {
-                //var billDto = new BillDto { StartDate = startDate, EndDate = endDate, Ascending = ascending };
-                //_response = await _billService.GetBillsInRangeAsync(billDto);
-                //if (_response.IsSuccess) return Ok(_response);
+                var billDto = new BillDto { StartDate = startDate, EndDate = endDate };
+                _response = await _billService.GetBillsInRangeAsync(billDto);
+                if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }
             catch (Exception ex)
@@ -88,12 +88,12 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpGet("getByProviderId")]
-        public async Task<IActionResult> GetBillsByProviderId([FromQuery] int providerId)
+        [HttpGet("getByProviderAndCompanyId")]
+        public async Task<IActionResult> GetBillsByProviderAndCompanyIdAsync([FromQuery] int? providerId, int? companyId)
         {
             try
             {
-                _response = await _billService.GetBillsByProviderIdAsync(providerId);
+                _response = await _billService.GetBillsByProviderAndCompanyIdAsync(providerId, companyId);
                 if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }
