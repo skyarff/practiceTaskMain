@@ -166,7 +166,7 @@
                   <v-col cols="12" sm="6">
                     <v-select
                       v-model="selectedCompanyId"
-                      :items="[{ companyId: null, name: 'Все компании' }, ...companies]"
+                      :items="companies"
                       item-title="name"
                       item-value="companyId"
                       label="Компания"
@@ -196,6 +196,8 @@
 <script>
 import api from '@/api';
 import Loader from '@/components/TableLoader.vue'
+import { mapGetters } from 'vuex';
+
 
 export default {
   components: {
@@ -212,37 +214,17 @@ export default {
       ],
       stocks: [],
       selectedStock: {},
-      companies: [],
       isEditing: false,
       isLoading: true
     }
   },
   mounted() {
     this.applyFilters();
-    this.getAllCompanies();
+    this.$store.dispatch('getAllCompanies');
   },
   methods: {
-    async getAllCompanies() {
-    const url = '/api/Company/getAll';
-
-      try {
-        const response = await api.get(url, {
-          headers: {
-            'accept': '*/*'
-          }
-        });
-
-        this.companies = response.data.result.map(company => ({
-          name: company.name,
-          companyId: company.companyId.toString(),
-        }));
-
-
-      } catch (error) {
-        // this.$store.commit('setErrorMessage', error);
-      }
-    },
     navigateStockId(item) {
+      console.log(this.$store.state._companies)
       this.filters = {stockId: item.stockId}
       this.isEditing = true
       this.selectedStock = item
@@ -257,23 +239,16 @@ export default {
     async applyFilters() {
       this.isLoading = true;
       const url = '/api/Stock/getStocksFiltered';
-      const data = {}
-      
-        if(this.filters.stockId)
-          data.stockId = this.filters.stockId
-        if(this.filters.name)
-          data.name = this.filters.name
-        if(this.filters.companyId)
-          data.companyId = this.filters.companyId
 
       try {
-        const response = await api.post(url, data, {
+        const response = await api.post(url, this.filters, {
           headers: {
             'accept': '*/*',
             'Content-Type': 'application/json'
           }
         });
         this.stocks = Array.from(response.data.result);
+        console.log(this.stocks)
       } catch (error) {
         this.$store.commit('setErrorMessage', 'Записи, соответствующие заданным фильтрам, отсутствуют.')
       } finally {
@@ -330,26 +305,26 @@ export default {
         delete this.selectedStock.stockId
         this.isEditing = false
       } else {
-        console.log(item)
         this.selectedStock = {...item};
         this.isEditing = true
       }
     },
     getCompanyName(companyId) {
-      const company = this.companies.find(c => c.companyId === companyId.toString());
+      const company = this.companies.find(c => c.companyId === companyId);
       return company ? company.name : 'Не указано';
     },
 },
 computed: {
   selectedCompanyId: {
     get() {
-      const company = this.companies.find(c => c.companyId === this.selectedStock.companyId?.toString());
+      const company = this.companies.find(c => c?.companyId === this.selectedStock.companyId);
       return company ? company.companyId : null;
     },
     set(value) {
       this.selectedStock.companyId = value;
     }
-  }
+  },
+  ...mapGetters(['companies'])
 }
 }
 </script>

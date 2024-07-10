@@ -266,17 +266,9 @@ import Loader from '@/components/TableLoader.vue'
       async applyFilters() {
         this.isLoading = true;
         const url = '/api/Company/getCompaniesFiltered';
-        const data = {}
-
-        if(this.filters.companyId)
-          data.companyId = this.filters.companyId
-        if(this.filters.name)
-          data.name = this.filters.name
-        if(this.filters.inn)
-          data.inn = this.filters.inn
         
         try {
-          const response = await api.post(url, data, {
+          const response = await api.post(url, this.filters, {
             headers: {
               'accept': '*/*',
               'Content-Type': 'application/json'
@@ -361,15 +353,4 @@ import Loader from '@/components/TableLoader.vue'
   border-right: 1px solid rgba(222, 222, 222, 0.22);
 }
 
-:deep(.image-tooltip) {
-  padding: 0 !important;
-  background-color: transparent !important;
-  opacity: 1 !important;
-}
-
-.full-size-image {
-  width: 200px;
-  height: 200px; 
-  object-fit: cover;
-}
 </style>

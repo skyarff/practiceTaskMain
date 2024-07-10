@@ -16,5 +16,7 @@ namespace StockService.Models
         [JsonIgnore]
         public Product? Product { get; set; }
 
+        public int CompanyId { get; set; }
+
     }
 }

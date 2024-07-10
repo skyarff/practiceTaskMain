@@ -552,10 +552,6 @@ import store from '@/store/index'
     mounted() {
       this.applyFilters();
     },
-    created() {
-      this.filters.stockId = this.stockId;
-      this.defaultFilters.stockId = this.stockId;
-    },
     methods: {
       navigateProductId(item) {
         this.filters = {productId: item.productId}
@@ -573,51 +569,13 @@ import store from '@/store/index'
       async applyFilters() {
         this.isLoading = true;
         const url = '/api/Product/getProductsFiltered';
-        const data = {}
-
-        if(this.filters.productId)
-          data.productId = this.filters.productId
-        if(this.filters.billId)
-          data.billId = this.filters.billId
-        if(this.filters.updId)
-          data.updId = this.filters.updId
-        if(this.filters.productCategoryId)
-          data.productCategoryId = this.filters.productCategoryId
-        if(this.filters.storageLocationId)
-          data.storageLocationId = this.filters.storageLocationId
-        if(this.filters.employeeId)
-          data.employeeId = this.filters.employeeId
-
-        if(this.filters.stockId)
-          data.stockId = this.filters.stockId
-        if(this.filters.companyId)
-          data.companyId = this.filters.companyId
-        if(this.filters.providerId)
-          data.providerId = this.filters.providerId
-
-
-        if(this.filters.name)
-          data.name = this.filters.name
-        if(this.filters.manufacturer)
-          data.manufacturer = this.filters.manufacturer
-        if(this.filters.productionArticle)
-          data.productionArticle = this.filters.productionArticle
-        if(this.filters.innerArticle)
-          data.innerArticle = this.filters.innerArticle
-        if(this.filters.factoryNumber)
-          data.factoryNumber = this.filters.factoryNumber
-
-
-        if(this.filters.lowerPriceLimit)
-          data.lowerPriceLimit = this.filters.lowerPriceLimit
-        if(this.filters.upperPriceLimit)
-          data.upperPriceLimit = this.filters.upperPriceLimit
+        
+        const data = {...this.filters}
 
         if (this.filters.startDate)
-            data.startDate = new Date(this.filters.startDate).toISOString();
+          data.startDate = new Date(this.filters.startDate).toISOString();
         if(this.filters.endDate)
           data.endDate = new Date(this.filters.endDate).toISOString();
-        
         
         try {
           const response = await api.post(url, data, {

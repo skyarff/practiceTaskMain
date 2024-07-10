@@ -12,7 +12,7 @@ using StockService;
 namespace StockService.Migrations
 {
     [DbContext(typeof(StockContext))]
-    [Migration("20240708060641_1")]
+    [Migration("20240710071906_1")]
     partial class _1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -45,6 +45,9 @@ namespace StockService.Migrations
                         .HasColumnType("numeric")
                         .HasDefaultValue(0m);
 
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("timestamp with time zone");
 
@@ -55,6 +58,8 @@ namespace StockService.Migrations
 
                     b.HasIndex("BillNumber")
                         .IsUnique();
+
+                    b.HasIndex("CompanyId");
 
                     b.HasIndex("ProviderId");
 
@@ -94,6 +99,9 @@ namespace StockService.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("EmployeeId"));
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Email")
                         .HasColumnType("text");
@@ -145,6 +153,9 @@ namespace StockService.Migrations
                     b.Property<int?>("BillId")
                         .HasColumnType("integer");
 
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("timestamp with time zone");
 
@@ -178,6 +189,12 @@ namespace StockService.Migrations
                     b.Property<string>("ProductionArticle")
                         .HasColumnType("text");
 
+                    b.Property<int?>("ProviderId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("StockId")
+                        .HasColumnType("integer");
+
                     b.Property<int>("StorageLocationId")
                         .HasColumnType("integer");
 
@@ -185,8 +202,6 @@ namespace StockService.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("ProductId");
-
-                    b.HasIndex("BillId");
 
                     b.HasIndex("EmployeeId");
 
@@ -303,6 +318,9 @@ namespace StockService.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("StorageLocationId"));
 
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
@@ -335,6 +353,12 @@ namespace StockService.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("UpdId"));
 
+                    b.Property<int>("BillId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("timestamp with time zone");
 
@@ -351,6 +375,8 @@ namespace StockService.Migrations
 
                     b.HasKey("UpdId");
 
+                    b.HasIndex("BillId");
+
                     b.HasIndex("DocumentNumber")
                         .IsUnique();
 
@@ -361,11 +387,19 @@ namespace StockService.Migrations
 
             modelBuilder.Entity("StockService.Models.Bill", b =>
                 {
+                    b.HasOne("StockService.Models.Company", "Company")
+                        .WithMany("Bills")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .IsRequired();
+
                     b.HasOne("StockService.Models.Provider", "Provider")
                         .WithMany("Bills")
                         .HasForeignKey("ProviderId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Company");
 
                     b.Navigation("Provider");
                 });
@@ -382,11 +416,6 @@ namespace StockService.Migrations
 
             modelBuilder.Entity("StockService.Models.Product", b =>
                 {
-                    b.HasOne("StockService.Models.Bill", "Bill")
-                        .WithMany("Products")
-                        .HasForeignKey("BillId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
                     b.HasOne("StockService.Models.Employee", "Employee")
                         .WithMany("Products")
                         .HasForeignKey("EmployeeId")
@@ -407,8 +436,6 @@ namespace StockService.Migrations
                         .WithMany("Products")
                         .HasForeignKey("UpdId")
                         .OnDelete(DeleteBehavior.SetNull);
-
-                    b.Navigation("Bill");
 
                     b.Navigation("Employee");
 
@@ -435,7 +462,7 @@ namespace StockService.Migrations
                     b.HasOne("StockService.Models.Company", "Company")
                         .WithMany("Stocks")
                         .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Company");
                 });
@@ -453,22 +480,30 @@ namespace StockService.Migrations
 
             modelBuilder.Entity("StockService.Models.Upd", b =>
                 {
-                    b.HasOne("StockService.Models.Provider", "Provider")
+                    b.HasOne("StockService.Models.Bill", "Bill")
                         .WithMany("Upds")
-                        .HasForeignKey("ProviderId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("BillId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Provider");
+                    b.HasOne("StockService.Models.Provider", null)
+                        .WithMany("Upds")
+                        .HasForeignKey("ProviderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Bill");
                 });
 
             modelBuilder.Entity("StockService.Models.Bill", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("Upds");
                 });
 
             modelBuilder.Entity("StockService.Models.Company", b =>
                 {
+                    b.Navigation("Bills");
+
                     b.Navigation("ProductCategories");
 
                     b.Navigation("Stocks");

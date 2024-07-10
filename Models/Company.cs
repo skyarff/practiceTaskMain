@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
+
 namespace StockService.Models
 {
     public class Company
@@ -11,6 +12,8 @@ namespace StockService.Models
 
         [JsonIgnore]
         public List<Stock>? Stocks { get; set; }
+        [JsonIgnore]
+        public List<Bill>? Bills { get; set; }
         [JsonIgnore]
         public List<ProductCategory>? ProductCategories { get; set; }
         public Company()

@@ -53,7 +53,7 @@
                   <v-col cols="4">
                     <v-select
                       v-model="filters.companyId"
-                      :items="[{ companyId: null, name: 'Все компании' }, ...companies]"
+                      :items="companies"
                       item-title="name"
                       item-value="companyId"
                       label="Компания"
@@ -172,6 +172,7 @@
 <script>
 import api from '@/api';
 import Loader from '@/components/TableLoader.vue'
+import { mapGetters } from 'vuex';
 
 export default {
   components: {
@@ -186,7 +187,6 @@ export default {
         { title: 'Название', key: 'name', align: 'start', sortable: true },
         { title: 'Компания', key: 'companyName', align: 'start', sortable: true },
       ],
-      companies: [],
       productCategories: [],
       selectedProductCategory: {},
       isEditing: false,
@@ -195,28 +195,9 @@ export default {
   },
   mounted() {
     this.applyFilters();
-    this.getAllCompanies();
+    this.$store.dispatch('getAllCompanies');
   },
   methods: {
-    async getAllCompanies() {
-    const url = '/api/Company/getAll';
-
-      try {
-        const response = await api.get(url, {
-          headers: {
-            'accept': '*/*'
-          }
-        });
-
-        this.companies = response.data.result.map(company => ({
-          name: company.name,
-          companyId: company.companyId.toString(),
-        }));
-
-      } catch (error) {
-        // this.$store.commit('setErrorMessage', error);
-      }
-    },
     navigateProductCategoryId(item) {
       this.filters = {productCategoryId: item.productCategoryId}
       this.isEditing = true
@@ -232,17 +213,9 @@ export default {
     async applyFilters() {
       this.isLoading = true;
       const url = '/api/ProductCategory/getProductCategoriesFiltered';
-      const data = {}
-      
-        if(this.filters.productCategoryId)
-          data.productCategoryId = this.filters.productCategoryId
-        if(this.filters.name)
-          data.name = this.filters.name
-        if(this.filters.companyId)
-          data.companyId = this.filters.companyId
 
       try {
-        const response = await api.post(url, data, {
+        const response = await api.post(url, this.filters, {
           headers: {
             'accept': '*/*',
             'Content-Type': 'application/json'
@@ -304,20 +277,21 @@ export default {
       }
     },
     getCompanyName(companyId) {
-      const company = this.companies.find(c => c.companyId === companyId.toString());
+      const company = this.companies.find(c => c.companyId === companyId);
       return company ? company.name : 'Не указано';
     },
 },
 computed: {
   selectedCompanyId: {
     get() {
-      const company = this.companies.find(c => c.companyId === this.selectedProductCategory.companyId?.toString());
+      const company = this.companies.find(c => c.companyId === this.selectedProductCategory.companyId);
       return company ? company.companyId : null;
     },
     set(value) {
       this.selectedProductCategory.companyId = value;
     }
-  }
+  },
+  ...mapGetters(['companies'])
 }
 }
 </script>

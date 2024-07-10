@@ -469,34 +469,9 @@ import Loader from '@/components/TableLoader.vue'
       async applyFilters() {
         this.isLoading = true;
         const url = '/api/Provider/getProvidersFiltered';
-        const data = {}
 
-        if(this.filters.providerId)
-          data.providerId = this.filters.providerId
-        if(this.filters.name)
-          data.name = this.filters.name
-        if(this.filters.inn)
-          data.inn = this.filters.inn
-        if(this.filters.legalAdress)
-          data.legalAdress = this.filters.legalAdress
-        if(this.filters.checkingAccount)
-          data.checkingAccount = this.filters.checkingAccount
-        if(this.filters.bank)
-          data.bank = this.filters.bank
-        if(this.filters.Bik)
-          data.Bik = this.filters.Bik
-        if(this.filters.correspondentAccount)
-          data.correspondentAccount = this.filters.correspondentAccount
-        if(this.filters.ManagerFullname)
-          data.ManagerFullname = this.filters.ManagerFullname
-        if(this.filters.email)
-          data.email = this.filters.email
-        if(this.filters.phone)
-          data.phone = this.filters.phone
-
-        
         try {
-          const response = await api.post(url, data, {
+          const response = await api.post(url, this.filters, {
             headers: {
               'accept': '*/*',
               'Content-Type': 'application/json'

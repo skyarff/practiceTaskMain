@@ -78,7 +78,7 @@
                   <v-col cols="4">
                     <v-select
                       v-model="filters.providerId"                    
-                      :items="[{ providerId: null, name: 'Все поставщики' }, ...providers]"
+                      :items="providers"
                       item-title="name"
                       item-value="providerId"
                       label="Поставщик"
@@ -201,7 +201,7 @@
                     <v-col cols="4">
                     <v-select
                       v-model="selectedProviderId"                    
-                      :items="[{ providerId: null, name: 'Все поставщики' }, ...providers]"
+                      :items="providers"
                       item-title="name"
                       item-value="providerId"
                       label="Поставщик"
@@ -234,6 +234,7 @@
 <script>
 import api from '@/api';
 import Loader from '@/components/TableLoader.vue'
+import { mapGetters } from 'vuex';
 
   export default {
     components: {
@@ -251,7 +252,6 @@ import Loader from '@/components/TableLoader.vue'
           { title: 'Дата добавления', key: 'createDate', align: 'start', sortable: false },
         ],
         upds: [],
-        providers: [],
         selectedUpd: {},
         isEditing: false,
         isLoading: true
@@ -259,7 +259,8 @@ import Loader from '@/components/TableLoader.vue'
     },
     mounted() {
       this.applyFilters();
-      this.getAllProviders();
+      // this.$store.dispatch('getAllCompanies');
+      this.$store.dispatch('getAllProviders');
     },
     methods: {
       async getAllProviders() {
@@ -297,22 +298,9 @@ import Loader from '@/components/TableLoader.vue'
       async applyFilters() {
         this.isLoading = true;
         const url = '/api/Upd/getUpdsFiltered';
-        const data = {}
-
-        if(this.filters.updId)
-          data.updId = this.filters.updId
-        if(this.filters.documentNumber)
-          data.documentNumber = this.filters.documentNumber
-        if(this.filters.providerId)
-          data.providerId = this.filters.providerId
-        if (this.filters.startDate)
-            data.startDate = new Date(this.filters.startDate).toISOString();
-        if(this.filters.endDate)
-          data.endDate = new Date(this.filters.endDate).toISOString();
-
-        
+    
         try {
-          const response = await api.post(url, data, {
+          const response = await api.post(url, this.filters, {
             headers: {
               'accept': '*/*',
               'Content-Type': 'application/json'
@@ -382,13 +370,26 @@ import Loader from '@/components/TableLoader.vue'
   computed: {
     selectedProviderId: {
     get() {
-      const provider = this.providers.find(p => p.providerId === this.selectedUpd.providerId?.toString());
+      const provider = this.providers.find(p => p.providerId === this.selectedUpd.providerId);
       return provider ? provider.providerId : null;
     },
     set(value) {
       this.selectedUpd.providerId = value;
     }
-  }
+    },
+    selectedCompanyId: {
+    get() {
+      const company = this.companies.find(c => c.companyId === this.selectedUpd.companyId);
+      return company ? company.name : null;
+    },
+    set(value) {
+      this.selectedUpd.companyId = value;
+    }
+    },
+    ...mapGetters([
+      'companies',
+      'providers'
+    ])
   }
 }
 </script>

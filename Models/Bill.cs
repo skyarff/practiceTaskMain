@@ -10,12 +10,16 @@ namespace StockService.Models
         public int ProviderId { get; set; }
         [JsonIgnore]
         public Provider? Provider { get; set; }
+        public int CompanyId { get; set; }
         [JsonIgnore]
-        public List<Product>? Products { get; set; }
+        public Company? Company { get; set; }
+        [JsonIgnore]
+        public List<Upd>? Upds { get; set; }
+
 
         public Bill()
         {
-            this.Products = new List<Product>();
+            this.Upds = new List<Upd>();
         }
 
         public decimal BillTotal { get; set; }

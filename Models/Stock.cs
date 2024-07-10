@@ -7,7 +7,7 @@ namespace StockService.Models
         public int StockId { get; set; }
         public string Name { get; set; }
 
-        public int? CompanyId { get; set; }
+        public int CompanyId { get; set; }
         [JsonIgnore]
         public Company? Company { get; set; }
         [JsonIgnore]

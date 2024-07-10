@@ -18,8 +18,8 @@ namespace StockService.Models.dto
         public decimal? Price { get; set; }
         public decimal? UpperPriceLimit { get; set; }
 
-        public int? BillId { get; set; }
         public int? UpdId { get; set; }
+        
         public int? ProductCategoryId { get; set; }
         public int? StorageLocationId { get; set; }
         public int? EmployeeId { get; set; }
@@ -27,6 +27,7 @@ namespace StockService.Models.dto
 
         public int? StockId { get; set; }
         public int? CompanyId { get; set; }
+        public int? BillId { get; set; }
         public int? ProviderId { get; set; }
         
 

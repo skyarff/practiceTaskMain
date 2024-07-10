@@ -7,7 +7,7 @@ namespace StockService.Repository.UpdRep
     {
         Task<Response> GetAllUpdsAsync();
         Task<Response> GetUpdsInRangeAsync(UpdDto updDto);
-        Task<Response> GetUpdsByProviderIdAsync(int providerId);
+        Task<Response> GetUpdsByBillIdAsync(int billId);
         Task<Response> GetUpdByIdAsync(int updId);
         Task<Response> CreateUpdAsync(UpdDto updDto);
         Task<Response> DeleteUpdAsync(int updId);

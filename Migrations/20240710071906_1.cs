@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
@@ -84,7 +83,7 @@ namespace StockService.Migrations
                         column: x => x.CompanyId,
                         principalTable: "Companies",
                         principalColumn: "CompanyId",
-                        onDelete: ReferentialAction.SetNull);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -96,6 +95,7 @@ namespace StockService.Migrations
                     BillNumber = table.Column<string>(type: "text", nullable: false),
                     BillPdfPath = table.Column<string>(type: "text", nullable: false),
                     ProviderId = table.Column<int>(type: "integer", nullable: false),
+                    CompanyId = table.Column<int>(type: "integer", nullable: false),
                     BillTotal = table.Column<decimal>(type: "numeric", nullable: false, defaultValue: 0m),
                     CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
@@ -103,33 +103,17 @@ namespace StockService.Migrations
                 {
                     table.PrimaryKey("PK_Bills", x => x.BillId);
                     table.ForeignKey(
+                        name: "FK_Bills_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "Companies",
+                        principalColumn: "CompanyId",
+                        onDelete: ReferentialAction.SetNull);
+                    table.ForeignKey(
                         name: "FK_Bills_Providers_ProviderId",
                         column: x => x.ProviderId,
                         principalTable: "Providers",
                         principalColumn: "ProviderId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Upds",
-                columns: table => new
-                {
-                    UpdId = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    DocumentNumber = table.Column<string>(type: "text", nullable: false),
-                    UpdPdfPath = table.Column<string>(type: "text", nullable: false),
-                    ProviderId = table.Column<int>(type: "integer", nullable: false),
-                    CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Upds", x => x.UpdId);
-                    table.ForeignKey(
-                        name: "FK_Upds_Providers_ProviderId",
-                        column: x => x.ProviderId,
-                        principalTable: "Providers",
-                        principalColumn: "ProviderId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -145,7 +129,8 @@ namespace StockService.Migrations
                     StockId = table.Column<int>(type: "integer", nullable: true),
                     ImagePath = table.Column<string>(type: "text", nullable: true),
                     Email = table.Column<string>(type: "text", nullable: true),
-                    Phone = table.Column<string>(type: "text", nullable: true)
+                    Phone = table.Column<string>(type: "text", nullable: true),
+                    CompanyId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -168,7 +153,8 @@ namespace StockService.Migrations
                     ShelfCode = table.Column<string>(type: "text", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: true),
                     ImagePath = table.Column<string>(type: "text", nullable: true),
-                    StockId = table.Column<int>(type: "integer", nullable: false)
+                    StockId = table.Column<int>(type: "integer", nullable: false),
+                    CompanyId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -178,6 +164,36 @@ namespace StockService.Migrations
                         column: x => x.StockId,
                         principalTable: "Stocks",
                         principalColumn: "StockId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Upds",
+                columns: table => new
+                {
+                    UpdId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    DocumentNumber = table.Column<string>(type: "text", nullable: false),
+                    UpdPdfPath = table.Column<string>(type: "text", nullable: false),
+                    BillId = table.Column<int>(type: "integer", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CompanyId = table.Column<int>(type: "integer", nullable: false),
+                    ProviderId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Upds", x => x.UpdId);
+                    table.ForeignKey(
+                        name: "FK_Upds_Bills_BillId",
+                        column: x => x.BillId,
+                        principalTable: "Bills",
+                        principalColumn: "BillId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Upds_Providers_ProviderId",
+                        column: x => x.ProviderId,
+                        principalTable: "Providers",
+                        principalColumn: "ProviderId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -195,21 +211,18 @@ namespace StockService.Migrations
                     Price = table.Column<decimal>(type: "numeric", nullable: false, defaultValue: 0m),
                     ImagePath = table.Column<string>(type: "text", nullable: true),
                     CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    BillId = table.Column<int>(type: "integer", nullable: true),
                     UpdId = table.Column<int>(type: "integer", nullable: true),
                     ProductCategoryId = table.Column<int>(type: "integer", nullable: true),
                     StorageLocationId = table.Column<int>(type: "integer", nullable: false),
-                    EmployeeId = table.Column<int>(type: "integer", nullable: true)
+                    EmployeeId = table.Column<int>(type: "integer", nullable: true),
+                    StockId = table.Column<int>(type: "integer", nullable: false),
+                    CompanyId = table.Column<int>(type: "integer", nullable: false),
+                    BillId = table.Column<int>(type: "integer", nullable: true),
+                    ProviderId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Products", x => x.ProductId);
-                    table.ForeignKey(
-                        name: "FK_Products_Bills_BillId",
-                        column: x => x.BillId,
-                        principalTable: "Bills",
-                        principalColumn: "BillId",
-                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_Products_Employees_EmployeeId",
                         column: x => x.EmployeeId,
@@ -243,6 +256,11 @@ namespace StockService.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Bills_CompanyId",
+                table: "Bills",
+                column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Bills_ProviderId",
                 table: "Bills",
                 column: "ProviderId");
@@ -268,11 +286,6 @@ namespace StockService.Migrations
                 name: "IX_ProductCategories_CompanyId",
                 table: "ProductCategories",
                 column: "CompanyId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Products_BillId",
-                table: "Products",
-                column: "BillId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_EmployeeId",
@@ -318,6 +331,11 @@ namespace StockService.Migrations
                 column: "StockId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Upds_BillId",
+                table: "Upds",
+                column: "BillId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Upds_DocumentNumber",
                 table: "Upds",
                 column: "DocumentNumber",
@@ -335,9 +353,6 @@ namespace StockService.Migrations
                 name: "Products");
 
             migrationBuilder.DropTable(
-                name: "Bills");
-
-            migrationBuilder.DropTable(
                 name: "Employees");
 
             migrationBuilder.DropTable(
@@ -353,10 +368,13 @@ namespace StockService.Migrations
                 name: "Stocks");
 
             migrationBuilder.DropTable(
-                name: "Providers");
+                name: "Bills");
 
             migrationBuilder.DropTable(
                 name: "Companies");
+
+            migrationBuilder.DropTable(
+                name: "Providers");
         }
     }
 }

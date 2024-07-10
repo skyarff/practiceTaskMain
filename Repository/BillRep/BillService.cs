@@ -147,6 +147,25 @@ namespace StockService.Repository.BillRep
             return _response;
         }
 
+        public async Task<Response> GetBillsByCompanyIdAsync(int companyId)
+        {
+            _response.IsSuccess = false;
+            _response.Message = "Счета не найдены для указанной компании.";
+
+            var bills = await _db.Bills
+                    .Where(с => с.CompanyId == companyId)
+                    .ToListAsync();
+
+            if (bills.Any())
+            {
+                _response.IsSuccess = true;
+                _response.Result = bills;
+                _response.Message = $"Счета для компании с ID {companyId} успешно получены.";
+            }
+
+            return _response;
+        }
+
         public async Task<Response> GetBillByIdAsync(int billId)
         {
             var bill = await _db.Bills.FindAsync(billId);
@@ -181,7 +200,9 @@ namespace StockService.Repository.BillRep
             if (billDto.ProviderId != null)
                 query = query.Where(b => b.ProviderId == billDto.ProviderId);
 
-            
+            if (billDto.CompanyId != null)
+                query = query.Where(b => b.CompanyId == billDto.CompanyId);
+
 
             if (billDto.LowerBillTotalLimit != null)
                 query = query.Where(b => b.BillTotal >= billDto.LowerBillTotalLimit);

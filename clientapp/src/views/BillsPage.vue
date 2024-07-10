@@ -43,6 +43,7 @@
                   </div>
               </td>
               <td>{{ getProviderName(item.providerId) }}</td>
+              <td>{{ getCompanyName(item.companyId) }}</td>
               <td>{{ item.billTotal }}</td>
               <td>{{ formatDate(item.createDate) }}</td>
             </tr>
@@ -61,7 +62,7 @@
           </v-expansion-panel-title>
           <v-expansion-panel-text class="pt-6">
             <v-row>
-              <v-col cols="12" sm="6" md="4">
+              <v-col cols="4">
                 <v-text-field
                   label="ID счета"
                   v-model="filters.billId"
@@ -69,7 +70,7 @@
                   prepend-icon="mdi-identifier"
                 ></v-text-field>
               </v-col>
-              <v-col cols="12" sm="6" md="4">
+              <v-col cols="4" sm="6" md="4">
                 <v-text-field
                   label="Номер счета"
                   v-model="filters.billNumber"
@@ -79,7 +80,7 @@
                   <v-col cols="4">
                     <v-select
                       v-model="filters.providerId"                    
-                      :items="[{ providerId: null, name: 'Все поставщики' }, ...providers]"
+                      :items="providers"
                       item-title="name"
                       item-value="providerId"
                       label="Поставщик"
@@ -90,7 +91,20 @@
             </v-row>
 
             <v-row>
-              <v-col cols="12" sm="6" md="4">
+              <v-col cols="4">
+                    <v-select
+                      v-model="filters.companyId"                    
+                      :items="companies"
+                      item-title="name"
+                      item-value="companyId"
+                      label="Компания"
+                      prepend-icon="mdi-domain"
+                      dense
+                    ></v-select>
+                  </v-col>
+
+
+              <v-col cols="4">
                 <v-text-field
                   label="От даты и времени"
                   v-model="filters.startDate"
@@ -98,7 +112,7 @@
                   prepend-icon="mdi-calendar-clock"
                 ></v-text-field>
               </v-col>
-              <v-col cols="12" sm="6" md="4">
+              <v-col cols="4">
                 <v-text-field
                   label="До даты и времени"
                   v-model="filters.endDate"
@@ -107,8 +121,10 @@
                 ></v-text-field>
               </v-col>
 
+            </v-row>
 
-              <v-col cols="12" sm="6" md="4">
+            <v-row>
+              <v-col cols="4">
                 <v-text-field
                   label="Минимальная сумма"
                   v-model="filters.lowerBillTotalLimit"
@@ -116,7 +132,7 @@
                   prepend-icon="mdi-currency-usd"
                 ></v-text-field>
               </v-col>
-              <v-col cols="12" sm="6" md="4">
+              <v-col cols="4" sm="6" md="4">
                 <v-text-field
                   label="Максимальная сумма"
                   v-model="filters.upperBillTotalLimit"
@@ -214,19 +230,13 @@
                       ></v-file-input>
                     </v-col>
 
-                    <v-col cols="4">
-                      <v-text-field
-                        v-model="selectedBill.providerId"
-                        label="ID поставщика*"
-                        type="number"
-                        prepend-icon="mdi-identifier"
-                      ></v-text-field>
-                    </v-col>
+                  </v-row>
 
+                  <v-row>
                     <v-col cols="4">
                     <v-select
                       v-model="selectedProviderId"                    
-                      :items="[{ providerId: null, name: 'Все поставщики' }, ...providers]"
+                      :items="providers"
                       item-title="name"
                       item-value="providerId"
                       label="Поставщик"
@@ -235,9 +245,18 @@
                     ></v-select>
                   </v-col>
 
-                  </v-row>
+                  <v-col cols="4">
+                    <v-select
+                      v-model="selectedCompanyId"                    
+                      :items="companies"
+                      item-title="name"
+                      item-value="companyId"
+                      label="Компания"
+                      prepend-icon="mdi-domain"
+                      dense
+                    ></v-select>
+                  </v-col>
 
-                  <v-row>
                     <v-col cols="4">
                       <v-text-field
                         v-model="selectedBill.billTotal"
@@ -270,6 +289,7 @@
 <script>
 import api from '@/api';
 import Loader from '@/components/TableLoader.vue'
+import { mapGetters } from 'vuex';
 
   export default {
     components: {
@@ -284,11 +304,11 @@ import Loader from '@/components/TableLoader.vue'
           { title: 'Номер счёта', key: 'billNumber', align: 'start', sortable: true },
           { title: 'Скан. PDF счета', key: 'billPdfPath', align: 'start', sortable: true },
           { title: 'Провайдер', key: 'providerName', align: 'start', sortable: false },
+          { title: 'Компания', key: 'companyName', align: 'start', sortable: false },
           { title: 'Сумма счета', key: 'billTotal', align: 'start', sortable: false },
           { title: 'Дата добавления', key: 'createDate', align: 'start', sortable: false },
         ],
         bills: [],
-        providers: [],
         selectedBill: {},
         isEditing: false,
         isLoading: true
@@ -296,28 +316,10 @@ import Loader from '@/components/TableLoader.vue'
     },
     mounted() {
       this.applyFilters();
-      this.getAllProviders();
+      this.$store.dispatch('getAllProviders');
+      this.$store.dispatch('getAllCompanies');
     },
     methods: {
-      async getAllProviders() {
-        const url = '/api/Provider/getAll';
-
-          try {
-            const response = await api.get(url, {
-              headers: {
-                'accept': '*/*'
-              }
-            });
-
-            this.providers = response.data.result.map(provider => ({
-              name: provider.name,
-              providerId: provider.providerId.toString(),
-            }));
-
-          } catch (error) {
-            // this.$store.commit('setErrorMessage', error);
-          } 
-      },
       navigateBillId(item) {
         this.filters = {billId: item.billId}
         this.isEditing = true
@@ -334,27 +336,9 @@ import Loader from '@/components/TableLoader.vue'
       async applyFilters() {
         this.isLoading = true;
         const url = '/api/Bill/getBillsFiltered';
-        const data = {}
-
-        if(this.filters.billId)
-          data.billId = this.filters.billId
-        if(this.filters.billNumber)
-          data.billNumber = this.filters.billNumber
-        if(this.filters.providerId)
-          data.providerId = this.filters.providerId
-        if(this.filters.lowerBillTotalLimit)
-          data.lowerBillTotalLimit = this.filters.lowerBillTotalLimit
-        if(this.filters.upperBillTotalLimit)
-          data.upperBillTotalLimit = this.filters.upperBillTotalLimit
-        if (this.filters.startDate)
-            data.startDate = new Date(this.filters.startDate).toISOString();
-        if(this.filters.endDate)
-          data.endDate = new Date(this.filters.endDate).toISOString();
-
    
-        
         try {
-          const response = await api.post(url, data, {
+          const response = await api.post(url, this.filters, {
             headers: {
               'accept': '*/*',
               'Content-Type': 'application/json'
@@ -379,6 +363,8 @@ import Loader from '@/components/TableLoader.vue'
           formData.append('BillNumber', this.selectedBill.billNumber);
         if(this.selectedBill.providerId)
           formData.append('ProviderId', this.selectedBill.providerId);
+        if(this.selectedBill.companyId)
+          formData.append('CompanyId', this.selectedBill.companyId);
         if (this.selectedBill.billPdf)
           formData.append('BillPdf', this.selectedBill.billPdf);
         if (this.selectedBill.billTotal)
@@ -419,20 +405,37 @@ import Loader from '@/components/TableLoader.vue'
       return date.toLocaleString();
       },
       getProviderName(providerId) {
-        const provider = this.providers.find(p => p.providerId === providerId.toString());
+        const provider = this.providers.find(p => p.providerId === providerId);
         return provider ? provider.name : 'Не указано';
+      },
+      getCompanyName(companyId) {
+        const company = this.companies.find(c => c.companyId === companyId);
+        return company ? company.name : 'Не указано';
       },
   },
   computed: {
     selectedProviderId: {
     get() {
-      const provider = this.providers.find(p => p.providerId === this.selectedBill.providerId?.toString());
+      const provider = this.providers.find(p => p.providerId === this.selectedBill.providerId);
       return provider ? provider.providerId : null;
     },
     set(value) {
       this.selectedBill.providerId = value;
     }
-  }
+    },
+    selectedCompanyId: {
+    get() {
+      const company = this.companies.find(c => c.companyId === this.selectedBill.companyId);
+      return company ? company.name : null;
+    },
+    set(value) {
+      this.selectedBill.companyId = value;
+    }
+    },
+    ...mapGetters([
+      'companies',
+      'providers'
+    ])
   }
 }
 </script>

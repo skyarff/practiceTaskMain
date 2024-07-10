@@ -148,9 +148,6 @@ namespace StockService.Repository.ProductRep
                 if (!string.IsNullOrEmpty(productDto.FactoryNumber))
                     product.FactoryNumber = productDto.FactoryNumber;
 
-                if (productDto.BillId != null)
-                    product.BillId = productDto.BillId;
-
                 if (productDto.UpdId != null)
                     product.UpdId = productDto.UpdId;
 
@@ -233,12 +230,15 @@ namespace StockService.Repository.ProductRep
                 query = query.Where(p => p.StorageLocation.Stock.CompanyId == productDto.CompanyId);
 
 
-            if (productDto.BillId != null)
-                query = query.Where(p => p.BillId == productDto.BillId);
-            else if (productDto.UpdId != null)
+
+            if (productDto.UpdId != null)
                 query = query.Where(p => p.UpdId == productDto.UpdId);
+
+            else if (productDto.BillId != null)
+                query = query.Where(p => p.Upd.BillId == productDto.BillId);
+
             else if (productDto.ProviderId != null)
-                query = query.Where(p => p.Bill.ProviderId == productDto.ProviderId || p.Upd.ProviderId == productDto.ProviderId);
+                query = query.Where(p => p.Upd.Bill.ProviderId == productDto.ProviderId);
 
 
             var products = await query.ToListAsync();

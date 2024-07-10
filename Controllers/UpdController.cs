@@ -75,10 +75,10 @@ namespace StockService.Controllers
         {
             try
             {
-                //var updDto = new UpdDto { StartDate = startDate, EndDate = endDate, Ascending = ascending };
+                var updDto = new UpdDto { StartDate = startDate, EndDate = endDate };
 
-                //_response = await _updService.GetUpdsInRangeAsync(updDto);
-                //if (_response.IsSuccess) return Ok(_response);
+                _response = await _updService.GetUpdsInRangeAsync(updDto);
+                if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }
             catch (Exception ex)
@@ -89,12 +89,12 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpGet("getByProviderId")]
-        public async Task<IActionResult> GetUpdsByProviderId([FromQuery] int providerId)
+        [HttpGet("getByBillId")]
+        public async Task<IActionResult> GetUpdsByBillId([FromQuery] int billId)
         {
             try
             {
-                _response = await _updService.GetUpdsByProviderIdAsync(providerId);
+                _response = await _updService.GetUpdsByBillIdAsync(billId);
                 if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }

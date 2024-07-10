@@ -15,9 +15,6 @@ namespace StockService.Models
         public string? ImagePath { get; set; }
         public DateTime CreateDate { get; set; }
 
-        public int? BillId { get; set; }
-        [JsonIgnore]
-        public Bill? Bill { get; set; }
 
         public int? UpdId { get; set; }
         [JsonIgnore]
@@ -34,5 +31,12 @@ namespace StockService.Models
         public int? EmployeeId { get; set; }
         [JsonIgnore]
         public Employee? Employee { get; set; }
+
+
+        public int StockId { get; set; }
+        public int CompanyId { get; set; }
+
+        public int? BillId { get; set; }
+        public int? ProviderId { get; set; }
     }
 }

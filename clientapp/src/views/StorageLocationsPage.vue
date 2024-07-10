@@ -4,7 +4,7 @@
       <!-- Секция таблицы -->
       <v-card v-if="!isLoading" class="mb-4">
         <v-data-table
-          :headers="filteredHeaders"
+          :headers="headers"
           :items="storageLocations"
           class="elevation-1 bordered-table"
         >
@@ -44,11 +44,7 @@
                     </v-icon>
                   </div>
               </td>
-              <td
-              v-if="!stockId"
-              >
-              {{ item.stockId }}
-              </td>
+              <td>{{ getStockName(item.stockId) }}</td>
             </tr>
           </template>
         </v-data-table>
@@ -98,24 +94,42 @@
                 ></v-text-field>
               </v-col>
 
-              <v-col cols="12" sm="6" md="4">
-                <v-text-field
-                  label="ID склада"
-                  type="number"
-                  v-model="filters.stockId"
-                  prepend-icon="mdi-identifier"
-                ></v-text-field>
-              </v-col>
+              <v-col cols="4">
+                    <v-select
+                      v-model="filters.companyId"
+                      @update:modelValue="getStocksByCompanyId(filters.companyId)"
+                      :items="[{ companyId: null, name: 'Все компании' }, ...companies]"
+                      item-title="name"
+                      item-value="companyId"
+                      label="Компания"
+                      prepend-icon="mdi-domain"
+                      dense
+                    ></v-select>
+                  </v-col>
 
-              <v-col cols="6">
-                <v-container>
-                  <v-chip-group v-model="filters.isBusy" column mandatory>
-                    <v-chip filter value="">Все</v-chip>
-                    <v-chip filter :value="false">Свободные</v-chip>
-                    <v-chip filter :value="true">Занятые</v-chip>
-                  </v-chip-group>
-                </v-container>
-              </v-col>
+              <v-col cols="4">
+                    <v-select
+                      v-model="filters.stockId"
+                      :items="[{ stockId: null, name: stocksByCompanyId.length !== 0 ? 'Все склады': '' }, ...stocksByCompanyId]"
+                      item-title="name"
+                      item-value="stockId"
+                      label="Склад"
+                      prepend-icon="mdi-package-variant-closed"
+                      dense
+                    ></v-select>
+                  </v-col>
+
+                  <v-col cols="4">
+                    <v-select
+                      v-model="filters.isBusy"
+                      :items="filterOptions"
+                      item-title="title"
+                      item-value="value"
+                      label="Места хранения"
+                      prepend-icon="mdi-domain"
+                      dense
+                    ></v-select>
+                  </v-col>
 
             </v-row>
             <v-row>
@@ -249,16 +263,34 @@
                     </v-col>
                   </v-row>
 
-                  <v-row>
-                    <v-col cols="6" sm="6">
-                      <v-text-field
-                        v-model="selectedStorageLocation.stockId"
-                        label="ID склада*"
-                        type="number"
-                        prepend-icon="mdi-identifier"
-                      ></v-text-field>
+                  <v-row>      
+                    <v-col cols="4">
+                      <v-select
+                        v-model="selectedCompanyId"
+                        :items="companies"
+                        item-title="name"
+                        item-value="companyId"
+                        label="Компания"
+                        prepend-icon="mdi-domain"
+                        dense
+                        @update:modelValue="getStocksByCompanyId(selectedStorageLocation.companyId)"
+                      ></v-select>
                     </v-col>
 
+                    <!-- name: company.name,
+                    companyId: company.companyId.toString(), -->
+
+                    <v-col cols="4">
+                      <v-select
+                        v-model="selectedStockId"
+                        :items="stocksByCompanyId"
+                        item-title="name"
+                        item-value="stockId"
+                        label="Склад"
+                        prepend-icon="mdi-package-variant-closed"
+                        dense
+                      ></v-select>
+                    </v-col>
                   </v-row>
 
                   <v-row>
@@ -292,10 +324,14 @@ import store from '@/store/index'
     data() {
       return {
         apiBaseUrl: import.meta.env.VITE_API_BASE_URL,
-        filters: {},
-        defaultFilters: {},
+        filters: {
+
+        },
+        companies: [],
+        stocks: [],
+        stocksByCompanyId: [],
         filterOptions: [
-          { title: 'Все места хранения', value: '' },
+          { title: 'Все места хранения', value: null },
           { title: 'Свободные', value: false },
           { title: 'Занятые', value: true }
         ],
@@ -305,7 +341,7 @@ import store from '@/store/index'
           { title: 'Код полки', key: 'shelfCode', align: 'start', sortable: true },
           { title: 'Описание', key: 'description', align: 'start', sortable: true },
           { title: 'Фото места хранения', key: 'imagePath', align: 'start', sortable: false },
-          { title: 'ID склада*', key: 'stockId', align: 'start', sortable: false },
+          { title: 'Склад', key: 'stockName', align: 'start', sortable: false },
         ],
         storageLocations: [],
         selectedStorageLocation: {},
@@ -315,22 +351,83 @@ import store from '@/store/index'
     },
     mounted() {
       this.applyFilters();
-    },
-    created() {
-      this.filters.stockId = this.stockId;
-      this.filters.isBusy = '';
-      this.defaultFilters.stockId = this.stockId;
-      this.defaultFilters.isBusy = '';
+      this.getAllCompanies();
+      this.getAllStocks();
     },
     methods: {
+      async getAllCompanies() {
+        const url = '/api/Company/getAll';
+
+          try {
+            const response = await api.get(url, {
+              headers: {
+                'accept': '*/*'
+              }
+            });
+
+            this.companies = response.data.result.map(company => ({
+              name: company.name,
+              companyId: company.companyId.toString(),
+            }));
+
+          } catch (error) {
+            // this.$store.commit('setErrorMessage', error);
+          } 
+      },
+      async getAllStocks() {
+        const url = '/api/Stock/getAll';
+
+          try {
+            const response = await api.get(url, {
+              headers: {
+                'accept': '*/*'
+              }
+            });
+
+            this.stocks = response.data.result.map(stock => ({
+              name: stock.name,
+              stockId: stock.stockId.toString(),
+              companyId: stock.companyId
+            }));
+
+          } catch (error) {
+            // this.$store.commit('setErrorMessage', error);
+          }
+      },
+      async getStocksByCompanyId(companyId) {
+        this.stocksByCompanyId = [];
+        delete this.filters.stockId
+        const url = `/api/Stock/getByCompanyId?companyId=${companyId}`;
+
+        try {
+          const response = await api.get(url, {
+            headers: {
+              'accept': '*/*'
+            }
+          });
+
+          this.stocksByCompanyId = response.data.result.map(stock => ({
+            name: stock.name,
+            stockId: stock.stockId.toString(),
+          }));
+          
+        } catch (error) {
+          console.error('Error fetching stocks by company ID:', error);
+          // this.$store.commit('setErrorMessage', error);
+        }
+      },
       navigateStorageLocationId(item) {
         this.filters = {
           storageLocationId: item.storageLocationId,
           isBusy: ''
         }
+
+        this.filters = {storageLocationId: item.storageLocationId}
         this.isEditing = true
-        this.selectedStorageLocation = item
+        const stock = this.stocks.find(s => s.stockId === item.stockId.toString());
+        this.selectedStorageLocation = {companyId: stock.companyId, ...item};
         this.applyFilters();
+
         window.scrollTo(0, document.body.scrollHeight);
       },
       switchEditingMode() {
@@ -342,23 +439,9 @@ import store from '@/store/index'
       async applyFilters() {
         this.isLoading = true;
         const url = '/api/StorageLocation/getStorageLocationsFiltered';
-        const data = {}
 
-        if(this.filters.storageLocationId)
-          data.storageLocationId = this.filters.storageLocationId
-        if(this.filters.rackCode)
-          data.rackCode = this.filters.rackCode
-        if(this.filters.shelfCode)
-          data.shelfCode = this.filters.shelfCode
-        if(this.filters.description)
-          data.description = this.filters.description
-        if(this.filters.stockId)
-          data.stockId = this.filters.stockId
-        if(this.filters.isBusy !== '')
-          data.isBusy = this.filters.isBusy
-        
         try {
-          const response = await api.post(url, data, {
+          const response = await api.post(url, this.filters, {
             headers: {
               'accept': '*/*',
               'Content-Type': 'application/json'
@@ -372,7 +455,7 @@ import store from '@/store/index'
         }
       },
       resetFilters() {
-        this.filters = {isBusy: ''}
+        this.filters = {isBusy: null}
         this.applyFilters();
       },
       async saveStorageLocation() {
@@ -425,24 +508,36 @@ import store from '@/store/index'
           delete this.selectedStorageLocation.storageLocationId
           this.isEditing = false
         } else {
-          this.selectedStorageLocation = {...item};
+          const stock = this.stocks.find(s => s.stockId === item.stockId.toString());
+          this.selectedStorageLocation = {companyId: stock.companyId, ...item};
           this.isEditing = true
         }
       },
+      getStockName(stockId) {
+        const stock = this.stocks.find(s => s.stockId === stockId.toString());
+        return stock ? stock.name : 'Не указано';
+      },
   },
   computed: {
-  stockId() {
-    return store.state.stockId;
+    selectedCompanyId: {
+    get() {
+      const company = this.companies.find(c => c.companyId === this.selectedStorageLocation.companyId?.toString());
+      return company ? company.companyId : null;
+    },
+    set(value) {
+      this.selectedStorageLocation.companyId = value;
+    }
   },
-  filteredHeaders() {
-    return this.headers.filter(header => {
-      if (this.stockId && header.key === 'stockId') 
-        return false;
-
-      return true;
-    });
+  selectedStockId: {
+    get() {
+      const stock = this.stocks.find(s => s.stockId === this.selectedStorageLocation.stockId?.toString());
+      return stock ? stock : null;
+    },
+    set(value) {
+      this.selectedStorageLocation.stockId = value;
+    }
   }
-}
+  }
 }
 </script>
 

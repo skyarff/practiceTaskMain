@@ -36,7 +36,7 @@ namespace StockService
 
                 entity.HasOne(s => s.Company)
                     .WithMany(c => c.Stocks)
-                    .OnDelete(DeleteBehavior.SetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasForeignKey(s => s.CompanyId);
             });
 
@@ -85,7 +85,6 @@ namespace StockService
                 entity.HasIndex(p => p.ProductCategoryId);
                 entity.HasIndex(p => p.StorageLocationId).IsUnique();
                 entity.HasIndex(p => p.EmployeeId);
-                entity.HasIndex(p => p.BillId);
                 entity.HasIndex(p => p.UpdId);
 
                 entity.HasOne(p => p.ProductCategory)
@@ -102,11 +101,6 @@ namespace StockService
                     .WithMany(e => e.Products)
                     .OnDelete(DeleteBehavior.SetNull)
                     .HasForeignKey(p => p.EmployeeId);
-
-                entity.HasOne(p => p.Bill)
-                    .WithMany(b => b.Products)
-                    .OnDelete(DeleteBehavior.SetNull)
-                    .HasForeignKey(p => p.BillId);
 
                 entity.HasOne(p => p.Upd)
                     .WithMany(u => u.Products)
@@ -127,20 +121,25 @@ namespace StockService
 
                 entity.HasOne(b => b.Provider)
                     .WithMany(p => p.Bills)
-                    .OnDelete(DeleteBehavior.Restrict)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasForeignKey(p => p.ProviderId);
+
+                entity.HasOne(b => b.Company)
+                    .WithMany(c => c.Bills)
+                    .OnDelete(DeleteBehavior.SetNull)
+                    .HasForeignKey(c => c.CompanyId);
             });
 
             modelBuilder.Entity<Upd>(entity =>
             {
                 entity.HasKey(u => u.UpdId);
                 entity.HasIndex(u => u.DocumentNumber).IsUnique();
-                entity.HasIndex(u => u.ProviderId);
+                entity.HasIndex(u => u.BillId);
 
-                entity.HasOne(u => u.Provider)
-                    .WithMany(p => p.Upds)
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .HasForeignKey(u => u.ProviderId);
+                entity.HasOne(u => u.Bill)
+                    .WithMany(b => b.Upds)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasForeignKey(u => u.BillId);
             });
 
             modelBuilder.Entity<Provider>(entity =>

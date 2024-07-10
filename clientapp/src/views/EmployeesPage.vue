@@ -358,7 +358,7 @@
                         dense
                       ></v-select>
                     </v-col>
-            </v-row>
+                  </v-row>
 
                 <v-row>
                     <v-col cols="4" sm="4">
@@ -457,11 +457,10 @@ import Loader from '@/components/TableLoader.vue'
               }
             });
 
-
             this.stocks = response.data.result.map(stock => ({
               name: stock.name,
               stockId: stock.stockId.toString(),
-              companyId: stock.companyId.toString()
+              companyId: stock.companyId
             }));
 
           } catch (error) {
@@ -493,8 +492,10 @@ import Loader from '@/components/TableLoader.vue'
       navigateEmployeeId(item) {
         this.filters = {employeeId: item.employeeId}
         this.isEditing = true
-        this.selectedEmployee = item
+        const stock = this.stocks.find(s => s.stockId === item.stockId.toString());
+        this.selectedEmployee = {companyId: stock.companyId, ...item};
         this.applyFilters();
+
         window.scrollTo(0, document.body.scrollHeight);
       },
       switchEditingMode() {
@@ -506,28 +507,9 @@ import Loader from '@/components/TableLoader.vue'
       async applyFilters() {
         this.isLoading = true;
         const url = '/api/Employee/getEmployeesFiltered';
-        const data = {}
-
-        if(this.filters.employeeId)
-          data.employeeId = this.filters.employeeId
-        if(this.filters.login)
-          data.login = this.filters.login
-        if(this.filters.fullName)
-          data.fullName = this.filters.fullName
-        if(this.filters.jobTitle)
-          data.jobTitle = this.filters.jobTitle
-        if(this.filters.email)
-          data.email = this.filters.email
-        if(this.filters.phone)
-          data.phone = this.filters.phone
-
-        if(this.filters.stockId)
-          data.stockId = this.filters.stockId
-        if(this.filters.companyId)
-          data.companyId = this.filters.companyId
-        
+ 
         try {
-          const response = await api.post(url, data, {
+          const response = await api.post(url, this.filters, {
             headers: {
               'accept': '*/*',
               'Content-Type': 'application/json'
@@ -600,16 +582,15 @@ import Loader from '@/components/TableLoader.vue'
           delete this.selectedEmployee.employeeId
           this.isEditing = false
         } else {
-           this.selectedEmployee = {companyId: 3, ...item};
+          const stock = this.stocks.find(s => s.stockId === item.stockId.toString());
+          this.selectedEmployee = {companyId: stock.companyId, ...item};
           delete this.selectedEmployee.password
           this.isEditing = true
-
-
-          // const stock = this.stocks.find(s => s.stockId === this.selectedEmployee.stockId?.toString());
         }
       },
       
       getStockName(stockId) {
+
         const stock = this.stocks.find(s => s.stockId === stockId.toString());
         return stock ? stock.name : 'Не указано';
       },
@@ -626,14 +607,14 @@ import Loader from '@/components/TableLoader.vue'
   },
   selectedStockId: {
     get() {
-      const stock = this.stocksByCompanyId.find(s => s.stockId === this.selectedEmployee.stockId?.toString());
-      return stock ? stock.stockId : null;
+      const stock = this.stocks.find(s => s.stockId === this.selectedEmployee.stockId?.toString());
+      return stock ? stock : null;
     },
     set(value) {
       this.selectedEmployee.stockId = value;
     }
   }
-}
+  }
 }
 </script>
 

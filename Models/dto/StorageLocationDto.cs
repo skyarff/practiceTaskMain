@@ -10,6 +10,7 @@ namespace StockService.Models.dto
         public string? Description { get; set; }
 
         public int? StockId { get; set; }
+        public int? CompanyId { get; set; }
         public IFormFile? Image { get; set; }
         public bool? IsBusy { get; set; }
 

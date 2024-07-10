@@ -3,8 +3,6 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using StockService.Models;
 using StockService.Models.dto;
-using System.Security.Cryptography.X509Certificates;
-using System.Text.RegularExpressions;
 
 namespace StockService.Repository.CompanyRep
 {
@@ -159,6 +157,7 @@ namespace StockService.Repository.CompanyRep
 
         public async Task<Response> GetCompaniesFilteredAsync(CompanyDto companyDto)
         {
+
             _response.IsSuccess = false;
             _response.Message = "Компании не найдены по указанным критериям.";
 

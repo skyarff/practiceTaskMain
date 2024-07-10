@@ -30,6 +30,9 @@ namespace StockService.Repository.BillRep
             if (!updIsExists)
             {
                 var upd = _mapper.Map<UpdDto, Upd>(updDto);
+                var bill = await _db.Bills.FindAsync(upd.BillId);
+                upd.ProviderId = bill.ProviderId;
+                upd.CompanyId = bill.CompanyId;
 
 
                 if (updDto.UpdPdf != null && updDto.UpdPdf.Length > 0)
@@ -129,20 +132,20 @@ namespace StockService.Repository.BillRep
             return _response;
         }
 
-        public async Task<Response> GetUpdsByProviderIdAsync(int providerId)
+        public async Task<Response> GetUpdsByBillIdAsync(int billId)
         {
             _response.IsSuccess = false;
-            _response.Message = "УПД не найдены для указанного поставщика.";
+            _response.Message = "УПД не найдены для указанного счета.";
 
             var upds = await _db.Upds
-                    .Where(u => u.ProviderId == providerId)
+                    .Where(u => u.BillId == billId)
                     .ToListAsync();
 
             if (upds.Any())
             {
                 _response.IsSuccess = true;
                 _response.Result = upds;
-                _response.Message = $"УПД от поставщика с ID {providerId} успешно получены.";
+                _response.Message = $"УПД счета с ID {billId} успешно получены.";
             }
 
             return _response;
@@ -178,8 +181,16 @@ namespace StockService.Repository.BillRep
 
             if (!string.IsNullOrEmpty(updDto.DocumentNumber))
                 query = query.Where(u => u.DocumentNumber == updDto.DocumentNumber);
-            if (updDto.ProviderId != null)
+
+
+            if (updDto.BillId != null)
+                query = query.Where(u => u.BillId == updDto.BillId);
+            else if (updDto.ProviderId != null)
                 query = query.Where(u => u.ProviderId == updDto.ProviderId);
+
+
+            if (updDto.CompanyId != null)
+                query = query.Where(u => u.CompanyId == updDto.CompanyId);
 
 
             if (updDto.StartDate != null)
@@ -198,5 +209,6 @@ namespace StockService.Repository.BillRep
 
             return _response;
         }
+
     }
 }
