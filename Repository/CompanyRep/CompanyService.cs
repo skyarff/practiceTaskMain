@@ -30,22 +30,20 @@ namespace StockService.Repository.CompanyRep
             {
                 var company = _mapper.Map<CompanyDto, Company>(companyDto);
 
+                string filePath = "";
                 if (companyDto.Image != null && companyDto.Image.Length > 0)
                 {
-                    var fileName = $"{Guid.NewGuid()}{Path.GetExtension(companyDto.Image.FileName)}";
-                    var filePath = Path.Combine(_imagePath, fileName);
-
-
-                    using (var stream = new FileStream("wwwroot/" + filePath, FileMode.Create))
-                    {
-                        await companyDto.Image.CopyToAsync(stream);
-                    }
-
+                    string fileName = $"{Guid.NewGuid()}{Path.GetExtension(companyDto.Image.FileName)}";
+                    filePath = Path.Combine(_imagePath, fileName);
                     company.LogoPath = filePath;
                 }
 
                 _db.Companies.Add(company);
                 await _db.SaveChangesAsync();
+
+                if (!string.IsNullOrEmpty(filePath))
+                    using (var stream = new FileStream("wwwroot/" + filePath, FileMode.Create))
+                        await companyDto.Image.CopyToAsync(stream);
 
                 _response.IsSuccess = true;
                 _response.Result = company;
@@ -117,6 +115,7 @@ namespace StockService.Repository.CompanyRep
             _response.IsSuccess = false;
             _response.Message = "Компания не найдена.";
 
+
             if (company != null)
             {
                 if (!string.IsNullOrEmpty(companyDto.Name))
@@ -125,27 +124,31 @@ namespace StockService.Repository.CompanyRep
                 if (!string.IsNullOrEmpty(companyDto.Inn))
                     company.Inn = companyDto.Inn;
 
+
+                string filePath = "";
+                string oldPath = company.LogoPath;
                 if (companyDto.Image != null && companyDto.Image.Length > 0)
                 {
-                    if (!string.IsNullOrEmpty(company.LogoPath))
-                    {
-                        if (File.Exists("wwwroot//" + company.LogoPath))
-                            File.Delete("wwwroot//" + company.LogoPath);
-                    }
-
-                    var fileName = $"{Guid.NewGuid()}{Path.GetExtension(companyDto.Image.FileName)}";
-                    var filePath = Path.Combine(_imagePath, fileName);
-
-
-                    using (var stream = new FileStream("wwwroot/" + filePath, FileMode.Create))
-                    {
-                        await companyDto.Image.CopyToAsync(stream);
-                    }
+                    string fileName = $"{Guid.NewGuid()}{Path.GetExtension(companyDto.Image.FileName)}";
+                    filePath = Path.Combine(_imagePath, fileName);
                     company.LogoPath = filePath;
                 }
 
 
                 await _db.SaveChangesAsync();
+                
+                if (!string.IsNullOrEmpty(filePath))
+                {
+                    using (var stream = new FileStream("wwwroot/" + filePath, FileMode.Create))
+                        await companyDto.Image.CopyToAsync(stream);
+
+                    if (!string.IsNullOrEmpty(oldPath) 
+                        && File.Exists("wwwroot//" + oldPath))
+                            File.Delete("wwwroot//" + oldPath);
+                }
+                    
+
+
 
                 _response.IsSuccess = true;
                 _response.Result = company;

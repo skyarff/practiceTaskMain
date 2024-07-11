@@ -46,6 +46,7 @@
                   </div>
               </td>
               <td>{{ getStockName(item.stockId) }}</td>
+              <td>{{ getCompanyName(item.companyId) }}</td>
               <td>{{ item.email }}</td>
               <td>{{ item.phone }}</td>
             </tr>
@@ -119,11 +120,24 @@
             </v-row>
 
             <v-row>
+
+              <v-col cols="4">
+                    <v-select
+                      v-model="filtersCompanyId"
+                      @update:modelValue="selectionOfStocks(false)"
+                      :items="companies"
+                      item-title="name"
+                      item-value="companyId"
+                      label="Компания"
+                      prepend-icon="mdi-domain"
+                      dense
+                    ></v-select>
+                  </v-col>
               
               <v-col cols="4">
                     <v-select
-                      v-model="filters.stockId"
-                      :items="[{ stockId: null, name: stocksByCompanyId.length !== 0 ? 'Все склады': '' }, ...stocksByCompanyId]"
+                      v-model="filtersStockId"
+                      :items="fStocksByCompanyId"
                       item-title="name"
                       item-value="stockId"
                       label="Склад"
@@ -132,18 +146,7 @@
                     ></v-select>
                   </v-col>
 
-              <v-col cols="4">
-                    <v-select
-                      v-model="filters.companyId"
-                      @update:modelValue="getStocksByCompanyId(filters.companyId)"
-                      :items="[{ companyId: null, name: 'Все компании' }, ...companies]"
-                      item-title="name"
-                      item-value="companyId"
-                      label="Компания"
-                      prepend-icon="mdi-domain"
-                      dense
-                    ></v-select>
-                  </v-col>
+              
             </v-row>
 
             <v-row>
@@ -343,7 +346,7 @@
                         label="Компания"
                         prepend-icon="mdi-domain"
                         dense
-                        @update:modelValue="getStocksByCompanyId(selectedEmployee.companyId)"
+                        @update:modelValue="selectionOfStocks(true)"
                       ></v-select>
                     </v-col>
 
@@ -394,6 +397,7 @@
 <script>
 import api from '@/api';
 import Loader from '@/components/TableLoader.vue'
+import { mapGetters } from 'vuex';
 
   export default {
     components: {
@@ -410,13 +414,11 @@ import Loader from '@/components/TableLoader.vue'
           { title: 'Логин', key: 'login', align: 'start', sortable: true },
           { title: 'Фото сотудника', key: 'imagePath', align: 'start', sortable: false },
           { title: 'Склад', key: 'stockName', align: 'start', sortable: true },
+          { title: 'Компания', key: 'companyName', align: 'start', sortable: true },
           { title: 'Почта', key: 'email', align: 'start', sortable: true },
           { title: 'Телефон', key: 'phone', align: 'start', sortable: true },
         ],
         employees: [],
-        companies: [],
-        stocks: [],
-        stocksByCompanyId: [],
         selectedEmployee: {},
         isEditing: false,
         isLoading: true
@@ -424,76 +426,25 @@ import Loader from '@/components/TableLoader.vue'
     },
     mounted() {
       this.applyFilters();
-      this.getAllCompanies();
-      this.getAllStocks();
+      this.$store.dispatch('getAllCompanies');
+      this.$store.dispatch('getAllStocks');
     },
     methods: {
-      async getAllCompanies() {
-        const url = '/api/Company/getAll';
-
-          try {
-            const response = await api.get(url, {
-              headers: {
-                'accept': '*/*'
-              }
-            });
-
-            this.companies = response.data.result.map(company => ({
-              name: company.name,
-              companyId: company.companyId.toString(),
-            }));
-
-          } catch (error) {
-            // this.$store.commit('setErrorMessage', error);
-          } 
-      },
-      async getAllStocks() {
-        const url = '/api/Stock/getAll';
-
-          try {
-            const response = await api.get(url, {
-              headers: {
-                'accept': '*/*'
-              }
-            });
-
-            this.stocks = response.data.result.map(stock => ({
-              name: stock.name,
-              stockId: stock.stockId.toString(),
-              companyId: stock.companyId
-            }));
-
-          } catch (error) {
-            // this.$store.commit('setErrorMessage', error);
-          }
-      },
-      async getStocksByCompanyId(companyId) {
-        this.stocksByCompanyId = [];
-        delete this.filters.stockId
-        const url = `/api/Stock/getByCompanyId?companyId=${companyId}`;
-
-        try {
-          const response = await api.get(url, {
-            headers: {
-              'accept': '*/*'
-            }
-          });
-
-          this.stocksByCompanyId = response.data.result.map(stock => ({
-            name: stock.name,
-            stockId: stock.stockId.toString(),
-          }));
-          
-        } catch (error) {
-          console.error('Error fetching stocks by company ID:', error);
-          // this.$store.commit('setErrorMessage', error);
+      selectionOfStocks(selected) {
+        let companyId;
+        if (selected) {
+          companyId = this.selectedEmployee.companyId
+          this.selectedStockId = null
+        } else {
+          companyId = this.filters.companyId
+          this.filtersStockId = null
         }
+        this.$store.dispatch( 'employeePage/getStocksByCompanyId', {companyId: companyId, selected: selected})
       },
       navigateEmployeeId(item) {
         this.filters = {employeeId: item.employeeId}
         this.isEditing = true
-        const stock = this.stocks.find(s => s.stockId === item.stockId.toString());
-        this.selectedEmployee = {companyId: stock.companyId, ...item};
+        this.selectedEmployee = {...item};
         this.applyFilters();
 
         window.scrollTo(0, document.body.scrollHeight);
@@ -577,43 +528,72 @@ import Loader from '@/components/TableLoader.vue'
         }
       },
       handleRowClick(item) {
-        
         if (this.selectedEmployee.employeeId === item.employeeId) {
           delete this.selectedEmployee.employeeId
           this.isEditing = false
         } else {
-          const stock = this.stocks.find(s => s.stockId === item.stockId.toString());
-          this.selectedEmployee = {companyId: stock.companyId, ...item};
-          delete this.selectedEmployee.password
+          this.selectedEmployee = {...item};
           this.isEditing = true
+          this.$store.dispatch( 'employeePage/getStocksByCompanyId', {companyId: this.selectedCompanyId, selected: true})
         }
       },
-      
       getStockName(stockId) {
-
-        const stock = this.stocks.find(s => s.stockId === stockId.toString());
+        const stock = this.stocks.find(s => s.stockId === stockId);
         return stock ? stock.name : 'Не указано';
       },
+      getCompanyName(companyId) {
+        const company = this.companies.find(c => c.companyId === companyId);
+        return company ? company.name : 'Не указано';
+      },
   },
-  computed: {
+    computed: {
+    
     selectedCompanyId: {
     get() {
-      const company = this.companies.find(c => c.companyId === this.selectedEmployee.companyId?.toString());
+      const company = this.companies.find(c => c.companyId === this.selectedEmployee.companyId);
       return company ? company.companyId : null;
     },
     set(value) {
       this.selectedEmployee.companyId = value;
     }
-  },
-  selectedStockId: {
+    },
+    selectedStockId: {
+      get() {
+        const stock = this.stocks.find(s => s.stockId === this.selectedEmployee.stockId);
+        return stock ? stock : null;
+      },
+      set(value) {
+        this.selectedEmployee.stockId = value;
+      }
+    },
+    filtersCompanyId: {
     get() {
-      const stock = this.stocks.find(s => s.stockId === this.selectedEmployee.stockId?.toString());
-      return stock ? stock : null;
+      const company = this.companies.find(c => c.companyId === this.filters.companyId);
+      return company ? company.companyId : null;
     },
     set(value) {
-      this.selectedEmployee.stockId = value;
+      this.filters.companyId = value;
     }
-  }
+    },
+    filtersStockId: {
+      get() {
+        const stock = this.stocks.find(s => s.stockId === this.filters.stockId);
+        return stock ? stock : null;
+      },
+      set(value) {
+        this.filters.stockId = value;
+      }
+    },
+    ...mapGetters([
+      'companies',
+      'stocks'
+    ]),
+    ...mapGetters('employeePage', 
+    [
+      'stocksByCompanyId',
+      'fStocksByCompanyId'
+    ]) 
+  
   }
 }
 </script>

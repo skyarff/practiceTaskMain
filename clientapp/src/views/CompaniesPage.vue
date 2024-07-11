@@ -26,6 +26,7 @@
                     class="full-size-image"
                     style="max-width: 40px; max-height: 40px"
                   ></v-img>
+
                   <v-tooltip 
                     activator="parent" 
                     location="start"
@@ -351,6 +352,18 @@ import Loader from '@/components/TableLoader.vue'
 }
 .bordered-table :deep() td {
   border-right: 1px solid rgba(222, 222, 222, 0.22);
+}
+
+:deep(.image-tooltip) {
+  padding: 0 !important;
+  background-color: transparent !important;
+  opacity: 1 !important;
+}
+
+.full-size-image {
+  width: 200px;
+  height: 200px; 
+  object-fit: cover;
 }
 
 </style>

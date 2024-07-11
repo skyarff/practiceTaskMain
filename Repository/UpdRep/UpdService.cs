@@ -34,25 +34,21 @@ namespace StockService.Repository.BillRep
                 upd.ProviderId = bill.ProviderId;
                 upd.CompanyId = bill.CompanyId;
 
-
+                string filePath = "";
                 if (updDto.UpdPdf != null && updDto.UpdPdf.Length > 0)
                 {
-
-                    var fileName = $"{Guid.NewGuid()}{Path.GetExtension(updDto.UpdPdf.FileName)}";
-                    var filePath = Path.Combine(_imagePath, fileName);
-
-
-                    using (var stream = new FileStream("wwwroot/" + filePath, FileMode.Create))
-                    {
-                        await updDto.UpdPdf.CopyToAsync(stream);
-                    }
-
+                    string fileName = $"{Guid.NewGuid()}{Path.GetExtension(updDto.UpdPdf.FileName)}";
+                    filePath = Path.Combine(_imagePath, fileName);
                     upd.UpdPdfPath = filePath;
                 }
 
                 upd.CreateDate = DateTime.UtcNow;
                 _db.Upds.Add(upd);
                 await _db.SaveChangesAsync();
+
+                if(!string.IsNullOrEmpty(filePath))
+                    using (var stream = new FileStream("wwwroot/" + filePath, FileMode.Create))
+                        await updDto.UpdPdf.CopyToAsync(stream);
 
                 _response.IsSuccess = true;
                 _response.Result = upd;
@@ -112,7 +108,6 @@ namespace StockService.Repository.BillRep
             if (updDto.EndDate != null)
                 query = query.Where(b => b.CreateDate <= updDto.EndDate.Value);
 
-            //bool ascending = updDto.Ascending == null ? true : (bool)updDto.Ascending;
             query = true
                 ? query.OrderBy(b => b.CreateDate)
                 : query.OrderByDescending(b => b.CreateDate);

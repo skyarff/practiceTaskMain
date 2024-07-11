@@ -45,6 +45,7 @@
                   </div>
               </td>
               <td>{{ getStockName(item.stockId) }}</td>
+              <td>{{ getCompanyName(item.companyId) }}</td>
             </tr>
           </template>
         </v-data-table>
@@ -96,8 +97,8 @@
 
               <v-col cols="4">
                     <v-select
-                      v-model="filters.companyId"
-                      @update:modelValue="getStocksByCompanyId(filters.companyId)"
+                      v-model="filtersCompanyId"
+                      @update:modelValue="selectionOfStocks(false)"
                       :items="companies"
                       item-title="name"
                       item-value="companyId"
@@ -111,7 +112,7 @@
                   <v-col cols="4">
                       <v-select
                         v-model="filtersStockId"
-                        :items="stocksByCompanyId"
+                        :items="fStocksByCompanyId"
                         item-title="name"
                         item-value="stockId"
                         label="Склад"
@@ -182,7 +183,7 @@
 
                     <v-col cols="12">
                       <v-text-field
-                        v-model="selectedStorageLocation.stockId"
+                        v-model="selectedStorageLocation.storageLocationId"
                         label="ID места хранения"
                         type="number"
                         prepend-icon="mdi-identifier"
@@ -274,7 +275,7 @@
                         label="Компания"
                         prepend-icon="mdi-domain"
                         dense
-                        @update:modelValue="getStocksByCompanyId(selectedStorageLocation.companyId)"
+                        @update:modelValue="selectionOfStocks(true)"
                       ></v-select>
                     </v-col>
 
@@ -316,7 +317,7 @@
 <script>
 import api from '@/api';
 import Loader from '@/components/TableLoader.vue'
-import store from '@/store/index'
+import { mapGetters } from 'vuex';
 
   export default {
     components: {
@@ -326,11 +327,7 @@ import store from '@/store/index'
       return {
         apiBaseUrl: import.meta.env.VITE_API_BASE_URL,
         filters: {
-
         },
-        companies: [],
-        stocks: [],
-        stocksByCompanyId: [],
         filterOptions: [
           { title: 'Все места хранения', value: null },
           { title: 'Свободные', value: false },
@@ -343,6 +340,7 @@ import store from '@/store/index'
           { title: 'Описание', key: 'description', align: 'start', sortable: true },
           { title: 'Фото места хранения', key: 'imagePath', align: 'start', sortable: false },
           { title: 'Склад', key: 'stockName', align: 'start', sortable: false },
+          { title: 'Компания', key: 'companyName', align: 'start', sortable: false },
         ],
         storageLocations: [],
         selectedStorageLocation: {},
@@ -352,10 +350,22 @@ import store from '@/store/index'
     },
     mounted() {
       this.applyFilters();
-      this.getAllCompanies();
-      this.getAllStocks();
+      this.$store.dispatch('getAllCompanies');
+      this.$store.dispatch('getAllStocks');
     },
     methods: {
+      selectionOfStocks(selected) {
+        let companyId;
+        if (selected) {
+          companyId = this.selectedStorageLocation.companyId
+          this.selectedStockId = null
+        } else {
+          companyId = this.filters.companyId
+          this.filtersStockId = null
+        }
+
+        this.$store.dispatch('storageLocationPage/getStocksByCompanyId', {companyId: companyId, selected: selected})
+      },
       async getAllCompanies() {
         const url = '/api/Company/getAll';
 
@@ -425,7 +435,7 @@ import store from '@/store/index'
 
         this.filters = {storageLocationId: item.storageLocationId}
         this.isEditing = true
-        const stock = this.stocks.find(s => s.stockId === item.stockId.toString());
+        const stock = this.stocks.find(s => s.stockId === item.stockId);
         this.selectedStorageLocation = {companyId: stock.companyId, ...item};
         this.applyFilters();
 
@@ -509,44 +519,65 @@ import store from '@/store/index'
           delete this.selectedStorageLocation.storageLocationId
           this.isEditing = false
         } else {
-          const stock = this.stocks.find(s => s.stockId === item.stockId.toString());
-          this.selectedStorageLocation = {companyId: stock.companyId, ...item};
+          this.selectedStorageLocation = {...item};
           this.isEditing = true
         }
       },
       getStockName(stockId) {
-        const stock = this.stocks.find(s => s.stockId === stockId.toString());
+        const stock = this.stocks.find(s => s.stockId === stockId);
         return stock ? stock.name : 'Не указано';
+      },
+      getCompanyName(companyId) {
+        const company = this.companies.find(c => c.companyId === companyId);
+        return company ? company.name : 'Не указано';
       },
   },
   computed: {
+    selectedStockId: {
+      get() {
+        const stock = this.stocks.find(s => s.stockId === this.selectedStorageLocation.stockId);
+        return stock ? stock : null;
+      },
+      set(value) {
+        this.selectedStorageLocation.stockId = value;
+      }
+    },
     selectedCompanyId: {
     get() {
-      const company = this.companies.find(c => c.companyId === this.selectedStorageLocation.companyId?.toString());
+      const company = this.companies.find(c => c.companyId === this.selectedStorageLocation.companyId);
       return company ? company.companyId : null;
     },
     set(value) {
       this.selectedStorageLocation.companyId = value;
     }
-  },
-  selectedStockId: {
-    get() {
-      const stock = this.stocks.find(s => s.stockId === this.selectedStorageLocation.stockId?.toString());
-      return stock ? stock : null;
     },
-    set(value) {
-      this.selectedStorageLocation.stockId = value;
-    }
-  },
-  filtersStockId: {
-    get() {
-      const stock = this.stocks.find(s => s.stockId === this.filters.stockId?.toString());
-      return stock ? stock : null;
+    filtersStockId: {
+      get() {
+        const stock = this.stocks.find(s => s.stockId === this.filters.stockId);
+        return stock ? stock : null;
+      },
+      set(value) {
+        this.filters.stockId = value;
+      }
     },
-    set(value) {
-      this.filters.stockId = value;
-    }
-  }
+    filtersCompanyId: {
+      get() {
+        const company = this.companies.find(c => c.companyId === this.filters.companyId);
+        return company ? company.companyId : null;
+      },
+      set(value) {
+        this.filters.companyId = value;
+      }
+    },
+    ...mapGetters([
+      'companies',
+      'stocks'
+    ]),
+    ...mapGetters('storageLocationPage', [
+      'stocksByCompanyId',
+      'fStocksByCompanyId'
+    ])
+
   }
 }
 </script>

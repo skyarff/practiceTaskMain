@@ -3,7 +3,6 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using StockService.Models;
 using StockService.Models.dto;
-using System.Text.RegularExpressions;
 
 namespace StockService.Repository.ProductRep
 {
@@ -30,18 +29,20 @@ namespace StockService.Repository.ProductRep
             {
                 var product = _mapper.Map<ProductDto, Product>(productDto);
 
+                var upd = await _db.Bills.FindAsync(productDto.UpdId);
+                product.BillId = upd.BillId;
+                product.ProviderId = upd.ProviderId;
 
+                var storageLocation = await _db.StorageLocations.FindAsync(productDto.StorageLocationId);
+                product.StockId = storageLocation.StockId;
+                product.CompanyId = storageLocation.CompanyId;
+
+
+                string filePath = "";
                 if (productDto.Image != null && productDto.Image.Length > 0)
                 {
-                    var fileName = $"{Guid.NewGuid()}{Path.GetExtension(productDto.Image.FileName)}";
-                    var filePath = Path.Combine(_imagePath, fileName);
-
-
-                    using (var stream = new FileStream("wwwroot/" + filePath, FileMode.Create))
-                    {
-                        await productDto.Image.CopyToAsync(stream);
-                    }
-
+                    string fileName = $"{Guid.NewGuid()}{Path.GetExtension(productDto.Image.FileName)}";
+                    filePath = Path.Combine(_imagePath, fileName);
                     product.ImagePath = filePath;
                 }
 
@@ -49,6 +50,10 @@ namespace StockService.Repository.ProductRep
                 product.CreateDate = DateTime.UtcNow;
                 _db.Products.Add(product);
                 await _db.SaveChangesAsync();
+
+                if (!string.IsNullOrEmpty(filePath))
+                    using (var stream = new FileStream("wwwroot/" + filePath, FileMode.Create))
+                        await productDto.Image.CopyToAsync(stream);
 
                 _response.IsSuccess = true;
                 _response.Result = product;
@@ -127,9 +132,18 @@ namespace StockService.Repository.ProductRep
                 if (productDto.ProductCategoryId != null)
                 {
                     var pc = await _db.ProductCategories.FindAsync(productDto.ProductCategoryId);
-                    if (pc != null) product.ProductCategoryId = productDto.ProductCategoryId;
+                    if (pc != null && pc.CompanyId == product.CompanyId) product.ProductCategoryId = productDto.ProductCategoryId;
                 }
-                  
+
+                if (productDto.UpdId != null)
+                {
+                    var upd = await _db.Upds.FindAsync(productDto.UpdId);
+
+                    if (upd != null && upd.CompanyId == product.CompanyId) product.UpdId = productDto.UpdId;
+
+                }
+                    
+
                 if (productDto.Price != null) 
                     product.Price = (decimal)productDto.Price;
 
@@ -148,33 +162,29 @@ namespace StockService.Repository.ProductRep
                 if (!string.IsNullOrEmpty(productDto.FactoryNumber))
                     product.FactoryNumber = productDto.FactoryNumber;
 
-                if (productDto.UpdId != null)
-                    product.UpdId = productDto.UpdId;
 
+                string filePath = "";
                 if (productDto.Image != null && productDto.Image.Length > 0)
                 {
-
-                    if (!string.IsNullOrEmpty(product.ImagePath))
-                    {
-                        if (File.Exists("wwwroot//" + product.ImagePath))
-                            File.Delete("wwwroot//" + product.ImagePath);
-                    }
-
-                    var fileName = $"{Guid.NewGuid()}{Path.GetExtension(productDto.Image.FileName)}";
-                    var filePath = Path.Combine(_imagePath, fileName);
-
-
-                    using (var stream = new FileStream("wwwroot/" + filePath, FileMode.Create))
-                    {
-                        await productDto.Image.CopyToAsync(stream);
-                    }
-
+                    string fileName = $"{Guid.NewGuid()}{Path.GetExtension(productDto.Image.FileName)}";
+                    filePath = Path.Combine(_imagePath, fileName);
                     product.ImagePath = filePath;
                 }
 
 
                 await _db.SaveChangesAsync();
 
+                if (!string.IsNullOrEmpty(filePath))
+                {
+                    using (var stream = new FileStream("wwwroot/" + filePath, FileMode.Create))
+                        await productDto.Image.CopyToAsync(stream);
+
+                    if (!string.IsNullOrEmpty(product.ImagePath)
+                    && File.Exists("wwwroot//" + product.ImagePath))
+                        File.Delete("wwwroot//" + product.ImagePath); 
+                }
+
+  
                 _response.IsSuccess = true;
                 _response.Result = product;
                 _response.Message = "Данные продукта обновлены.";
@@ -225,9 +235,9 @@ namespace StockService.Repository.ProductRep
 
 
             if (productDto.StockId != null)
-                query = query.Where(p => p.StorageLocation.StockId == productDto.StockId);
+                query = query.Where(p => p.StockId == productDto.StockId);
             else if(productDto.CompanyId != null)
-                query = query.Where(p => p.StorageLocation.Stock.CompanyId == productDto.CompanyId);
+                query = query.Where(p => p.CompanyId == productDto.CompanyId);
 
 
 
@@ -235,10 +245,10 @@ namespace StockService.Repository.ProductRep
                 query = query.Where(p => p.UpdId == productDto.UpdId);
 
             else if (productDto.BillId != null)
-                query = query.Where(p => p.Upd.BillId == productDto.BillId);
+                query = query.Where(p => p.BillId == productDto.BillId);
 
             else if (productDto.ProviderId != null)
-                query = query.Where(p => p.Upd.Bill.ProviderId == productDto.ProviderId);
+                query = query.Where(p => p.ProviderId == productDto.ProviderId);
 
 
             var products = await query.ToListAsync();

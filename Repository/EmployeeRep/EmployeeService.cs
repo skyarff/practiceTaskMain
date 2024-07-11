@@ -3,7 +3,6 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using StockService.Models;
 using StockService.Models.dto;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 
 namespace StockService.Repository.EmployeeRep
@@ -58,26 +57,27 @@ namespace StockService.Repository.EmployeeRep
             if (!employeeIsExists)
             {
                 var employee = _mapper.Map<EmployeeDto, Employee>(employeeDto);
+                var stock = await _db.Stocks.FindAsync(employeeDto.StockId);
+                employee.CompanyId = stock.CompanyId;
 
                 if (!string.IsNullOrEmpty(employeeDto.Password))
                     employee.Password = Sha256.ComputeSha256Hash(employeeDto.Password);
 
+
+                string filePath = "";
                 if (employeeDto.Image != null && employeeDto.Image.Length > 0)
                 {
-                    var fileName = $"{Guid.NewGuid()}{Path.GetExtension(employeeDto.Image.FileName)}";
-                    var filePath = Path.Combine(_imagePath, fileName);
-
-
-                    using (var stream = new FileStream("wwwroot/" + filePath, FileMode.Create))
-                    {
-                        await employeeDto.Image.CopyToAsync(stream);
-                    }
-
+                    string fileName = $"{Guid.NewGuid()}{Path.GetExtension(employeeDto.Image.FileName)}";
+                    filePath = Path.Combine(_imagePath, fileName);
                     employee.ImagePath = filePath;
                 }
 
                 _db.Employees.Add(employee);
                 await _db.SaveChangesAsync();
+
+                if (!string.IsNullOrEmpty(filePath))
+                    using (var stream = new FileStream("wwwroot/" + filePath, FileMode.Create))
+                        await employeeDto.Image.CopyToAsync(stream);
 
                 _response.IsSuccess = true;
                 _response.Result = employee;
@@ -152,7 +152,7 @@ namespace StockService.Repository.EmployeeRep
             _response.Message = "Сотрудники не найдены для указанной компании.";
 
             var employees = await _db.Employees
-                .Where(e => e.Stock.Company.CompanyId == companyId)
+                .Where(e => e.CompanyId == companyId)
                 .ToListAsync();
 
             if (employees.Any())
@@ -200,25 +200,11 @@ namespace StockService.Repository.EmployeeRep
                 if (!string.IsNullOrEmpty(employeeDto.Password))
                     employee.Password = Sha256.ComputeSha256Hash(employeeDto.Password);
 
+                string filePath = "";
                 if (employeeDto.Image != null && employeeDto.Image.Length > 0)
                 {
-
-                    if (!string.IsNullOrEmpty(employee.ImagePath))
-                    {
-                        if (File.Exists("wwwroot//" + employee.ImagePath))
-                            File.Delete("wwwroot//" + employee.ImagePath);
-                    }
-
-
-                    var fileName = $"{Guid.NewGuid()}{Path.GetExtension(employeeDto.Image.FileName)}";
-                    var filePath = Path.Combine(_imagePath, fileName);
-
-
-                    using (var stream = new FileStream("wwwroot/" + filePath, FileMode.Create))
-                    {
-                        await employeeDto.Image.CopyToAsync(stream);
-                    }
-
+                    string fileName = $"{Guid.NewGuid()}{Path.GetExtension(employeeDto.Image.FileName)}";
+                    filePath = Path.Combine(_imagePath, fileName);
                     employee.ImagePath = filePath;
                 }
 
@@ -230,6 +216,22 @@ namespace StockService.Repository.EmployeeRep
 
 
                 await _db.SaveChangesAsync();
+
+                if (!string.IsNullOrEmpty(filePath))
+                {
+                    using (var stream = new FileStream("wwwroot/" + filePath, FileMode.Create))
+                        await employeeDto.Image.CopyToAsync(stream);
+
+                    if (!string.IsNullOrEmpty(employee.ImagePath)
+                        && File.Exists("wwwroot//" + employee.ImagePath))
+                            File.Delete("wwwroot//" + employee.ImagePath);
+                }
+
+                
+
+
+                
+
 
                 _response.IsSuccess = true;
                 _response.Result = employee;
@@ -265,7 +267,7 @@ namespace StockService.Repository.EmployeeRep
             if (employeeDto.StockId != null)
                 query = query.Where(e => e.StockId == employeeDto.StockId);
             else if (employeeDto.CompanyId != null)
-                query = query.Where(e => e.Stock.CompanyId == employeeDto.CompanyId);
+                query = query.Where(e => e.CompanyId == employeeDto.CompanyId);
 
             var products = await query.ToListAsync();
 

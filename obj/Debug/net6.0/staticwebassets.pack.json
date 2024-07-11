@@ -49,8 +49,8 @@
       "PackagePath": "staticwebassets\\Images\\Common\\2.png"
     },
     {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\Common\\SchemaAccess.png.png",
-      "PackagePath": "staticwebassets\\Images\\Common\\SchemaAccess.png.png"
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\Common\\SchemaAccess.png",
+      "PackagePath": "staticwebassets\\Images\\Common\\SchemaAccess.png"
     },
     {
       "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\Common\\oldSchemaAccess.png",
@@ -65,8 +65,8 @@
       "PackagePath": "staticwebassets\\Images\\Common\\склад-склад.jpg"
     },
     {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\4f528183-b727-4ada-bc52-856a1fb3e376.png",
-      "PackagePath": "staticwebassets\\Images\\CompanyLogos\\4f528183-b727-4ada-bc52-856a1fb3e376.png"
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\53e190d1-fd28-4362-a39b-41704661ba42.png",
+      "PackagePath": "staticwebassets\\Images\\CompanyLogos\\53e190d1-fd28-4362-a39b-41704661ba42.png"
     },
     {
       "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\5daa8a86-b7a6-451e-8263-269b6965ae6f.png",
@@ -77,12 +77,52 @@
       "PackagePath": "staticwebassets\\Images\\CompanyLogos\\ddf0c81c-2985-4cfd-8568-a6fff804d452.png"
     },
     {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\ec848627-b3a5-4d2d-a730-0d2e4346deab.png",
+      "PackagePath": "staticwebassets\\Images\\CompanyLogos\\ec848627-b3a5-4d2d-a730-0d2e4346deab.png"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\1f6de672-941b-4bd4-903b-f15c2c3e4699.png",
+      "PackagePath": "staticwebassets\\Images\\EmployeeImages\\1f6de672-941b-4bd4-903b-f15c2c3e4699.png"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\417977c3-c850-4a86-bc40-d6b7c0e2bfc7.png",
+      "PackagePath": "staticwebassets\\Images\\EmployeeImages\\417977c3-c850-4a86-bc40-d6b7c0e2bfc7.png"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\88589134-14ca-4295-94e8-f276a96b0eff.png",
+      "PackagePath": "staticwebassets\\Images\\EmployeeImages\\88589134-14ca-4295-94e8-f276a96b0eff.png"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\9e043402-e459-4754-8cfc-18dc8978046a.png",
+      "PackagePath": "staticwebassets\\Images\\EmployeeImages\\9e043402-e459-4754-8cfc-18dc8978046a.png"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\9eb2dfe8-3888-416b-9a77-7476358ce5fb.png",
+      "PackagePath": "staticwebassets\\Images\\EmployeeImages\\9eb2dfe8-3888-416b-9a77-7476358ce5fb.png"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\c1c7a83b-ce0d-42d3-9c45-2d5ff410738f.png",
+      "PackagePath": "staticwebassets\\Images\\EmployeeImages\\c1c7a83b-ce0d-42d3-9c45-2d5ff410738f.png"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\fd67f743-bbd2-4795-98e0-8f896bb154b7.png",
+      "PackagePath": "staticwebassets\\Images\\EmployeeImages\\fd67f743-bbd2-4795-98e0-8f896bb154b7.png"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\StorageLocationImages\\1681cb84-9839-4cc6-ba35-972a4e01b885.png",
+      "PackagePath": "staticwebassets\\Images\\StorageLocationImages\\1681cb84-9839-4cc6-ba35-972a4e01b885.png"
+    },
+    {
       "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\UpdPdfs\\1cc42064-952b-4efd-bc19-a7d21bac588a.png",
       "PackagePath": "staticwebassets\\Images\\UpdPdfs\\1cc42064-952b-4efd-bc19-a7d21bac588a.png"
     },
     {
       "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\UpdPdfs\\4535d172-add8-4fc1-bae5-9b30c907bbc1.png",
       "PackagePath": "staticwebassets\\Images\\UpdPdfs\\4535d172-add8-4fc1-bae5-9b30c907bbc1.png"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\UpdPdfs\\517a77a0-8a28-42a4-b887-3f49b25f75f1.png",
+      "PackagePath": "staticwebassets\\Images\\UpdPdfs\\517a77a0-8a28-42a4-b887-3f49b25f75f1.png"
     },
     {
       "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\UpdPdfs\\559f3d44-c080-4909-89d0-dbdf729398fe.png",

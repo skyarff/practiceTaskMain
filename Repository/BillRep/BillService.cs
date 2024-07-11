@@ -30,24 +30,21 @@ namespace StockService.Repository.BillRep
             {
                 var bill = _mapper.Map<BillDto, Bill>(billDto);
 
-                
+                string filePath = "";
                 if (billDto.BillPdf != null && billDto.BillPdf.Length > 0)
                 {
-                    var fileName = $"{Guid.NewGuid()}{Path.GetExtension(billDto.BillPdf.FileName)}";
-                    var filePath = Path.Combine(_imagePath, fileName);
-
-
-                    using (var stream = new FileStream("wwwroot/" + filePath, FileMode.Create))
-                    {
-                        await billDto.BillPdf.CopyToAsync(stream);
-                    }
-
+                    string fileName = $"{Guid.NewGuid()}{Path.GetExtension(billDto.BillPdf.FileName)}";
+                    filePath = Path.Combine(_imagePath, fileName);
                     bill.BillPdfPath = filePath;
                 }
 
                 bill.CreateDate = DateTime.UtcNow;
                 _db.Bills.Add(bill);
                 await _db.SaveChangesAsync();
+
+                if(!string.IsNullOrEmpty(filePath))
+                    using (var stream = new FileStream("wwwroot/" + filePath, FileMode.Create))
+                        await billDto.BillPdf.CopyToAsync(stream);
 
                 _response.IsSuccess = true;
                 _response.Result = bill;

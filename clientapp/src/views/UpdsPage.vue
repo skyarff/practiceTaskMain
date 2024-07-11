@@ -82,8 +82,7 @@
               <v-col cols="4">
                       <v-select
                       v-model="filtersCompanyId"
-                      @update:modelValue="this.$store.dispatch('updPage/getBillsByProviderAndCompanyId', 
-                      {providerId: filters.providerId, companyId: filters.companyId})"
+                      @update:modelValue="selectionOfBills(false)"
                       :items="companies"
                       item-title="name"
                       item-value="companyId"
@@ -99,8 +98,7 @@
               <v-col cols="4">
                       <v-select
                       v-model="filtersProviderId"
-                      @update:modelValue="this.$store.dispatch('updPage/getBillsByProviderAndCompanyId', 
-                      {providerId: filters.providerId, companyId: filters.companyId})"
+                      @update:modelValue="selectionOfBills(false)"
                       :items="providers"
                       item-title="name"
                       item-value="providerId"
@@ -113,7 +111,7 @@
               <v-col cols="4">
                     <v-select
                       v-model="filtersBillId"                    
-                      :items="billsByProviderAndCompanyId"
+                      :items="fBillsByProviderAndCompanyId"
                       item-title="name"
                       item-value="billId"
                       label="Счет"
@@ -236,8 +234,7 @@
                     <v-col cols="4">
                       <v-select
                       v-model="selectedCompanyId"
-                      @update:modelValue="this.$store.dispatch('updPage/getBillsByProviderAndCompanyId', 
-                      {providerId: selectedUpd.providerId, companyId: selectedUpd.companyId})"
+                      @update:modelValue="selectionOfBills(true)"
                       :items="companies"
                       item-title="name"
                       item-value="companyId"
@@ -251,8 +248,7 @@
                     <v-col cols="4">
                       <v-select
                       v-model="selectedProviderId"
-                      @update:modelValue="this.$store.dispatch('updPage/getBillsByProviderAndCompanyId', 
-                      {providerId: selectedUpd.providerId, companyId: selectedUpd.companyId})"
+                      @update:modelValue="selectionOfBills(true)"
                       :items="providers"
                       item-title="name"
                       item-value="providerId"
@@ -330,24 +326,21 @@ import { mapGetters } from 'vuex';
       this.$store.dispatch('getAllBills');
     },
     methods: {
-      async getAllProviders() {
-        const url = '/api/Provider/getAll';
+      selectionOfBills(selected) {
 
-          try {
-            const response = await api.get(url, {
-              headers: {
-                'accept': '*/*'
-              }
-            });
+        let companyId;
+        let providerId;
+        if (selected) {
+          companyId = this.selectedUpd.companyId
+          providerId = this.selectedUpd.providerId
+          this.selectedBillId = null
+        } else {
+          companyId = this.filters.CompanyId
+          providerId = this.filters.providerId
+          this.filtersBillId = null
+        }
 
-            this.providers = response.data.result.map(provider => ({
-              name: provider.name,
-              providerId: provider.providerId.toString(),
-            }));
-
-          } catch (error) {
-            // this.$store.commit('setErrorMessage', error);
-          } 
+        this.$store.dispatch('updPage/getBillsByProviderAndCompanyId', {providerId: providerId, companyId: companyId, selected: selected})
       },
       navigateUpdId(item) {
         this.filters = {updId: item.updId}
@@ -425,6 +418,8 @@ import { mapGetters } from 'vuex';
         } else {
           this.selectedUpd = {...item};
           this.isEditing = true
+          this.$store.dispatch('updPage/getBillsByProviderAndCompanyId', 
+            {providerId: this.selectedUpd.providerId, companyId: this.selectedUpd.companyId})
         }
       },
       formatDate(dateString) {
@@ -504,7 +499,11 @@ import { mapGetters } from 'vuex';
       'providers',
       'bills'
     ]),
-    ...mapGetters('updPage', ['billsByProviderAndCompanyId']) 
+    ...mapGetters('updPage', 
+    [
+      'billsByProviderAndCompanyId',
+      'fBillsByProviderAndCompanyId'
+    ]) 
   }
 }
 </script>

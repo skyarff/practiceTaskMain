@@ -3,21 +3,32 @@ import api from '@/api'
 const updPageModule = {
     namespaced: true,
     state: {
-        billsByProviderAndCompanyId: [{ name: 'Все счета', billId: null }]
+        billsByProviderAndCompanyId: [{ name: 'Все счета', billId: null }],
+        fBillsByProviderAndCompanyId: [{ name: 'Все счета', billId: null }]
 
     },
     getters: {
         billsByProviderAndCompanyId(state) {
             return state.billsByProviderAndCompanyId;
         },
+        fBillsByProviderAndCompanyId(state) {
+            return state.fBillsByProviderAndCompanyId;
+        },
     },
     mutations: {
         setBillsByProviderAndCompanyId(state, billsByProviderAndCompanyId) {
             state.billsByProviderAndCompanyId = billsByProviderAndCompanyId;
-        }   
+        },
+        setFBillsByProviderAndCompanyId(state, billsByProviderAndCompanyId) {
+            state.fBillsByProviderAndCompanyId = billsByProviderAndCompanyId;
+        }  
     },
     actions: {
         async getBillsByProviderAndCompanyId({commit}, payload) {
+            if (payload.selected) commit('setBillsByProviderAndCompanyId', []);    
+              else commit('setFBillsByProviderAndCompanyId', []);
+
+
             commit('setBillsByProviderAndCompanyId', []);
 
             let url = '/api/Bill/getByProviderAndCompanyId';
@@ -44,7 +55,9 @@ const updPageModule = {
               }));
               billsByProviderAndCompanyId.unshift({ name: 'Все счета', billId: null });
 
-              commit('setBillsByProviderAndCompanyId', billsByProviderAndCompanyId);
+
+              if (payload.selected) commit('setBillsByProviderAndCompanyId', billsByProviderAndCompanyId);    
+              else commit('setFBillsByProviderAndCompanyId', billsByProviderAndCompanyId);
               
             } catch (error) {
               console.error('Error fetching stocks by company ID:', error);

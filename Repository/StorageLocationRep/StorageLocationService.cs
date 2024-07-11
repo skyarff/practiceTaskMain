@@ -32,23 +32,23 @@ namespace StockService.Repository.StorageLocationRep
             if (!storageLocationIsExists)
             {
                 var storageLocation = _mapper.Map<StorageLocationDto, StorageLocation>(storageLocationDto);
+                var stock = await _db.Stocks.FindAsync(storageLocationDto.StockId);
+                storageLocation.CompanyId = stock.CompanyId;
 
+                string filePath = "";
                 if (storageLocationDto.Image != null && storageLocationDto.Image.Length > 0)
                 {
-                    var fileName = $"{Guid.NewGuid()}{Path.GetExtension(storageLocationDto.Image.FileName)}";
-                    var filePath = Path.Combine(_imagePath, fileName);
-
-
-                    using (var stream = new FileStream("wwwroot/" + filePath, FileMode.Create))
-                    {
-                        await storageLocationDto.Image.CopyToAsync(stream);
-                    }
-
+                    string fileName = $"{Guid.NewGuid()}{Path.GetExtension(storageLocationDto.Image.FileName)}";
+                    filePath = Path.Combine(_imagePath, fileName);
                     storageLocation.ImagePath = filePath;
                 }
 
                 _db.StorageLocations.Add(storageLocation);
                 await _db.SaveChangesAsync();
+
+                if (!string.IsNullOrEmpty(filePath))
+                    using (var stream = new FileStream("wwwroot/" + filePath, FileMode.Create))
+                        await storageLocationDto.Image.CopyToAsync(stream);
 
                 _response.IsSuccess = true;
                 _response.Result = storageLocation;
@@ -128,26 +128,26 @@ namespace StockService.Repository.StorageLocationRep
                 if (!string.IsNullOrEmpty(storageLocationDto.Description))
                     storageLocation.Description = storageLocationDto.Description;
 
+                string filePath = "";
                 if (storageLocationDto.Image != null && storageLocationDto.Image.Length > 0)
                 {
-                    if (!string.IsNullOrEmpty(storageLocation.ImagePath))
-                    {
-                        if (File.Exists("wwwroot//" + storageLocation.ImagePath))
-                            File.Delete("wwwroot//" + storageLocation.ImagePath);
-                    }
-
                     var fileName = $"{Guid.NewGuid()}{Path.GetExtension(storageLocationDto.Image.FileName)}";
-                    var filePath = Path.Combine(_imagePath, fileName);
-
-
-                    using (var stream = new FileStream("wwwroot/" + filePath, FileMode.Create))
-                    {
-                        await storageLocationDto.Image.CopyToAsync(stream);
-                    }
+                    filePath = Path.Combine(_imagePath, fileName);
                     storageLocation.ImagePath = filePath;
                 }
 
                 await _db.SaveChangesAsync();
+
+                if (!string.IsNullOrEmpty(filePath))
+                {
+                    using (var stream = new FileStream("wwwroot/" + filePath, FileMode.Create))
+                        await storageLocationDto.Image.CopyToAsync(stream);
+
+                    if (!string.IsNullOrEmpty(storageLocation.ImagePath)
+                        && File.Exists("wwwroot//" + storageLocation.ImagePath))
+                            File.Delete("wwwroot//" + storageLocation.ImagePath);
+                }
+
 
                 _response.IsSuccess = true;
                 _response.Result = storageLocation;
@@ -170,7 +170,7 @@ namespace StockService.Repository.StorageLocationRep
             if (storageLocationDto.StockId != null)
                 query = query.Where(sl => sl.StockId == storageLocationDto.StockId);
             if (storageLocationDto.CompanyId != null)
-                query = query.Where(sl => sl.Stock.CompanyId == storageLocationDto.CompanyId);
+                query = query.Where(sl => sl.CompanyId == storageLocationDto.CompanyId);
 
             if (storageLocationDto.IsBusy != null)
                 query = query.Where(sl => (sl.Product != null) == (bool)storageLocationDto.IsBusy);
@@ -182,6 +182,7 @@ namespace StockService.Repository.StorageLocationRep
                 query = query.Where(sl => sl.RackCode == storageLocationDto.RackCode);
             if (!string.IsNullOrEmpty(storageLocationDto.ShelfCode))
                 query = query.Where(sl => sl.ShelfCode == storageLocationDto.ShelfCode);
+
 
             var storageLocations = await query.ToListAsync();
 

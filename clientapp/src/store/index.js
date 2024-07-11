@@ -1,6 +1,8 @@
 import { createStore } from "vuex";
 import api from '@/api'
 import updPageModule from '@/store/updPage'
+import employeePageModule from '@/store/employeePage';
+import storageLocationPageModule from '@/store/storageLocationPage'
 
 export default createStore({
   state: {
@@ -11,6 +13,7 @@ export default createStore({
     companies: [],
     providers: [],
     bills: [],
+    stocks: []
   },
   getters: {
     companies(state) {
@@ -21,6 +24,9 @@ export default createStore({
     },
     bills(state) {
       return state.bills;
+    },
+    stocks(state) {
+      return state.stocks;
     },
   },
   mutations: {
@@ -35,6 +41,9 @@ export default createStore({
     },
     setBills(state, bills) {
       state.bills = bills
+    },
+    setStocks(state, stocks) {
+      state.stocks = stocks
     },
   },
   actions: {
@@ -107,8 +116,34 @@ export default createStore({
             // this.$store.commit('setErrorMessage', error);
           } 
       },
+      async getAllStocks({commit}) {
+
+        const url = '/api/Stock/getAll';
+
+          try {
+            const response = await api.get(url, {
+              headers: {
+                'accept': '*/*'
+              }
+            });
+
+            const stocks = response.data.result.map(stock => ({
+              name: stock.name,
+              stockId: stock.stockId,
+            }));
+
+            stocks.unshift({ name: 'Все склады', stockId: null });
+
+            commit('setStocks', stocks)
+
+          } catch (error) {
+            // this.$store.commit('setErrorMessage', error);
+          } 
+      },
   },
   modules: {
-    updPage: updPageModule
+    updPage: updPageModule,
+    employeePage: employeePageModule,
+    storageLocationPage: storageLocationPageModule
   },
 });
