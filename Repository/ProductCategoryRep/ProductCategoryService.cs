@@ -56,7 +56,22 @@ namespace StockService.Repository.ProductCategoryRep
 
             return _response;
         }
+        public async Task<Response> GetAllProductCategoriesAsync()
+        {
+            _response.IsSuccess = false;
+            _response.Message = "Категории продуктов не найдены.";
 
+            var stocks = await _db.ProductCategories.ToListAsync();
+
+            if (stocks.Any())
+            {
+                _response.IsSuccess = true;
+                _response.Result = stocks;
+                _response.Message = $"Категории успешно получены.";
+            }
+
+            return _response;
+        }
         public async Task<Response> GetProductCategoriesByCompanyIdAsync(int companyId)
         {
             _response.IsSuccess = false;
@@ -70,11 +85,13 @@ namespace StockService.Repository.ProductCategoryRep
             {
                 _response.IsSuccess = true;
                 _response.Result = stocks;
-                _response.Message = $"Склады для компании с ID {companyId} успешно получены.";
+                _response.Message = $"Категории для компании с ID {companyId} успешно получены.";
             }
 
             return _response;
         }
+
+
 
         public async Task<Response> GetCategoriesFilteredAsync(ProductCategoryDto productCategoryDto)
         {

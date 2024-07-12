@@ -3,6 +3,7 @@ import api from '@/api'
 import updPageModule from '@/store/updPage'
 import employeePageModule from '@/store/employeePage';
 import storageLocationPageModule from '@/store/storageLocationPage'
+import productPageModule from '@/store/productPage'
 
 export default createStore({
   state: {
@@ -13,7 +14,10 @@ export default createStore({
     companies: [],
     providers: [],
     bills: [],
-    stocks: []
+    upds: [],
+    stocks: [],
+    employees: [],
+    productCategories: []
   },
   getters: {
     companies(state) {
@@ -25,8 +29,17 @@ export default createStore({
     bills(state) {
       return state.bills;
     },
+    upds(state) {
+      return state.upds;
+    },
     stocks(state) {
       return state.stocks;
+    },
+    employees(state) {
+      return state.employees;
+    },
+    productCategories(state) {
+      return state.productCategories;
     },
   },
   mutations: {
@@ -42,8 +55,17 @@ export default createStore({
     setBills(state, bills) {
       state.bills = bills
     },
+    setUpds(state, upds) {
+      state.upds = upds
+    },
+    setProductCategories(state, productCategories) {
+      state.productCategories = productCategories
+    },
     setStocks(state, stocks) {
       state.stocks = stocks
+    },
+    setEmployees(state, employees) {
+      state.employees = employees
     },
   },
   actions: {
@@ -140,10 +162,81 @@ export default createStore({
             // this.$store.commit('setErrorMessage', error);
           } 
       },
+      async getAllEmployees({commit}) {
+
+        const url = '/api/Employee/getAll';
+
+          try {
+            const response = await api.get(url, {
+              headers: {
+                'accept': '*/*'
+              }
+            });
+
+            const employees = response.data.result.map(emp => ({
+              name: emp.login,
+              employeeId: emp.employeeId,
+            }));
+
+            commit('setEmployees', employees)
+
+          } catch (error) {
+            // this.$store.commit('setErrorMessage', error);
+          } 
+      },
+      async getAllProductCategories({commit}) {
+
+        const url = '/api/ProductCategory/getAll';
+
+          try {
+            const response = await api.get(url, {
+              headers: {
+                'accept': '*/*'
+              }
+            });
+
+            const productCategories = response.data.result.map(pc => ({
+              name: pc.name,
+              productCategoryId: pc.productCategoryId,
+            }));
+
+            productCategories.unshift({ name: 'Все категории', productCategoryId: null });
+
+            commit('setProductCategories', productCategories)
+
+          } catch (error) {
+            // this.$store.commit('setErrorMessage', error);
+          } 
+      },
+      async getAllUpds({commit}) {
+
+        const url = '/api/Upd/getAll';
+
+          try {
+            const response = await api.get(url, {
+              headers: {
+                'accept': '*/*'
+              }
+            });
+
+            const upds = response.data.result.map(upd => ({
+              name: upd.documentNumber,
+              updId: upd.updId,
+            }));
+
+            upds.unshift({ name: 'Все УПД', updId: null });
+
+            commit('setUpds', upds)
+
+          } catch (error) {
+            // this.$store.commit('setErrorMessage', error);
+          } 
+      },
   },
   modules: {
     updPage: updPageModule,
     employeePage: employeePageModule,
-    storageLocationPage: storageLocationPageModule
+    storageLocationPage: storageLocationPageModule,
+    productPage: productPageModule
   },
 });

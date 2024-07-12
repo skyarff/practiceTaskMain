@@ -6,6 +6,7 @@ namespace StockService.Repository.ProductCategoryRep
     public interface IProductCategoryService
     {
         Task<Response> GetProductCategoriesByCompanyIdAsync(int companyId);
+        Task<Response> GetAllProductCategoriesAsync();
         Task<Response> CreateProductCategoryAsync(ProductCategoryDto productCategoryDto);
         Task<Response> DeleteProductCategoryAsync(int productCategoryId);
         Task<Response> GetCategoriesFilteredAsync(ProductCategoryDto productCategoryDto);

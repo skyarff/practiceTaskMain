@@ -21,10 +21,11 @@ namespace StockService.Repository.ProductRep
         
         public async Task<Response> CreateProductAsync(ProductDto productDto)
         {
-            var productIsExists = await _db.Products.AnyAsync(p => p.StorageLocationId == productDto.StorageLocationId);
+            var productIsExists = await _db.Products.AnyAsync(p => p.StorageLocationId == productDto.StorageLocationId
+                && p.ShelfCode == productDto.ShelfCode);
 
             _response.IsSuccess = false;
-            _response.Message = "Место хранения уже используется или данные конфликтуют.";
+            _response.Message = "Полка уже используется или данные конфликтуют.";
             if (!productIsExists)
             {
                 var product = _mapper.Map<ProductDto, Product>(productDto);
@@ -36,6 +37,7 @@ namespace StockService.Repository.ProductRep
                 var storageLocation = await _db.StorageLocations.FindAsync(productDto.StorageLocationId);
                 product.StockId = storageLocation.StockId;
                 product.CompanyId = storageLocation.CompanyId;
+                product.RackCode = storageLocation.RackCode;
 
 
                 string filePath = "";
@@ -138,9 +140,16 @@ namespace StockService.Repository.ProductRep
                 if (productDto.UpdId != null)
                 {
                     var upd = await _db.Upds.FindAsync(productDto.UpdId);
-
                     if (upd != null && upd.CompanyId == product.CompanyId) product.UpdId = productDto.UpdId;
+                }
 
+
+                if (productDto.ShelfCode != null)
+                {
+                    var productIsExists = await _db.Products.AnyAsync(p => p.StorageLocationId == productDto.StorageLocationId
+                        && p.ShelfCode == productDto.ShelfCode);
+                    if (!productIsExists) product.ShelfCode = productDto.ShelfCode;
+                    else throw new Exception("Место хранения уже используется.");
                 }
                     
 
@@ -202,6 +211,9 @@ namespace StockService.Repository.ProductRep
 
             if (productDto.ProductId != null)
                 query = query.Where(p => p.ProductId == productDto.ProductId);
+
+            if (!string.IsNullOrEmpty(productDto.RackCode))
+                query = query.Where(p => p.RackCode == productDto.RackCode);
 
             if (productDto.LowerPriceLimit != null)
                 query = query.Where(p => p.Price >= productDto.LowerPriceLimit);

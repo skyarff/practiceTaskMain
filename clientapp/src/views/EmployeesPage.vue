@@ -445,6 +445,7 @@ import { mapGetters } from 'vuex';
         this.filters = {employeeId: item.employeeId}
         this.isEditing = true
         this.selectedEmployee = {...item};
+        delete this.selectedEmployee.password
         this.applyFilters();
 
         window.scrollTo(0, document.body.scrollHeight);
@@ -534,6 +535,7 @@ import { mapGetters } from 'vuex';
         } else {
           this.selectedEmployee = {...item};
           this.isEditing = true
+          delete this.selectedEmployee.password
           this.$store.dispatch( 'employeePage/getStocksByCompanyId', {companyId: this.selectedCompanyId, selected: true})
         }
       },
@@ -551,7 +553,7 @@ import { mapGetters } from 'vuex';
     selectedCompanyId: {
     get() {
       const company = this.companies.find(c => c.companyId === this.selectedEmployee.companyId);
-      return company ? company.companyId : null;
+      return company ? company.name : null;
     },
     set(value) {
       this.selectedEmployee.companyId = value;
@@ -560,7 +562,7 @@ import { mapGetters } from 'vuex';
     selectedStockId: {
       get() {
         const stock = this.stocks.find(s => s.stockId === this.selectedEmployee.stockId);
-        return stock ? stock : null;
+        return stock ? stock.name : null;
       },
       set(value) {
         this.selectedEmployee.stockId = value;
@@ -569,7 +571,7 @@ import { mapGetters } from 'vuex';
     filtersCompanyId: {
     get() {
       const company = this.companies.find(c => c.companyId === this.filters.companyId);
-      return company ? company.companyId : null;
+      return company ? company.name : null;
     },
     set(value) {
       this.filters.companyId = value;
@@ -578,7 +580,7 @@ import { mapGetters } from 'vuex';
     filtersStockId: {
       get() {
         const stock = this.stocks.find(s => s.stockId === this.filters.stockId);
-        return stock ? stock : null;
+        return stock ? stock.name : null;
       },
       set(value) {
         this.filters.stockId = value;

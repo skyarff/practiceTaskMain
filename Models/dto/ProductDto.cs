@@ -8,6 +8,10 @@ namespace StockService.Models.dto
     {
         public int? ProductId { get; set; }
         public string? Name { get; set; }
+
+        public string? RackCode { get; set; }
+        public string? ShelfCode { get; set; }
+
         public string? Manufacturer { get; set; }
         public string? ProductionArticle { get; set; }
         public string? InnerArticle { get; set; }

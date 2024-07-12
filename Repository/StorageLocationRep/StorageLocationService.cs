@@ -23,11 +23,10 @@ namespace StockService.Repository.StorageLocationRep
         {
             var storageLocationIsExists = await _db.StorageLocations.AnyAsync(sl => 
             sl.StockId == storageLocationDto.StockId
-            && sl.RackCode == storageLocationDto.RackCode
-            && sl.ShelfCode == storageLocationDto.ShelfCode);
+            && sl.RackCode == storageLocationDto.RackCode);
 
             _response.IsSuccess = false;
-            _response.Message = "Место хранения уже существует.";
+            _response.Message = "Стеллаж уже существует.";
 
             if (!storageLocationIsExists)
             {
@@ -63,7 +62,7 @@ namespace StockService.Repository.StorageLocationRep
             var storageLocation = await _db.StorageLocations.FindAsync(storageLocationId);
 
             _response.IsSuccess = false;
-            _response.Message = "Место хранения не найдено.";
+            _response.Message = "Стеллаж не найден.";
 
             if (storageLocation != null)
             {
@@ -75,7 +74,7 @@ namespace StockService.Repository.StorageLocationRep
                 await _db.SaveChangesAsync();
 
                 _response.IsSuccess = true;
-                _response.Message = "Место хранения успешно удалено.";
+                _response.Message = "Стеллаж успешно удален.";
             }
 
             return _response;
@@ -84,7 +83,7 @@ namespace StockService.Repository.StorageLocationRep
         public async Task<Response> GetStorageLocationsByStockIdAsync(int stockId)
         {
             _response.IsSuccess = false;
-            _response.Message = "Места хранения не найдены.";
+            _response.Message = "Стеллажы не найдены.";
 
             var storageLocations = await _db.StorageLocations
                     .Where(sl => sl.StockId == stockId)
@@ -94,7 +93,7 @@ namespace StockService.Repository.StorageLocationRep
             {
                 _response.IsSuccess = true;
                 _response.Result = storageLocations;
-                _response.Message = $"Места хранения для склада с ID {stockId} успешно получены.";
+                _response.Message = $"Стеллажы для склада с ID {stockId} успешно получены.";
             }
 
             return _response;
@@ -105,12 +104,12 @@ namespace StockService.Repository.StorageLocationRep
             var storageLocation = await _db.StorageLocations.FindAsync(storageLocationId);
 
             _response.IsSuccess = false;
-            _response.Message = "Место хранения не найдено.";
+            _response.Message = "Стеллаж не найден.";
             if (storageLocation != null)
             {
                 _response.IsSuccess = true;
                 _response.Result = storageLocation;
-                _response.Message = "Место хранения найдено.";
+                _response.Message = "Стеллаж найден.";
             }
 
             return _response;
@@ -121,7 +120,7 @@ namespace StockService.Repository.StorageLocationRep
             var storageLocation = await _db.StorageLocations.FindAsync(storageLocationDto.StorageLocationId);
 
             _response.IsSuccess = false;
-            _response.Message = "Место хранения не найдено.";
+            _response.Message = "Стеллаж не найден.";
 
             if (storageLocation != null)
             {
@@ -151,7 +150,7 @@ namespace StockService.Repository.StorageLocationRep
 
                 _response.IsSuccess = true;
                 _response.Result = storageLocation;
-                _response.Message = "Данные места хранения обновлены.";
+                _response.Message = "Данные стеллажа обновлены.";
             }
 
             return _response;
@@ -160,7 +159,7 @@ namespace StockService.Repository.StorageLocationRep
         public async Task<Response> GetStorageLocationsFilteredAsync(StorageLocationDto storageLocationDto)
         {
             _response.IsSuccess = false;
-            _response.Message = "Места храненения не найдены по указанным критериям.";
+            _response.Message = "Стеллажы не найдены по указанным критериям.";
 
             var query = _db.StorageLocations.AsQueryable();
 
@@ -172,16 +171,12 @@ namespace StockService.Repository.StorageLocationRep
             if (storageLocationDto.CompanyId != null)
                 query = query.Where(sl => sl.CompanyId == storageLocationDto.CompanyId);
 
-            if (storageLocationDto.IsBusy != null)
-                query = query.Where(sl => (sl.Product != null) == (bool)storageLocationDto.IsBusy);
 
             if (!string.IsNullOrEmpty(storageLocationDto.Description))
                 query = query.Where(sl => EF.Functions.ILike(sl.Description, $"%{storageLocationDto.Description}%"));
 
             if (!string.IsNullOrEmpty(storageLocationDto.RackCode))
                 query = query.Where(sl => sl.RackCode == storageLocationDto.RackCode);
-            if (!string.IsNullOrEmpty(storageLocationDto.ShelfCode))
-                query = query.Where(sl => sl.ShelfCode == storageLocationDto.ShelfCode);
 
 
             var storageLocations = await query.ToListAsync();
@@ -191,7 +186,7 @@ namespace StockService.Repository.StorageLocationRep
             {
                 _response.IsSuccess = true;
                 _response.Result = storageLocations;
-                _response.Message = "Места хранения успешно найдены по указанным критериям.";
+                _response.Message = "Стеллажы успешно найдены по указанным критериям.";
             }
 
             return _response;

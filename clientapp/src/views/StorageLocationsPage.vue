@@ -18,7 +18,6 @@
                 {{ item.storageLocationId}}
               </td>
               <td>{{ item.rackCode }}</td>
-              <td>{{ item.shelfCode }}</td>
               <td>{{ item.description }}</td>
               <td>
                   <div v-if="item.imagePath">
@@ -81,14 +80,6 @@
 
               <v-col cols="12" sm="6" md="4">
                 <v-text-field
-                  label="Код полки"
-                  v-model="filters.shelfCode"
-                  prepend-icon="mdi-bookshelf"
-                ></v-text-field>
-              </v-col>
-
-              <v-col cols="12" sm="6" md="4">
-                <v-text-field
                   label="Описание"
                   v-model="filters.description"
                   prepend-icon="mdi-note-text"
@@ -120,19 +111,6 @@
                         dense
                       ></v-select>
                     </v-col>
-
-                  <v-col cols="4">
-                    <v-select
-                      v-model="filters.isBusy"
-                      :items="filterOptions"
-                      item-title="title"
-                      item-value="value"
-                      label="Места хранения"
-                      prepend-icon="mdi-domain"
-                      dense
-                    ></v-select>
-                  </v-col>
-
             </v-row>
             <v-row>
               <v-col cols="12">
@@ -230,24 +208,15 @@
               <v-card-text>
                 <v-form @submit.prevent="saveStorageLocation">
                   <v-row>
-                    <v-col cols="12" sm="6">
+                    <v-col cols="4">
                       <v-text-field
                         v-model="selectedStorageLocation.rackCode"
                         label="Код стеллажа*"
                         prepend-icon="mdi-file-cabinet"
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="12" sm="6">
-                      <v-text-field
-                        v-model="selectedStorageLocation.shelfCode"
-                        label="Код полки*"
-                        prepend-icon="mdi-bookshelf"
-                      ></v-text-field>
-                    </v-col>
-                  </v-row>
 
-                  <v-row>
-                    <v-col cols="6">
+                    <v-col cols="4">
                       <v-text-field
                         v-model="selectedStorageLocation.description"
                         label="Описание"
@@ -255,7 +224,7 @@
                       ></v-text-field>
                     </v-col>
 
-                    <v-col cols="6" sm="6">
+                    <v-col cols="4">
                       <v-file-input
                         v-model="selectedStorageLocation.image"
                         label="Фото места хранения"
@@ -264,6 +233,7 @@
                       ></v-file-input>
                     </v-col>
                   </v-row>
+
 
                   <v-row>      
                     <v-col cols="4">
@@ -278,8 +248,6 @@
                         @update:modelValue="selectionOfStocks(true)"
                       ></v-select>
                     </v-col>
-
-   
 
                     <v-col cols="4">
                       <v-select
@@ -326,17 +294,10 @@ import { mapGetters } from 'vuex';
     data() {
       return {
         apiBaseUrl: import.meta.env.VITE_API_BASE_URL,
-        filters: {
-        },
-        filterOptions: [
-          { title: 'Все места хранения', value: null },
-          { title: 'Свободные', value: false },
-          { title: 'Занятые', value: true }
-        ],
+        filters: {},
         headers: [
-          { title: 'ID места хранения*', key: 'storageLocationId', align: 'start', sortable: true },
+          { title: 'ID стеллажа*', key: 'storageLocationId', align: 'start', sortable: true },
           { title: 'Код стеллажа', key: 'rackCode', align: 'start', sortable: true },
-          { title: 'Код полки', key: 'shelfCode', align: 'start', sortable: true },
           { title: 'Описание', key: 'description', align: 'start', sortable: true },
           { title: 'Фото места хранения', key: 'imagePath', align: 'start', sortable: false },
           { title: 'Склад', key: 'stockName', align: 'start', sortable: false },
@@ -430,7 +391,6 @@ import { mapGetters } from 'vuex';
       navigateStorageLocationId(item) {
         this.filters = {
           storageLocationId: item.storageLocationId,
-          isBusy: ''
         }
 
         this.filters = {storageLocationId: item.storageLocationId}
@@ -466,7 +426,7 @@ import { mapGetters } from 'vuex';
         }
       },
       resetFilters() {
-        this.filters = {isBusy: null}
+        this.filters = {}
         this.applyFilters();
       },
       async saveStorageLocation() {
@@ -475,8 +435,6 @@ import { mapGetters } from 'vuex';
           formData.append('StorageLocationId', this.selectedStorageLocation.storageLocationId);
         if(this.selectedStorageLocation.rackCode)
           formData.append('RackCode', this.selectedStorageLocation.rackCode);
-        if(this.selectedStorageLocation.shelfCode)
-          formData.append('ShelfCode', this.selectedStorageLocation.shelfCode);
         if(this.selectedStorageLocation.description)
           formData.append('Description', this.selectedStorageLocation.description);
         if (this.selectedStorageLocation.image) 

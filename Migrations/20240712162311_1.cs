@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
@@ -73,7 +74,7 @@ namespace StockService.Migrations
                     StockId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    CompanyId = table.Column<int>(type: "integer", nullable: true)
+                    CompanyId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -150,7 +151,6 @@ namespace StockService.Migrations
                     StorageLocationId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     RackCode = table.Column<string>(type: "text", nullable: false),
-                    ShelfCode = table.Column<string>(type: "text", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: true),
                     ImagePath = table.Column<string>(type: "text", nullable: true),
                     StockId = table.Column<int>(type: "integer", nullable: false),
@@ -204,6 +204,8 @@ namespace StockService.Migrations
                     ProductId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
+                    RackCode = table.Column<string>(type: "text", nullable: false),
+                    ShelfCode = table.Column<string>(type: "text", nullable: false),
                     Manufacturer = table.Column<string>(type: "text", nullable: true),
                     ProductionArticle = table.Column<string>(type: "text", nullable: true),
                     InnerArticle = table.Column<string>(type: "text", nullable: true),
@@ -272,6 +274,11 @@ namespace StockService.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Employees_CompanyId",
+                table: "Employees",
+                column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Employees_Login",
                 table: "Employees",
                 column: "Login",
@@ -288,6 +295,16 @@ namespace StockService.Migrations
                 column: "CompanyId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Products_BillId",
+                table: "Products",
+                column: "BillId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_CompanyId",
+                table: "Products",
+                column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Products_EmployeeId",
                 table: "Products",
                 column: "EmployeeId");
@@ -298,10 +315,29 @@ namespace StockService.Migrations
                 column: "ProductCategoryId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Products_ProviderId",
+                table: "Products",
+                column: "ProviderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_RackCode",
+                table: "Products",
+                column: "RackCode");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_ShelfCode",
+                table: "Products",
+                column: "ShelfCode");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_StockId",
+                table: "Products",
+                column: "StockId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Products_StorageLocationId",
                 table: "Products",
-                column: "StorageLocationId",
-                unique: true);
+                column: "StorageLocationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_UpdId",
@@ -326,6 +362,16 @@ namespace StockService.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_StorageLocations_CompanyId",
+                table: "StorageLocations",
+                column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StorageLocations_RackCode",
+                table: "StorageLocations",
+                column: "RackCode");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_StorageLocations_StockId",
                 table: "StorageLocations",
                 column: "StockId");
@@ -334,6 +380,11 @@ namespace StockService.Migrations
                 name: "IX_Upds_BillId",
                 table: "Upds",
                 column: "BillId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Upds_CompanyId",
+                table: "Upds",
+                column: "CompanyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Upds_DocumentNumber",

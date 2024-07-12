@@ -19,7 +19,6 @@ namespace StockService.Controllers
             this._response = new Response();
         }
 
-
         [HttpPost("create")]
         public async Task<IActionResult> CreateProductCategory(ProductCategoryDto productCategoryDto)
         {
@@ -39,6 +38,23 @@ namespace StockService.Controllers
                     _response.Errors.Add($"Inner exception: {ex.InnerException.Message}");
                 }
 
+                return BadRequest(_response);
+            }
+        }
+
+        [HttpGet("getAll")]
+        public async Task<IActionResult> GetAllProductCategories()
+        {
+            try
+            {
+                _response = await _productCategoryService.GetAllProductCategoriesAsync();
+                if (_response.IsSuccess) return Ok(_response);
+                return NotFound(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.Errors.Add(ex.Message);
                 return BadRequest(_response);
             }
         }

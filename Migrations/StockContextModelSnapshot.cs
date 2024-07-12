@@ -132,6 +132,8 @@ namespace StockService.Migrations
 
                     b.HasKey("EmployeeId");
 
+                    b.HasIndex("CompanyId");
+
                     b.HasIndex("Login")
                         .IsUnique();
 
@@ -190,6 +192,14 @@ namespace StockService.Migrations
                     b.Property<int?>("ProviderId")
                         .HasColumnType("integer");
 
+                    b.Property<string>("RackCode")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ShelfCode")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<int>("StockId")
                         .HasColumnType("integer");
 
@@ -201,12 +211,23 @@ namespace StockService.Migrations
 
                     b.HasKey("ProductId");
 
+                    b.HasIndex("BillId");
+
+                    b.HasIndex("CompanyId");
+
                     b.HasIndex("EmployeeId");
 
                     b.HasIndex("ProductCategoryId");
 
-                    b.HasIndex("StorageLocationId")
-                        .IsUnique();
+                    b.HasIndex("ProviderId");
+
+                    b.HasIndex("RackCode");
+
+                    b.HasIndex("ShelfCode");
+
+                    b.HasIndex("StockId");
+
+                    b.HasIndex("StorageLocationId");
 
                     b.HasIndex("UpdId");
 
@@ -291,7 +312,7 @@ namespace StockService.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("StockId"));
 
-                    b.Property<int?>("CompanyId")
+                    b.Property<int>("CompanyId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Name")
@@ -329,14 +350,14 @@ namespace StockService.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("ShelfCode")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<int>("StockId")
                         .HasColumnType("integer");
 
                     b.HasKey("StorageLocationId");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("RackCode");
 
                     b.HasIndex("StockId");
 
@@ -374,6 +395,8 @@ namespace StockService.Migrations
                     b.HasKey("UpdId");
 
                     b.HasIndex("BillId");
+
+                    b.HasIndex("CompanyId");
 
                     b.HasIndex("DocumentNumber")
                         .IsUnique();
@@ -425,8 +448,8 @@ namespace StockService.Migrations
                         .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("StockService.Models.StorageLocation", "StorageLocation")
-                        .WithOne("Product")
-                        .HasForeignKey("StockService.Models.Product", "StorageLocationId")
+                        .WithMany("Products")
+                        .HasForeignKey("StorageLocationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -460,7 +483,8 @@ namespace StockService.Migrations
                     b.HasOne("StockService.Models.Company", "Company")
                         .WithMany("Stocks")
                         .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Company");
                 });
@@ -533,7 +557,7 @@ namespace StockService.Migrations
 
             modelBuilder.Entity("StockService.Models.StorageLocation", b =>
                 {
-                    b.Navigation("Product");
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("StockService.Models.Upd", b =>

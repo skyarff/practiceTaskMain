@@ -56,6 +56,7 @@ namespace StockService
                 entity.HasKey(e => e.EmployeeId);
                 entity.Property(e => e.JobTitle).HasDefaultValue("Junior");
                 entity.HasIndex(e => e.StockId);
+                entity.HasIndex(e => e.CompanyId);
                 entity.HasIndex(e => e.Login).IsUnique();
 
                 entity.HasOne(e => e.Stock)
@@ -68,6 +69,8 @@ namespace StockService
             {
                 entity.HasKey(sl => sl.StorageLocationId);
                 entity.HasIndex(sl => sl.StockId);
+                entity.HasIndex(sl => sl.RackCode);
+                entity.HasIndex(sl => sl.CompanyId);
 
                 entity.HasOne(sl => sl.Stock)
                     .WithMany(s => s.StorageLocations)
@@ -83,9 +86,15 @@ namespace StockService
 
 
                 entity.HasIndex(p => p.ProductCategoryId);
-                entity.HasIndex(p => p.StorageLocationId).IsUnique();
+                entity.HasIndex(p => p.StorageLocationId);
                 entity.HasIndex(p => p.EmployeeId);
                 entity.HasIndex(p => p.UpdId);
+                entity.HasIndex(p => p.StockId);
+                entity.HasIndex(p => p.CompanyId);
+                entity.HasIndex(p => p.BillId);
+                entity.HasIndex(p => p.ProviderId);
+                entity.HasIndex(p => p.RackCode);
+                entity.HasIndex(p => p.ShelfCode);
 
                 entity.HasOne(p => p.ProductCategory)
                     .WithMany(pc => pc.Products)
@@ -93,9 +102,9 @@ namespace StockService
                     .HasForeignKey(p => p.ProductCategoryId);
 
                 entity.HasOne(p => p.StorageLocation)
-                    .WithOne(sl => sl.Product)
+                    .WithMany(sl => sl.Products)
                     .OnDelete(DeleteBehavior.Cascade)
-                    .HasForeignKey<Product>(p => p.StorageLocationId);
+                    .HasForeignKey(p => p.StorageLocationId);
 
                 entity.HasOne(p => p.Employee)
                     .WithMany(e => e.Products)
@@ -135,6 +144,8 @@ namespace StockService
                 entity.HasKey(u => u.UpdId);
                 entity.HasIndex(u => u.DocumentNumber).IsUnique();
                 entity.HasIndex(u => u.BillId);
+                entity.HasIndex(u => u.ProviderId);
+                entity.HasIndex(u => u.CompanyId);
 
                 entity.HasOne(u => u.Bill)
                     .WithMany(b => b.Upds)

@@ -28,9 +28,7 @@ const updPageModule = {
             if (payload.selected) commit('setBillsByProviderAndCompanyId', []);    
               else commit('setFBillsByProviderAndCompanyId', []);
 
-
-            commit('setBillsByProviderAndCompanyId', []);
-
+              
             let url = '/api/Bill/getByProviderAndCompanyId';
             const params = new URLSearchParams();
 
