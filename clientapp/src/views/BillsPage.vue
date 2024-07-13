@@ -314,7 +314,7 @@ import { mapGetters } from 'vuex';
         isLoading: true
       }
     },
-    mounted() {
+    activated() {
       this.applyFilters();
       this.$store.dispatch('getAllProviders');
       this.$store.dispatch('getAllCompanies');

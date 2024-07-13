@@ -3,6 +3,7 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using StockService.Models;
 using StockService.Models.dto;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace StockService.Repository.ProductRep
 {
@@ -131,27 +132,25 @@ namespace StockService.Repository.ProductRep
 
             if (product != null)
             {
-                if (productDto.ProductCategoryId != null)
-                {
-                    var pc = await _db.ProductCategories.FindAsync(productDto.ProductCategoryId);
-                    if (pc != null && pc.CompanyId == product.CompanyId) product.ProductCategoryId = productDto.ProductCategoryId;
-                }
-
-                if (productDto.UpdId != null)
-                {
-                    var upd = await _db.Upds.FindAsync(productDto.UpdId);
-                    if (upd != null && upd.CompanyId == product.CompanyId) product.UpdId = productDto.UpdId;
-                }
-
-
-                if (productDto.ShelfCode != null)
-                {
-                    var productIsExists = await _db.Products.AnyAsync(p => p.StorageLocationId == productDto.StorageLocationId
-                        && p.ShelfCode == productDto.ShelfCode);
-                    if (!productIsExists) product.ShelfCode = productDto.ShelfCode;
-                    else throw new Exception("Место хранения уже используется.");
-                }
-                    
+                #region
+                //if (productDto.ProductCategoryId != null)
+                //{
+                //    var pc = await _db.ProductCategories.FindAsync(productDto.ProductCategoryId);
+                //    if (pc != null && pc.CompanyId == product.CompanyId) product.ProductCategoryId = productDto.ProductCategoryId;
+                //}
+                //if (productDto.UpdId != null)
+                //{
+                //    var upd = await _db.Upds.FindAsync(productDto.UpdId);
+                //    if (upd != null && upd.CompanyId == product.CompanyId) product.UpdId = productDto.UpdId;
+                //}
+                //if (productDto.ShelfCode != null)
+                //{
+                //    var productIsExists = await _db.Products.AnyAsync(p => p.StorageLocationId == productDto.StorageLocationId
+                //        && p.ShelfCode == productDto.ShelfCode);
+                //    if (!productIsExists) product.ShelfCode = productDto.ShelfCode;
+                //    else throw new Exception("Место хранения уже используется.");
+                //}
+                #endregion
 
                 if (productDto.Price != null) 
                     product.Price = (decimal)productDto.Price;
@@ -173,6 +172,7 @@ namespace StockService.Repository.ProductRep
 
 
                 string filePath = "";
+                string? oldPath = product.ImagePath;
                 if (productDto.Image != null && productDto.Image.Length > 0)
                 {
                     string fileName = $"{Guid.NewGuid()}{Path.GetExtension(productDto.Image.FileName)}";
@@ -188,9 +188,9 @@ namespace StockService.Repository.ProductRep
                     using (var stream = new FileStream("wwwroot/" + filePath, FileMode.Create))
                         await productDto.Image.CopyToAsync(stream);
 
-                    if (!string.IsNullOrEmpty(product.ImagePath)
-                    && File.Exists("wwwroot//" + product.ImagePath))
-                        File.Delete("wwwroot//" + product.ImagePath); 
+                    if (!string.IsNullOrEmpty(oldPath)
+                        && File.Exists("wwwroot//" + oldPath))
+                        File.Delete("wwwroot//" + oldPath);
                 }
 
   
@@ -214,6 +214,8 @@ namespace StockService.Repository.ProductRep
 
             if (!string.IsNullOrEmpty(productDto.RackCode))
                 query = query.Where(p => p.RackCode == productDto.RackCode);
+            if (!string.IsNullOrEmpty(productDto.ShelfCode))
+                query = query.Where(p => p.ShelfCode == productDto.ShelfCode);
 
             if (productDto.LowerPriceLimit != null)
                 query = query.Where(p => p.Price >= productDto.LowerPriceLimit);

@@ -309,7 +309,7 @@ import { mapGetters } from 'vuex';
         isLoading: true
       }
     },
-    mounted() {
+    activated() {
       this.applyFilters();
       this.$store.dispatch('getAllCompanies');
       this.$store.dispatch('getAllStocks');
@@ -400,6 +400,9 @@ import { mapGetters } from 'vuex';
         this.applyFilters();
 
         window.scrollTo(0, document.body.scrollHeight);
+
+        this.$store.dispatch('storageLocationPage/getStocksByCompanyId', 
+            {companyId: this.selectedStorageLocation.companyId, selected: true})
       },
       switchEditingMode() {
           this.isEditing = !this.isEditing
@@ -480,6 +483,8 @@ import { mapGetters } from 'vuex';
           this.selectedStorageLocation = {...item};
           this.isEditing = true
         }
+        this.$store.dispatch('storageLocationPage/getStocksByCompanyId', 
+            {companyId: this.selectedStorageLocation.companyId, selected: true})
       },
       getStockName(stockId) {
         const stock = this.stocks.find(s => s.stockId === stockId);

@@ -126,7 +126,7 @@ namespace StockService.Repository.CompanyRep
 
 
                 string filePath = "";
-                string oldPath = company.LogoPath;
+                string? oldPath = company.LogoPath;
                 if (companyDto.Image != null && companyDto.Image.Length > 0)
                 {
                     string fileName = $"{Guid.NewGuid()}{Path.GetExtension(companyDto.Image.FileName)}";

@@ -424,7 +424,7 @@ import { mapGetters } from 'vuex';
         isLoading: true
       }
     },
-    mounted() {
+    activated() {
       this.applyFilters();
       this.$store.dispatch('getAllCompanies');
       this.$store.dispatch('getAllStocks');
@@ -447,8 +447,8 @@ import { mapGetters } from 'vuex';
         this.selectedEmployee = {...item};
         delete this.selectedEmployee.password
         this.applyFilters();
-
         window.scrollTo(0, document.body.scrollHeight);
+        this.$store.dispatch( 'employeePage/getStocksByCompanyId', {companyId: this.selectedEmployee.companyId, selected: true})
       },
       switchEditingMode() {
           this.isEditing = !this.isEditing
@@ -536,7 +536,7 @@ import { mapGetters } from 'vuex';
           this.selectedEmployee = {...item};
           this.isEditing = true
           delete this.selectedEmployee.password
-          this.$store.dispatch( 'employeePage/getStocksByCompanyId', {companyId: this.selectedCompanyId, selected: true})
+          this.$store.dispatch( 'employeePage/getStocksByCompanyId', {companyId: this.selectedEmployee.companyId, selected: true})
         }
       },
       getStockName(stockId) {

@@ -247,7 +247,7 @@ import Loader from '@/components/TableLoader.vue'
         isLoading: true
       }
     },
-    mounted() {
+    activated() {
       this.applyFilters();
     },
     methods: {

@@ -218,7 +218,7 @@ export default {
       isLoading: true
     }
   },
-  mounted() {
+  activated() {
     this.applyFilters();
     this.$store.dispatch('getAllCompanies');
   },

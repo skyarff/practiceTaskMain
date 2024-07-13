@@ -201,6 +201,7 @@ namespace StockService.Repository.EmployeeRep
                     employee.Password = Sha256.ComputeSha256Hash(employeeDto.Password);
 
                 string filePath = "";
+                string? oldPath = employee.ImagePath;
                 if (employeeDto.Image != null && employeeDto.Image.Length > 0)
                 {
                     string fileName = $"{Guid.NewGuid()}{Path.GetExtension(employeeDto.Image.FileName)}";
@@ -222,9 +223,9 @@ namespace StockService.Repository.EmployeeRep
                     using (var stream = new FileStream("wwwroot/" + filePath, FileMode.Create))
                         await employeeDto.Image.CopyToAsync(stream);
 
-                    if (!string.IsNullOrEmpty(employee.ImagePath)
-                        && File.Exists("wwwroot//" + employee.ImagePath))
-                            File.Delete("wwwroot//" + employee.ImagePath);
+                    if (!string.IsNullOrEmpty(oldPath)
+                        && File.Exists("wwwroot//" + oldPath))
+                            File.Delete("wwwroot//" + oldPath);
                 }
 
                 

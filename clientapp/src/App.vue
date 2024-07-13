@@ -1,17 +1,15 @@
 <template>
   <v-app>
-
     <NavBar />
-
     <NavDrawer />
-
     <v-main>
-      <router-view class="pa-4" />
+        <router-view class="pa-4" v-slot="{ Component }">
+            <keep-alive>
+              <component :is="Component" />
+            </keep-alive>
+        </router-view>
     </v-main>
-
-
     <ErrorOutput />
-    
   </v-app>
 
 
@@ -28,7 +26,7 @@ export default {
   components: {
     NavBar,
     NavDrawer,
-    ErrorOutput
+    ErrorOutput,
   },
 };
 </script>

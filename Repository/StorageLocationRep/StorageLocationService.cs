@@ -128,6 +128,7 @@ namespace StockService.Repository.StorageLocationRep
                     storageLocation.Description = storageLocationDto.Description;
 
                 string filePath = "";
+                string? oldPath = storageLocation.ImagePath;
                 if (storageLocationDto.Image != null && storageLocationDto.Image.Length > 0)
                 {
                     var fileName = $"{Guid.NewGuid()}{Path.GetExtension(storageLocationDto.Image.FileName)}";
@@ -142,9 +143,9 @@ namespace StockService.Repository.StorageLocationRep
                     using (var stream = new FileStream("wwwroot/" + filePath, FileMode.Create))
                         await storageLocationDto.Image.CopyToAsync(stream);
 
-                    if (!string.IsNullOrEmpty(storageLocation.ImagePath)
-                        && File.Exists("wwwroot//" + storageLocation.ImagePath))
-                            File.Delete("wwwroot//" + storageLocation.ImagePath);
+                    if (!string.IsNullOrEmpty(oldPath)
+                        && File.Exists("wwwroot//" + oldPath))
+                            File.Delete("wwwroot//" + oldPath);
                 }
 
 

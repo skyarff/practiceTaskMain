@@ -193,7 +193,7 @@ export default {
       isLoading: true
     }
   },
-  mounted() {
+  activated() {
     this.applyFilters();
     this.$store.dispatch('getAllCompanies');
   },
@@ -221,8 +221,6 @@ export default {
             'Content-Type': 'application/json'
           }
         });
-
-        console.log(response)
 
         this.productCategories = Array.from(response.data.result);
       } catch (error) {

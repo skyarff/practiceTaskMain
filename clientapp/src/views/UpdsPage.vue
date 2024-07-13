@@ -319,7 +319,7 @@ import { mapGetters } from 'vuex';
         isLoading: true
       }
     },
-    mounted() {
+    activated() {
       this.applyFilters();
       this.$store.dispatch('getAllCompanies');
       this.$store.dispatch('getAllProviders');
@@ -348,6 +348,8 @@ import { mapGetters } from 'vuex';
         this.selectedUpd = item
         this.applyFilters();
         window.scrollTo(0, document.body.scrollHeight);
+        this.$store.dispatch('updPage/getBillsByProviderAndCompanyId', 
+            {providerId: this.selectedUpd.providerId, companyId: this.selectedUpd.companyId, selected: true})
       },
       switchEditingMode() {
 
@@ -418,8 +420,9 @@ import { mapGetters } from 'vuex';
         } else {
           this.selectedUpd = {...item};
           this.isEditing = true
+          debugger
           this.$store.dispatch('updPage/getBillsByProviderAndCompanyId', 
-            {providerId: this.selectedUpd.providerId, companyId: this.selectedUpd.companyId})
+            {providerId: this.selectedUpd.providerId, companyId: this.selectedUpd.companyId, selected: true})
         }
       },
       formatDate(dateString) {

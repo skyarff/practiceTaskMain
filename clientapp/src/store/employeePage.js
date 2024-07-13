@@ -25,6 +25,7 @@ const employeePageModule = {
     },
     actions: {
         async getStocksByCompanyId({commit}, payload) {
+            
             if (payload.selected) commit('setStocksByCompanyId', []);    
               else commit('setFStocksByCompanyId', []);
 
