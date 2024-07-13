@@ -1,27 +1,13 @@
 <template>
     <div class="d-flex flex-column align-center justify-center" style="height: 100%; padding: 40px; margin-top: 1.7%;">
-      <v-card class="mb-16" width="95%" max-width="1200">
-        <v-card-title class="text-h4 font-weight-bold text-center py-6">
+      <v-card class="mb-16" width="50%">
+        <v-card-title class="text-h4 font-weight-bold text-center">
           Схема Access
         </v-card-title>
-        <v-card-text class="pa-6">
+        <v-card-text >
           <v-img
-            :src="`${apiBaseUrl}/Images/Common/schemaAccess.png`"
+            :src="`${apiBaseUrl}/Images/Common/SchemaAccess.png`"
             contain
-            height="600"
-          />
-        </v-card-text>
-      </v-card>
-  
-      <v-card width="95%" max-width="1200">
-        <v-card-title class="text-h4 font-weight-bold text-center py-6">
-          Схема поведения при удалении
-        </v-card-title>
-        <v-card-text class="pa-6">
-          <v-img
-            :src="`${apiBaseUrl}/Images/Common/schemaGpt.png`"
-            contain
-            height="600"
           />
         </v-card-text>
       </v-card>

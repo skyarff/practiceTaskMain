@@ -12,7 +12,7 @@ using StockService;
 namespace StockService.Migrations
 {
     [DbContext(typeof(StockContext))]
-    [Migration("20240712162311_1")]
+    [Migration("20240713134437_1")]
     partial class _1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
