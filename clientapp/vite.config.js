@@ -3,9 +3,8 @@ import vue from "@vitejs/plugin-vue";
 import vuetify from "vite-plugin-vuetify";
 import path from "path";
 
-// https://vitejs.dev/config/
+
 export default defineConfig(({ mode }) => {
-  // Загрузка переменных окружения
   const env = loadEnv(mode, process.cwd(), '');
   
   return {

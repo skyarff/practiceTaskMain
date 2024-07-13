@@ -73,7 +73,7 @@
             <v-row @click.stop justify="end" align="center" class="ml-auto mr-5">
               <v-col cols="auto">
                 <v-btn
-                  class="mr-2"
+                  class="mr-3"
                   color="primary"
                   @click="applyFilters"
                   icon="mdi-magnify"
@@ -94,7 +94,6 @@
   
             <v-row>
               <v-col cols="6">
-
                 <v-card  color="grey-lighten-4">
                   <v-card-title>
                     Поля
@@ -204,7 +203,7 @@
                             item-title="name"
                             item-value="providerId"
                             label="Поставщик"
-                            prepend-icon="mdi-domain"
+                            prepend-icon="mdi-truck-delivery"
                             dense
                             @update:modelValue="selectionOfBills(false)"
                           ></v-select>
@@ -232,7 +231,7 @@
                         item-title="name"
                         item-value="productCategoryId"
                         label="Категория"
-                        prepend-icon="mdi-package-variant-closed"
+                        prepend-icon="mdi-tag-multiple"
                         dense
                       ></v-select>
                     </v-col>
@@ -244,7 +243,7 @@
                         item-title="name"
                         item-value="billId"
                         label="Счет"
-                        prepend-icon="mdi-package-variant-closed"
+                        prepend-icon="mdi-receipt"
                         dense
                         @update:modelValue="selectionOfUpds(false)"
                       ></v-select>
@@ -260,7 +259,7 @@
                         item-title="name"
                         item-value="storageLocationId"
                         label="Стеллаж"
-                        prepend-icon="mdi-package-variant-closed"
+                        prepend-icon="mdi-locker-multiple"
                         dense
                       ></v-select>
                     </v-col>
@@ -272,7 +271,7 @@
                         item-title="name"
                         item-value="employeeId"
                         label="Сотрудник"
-                        prepend-icon="mdi-package-variant-closed"
+                        prepend-icon="mdi-account-tie"
                         dense
                       ></v-select>
                     </v-col>
@@ -284,7 +283,7 @@
                         item-title="name"
                         item-value="updId"
                         label="УПД"
-                        prepend-icon="mdi-package-variant-closed"
+                        prepend-icon="mdi-file-document-outline"
                         dense
                       ></v-select>
                     </v-col>
@@ -333,7 +332,7 @@
             ></v-btn>
             <v-btn 
               v-if="isEditing"
-              class="ml-2"
+              class="ml-3"
               color="secondary"
               @click="deleteProduct"
               icon="mdi-delete"
@@ -421,7 +420,25 @@
           </div>
           <div v-else>
                   <v-row>
-                    <v-col cols="12" sm="6" md="4">
+                    <v-col cols="6">
+                      <v-card color="grey-lighten-4">
+                    <v-card-title>
+                      Поля
+                    </v-card-title>
+                    <v-card-subtitle>
+                      Заполните поля данными
+                    </v-card-subtitle>
+                      <v-card-text>
+                        <v-row>
+                          <v-col cols="4">
+                      <v-text-field
+                        label="Полка*"
+                        v-model="selectedProduct.shelfCode"
+                        prepend-icon="mdi-factory"
+                      ></v-text-field>
+                    </v-col>
+
+                          <v-col cols="8">
                       <v-text-field
                         label="Наименование продукта*"
                         v-model="selectedProduct.name"
@@ -429,147 +446,9 @@
                       ></v-text-field>
                     </v-col>
 
-                    <v-col cols="4">
-                      <v-select
-                        v-model="selectedProviderId"
-                        :items="providers"
-                        item-title="name"
-                        item-value="providerId"
-                        label="Поставщик"
-                        prepend-icon="mdi-domain"
-                        dense
-                        @update:modelValue="selectionOfBills(true)"
-                      ></v-select>
-                    </v-col>
-
-                    <v-col cols="4">
-                      <v-select
-                        v-model="selectedCompanyId"
-                        :items="companies"
-                        item-title="name"
-                        item-value="companyId"
-                        label="Компания"
-                        prepend-icon="mdi-domain"
-                        dense
-                        @update:modelValue="selectionOfStocksAndProductCategoriesAndBills(true)"
-                      ></v-select>
-                    </v-col>
-
-                    <v-col cols="4">
-                      <v-select
-                        v-model="selectedStockId"
-                        :items="stocksByCompanyId"
-                        item-title="name"
-                        item-value="stockId"
-                        label="Склад"
-                        prepend-icon="mdi-package-variant-closed"
-                        dense
-                        @update:modelValue="selectionOfStorageLocationsAndEmployees(true)"
-                      ></v-select>
-                    </v-col>
-
-                    <v-col cols="4">
-                      <v-select
-                        v-model="selectedProductCategoryId"
-                        :items="productCategoriesByCompanyId"
-                        item-title="name"
-                        item-value="productCategoryId"
-                        label="Категория"
-                        prepend-icon="mdi-package-variant-closed"
-                        dense
-                      ></v-select>
-                    </v-col>
-
-                    <v-col cols="4">
-                      <v-select
-                        v-model="selectedBillId"
-                        :items="billsByCompanyAndProviderId"
-                        item-title="name"
-                        item-value="billId"
-                        label="Счет"
-                        prepend-icon="mdi-package-variant-closed"
-                        dense
-                        @update:modelValue="selectionOfUpds(true)"
-                      ></v-select>
-                    </v-col>
-
-                    <v-col cols="4">
-                      <v-select
-                        v-model="selectedStorageLocationId"
-                        :items="storageLocationsByStockId"
-                        item-title="name"
-                        item-value="storageLocationId"
-                        label="Стеллаж"
-                        prepend-icon="mdi-package-variant-closed"
-                        dense
-                      ></v-select>
-                    </v-col>
-
-                    <v-col cols="4">
-                      <v-select
-                        v-model="selectedEmployeeId"
-                        :items="employeesByStockId"
-                        item-title="name"
-                        item-value="employeeId"
-                        label="Сотрудник"
-                        prepend-icon="mdi-package-variant-closed"
-                        dense
-                      ></v-select>
-                    </v-col>
-
-                    <v-col cols="4">
-                      <v-select
-                        v-model="selectedUpdId"
-                        :items="updsByBillId"
-                        item-title="name"
-                        item-value="updId"
-                        label="УПД"
-                        prepend-icon="mdi-package-variant-closed"
-                        dense
-                      ></v-select>
-                    </v-col>
-
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field
-                        label="Полка"
-                        v-model="selectedProduct.shelfCode"
-                        prepend-icon="mdi-factory"
-                      ></v-text-field>
-                    </v-col>
-
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field
-                        label="Производитель"
-                        v-model="selectedProduct.manufacturer"
-                        prepend-icon="mdi-factory"
-                      ></v-text-field>
-                    </v-col>
-
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field
-                        label="Произв. артикул"
-                        v-model="selectedProduct.productionArticle"
-                        prepend-icon="mdi-tag"
-                      ></v-text-field>
-                    </v-col>
                   </v-row>
 
-                  <v-row> 
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field
-                        label="Внутр. артикул"
-                        v-model="selectedProduct.innerArticle"
-                        prepend-icon="mdi-tag-outline"
-                      ></v-text-field>
-                    </v-col>
-
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field
-                        label="Заводской номер"
-                        v-model="selectedProduct.factoryNumber"
-                        prepend-icon="mdi-pound"
-                      ></v-text-field>
-                    </v-col>
+                  <v-row>
 
                     <v-col cols="12" sm="6" md="4">
                       <v-text-field
@@ -579,13 +458,8 @@
                         prepend-icon="mdi-currency-usd"
                       ></v-text-field>
                     </v-col>
-                  </v-row>
-
-                  <v-row>
                     
-                  </v-row>
 
-                  <v-row>
                     <v-col cols="4">
                       <v-file-input
                         v-model="selectedProduct.image"
@@ -594,16 +468,171 @@
                         prepend-icon="mdi-image"
                       ></v-file-input>
                     </v-col>
+
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field
+                        label="Производитель"
+                        v-model="selectedProduct.manufacturer"
+                        prepend-icon="mdi-factory"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+
+                  <v-row> 
+                    
+                    <v-col cols="4">
+                      <v-text-field
+                        label="Заводской номер"
+                        v-model="selectedProduct.factoryNumber"
+                        prepend-icon="mdi-pound"
+                      ></v-text-field>
+                    </v-col>
+
+                    <v-col cols="4">
+                      <v-text-field
+                        label="Произв. артикул"
+                        v-model="selectedProduct.productionArticle"
+                        prepend-icon="mdi-tag"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="4">
+                      <v-text-field
+                        label="Внутр. артикул"
+                        v-model="selectedProduct.innerArticle"
+                        prepend-icon="mdi-tag-outline"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+
+                  
+                      </v-card-text>
+
+                  </v-card>
+                    </v-col>
+
+                    <v-col cols="6">
+                      <v-card color="teal-lighten-5">
+                        <v-card-title>
+                          Иерархические сущности
+                        </v-card-title>
+                        <v-card-subtitle>
+                          Выберите стелаж, сотрудника и УПД
+                        </v-card-subtitle>
+                        <v-card-text>
+
+                          <v-row>
+                            <v-col cols="6">
+                            <v-select
+                              v-model="selectedCompanyId"
+                              :items="companies"
+                              item-title="name"
+                              item-value="companyId"
+                              label="Компания*"
+                              prepend-icon="mdi-domain"
+                              dense
+                              @update:modelValue="selectionOfStocksAndProductCategoriesAndBills(true)"
+                            ></v-select>
+                          </v-col>
+
+                    <v-col cols="6">
+                      <v-select
+                        v-model="selectedProviderId"
+                        :items="providers"
+                        item-title="name"
+                        item-value="providerId"
+                        label="Поставщик"
+                        prepend-icon="mdi-truck-delivery"
+                        dense
+                        @update:modelValue="selectionOfBills(true)"
+                      ></v-select>
+                    </v-col>
+                          </v-row>
+
+                          <v-row>
+                            <v-col cols="4">
+                              <v-select
+                                v-model="selectedStockId"
+                                :items="stocksByCompanyId"
+                                item-title="name"
+                                item-value="stockId"
+                                label="Склад*"
+                                prepend-icon="mdi-package-variant-closed"
+                                dense
+                                @update:modelValue="selectionOfStorageLocationsAndEmployees(true)"
+                              ></v-select>
+                            </v-col>
+
+                            <v-col cols="4">
+                              <v-select
+                                v-model="selectedProductCategoryId"
+                                :items="productCategoriesByCompanyId"
+                                item-title="name"
+                                item-value="productCategoryId"
+                                label="Категория"
+                                prepend-icon="mdi-tag-multiple"
+                                dense
+                              ></v-select>
+                            </v-col>
+
+                            <v-col cols="4">
+                              <v-select
+                                v-model="selectedBillId"
+                                :items="billsByCompanyAndProviderId"
+                                item-title="name"
+                                item-value="billId"
+                                label="Счет"
+                                prepend-icon="mdi-receipt"
+                                dense
+                                @update:modelValue="selectionOfUpds(true)"
+                              ></v-select>
+                            </v-col>
+                          </v-row>
+
+                          <v-row>
+                            <v-col cols="4">
+                              <v-select
+                                v-model="selectedStorageLocationId"
+                                :items="storageLocationsByStockId"
+                                item-title="name"
+                                item-value="storageLocationId"
+                                label="Стеллаж*"
+                                prepend-icon="mdi-locker-multiple"
+                                dense
+                              ></v-select>
+                            </v-col>
+
+                            <v-col cols="4">
+                              <v-select
+                                v-model="selectedEmployeeId"
+                                :items="employeesByStockId"
+                                item-title="name"
+                                item-value="employeeId"
+                                label="Сотрудник"
+                                prepend-icon="mdi-account-tie"
+                                dense
+                              ></v-select>
+                            </v-col>
+
+                            <v-col cols="4">
+                              <v-select
+                                v-model="selectedUpdId"
+                                :items="updsByBillId"
+                                item-title="name"
+                                item-value="updId"
+                                label="УПД"
+                                prepend-icon="mdi-file-document-outline"
+                                dense
+                              ></v-select>
+                            </v-col>
+                          </v-row>
+                        </v-card-text>
+                      </v-card>
+                    </v-col>
                   </v-row>
 
 
-                  <v-row>
-                    <v-col>
-                      <v-btn class="mr-4" @click="saveProduct" color="primary" prepend-icon="mdi-plus-circle">
-                        Добавить
-                      </v-btn>
-                    </v-col>
-                </v-row>
+
+                  
           </div>
           
       </v-card-text>
@@ -890,7 +919,7 @@ import { mapGetters } from 'vuex';
         }
         
         this.$store.dispatch( 'productPage/getStocksByCompanyId', {companyId: this.selectedProduct.companyId, selected: true})
-        this.$store.dispatch( 'productPage/getProductCategoriesByCompanyId', {companyId: this.selectedProduct.productCategoryId, selected: true})
+        this.$store.dispatch( 'productPage/getProductCategoriesByCompanyId', {companyId: this.selectedProduct.companyId, selected: true})
         this.$store.dispatch( 'productPage/getBillsByCompanyAndProviderId', 
         {companyId: this.selectedProduct.companyId, providerId: this.selectedProduct.providerId, selected: true, })
         this.$store.dispatch( 'productPage/getStorageLocationsByStockId', {stockId: this.selectedProduct.stockId, selected: true})

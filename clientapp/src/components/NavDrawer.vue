@@ -41,12 +41,12 @@
           <v-list-item prepend-icon="mdi-receipt" title="Счета" value="bills" to="/BillsPage"></v-list-item>
           <v-list-item />
 
-          <v-list-item prepend-icon="mdi-locker-multiple" title="Места хранения" value="storage locations" to="/StorageLocationsPage"></v-list-item>
+          <v-list-item prepend-icon="mdi-locker-multiple" title="Стеллажи" value="storage locations" to="/StorageLocationsPage"></v-list-item>
           <v-list-item prepend-icon="mdi-shape-outline" title="Продукты" value="products" to="/ProductsPage"></v-list-item>
           <v-list-item />
 
           
-          <v-list-item prepend-icon="mdi-vector-polygon" title="Схема" value="Schrma" to="/SchemaPage"></v-list-item>
+          <v-list-item prepend-icon="mdi-vector-polygon" title="Схема" value="Schema" to="/SchemaPage"></v-list-item>
 
 
         </v-list>
