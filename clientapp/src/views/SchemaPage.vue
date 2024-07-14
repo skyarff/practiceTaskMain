@@ -1,6 +1,6 @@
 <template>
     <div class="d-flex flex-column align-center justify-center" style="height: 100%; padding: 40px; margin-top: 1.7%;">
-      <v-card class="mb-16" width="50%">
+      <v-card class="mb-16" width="60%">
         <v-card-title class="text-h4 font-weight-bold text-center">
           Схема Access
         </v-card-title>

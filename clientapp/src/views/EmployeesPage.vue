@@ -6,6 +6,10 @@
         <v-data-table
           :headers="headers"
           :items="employees"
+          :page.sync="page"
+          :items-per-page="itemsPerPage"
+          @update:page="updatePage"
+          @update:items-per-page="updateItemsPerPage"
           class="elevation-1 bordered-table"
         >
           <template v-slot:item="{ item }">
@@ -421,7 +425,9 @@ import { mapGetters } from 'vuex';
         employees: [],
         selectedEmployee: {},
         isEditing: false,
-        isLoading: true
+        isLoading: true,
+        page: 1,
+        itemsPerPage: 10,
       }
     },
     activated() {
@@ -440,6 +446,12 @@ import { mapGetters } from 'vuex';
           this.filtersStockId = null
         }
         this.$store.dispatch( 'employeePage/getStocksByCompanyId', {companyId: companyId, selected: selected})
+      },
+      updatePage(newPage) {
+        this.page = newPage;
+      },
+      updateItemsPerPage(itemsPerPage) {
+        this.itemsPerPage = itemsPerPage;
       },
       navigateEmployeeId(item) {
         this.filters = {employeeId: item.employeeId}

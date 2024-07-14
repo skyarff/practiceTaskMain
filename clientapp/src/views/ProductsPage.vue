@@ -6,6 +6,10 @@
         <v-data-table
           :headers="headers"
           :items="products"
+          :page.sync="page"
+          :items-per-page="itemsPerPage"
+          @update:page="updatePage"
+          @update:items-per-page="updateItemsPerPage"
           class="elevation-1 bordered-table"
         >
           <template v-slot:item="{ item }">
@@ -681,7 +685,9 @@ import { mapGetters } from 'vuex';
         products: [],
         selectedProduct: {},
         isEditing: false,
-        isLoading: true
+        isLoading: true,
+        page: 1,
+        itemsPerPage: 10,
       }
     },
     activated() {
@@ -775,6 +781,12 @@ import { mapGetters } from 'vuex';
           this.filtersUpdId = null
         }
         return billId
+      },
+      updatePage(newPage) {
+        this.page = newPage;
+      },
+      updateItemsPerPage(itemsPerPage) {
+        this.itemsPerPage = itemsPerPage;
       },
       navigateProductId(item) {
         this.filters = {productId: item.productId}

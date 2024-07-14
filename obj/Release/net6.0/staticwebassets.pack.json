@@ -1,0 +1,53 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\Common\\1.jpg",
+      "PackagePath": "staticwebassets\\Images\\Common\\1.jpg"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\Common\\2.png",
+      "PackagePath": "staticwebassets\\Images\\Common\\2.png"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\Common\\SchemaAccess.png",
+      "PackagePath": "staticwebassets\\Images\\Common\\SchemaAccess.png"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\Common\\old1SchemaAccess.png",
+      "PackagePath": "staticwebassets\\Images\\Common\\old1SchemaAccess.png"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\Common\\old2SchemaAccess.png",
+      "PackagePath": "staticwebassets\\Images\\Common\\old2SchemaAccess.png"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\Common\\old2SchemaGpt.png",
+      "PackagePath": "staticwebassets\\Images\\Common\\old2SchemaGpt.png"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\Common\\склад-склад.jpg",
+      "PackagePath": "staticwebassets\\Images\\Common\\склад-склад.jpg"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\2285910a-8e6d-4f4c-9ea2-6205359b086f.png",
+      "PackagePath": "staticwebassets\\Images\\CompanyLogos\\2285910a-8e6d-4f4c-9ea2-6205359b086f.png"
+    },
+    {
+      "Id": "obj\\Release\\net6.0\\staticwebassets\\msbuild.StockService.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Release\\net6.0\\staticwebassets\\msbuild.build.StockService.props",
+      "PackagePath": "build\\StockService.props"
+    },
+    {
+      "Id": "obj\\Release\\net6.0\\staticwebassets\\msbuild.buildMultiTargeting.StockService.props",
+      "PackagePath": "buildMultiTargeting\\StockService.props"
+    },
+    {
+      "Id": "obj\\Release\\net6.0\\staticwebassets\\msbuild.buildTransitive.StockService.props",
+      "PackagePath": "buildTransitive\\StockService.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

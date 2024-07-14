@@ -1,82 +1,6 @@
 {
   "Files": [
     {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\BillPdfs\\0883804c-d3bd-4770-a8e3-11af469f19c6.png",
-      "PackagePath": "staticwebassets\\Images\\BillPdfs\\0883804c-d3bd-4770-a8e3-11af469f19c6.png"
-    },
-    {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\BillPdfs\\1353ec67-9686-4a53-a0e8-9f558dd2ada5.png",
-      "PackagePath": "staticwebassets\\Images\\BillPdfs\\1353ec67-9686-4a53-a0e8-9f558dd2ada5.png"
-    },
-    {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\BillPdfs\\33ecf683-8ce0-4126-85b8-a68293b8bc8d.png",
-      "PackagePath": "staticwebassets\\Images\\BillPdfs\\33ecf683-8ce0-4126-85b8-a68293b8bc8d.png"
-    },
-    {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\BillPdfs\\3850f9f9-1e36-4b82-a923-4f3c77156843.png",
-      "PackagePath": "staticwebassets\\Images\\BillPdfs\\3850f9f9-1e36-4b82-a923-4f3c77156843.png"
-    },
-    {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\BillPdfs\\3baf9d54-15e7-465a-9225-fd0045e519da.png",
-      "PackagePath": "staticwebassets\\Images\\BillPdfs\\3baf9d54-15e7-465a-9225-fd0045e519da.png"
-    },
-    {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\BillPdfs\\441bbeb3-a1ee-4f94-8794-714ccd1321c6.png",
-      "PackagePath": "staticwebassets\\Images\\BillPdfs\\441bbeb3-a1ee-4f94-8794-714ccd1321c6.png"
-    },
-    {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\BillPdfs\\5459cabd-a628-4d6f-a65a-1443e98af451.png",
-      "PackagePath": "staticwebassets\\Images\\BillPdfs\\5459cabd-a628-4d6f-a65a-1443e98af451.png"
-    },
-    {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\BillPdfs\\578fa6f7-11eb-47b8-8fff-a358d694c2c1.png",
-      "PackagePath": "staticwebassets\\Images\\BillPdfs\\578fa6f7-11eb-47b8-8fff-a358d694c2c1.png"
-    },
-    {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\BillPdfs\\818148e1-5114-48d7-82b0-2b61abf74803.png",
-      "PackagePath": "staticwebassets\\Images\\BillPdfs\\818148e1-5114-48d7-82b0-2b61abf74803.png"
-    },
-    {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\BillPdfs\\84d1d158-e439-431f-811b-c340a5033cab.png",
-      "PackagePath": "staticwebassets\\Images\\BillPdfs\\84d1d158-e439-431f-811b-c340a5033cab.png"
-    },
-    {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\BillPdfs\\92a8f13c-d5f1-424d-8cf0-12fce56b5f9e.png",
-      "PackagePath": "staticwebassets\\Images\\BillPdfs\\92a8f13c-d5f1-424d-8cf0-12fce56b5f9e.png"
-    },
-    {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\BillPdfs\\aab610d5-4522-4e7a-a503-c8e43c8ce3b7.png",
-      "PackagePath": "staticwebassets\\Images\\BillPdfs\\aab610d5-4522-4e7a-a503-c8e43c8ce3b7.png"
-    },
-    {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\BillPdfs\\b195df1a-d711-4e66-849e-f15778f6e975.png",
-      "PackagePath": "staticwebassets\\Images\\BillPdfs\\b195df1a-d711-4e66-849e-f15778f6e975.png"
-    },
-    {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\BillPdfs\\ba1e436e-07c2-4e07-9b4e-b551bd455f0d.png",
-      "PackagePath": "staticwebassets\\Images\\BillPdfs\\ba1e436e-07c2-4e07-9b4e-b551bd455f0d.png"
-    },
-    {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\BillPdfs\\c3085519-83af-48ea-93b8-5da2440bad09.png",
-      "PackagePath": "staticwebassets\\Images\\BillPdfs\\c3085519-83af-48ea-93b8-5da2440bad09.png"
-    },
-    {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\BillPdfs\\d32c2b9d-9ea8-4473-9c4a-b92e1adb59fd.png",
-      "PackagePath": "staticwebassets\\Images\\BillPdfs\\d32c2b9d-9ea8-4473-9c4a-b92e1adb59fd.png"
-    },
-    {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\BillPdfs\\e7272efd-c2b1-4a18-8833-573f98e828a2.png",
-      "PackagePath": "staticwebassets\\Images\\BillPdfs\\e7272efd-c2b1-4a18-8833-573f98e828a2.png"
-    },
-    {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\BillPdfs\\f63af412-0027-4fda-8310-b5b336dcdb61.png",
-      "PackagePath": "staticwebassets\\Images\\BillPdfs\\f63af412-0027-4fda-8310-b5b336dcdb61.png"
-    },
-    {
-      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\BillPdfs\\fdb87786-4e68-4824-b9e0-f995679602ea.png",
-      "PackagePath": "staticwebassets\\Images\\BillPdfs\\fdb87786-4e68-4824-b9e0-f995679602ea.png"
-    },
-    {
       "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\Common\\1.jpg",
       "PackagePath": "staticwebassets\\Images\\Common\\1.jpg"
     },
@@ -103,6 +27,62 @@
     {
       "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\Common\\склад-склад.jpg",
       "PackagePath": "staticwebassets\\Images\\Common\\склад-склад.jpg"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\2285910a-8e6d-4f4c-9ea2-6205359b086f.png",
+      "PackagePath": "staticwebassets\\Images\\CompanyLogos\\2285910a-8e6d-4f4c-9ea2-6205359b086f.png"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\4eed24a0-c60a-4a0a-b131-9b1e0b1e67aa.png",
+      "PackagePath": "staticwebassets\\Images\\CompanyLogos\\4eed24a0-c60a-4a0a-b131-9b1e0b1e67aa.png"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\93a8f3a1-86f4-4d26-bde4-177277572905.png",
+      "PackagePath": "staticwebassets\\Images\\CompanyLogos\\93a8f3a1-86f4-4d26-bde4-177277572905.png"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\2e55574b-30f4-493f-b2b0-221d2839babd.jpg",
+      "PackagePath": "staticwebassets\\Images\\EmployeeImages\\2e55574b-30f4-493f-b2b0-221d2839babd.jpg"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\33893fc4-4f8d-476a-86a9-df587f138dff.jpg",
+      "PackagePath": "staticwebassets\\Images\\EmployeeImages\\33893fc4-4f8d-476a-86a9-df587f138dff.jpg"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\4ccc5c7f-e89f-4c40-ae5e-523767fef821.jpg",
+      "PackagePath": "staticwebassets\\Images\\EmployeeImages\\4ccc5c7f-e89f-4c40-ae5e-523767fef821.jpg"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\5d63fbfc-c583-49f2-b9ad-866abb9ca0c0.jpg",
+      "PackagePath": "staticwebassets\\Images\\EmployeeImages\\5d63fbfc-c583-49f2-b9ad-866abb9ca0c0.jpg"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\6448c875-47ad-40ab-8351-c56d3fd2a015.png",
+      "PackagePath": "staticwebassets\\Images\\EmployeeImages\\6448c875-47ad-40ab-8351-c56d3fd2a015.png"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\6d2344d6-c514-431b-96c0-fe798f4b9ef9.jpg",
+      "PackagePath": "staticwebassets\\Images\\EmployeeImages\\6d2344d6-c514-431b-96c0-fe798f4b9ef9.jpg"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\72151345-3c01-42f6-be02-b572df32c5ad.jpg",
+      "PackagePath": "staticwebassets\\Images\\EmployeeImages\\72151345-3c01-42f6-be02-b572df32c5ad.jpg"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\8f068cde-f60c-45f1-b85d-772c04395bcc.jpg",
+      "PackagePath": "staticwebassets\\Images\\EmployeeImages\\8f068cde-f60c-45f1-b85d-772c04395bcc.jpg"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\96ae831c-d88b-48b2-a3e4-0842282fc636.jpg",
+      "PackagePath": "staticwebassets\\Images\\EmployeeImages\\96ae831c-d88b-48b2-a3e4-0842282fc636.jpg"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\a1c67942-a309-4b15-bbc1-7b1cdc15b074.jpg",
+      "PackagePath": "staticwebassets\\Images\\EmployeeImages\\a1c67942-a309-4b15-bbc1-7b1cdc15b074.jpg"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\b09c8916-3bd9-41c1-ba4f-1cc7bee84ff4.jpg",
+      "PackagePath": "staticwebassets\\Images\\EmployeeImages\\b09c8916-3bd9-41c1-ba4f-1cc7bee84ff4.jpg"
     },
     {
       "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.StockService.Microsoft.AspNetCore.StaticWebAssets.props",
