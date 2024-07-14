@@ -6,6 +6,10 @@
       <v-data-table
         :headers="headers"
         :items="productCategories"
+        :page.sync="page"
+        :items-per-page="itemsPerPage"
+        @update:page="updatePage"
+        @update:items-per-page="updateItemsPerPage"
         class="elevation-1 bordered-table"
       >
         <template v-slot:item="{ item }">
@@ -190,7 +194,9 @@ export default {
       productCategories: [],
       selectedProductCategory: {},
       isEditing: false,
-      isLoading: true
+      isLoading: true,
+      page: 1,
+      itemsPerPage: 10,
     }
   },
   activated() {
@@ -198,6 +204,12 @@ export default {
     this.$store.dispatch('getAllCompanies');
   },
   methods: {
+    updatePage(newPage) {
+      this.page = newPage;
+    },
+    updateItemsPerPage(itemsPerPage) {
+      this.itemsPerPage = itemsPerPage;
+    },
     navigateProductCategoryId(item) {
       this.filters = {productCategoryId: item.productCategoryId}
       this.isEditing = true

@@ -6,6 +6,10 @@
         <v-data-table
           :headers="headers"
           :items="companies"
+          :page.sync="page"
+          :items-per-page="itemsPerPage"
+          @update:page="updatePage"
+          @update:items-per-page="updateItemsPerPage"
           class="elevation-1 bordered-table"
         >
           <template v-slot:item="{ item }">
@@ -244,13 +248,21 @@ import Loader from '@/components/TableLoader.vue'
         companies: [],
         selectedCompany: {},
         isEditing: false,
-        isLoading: true
+        isLoading: true,
+        page: 1,
+        itemsPerPage: 10,
       }
     },
     activated() {
       this.applyFilters();
     },
     methods: {
+      updatePage(newPage) {
+        this.page = newPage;
+      },
+      updateItemsPerPage(itemsPerPage) {
+        this.itemsPerPage = itemsPerPage;
+      },
       navigateCompanyId(item) {
         this.filters = {companyId: item.companyId}
         this.isEditing = true

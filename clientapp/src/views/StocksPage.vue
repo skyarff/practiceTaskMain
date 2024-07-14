@@ -6,6 +6,10 @@
       <v-data-table
         :headers="headers"
         :items="stocks"
+        :page.sync="page"
+        :items-per-page="itemsPerPage"
+        @update:page="updatePage"
+        @update:items-per-page="updateItemsPerPage"
         class="elevation-1 bordered-table"
       >
         <template v-slot:item="{ item }">
@@ -215,7 +219,9 @@ export default {
       stocks: [],
       selectedStock: {},
       isEditing: false,
-      isLoading: true
+      isLoading: true,
+      page: 1,
+      itemsPerPage: 10,
     }
   },
   activated() {
@@ -223,6 +229,12 @@ export default {
     this.$store.dispatch('getAllCompanies');
   },
   methods: {
+    updatePage(newPage) {
+      this.page = newPage;
+    },
+    updateItemsPerPage(itemsPerPage) {
+      this.itemsPerPage = itemsPerPage;
+    },
     navigateStockId(item) {
       console.log(this.$store.state._companies)
       this.filters = {stockId: item.stockId}

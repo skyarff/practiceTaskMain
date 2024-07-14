@@ -6,6 +6,10 @@
         <v-data-table
           :headers="headers"
           :items="upds"
+          :page.sync="page"
+          :items-per-page="itemsPerPage"
+          @update:page="updatePage"
+          @update:items-per-page="updateItemsPerPage"
           class="elevation-1 bordered-table"
         >
           <template v-slot:item="{ item }">
@@ -316,7 +320,9 @@ import { mapGetters } from 'vuex';
         upds: [],
         selectedUpd: {},
         isEditing: false,
-        isLoading: true
+        isLoading: true,
+        page: 1,
+        itemsPerPage: 10,
       }
     },
     activated() {
@@ -341,6 +347,12 @@ import { mapGetters } from 'vuex';
         }
 
         this.$store.dispatch('updPage/getBillsByProviderAndCompanyId', {providerId: providerId, companyId: companyId, selected: selected})
+      },
+      updatePage(newPage) {
+      this.page = newPage;
+      },
+      updateItemsPerPage(itemsPerPage) {
+        this.itemsPerPage = itemsPerPage;
       },
       navigateUpdId(item) {
         this.filters = {updId: item.updId}
