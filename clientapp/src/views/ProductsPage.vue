@@ -670,7 +670,7 @@ import { mapGetters } from 'vuex';
           { title: 'Внутр. артикул', key: 'innerArticle', align: 'start', sortable: false },
           { title: 'Заводской номер', key: 'factoryNumber', align: 'start', sortable: true },
           { title: 'Цена', key: 'price', align: 'start', sortable: true },
-          { title: 'Фото продукта', key: 'imagePath', align: 'start', sortable: true },
+          
           { title: 'Дата добавления', key: 'createDate', align: 'start', sortable: true },
           { title: 'Счет', key: 'billName', align: 'start', sortable: true },
           { title: 'УПД', key: 'updName', align: 'start', sortable: true },
@@ -727,7 +727,6 @@ import { mapGetters } from 'vuex';
       },
       selectionOfUpds(selected) {
         const billId = this.selectionArgsLvl3CalcPBU(selected);
-
         this.$store.dispatch( 'productPage/getUpdsByBillId', {billId: billId, selected: selected})
       },
       selectionArgsLvl2CalcCSP(selected) {
@@ -926,10 +925,11 @@ import { mapGetters } from 'vuex';
           delete this.selectedProduct.productId
           this.isEditing = false
         } else {
+          debugger
           this.selectedProduct = {...item};
           this.isEditing = true
-        }
-        
+
+
         this.$store.dispatch( 'productPage/getStocksByCompanyId', {companyId: this.selectedProduct.companyId, selected: true})
         this.$store.dispatch( 'productPage/getProductCategoriesByCompanyId', {companyId: this.selectedProduct.companyId, selected: true})
         this.$store.dispatch( 'productPage/getBillsByCompanyAndProviderId', 
@@ -937,6 +937,9 @@ import { mapGetters } from 'vuex';
         this.$store.dispatch( 'productPage/getStorageLocationsByStockId', {stockId: this.selectedProduct.stockId, selected: true})
         this.$store.dispatch( 'productPage/getEmployeesByStockId', {stockId: this.selectedProduct.stockId, selected: true})
         this.$store.dispatch( 'productPage/getUpdsByBillId', {billId: this.selectedProduct.billId, selected: true})
+        }
+        
+        
       },
       formatDate(dateString) {
       const date = new Date(dateString);

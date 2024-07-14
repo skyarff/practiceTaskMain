@@ -31,14 +31,21 @@ namespace StockService.Repository.ProductRep
             {
                 var product = _mapper.Map<ProductDto, Product>(productDto);
 
-                var upd = await _db.Bills.FindAsync(productDto.UpdId);
-                product.BillId = upd.BillId;
-                product.ProviderId = upd.ProviderId;
-
                 var storageLocation = await _db.StorageLocations.FindAsync(productDto.StorageLocationId);
                 product.StockId = storageLocation.StockId;
                 product.CompanyId = storageLocation.CompanyId;
                 product.RackCode = storageLocation.RackCode;
+
+
+                var upd = await _db.Upds.FindAsync(productDto.UpdId);
+                if (upd != null && upd.CompanyId == product.CompanyId)
+                {
+                    product.BillId = upd.BillId;
+                    product.ProviderId = upd.ProviderId;
+                }
+                else throw new Exception("УПД не обнаружен у данной компании.");
+
+                
 
 
                 string filePath = "";

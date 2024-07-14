@@ -494,9 +494,10 @@ import { mapGetters } from 'vuex';
         } else {
           this.selectedStorageLocation = {...item};
           this.isEditing = true
-        }
-        this.$store.dispatch('storageLocationPage/getStocksByCompanyId', 
+          this.$store.dispatch('storageLocationPage/getStocksByCompanyId', 
             {companyId: this.selectedStorageLocation.companyId, selected: true})
+        }
+        
       },
       getStockName(stockId) {
         const stock = this.stocks.find(s => s.stockId === stockId);
