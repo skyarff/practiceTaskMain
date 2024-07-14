@@ -501,7 +501,7 @@ import { mapGetters } from 'vuex';
     },
     filtersBillId: {
     get() {
-      const bill = this.bills.find(b => b.billId === this.filters.billId);
+      const bill = this.fBillsByProviderAndCompanyId.find(b => b.billId === this.filters.billId);
       return bill ? bill.name : null;
     },
     set(value) {

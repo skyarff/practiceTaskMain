@@ -591,7 +591,7 @@ import { mapGetters } from 'vuex';
     },
     filtersStockId: {
       get() {
-        const stock = this.stocks.find(s => s.stockId === this.filters.stockId);
+        const stock = this.fStocksByCompanyId.find(s => s.stockId === this.filters.stockId);
         return stock ? stock.name : null;
       },
       set(value) {

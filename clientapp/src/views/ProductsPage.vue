@@ -670,7 +670,7 @@ import { mapGetters } from 'vuex';
           { title: 'Внутр. артикул', key: 'innerArticle', align: 'start', sortable: false },
           { title: 'Заводской номер', key: 'factoryNumber', align: 'start', sortable: true },
           { title: 'Цена', key: 'price', align: 'start', sortable: true },
-          
+          { title: 'Фото продукта', key: 'productPhoto', align: 'start', sortable: false },
           { title: 'Дата добавления', key: 'createDate', align: 'start', sortable: true },
           { title: 'Счет', key: 'billName', align: 'start', sortable: true },
           { title: 'УПД', key: 'updName', align: 'start', sortable: true },
@@ -810,7 +810,6 @@ import { mapGetters } from 'vuex';
       async applyFilters() {
         this.isLoading = true;
         const url = '/api/Product/getProductsFiltered';
-        
         const data = {}
 
         if (this.filters.productId)
@@ -825,10 +824,14 @@ import { mapGetters } from 'vuex';
           data.stockId = this.filters.stockId
         if (this.filters.productCategoryId)
           data.productCategoryId = this.filters.productCategoryId
+        if (this.filters.storageLocationId)
+          data.storageLocationId = this.filters.storageLocationId
         if (this.filters.employeeId)
           data.employeeId = this.filters.employeeId
         if (this.filters.updId)
           data.updId = this.filters.updId
+        if (this.filters.billId)
+          data.billId = this.filters.billId
         if (this.filters.shelfCode)
           data.shelfCode = this.filters.shelfCode
         if (this.filters.lowerPriceLimit)
@@ -925,7 +928,6 @@ import { mapGetters } from 'vuex';
           delete this.selectedProduct.productId
           this.isEditing = false
         } else {
-          debugger
           this.selectedProduct = {...item};
           this.isEditing = true
 
@@ -995,7 +997,7 @@ import { mapGetters } from 'vuex';
     },
     selectedStockId: {
       get() {
-        const stock = this.stocks.find(s => s.stockId === this.selectedProduct.stockId);
+        const stock = this.stocksByCompanyId.find(s => s.stockId === this.selectedProduct.stockId);
         return stock ? stock.name : null;
       },
       set(value) {
@@ -1004,7 +1006,7 @@ import { mapGetters } from 'vuex';
     },
     filtersStockId: {
       get() {
-        const stock = this.stocks.find(s => s.stockId === this.filters.stockId);
+        const stock = this.fStocksByCompanyId.find(s => s.stockId === this.filters.stockId);
         return stock ? stock.name : null;
       },
       set(value) {
@@ -1013,7 +1015,7 @@ import { mapGetters } from 'vuex';
     },
     selectedProductCategoryId: {
       get() {
-        const productCategory = this.productCategories.find(pc => pc.productCategoryId === this.selectedProduct.productCategoryId);
+        const productCategory = this.productCategoriesByCompanyId.find(pc => pc.productCategoryId === this.selectedProduct.productCategoryId);
         return productCategory ? productCategory.name : null;
       },
       set(value) {
@@ -1022,7 +1024,7 @@ import { mapGetters } from 'vuex';
     },
     filtersProductCategoryId: {
       get() {
-        const productCategory = this.productCategories.find(pc => pc.productCategoryId === this.filters.productCategoryId);
+        const productCategory = this.fProductCategoriesByCompanyId.find(pc => pc.productCategoryId === this.filters.productCategoryId);
         return productCategory ? productCategory.name : null;
       },
       set(value) {
@@ -1031,7 +1033,7 @@ import { mapGetters } from 'vuex';
     },
     selectedBillId: {
       get() {
-        const bill = this.bills.find(b => b.billId === this.selectedProduct.billId);
+        const bill = this.billsByCompanyAndProviderId.find(b => b.billId === this.selectedProduct.billId);
         return bill ? bill.name : null;
       },
       set(value) {
@@ -1040,7 +1042,7 @@ import { mapGetters } from 'vuex';
     },
     filtersBillId: {
       get() {
-        const bill = this.bills.find(b => b.billId === this.filters.billId);
+        const bill = this.fBillsByCompanyAndProviderId.find(b => b.billId === this.filters.billId);
         return bill ? bill.name : null;
       },
       set(value) {
@@ -1076,7 +1078,7 @@ import { mapGetters } from 'vuex';
     },
     filtersStorageLocationId: {
       get() {
-        const storageLocation = this.storageLocationsByStockId.find(sl => sl.storageLocationId === this.filters.storageLocationId);
+        const storageLocation = this.fStorageLocationsByStockId.find(sl => sl.storageLocationId === this.filters.storageLocationId);
         return storageLocation ? storageLocation.name : null;
       },
       set(value) {
@@ -1094,7 +1096,7 @@ import { mapGetters } from 'vuex';
     },
     filtersEmployeeId: {
       get() {
-        const employee = this.employeesByStockId.find(e => e.employeeId === this.filters.employeeId);
+        const employee = this.fEmployeesByStockId.find(e => e.employeeId === this.filters.employeeId);
         return employee ? employee.name : null;
       },
       set(value) {
@@ -1112,7 +1114,7 @@ import { mapGetters } from 'vuex';
     },
     filtersUpdId: {
       get() {
-        const upd = this.updsByBillId.find(u => u.updId === this.filters.updId);
+        const upd = this.fUpdsByBillId.find(u => u.updId === this.filters.updId);
         return upd ? upd.name : null;
       },
       set(value) {
@@ -1121,12 +1123,12 @@ import { mapGetters } from 'vuex';
     },
     ...mapGetters([
       'companies',
-      'stocks',
-      'bills',
-      'upds',
       'providers',
-      'employees',
-      'productCategories'
+      'bills',
+      'productCategories',
+      'upds',
+      'stocks',
+      'employees'
     ]),
     ...mapGetters('productPage', 
     [

@@ -322,8 +322,7 @@ import Loader from '@/components/TableLoader.vue'
                 'Content-Type': 'multipart/form-data'
               }
             });
-          } 
-          
+          }  
           this.applyFilters();
         } catch (error) {
           this.$store.commit('setErrorMessage', error)
