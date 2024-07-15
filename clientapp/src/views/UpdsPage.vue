@@ -374,20 +374,16 @@ import { mapGetters } from 'vuex';
       async applyFilters() {
         this.isLoading = true;
         const url = '/api/Upd/getUpdsFiltered';
-    
-        try {
-          const response = await api.post(url, this.filters, {
+
+        api.post(url, this.filters, {
             headers: {
               'accept': '*/*',
               'Content-Type': 'application/json'
             }
-          });
-          this.upds = Array.from(response.data.result);
-        } catch (error) {
-          this.$store.commit('setErrorMessage', error)
-        } finally {
-          this.isLoading = false;
-        }
+          })
+          .then(response => this.upds = Array.from(response.data.result))
+          .catch(error => this.$store.commit('setErrorMessage', error))
+          .finally(() => this.isLoading = false)
       },
       resetFilters() {
         this.filters = {}
@@ -417,13 +413,9 @@ import { mapGetters } from 'vuex';
         }
       },
       async deleteUpd() {
-        try {
-          await api.delete(`/api/Upd/delById?updId=${this.selectedUpd.updId}`);
-          
-          this.applyFilters();
-        } catch (error) {
-          this.$store.commit('setErrorMessage', error)
-        }
+        api.delete(`/api/Upd/delById?updId=${this.selectedUpd.updId}`)
+        .then(() => this.applyFilters())
+        .catch(error => this.$store.commit('setErrorMessage', error))
       },
       async handleRowClick(item) {
         

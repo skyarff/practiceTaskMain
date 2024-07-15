@@ -349,20 +349,16 @@ import { mapGetters } from 'vuex';
       async applyFilters() {
         this.isLoading = true;
         const url = '/api/Bill/getBillsFiltered';
-   
-        try {
-          const response = await api.post(url, this.filters, {
+
+        api.post(url, this.filters, {
             headers: {
               'accept': '*/*',
               'Content-Type': 'application/json'
             }
-          });
-          this.bills = Array.from(response.data.result);
-        } catch (error) {
-          this.$store.commit('setErrorMessage', error)
-        } finally {
-          this.isLoading = false;
-        }
+          })
+        .then(response => this.bills = Array.from(response.data.result))
+        .catch(error => this.$store.commit('setErrorMessage', error))
+        .finally(() => this.isLoading = false)
       },
       resetFilters() {
         this.filters = {}
@@ -395,13 +391,10 @@ import { mapGetters } from 'vuex';
         }
       },
       async deleteBill() {
-        try {
-          await api.delete(`/api/Bill/delById?billId=${this.selectedBill.billId}`);
-          
-          this.applyFilters();
-        } catch (error) {
-          this.$store.commit('setErrorMessage', error)
-        }
+
+        api.delete(`/api/Bill/delById?billId=${this.selectedBill.billId}`)
+        .then(() => this.applyFilters())
+        .catch(error => this.$store.commit('setErrorMessage', error))
       },
       async handleRowClick(item) {
         

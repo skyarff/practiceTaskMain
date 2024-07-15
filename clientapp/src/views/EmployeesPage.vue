@@ -473,19 +473,15 @@ import { mapGetters } from 'vuex';
         this.isLoading = true;
         const url = '/api/Employee/getEmployeesFiltered';
  
-        try {
-          const response = await api.post(url, this.filters, {
+        api.post(url, this.filters, {
             headers: {
               'accept': '*/*',
               'Content-Type': 'application/json'
             }
-          });
-          this.employees = Array.from(response.data.result);
-        } catch (error) {
-          this.$store.commit('setErrorMessage', 'Записи, соответствующие заданным фильтрам, отсутствуют.')
-        } finally {
-          this.isLoading = false;
-        }
+          })
+          .then(response => this.employees = Array.from(response.data.result))
+          .catch(() => this.$store.commit('setErrorMessage', 'Записи, соответствующие заданным фильтрам, отсутствуют.'))
+          .finally(() => this.isLoading = false)
       },
       resetFilters() {
         this.filters = {}
@@ -533,13 +529,10 @@ import { mapGetters } from 'vuex';
         }
       },
       async deleteEmployee() {
-        try {
-          await api.delete(`api/Employee/dellById?employeeId=${this.selectedEmployee.employeeId}`);
-          
-          this.applyFilters();
-        } catch (error) {
-          this.$store.commit('setErrorMessage', error)
-        }
+
+        api.delete(`api/Employee/dellById?employeeId=${this.selectedEmployee.employeeId}`)
+        .then(() => this.applyFilters())
+        .catch(error => this.$store.commit('setErrorMessage', error))
       },
       handleRowClick(item) {
         if (this.selectedEmployee.employeeId === item.employeeId) {

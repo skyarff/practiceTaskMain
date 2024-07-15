@@ -348,10 +348,18 @@
         </v-card-title>
         <v-card-text>
           <div v-if="selectedProduct.productId !== undefined || isEditing">
-              <v-card color="grey-lighten-4">
-                <v-card-text class=pa-5>
-                  <v-row>
-                    <v-col cols="2">
+            <v-row>
+              <v-col cols="6">
+                <v-card color="grey-lighten-4">
+                  <v-card-title>
+                    Поля
+                  </v-card-title>
+                  <v-card-subtitle>
+                    Заполните поля данными
+                  </v-card-subtitle>
+                  <v-card-text>
+                    <v-row>
+                    <v-col cols="4">
                       <v-text-field
                         label="ID продукта"
                         v-model="selectedProduct.productId"
@@ -359,51 +367,61 @@
                         prepend-icon="mdi-identifier"
                       ></v-text-field>
                     </v-col>
-
-                    <v-col cols="3">
+                    <v-col cols="8">
                       <v-text-field
                         label="Наименование продукта"
                         v-model="selectedProduct.name"
                         prepend-icon="mdi-shape-outline"
                       ></v-text-field>
                     </v-col>
-
-                    <v-col cols="3">
+                  </v-row>
+                  <v-row>
+                    <v-col cols="8">
+                        <v-text-field
+                          label="Цена продукта"
+                          v-model="selectedProduct.price"
+                          prepend-icon="mdi-currency-usd"
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="4" >
+                        <v-file-input
+                          v-model="selectedProduct.image"
+                          label="Фото продукта"
+                          accept="image/*"
+                          prepend-icon="mdi-image"
+                        ></v-file-input>
+                      </v-col>
+                  </v-row>
+                  </v-card-text>
+                </v-card>
+              </v-col>
+                <v-col cols="6">
+                <v-card color="teal-lighten-5">
+                  <v-card-title>
+                    Поля
+                  </v-card-title>
+                  <v-card-subtitle>
+                    Заполните поля данными
+                  </v-card-subtitle>
+                    <v-card-text>
+                      <v-row>
+                      <v-col cols="6">
                       <v-text-field
                         label="Производитель"
                         v-model="selectedProduct.manufacturer"
                         prepend-icon="mdi-factory"
                       ></v-text-field>
                     </v-col>
-
-                    <v-col cols="2">
-                      <v-text-field
-                        label="Цена продукта"
-                        v-model="selectedProduct.price"
-                        prepend-icon="mdi-currency-usd"
-                      ></v-text-field>
-                    </v-col>
-                  
-                    <v-col cols="2" >
-                      <v-file-input
-                        v-model="selectedProduct.image"
-                        label="Фото продукта"
-                        accept="image/*"
-                        prepend-icon="mdi-image"
-                      ></v-file-input>
-                    </v-col>
-
-              </v-row>
-                  
-                  <v-row>
-                    <v-col cols="4">
+                    <v-col cols="6">
                       <v-text-field
                         label="Заводской номер"
                         v-model="selectedProduct.factoryNumber"
                         prepend-icon="mdi-pound"
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="4">
+                    </v-row>
+                    <v-row>
+                      <v-col cols="6">
                       <v-text-field
                         label="Произв. артикул"
                         v-model="selectedProduct.productionArticle"
@@ -411,16 +429,19 @@
                       ></v-text-field>
                     </v-col>
 
-                    <v-col cols="4">
+                    <v-col cols="6">
                       <v-text-field
                         label="Внутр. артикул"
                         v-model="selectedProduct.innerArticle"
                         prepend-icon="mdi-tag-outline"
                       ></v-text-field>
                     </v-col>
-                  </v-row>
-                </v-card-text>
-              </v-card>
+                    </v-row>
+                    </v-card-text>
+                </v-card>
+                </v-col>
+            </v-row>
+        
           </div>
           <div v-else>
                   <v-row>
@@ -511,7 +532,7 @@
                   
                       </v-card-text>
 
-                  </v-card>
+                      </v-card>
                     </v-col>
 
                     <v-col cols="6">
@@ -843,20 +864,16 @@ import { mapGetters } from 'vuex';
           data.startDate = new Date(this.filters.startDate).toISOString();
         if(this.filters.endDate)
           data.endDate = new Date(this.filters.endDate).toISOString();
-        
-        try {
-          const response = await api.post(url, data, {
+         
+          api.post(url, data, {
             headers: {
               'accept': '*/*',
               'Content-Type': 'application/json'
             }
-          });
-          this.products = Array.from(response.data.result);
-        } catch (error) {
-          this.$store.commit('setErrorMessage', error)
-        } finally {
-          this.isLoading = false;
-        }
+          })
+          .then(response => this.products = Array.from(response.data.result))
+          .catch(error => this.$store.commit('setErrorMessage', error))
+          .finally(() => this.isLoading = false)
       },
       resetFilters() {
         this.filters = {}
@@ -908,23 +925,18 @@ import { mapGetters } from 'vuex';
               }
             });
           } 
-          
           this.applyFilters();
         } catch (error) {
           this.$store.commit('setErrorMessage', error)
         }
       },
       async deleteProduct() {
-        try {
-          await api.delete(`api/Product/dellById?productId=${this.selectedProduct.productId}`);
-          
-          this.applyFilters();
-        } catch (error) {
-          this.$store.commit('setErrorMessage', error)
-        }
+        api.delete(`api/Product/dellById?productId=${this.selectedProduct.productId}`)
+          .then(() => this.applyFilters())
+          .catch((error) => this.$store.commit('setErrorMessage', error))
       },
       async handleRowClick(item) {
-        
+        debugger
         if (this.selectedProduct.productId === item.productId) {
           delete this.selectedProduct.productId
           this.isEditing = false

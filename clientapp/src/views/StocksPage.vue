@@ -253,19 +253,15 @@ export default {
       this.isLoading = true;
       const url = '/api/Stock/getStocksFiltered';
 
-      try {
-        const response = await api.post(url, this.filters, {
+      api.post(url, this.filters, {
           headers: {
             'accept': '*/*',
             'Content-Type': 'application/json'
           }
-        });
-        this.stocks = Array.from(response.data.result);
-      } catch (error) {
-        this.$store.commit('setErrorMessage', 'Записи, соответствующие заданным фильтрам, отсутствуют.')
-      } finally {
-        this.isLoading = false;
-      }
+        })
+        .then(response => this.stocks = Array.from(response.data.result))
+        .catch(() => this.$store.commit('setErrorMessage', 'Записи, соответствующие заданным фильтрам, отсутствуют.'))
+        .finally(() => this.isLoading = false)
     },
     resetFilters() {
       this.filters = {}
@@ -303,13 +299,9 @@ export default {
       }
     },
     async deleteStock() {
-      try {
-        await api.delete(`api/Stock/dellById?stockId=${this.selectedStock.stockId}`);
-        
-        this.applyFilters();
-      } catch (error) {
-        this.$store.commit('setErrorMessage', error)
-      }
+      api.delete(`api/Stock/dellById?stockId=${this.selectedStock.stockId}`)
+      .then(() => this.applyFilters())
+      .catch(error => this.$store.commit('setErrorMessage', error))
     },
     async handleRowClick(item) {
       

@@ -62,10 +62,42 @@
           <v-expansion-panel-title>
             <v-icon start icon="mdi-filter"></v-icon>
             Фильтры
+            <v-row @click.stop justify="end" align="center" class="ml-auto mr-5">
+              <v-col cols="auto">
+                <v-btn
+                  class="mr-3"
+                  color="primary"
+                  @click="applyFilters"
+                  icon="mdi-magnify"
+                  size="small"
+                  rounded="circle"
+                ></v-btn>
+                <v-btn
+                  color="secondary"
+                  @click="resetFilters"
+                  icon="mdi-eraser"
+                  size="small"
+                  rounded="circle"
+                ></v-btn>
+              </v-col>
+            </v-row>
           </v-expansion-panel-title>
-          <v-expansion-panel-text class="pt-6">
+          <v-expansion-panel-text class="pt-2">
+
             <v-row>
-              <v-col cols="12" sm="6" md="4">
+
+
+            <v-col cols="6">
+              <v-card color="grey-lighten-4">
+                <v-card-title>
+                  Поля
+                </v-card-title>
+                <v-card-subtitle>
+                  Заполните поля данными
+                </v-card-subtitle>
+                <v-card-text>
+                  <v-row>
+                <v-col cols="4">
                 <v-text-field
                   label="ID места хранения"
                   v-model="filters.storageLocationId"
@@ -74,7 +106,7 @@
                 ></v-text-field>
               </v-col>
 
-              <v-col cols="12" sm="6" md="4">
+              <v-col cols="8">
                 <v-text-field
                   label="Код стеллажа"
                   v-model="filters.rackCode"
@@ -82,15 +114,32 @@
                 ></v-text-field>
               </v-col>
 
-              <v-col cols="12" sm="6" md="4">
+              <v-col cols="12">
                 <v-text-field
                   label="Описание"
                   v-model="filters.description"
                   prepend-icon="mdi-note-text"
                 ></v-text-field>
               </v-col>
+              </v-row>
 
-              <v-col cols="4">
+             
+                </v-card-text>
+              </v-card>
+            </v-col>
+
+              
+            <v-col cols="6">
+              <v-card color="teal-lighten-5">
+                <v-card-title>
+                  Иерархические сущности
+                </v-card-title>
+                <v-card-subtitle>
+                  Выберите один из предложенных вариантов
+                </v-card-subtitle>
+                <v-card-text>
+                  <v-row>
+                <v-col cols="12">
                     <v-select
                       v-model="filtersCompanyId"
                       @update:modelValue="selectionOfStocks(false)"
@@ -102,9 +151,9 @@
                       dense
                     ></v-select>
                   </v-col>
-                
-
-                  <v-col cols="4">
+              </v-row>
+              <v-row>
+                <v-col cols="12">
                       <v-select
                         v-model="filtersStockId"
                         :items="fStocksByCompanyId"
@@ -115,17 +164,13 @@
                         dense
                       ></v-select>
                     </v-col>
+              </v-row>
+                </v-card-text>
+              </v-card>
+            </v-col>
             </v-row>
-            <v-row>
-              <v-col cols="12">
-                <v-btn class="mr-4" color="primary" @click="applyFilters" prepend-icon="mdi-magnify">
-                  Применить фильтры
-                </v-btn>
-                <v-btn color="secondary" @click="resetFilters" prepend-icon="mdi-eraser">
-                  Очистить фильтры
-                </v-btn>
-              </v-col>
-            </v-row>
+
+  
           </v-expansion-panel-text>
         </v-expansion-panel>
       </v-expansion-panels>
@@ -426,19 +471,15 @@ import { mapGetters } from 'vuex';
         this.isLoading = true;
         const url = '/api/StorageLocation/getStorageLocationsFiltered';
 
-        try {
-          const response = await api.post(url, this.filters, {
+        api.post(url, this.filters, {
             headers: {
               'accept': '*/*',
               'Content-Type': 'application/json'
             }
-          });
-          this.storageLocations = Array.from(response.data.result);
-        } catch (error) {
-          this.$store.commit('setErrorMessage', error)
-        } finally {
-          this.isLoading = false;
-        }
+          })
+          .then(response => this.storageLocations = Array.from(response.data.result))
+          .catch(error => this.$store.commit('setErrorMessage', error))
+          .finally(() => this.isLoading = false)
       },
       resetFilters() {
         this.filters = {}
@@ -478,13 +519,9 @@ import { mapGetters } from 'vuex';
         }
       },
       async deleteStorageLocation() {
-        try {
-          await api.delete(`/api/StorageLocation/dellById?storageLocationId=${this.selectedStorageLocation.storageLocationId}`);
-          
-          this.applyFilters();
-        } catch (error) {
-          this.$store.commit('setErrorMessage', error)
-        }
+        api.delete(`/api/StorageLocation/dellById?storageLocationId=${this.selectedStorageLocation.storageLocationId}`)
+        .then(() => this.applyFilters())
+        .catch(error => this.$store.commit('setErrorMessage', error))
       },
       async handleRowClick(item) {
         

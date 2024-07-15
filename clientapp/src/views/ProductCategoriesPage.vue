@@ -228,20 +228,15 @@ export default {
       this.isLoading = true;
       const url = '/api/ProductCategory/getProductCategoriesFiltered';
 
-      try {
-        const response = await api.post(url, this.filters, {
+      api.post(url, this.filters, {
           headers: {
             'accept': '*/*',
             'Content-Type': 'application/json'
           }
-        });
-
-        this.productCategories = Array.from(response.data.result);
-      } catch (error) {
-        this.$store.commit('setErrorMessage', 'Записи, соответствующие заданным фильтрам, отсутствуют.')
-      } finally {
-        this.isLoading = false;
-      }
+        })
+        .then(response => this.productCategories = Array.from(response.data.result))
+        .catch(() => this.$store.commit('setErrorMessage', 'Записи, соответствующие заданным фильтрам, отсутствуют.'))
+        .finally(() => this.isLoading = false)
     },
     resetFilters() {
       this.filters = {}
@@ -271,13 +266,11 @@ export default {
       }
     },
     async deleteStock() {
-      try {
-        await api.delete(`api/ProductCategory/dellById?productCategoryId=${this.selectedProductCategory.productCategoryId}`);
-        
-        this.applyFilters();
-      } catch (error) {
-        this.$store.commit('setErrorMessage', error)
-      }
+
+      api.delete(`api/ProductCategory/dellById?productCategoryId=${this.selectedProductCategory.productCategoryId}`)
+      .then(() => this.applyFilters())
+      .catch(() => this.$store.commit('setErrorMessage', error))
+
     },
     async handleRowClick(item) {
       if (this.selectedProductCategory.productCategoryId === item.productCategoryId) {

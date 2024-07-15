@@ -483,19 +483,15 @@ import Loader from '@/components/TableLoader.vue'
         this.isLoading = true;
         const url = '/api/Provider/getProvidersFiltered';
 
-        try {
-          const response = await api.post(url, this.filters, {
+        api.post(url, this.filters, {
             headers: {
               'accept': '*/*',
               'Content-Type': 'application/json'
             }
-          });
-          this.providers = Array.from(response.data.result);
-        } catch (error) {
-          this.$store.commit('setErrorMessage', error)
-        } finally {
-          this.isLoading = false;
-        }
+          })
+          .then(response => this.providers = Array.from(response.data.result))
+          .catch(error => this.$store.commit('setErrorMessage', error))
+          .finally(() => this.isLoading = false)
       },
       resetFilters() {
         this.filters = {}
@@ -548,13 +544,10 @@ import Loader from '@/components/TableLoader.vue'
         }
       },
       async deleteProvider() {
-        try {
-          await api.delete(`api/Provider/dellById?providerId=${this.selectedProvider.providerId}`);
-          
-          this.applyFilters();
-        } catch (error) {
-          this.$store.commit('setErrorMessage', error)
-        }
+
+        api.delete(`api/Provider/dellById?providerId=${this.selectedProvider.providerId}`)
+        .then(() => this.applyFilters())
+        .catch(error => this.$store.commit('setErrorMessage', error))
       },
       async handleRowClick(item) {
         

@@ -251,10 +251,15 @@ import Loader from '@/components/TableLoader.vue'
         isLoading: true,
         page: 1,
         itemsPerPage: 10,
+        controller: null
       }
     },
     activated() {
-      this.applyFilters();
+      this.controller = new AbortController();
+      this.checkConnection(this.controller.signal);
+    },
+    deactivated() {
+      this.controller.abort();
     },
     methods: {
       updatePage(newPage) {
@@ -281,18 +286,37 @@ import Loader from '@/components/TableLoader.vue'
         this.isLoading = true;
         const url = '/api/Company/getCompaniesFiltered';
         
-        try {
-          const response = await api.post(url, this.filters, {
+        return new Promise((resolve, reject) => {
+          api.post(url, this.filters, {
             headers: {
               'accept': '*/*',
               'Content-Type': 'application/json'
             }
+          })
+          .then(response => {
+            this.companies = Array.from(response.data.result);
+            resolve();
+          })
+          .catch(error => {
+            this.$store.commit('setErrorMessage', error);
+            reject(error);
+          })
+          .finally(() => {
+            this.isLoading = false;
           });
-          this.companies = Array.from(response.data.result);
-        } catch (error) {
-          this.$store.commit('setErrorMessage', error)
-        } finally {
-          this.isLoading = false;
+        });
+      },
+      async checkConnection(signal) {
+        signal.addEventListener('abort', () => console.log('Aborted!'));
+
+        let flag = true;
+        while (flag && !signal.aborted) {
+          try {
+            await this.applyFilters();
+            flag = false;
+          } catch {
+            await new Promise(resolve => setTimeout(resolve, 7000));
+          }
         }
       },
       resetFilters() {
@@ -330,13 +354,10 @@ import Loader from '@/components/TableLoader.vue'
         }
       },
       async deleteCompany() {
-        try {
-          await api.delete(`api/Company/dellById?companyId=${this.selectedCompany.companyId}`);
-          
-          this.applyFilters();
-        } catch (error) {
-          this.$store.commit('setErrorMessage', error)
-        }
+
+        api.delete(`api/Company/dellById?companyId=${this.selectedCompany.companyId}`)
+        .then(() => this.applyFilters())
+        .catch(error => this.$store.commit('setErrorMessage', error)) 
       },
       async handleRowClick(item) {
         
