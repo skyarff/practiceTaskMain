@@ -241,6 +241,7 @@ export default {
       this.isEditing = true
       this.selectedStock = item
       this.applyFilters();
+      this.filters = {}
     },
     switchEditingMode() {
         this.isEditing = !this.isEditing

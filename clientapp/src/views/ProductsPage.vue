@@ -792,14 +792,15 @@ import { mapGetters } from 'vuex';
         this.isEditing = true
         this.selectedProduct = item
         this.applyFilters();
+        this.filters = {}
         window.scrollTo(0, document.body.scrollHeight);
         this.$store.dispatch( 'productPage/getStocksByCompanyId', {companyId: this.selectedProduct.companyId, selected: true})
-        this.$store.dispatch( 'productPage/getProductCategoriesByCompanyId', {companyId: this.selectedProduct.productCategoryId, selected: true})
+        this.$store.dispatch( 'productPage/getProductCategoriesByCompanyId', {companyId: this.selectedProduct.companyId, selected: true})
         this.$store.dispatch( 'productPage/getBillsByCompanyAndProviderId', 
         {companyId: this.selectedProduct.companyId, providerId: this.selectedProduct.providerId, selected: true, })
         this.$store.dispatch( 'productPage/getStorageLocationsByStockId', {stockId: this.selectedProduct.stockId, selected: true})
         this.$store.dispatch( 'productPage/getEmployeesByStockId', {stockId: this.selectedProduct.stockId, selected: true})
-        this.$store.dispatch( 'productPage/getUpdsByBillId', {billId: this.selectedProduct.billId, selected: true})
+        this.$store.dispatch( 'productPage/getUpdsByBillId', {billId: this.selectedProduct.billId, selected: true}) 
       },
       switchEditingMode() {
           this.isEditing = !this.isEditing

@@ -359,6 +359,7 @@ import { mapGetters } from 'vuex';
         this.isEditing = true
         this.selectedUpd = item
         this.applyFilters();
+        this.filters = {}
         window.scrollTo(0, document.body.scrollHeight);
         this.$store.dispatch('updPage/getBillsByProviderAndCompanyId', 
             {providerId: this.selectedUpd.providerId, companyId: this.selectedUpd.companyId, selected: true})

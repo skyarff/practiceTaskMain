@@ -470,6 +470,7 @@ import Loader from '@/components/TableLoader.vue'
         this.isEditing = true
         this.selectedProvider = item
         this.applyFilters();
+        this.filters = {}
         window.scrollTo(0, document.body.scrollHeight);
       },
       switchEditingMode() {

@@ -459,6 +459,7 @@ import { mapGetters } from 'vuex';
         this.selectedEmployee = {...item};
         delete this.selectedEmployee.password
         this.applyFilters();
+        this.filters = {}
         window.scrollTo(0, document.body.scrollHeight);
         this.$store.dispatch( 'employeePage/getStocksByCompanyId', {companyId: this.selectedEmployee.companyId, selected: true})
       },

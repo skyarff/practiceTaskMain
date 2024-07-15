@@ -215,6 +215,8 @@ export default {
       this.isEditing = true
       this.selectedProductCategory = item
       this.applyFilters();
+      this.filters = {}
+      window.scrollTo(0, document.body.scrollHeight);
     },
     switchEditingMode() {
         this.isEditing = !this.isEditing

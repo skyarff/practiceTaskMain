@@ -337,6 +337,7 @@ import { mapGetters } from 'vuex';
         this.isEditing = true
         this.selectedBill = item
         this.applyFilters();
+        this.filters = {}
         window.scrollTo(0, document.body.scrollHeight);
       },
       switchEditingMode() {

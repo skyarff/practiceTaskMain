@@ -410,7 +410,7 @@ import { mapGetters } from 'vuex';
         const stock = this.stocks.find(s => s.stockId === item.stockId);
         this.selectedStorageLocation = {companyId: stock.companyId, ...item};
         this.applyFilters();
-
+        this.filters = {}
         window.scrollTo(0, document.body.scrollHeight);
 
         this.$store.dispatch('storageLocationPage/getStocksByCompanyId', 

@@ -11,8 +11,6 @@
     </v-main>
     <ErrorOutput />
   </v-app>
-
-
 </template>
 
 <script>
