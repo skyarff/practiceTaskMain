@@ -252,19 +252,17 @@ import Loader from '@/components/TableLoader.vue'
         page: 1,
         itemsPerPage: 10,
         controller: null,
-        flagSource: {
-          flag: false
-        }
+        flag: false
       }
     },
     activated() {
       // this.controller = new AbortController();
-      this.flagSource.flag = false
-      this.checkConnection(this.flagSource);
+      this.flag = false
+      this.checkConnection();
     },
     deactivated() {
       // this.controller.abort();
-      this.flagSource.flag = true
+      this.flag = true
     },
     methods: {
       updatePage(newPage) {
@@ -311,11 +309,11 @@ import Loader from '@/components/TableLoader.vue'
           });
         });
       },
-      async checkConnection(flagSource) {
+      async checkConnection() {
         // signal.addEventListener('abort', () => console.log('Aborted!'));
 
         let flag = true;
-        while (flag && !flagSource.flag) {
+        while (flag && !this.flag) {
           try {
             await this.applyFilters();
             flag = false;
