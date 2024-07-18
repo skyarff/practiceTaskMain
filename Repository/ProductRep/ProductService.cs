@@ -3,7 +3,6 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using StockService.Models;
 using StockService.Models.dto;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace StockService.Repository.ProductRep
 {
