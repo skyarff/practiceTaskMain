@@ -260,13 +260,10 @@ namespace StockService.Repository.ProductRep
                 query = query.Where(p => p.CompanyId == productDto.CompanyId);
 
 
-
             if (productDto.UpdId != null)
                 query = query.Where(p => p.UpdId == productDto.UpdId);
-
             else if (productDto.BillId != null)
                 query = query.Where(p => p.BillId == productDto.BillId);
-
             else if (productDto.ProviderId != null)
                 query = query.Where(p => p.ProviderId == productDto.ProviderId);
 

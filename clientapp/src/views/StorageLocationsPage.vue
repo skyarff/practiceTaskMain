@@ -83,10 +83,7 @@
             </v-row>
           </v-expansion-panel-title>
           <v-expansion-panel-text class="pt-2">
-
             <v-row>
-
-
             <v-col cols="6">
               <v-card color="grey-lighten-4">
                 <v-card-title>
@@ -177,9 +174,9 @@
   
       <!-- Секция редактирования -->
       <v-card >
-        <v-card-text>
-          <v-row align="center" no-gutters>
-            <v-col class="mr-4" cols="auto">
+        <v-card-title>
+          <v-row align="center">
+            <v-col cols="auto">
               <v-switch
                 :model-value="isEditing"
                 color="primary"
@@ -200,15 +197,41 @@
                 <v-icon>mdi-broom</v-icon>
               </v-btn>
             </v-col>
-          </v-row>
-        </v-card-text>
+            <v-spacer />
+          <v-col class="mr-15" cols="auto">
+            <v-btn
+              color="primary"
+              @click="saveStorageLocation"
+              icon="mdi-plus-circle"
+              size="small"
+              rounded="circle"
+            ></v-btn>
+            <v-btn 
+              v-if="isEditing"
+              class="ml-3"
+              color="secondary"
+              @click="deleteStorageLocation"
+              icon="mdi-delete"
+              size="small"
+              rounded="circle"
+            ></v-btn>
+          </v-col>
+        </v-row>
+        </v-card-title>
+        <v-card-text>
           <div v-if="selectedStorageLocation.storageLocationId !== undefined || isEditing">
-            <v-card-title>Редактирование/удаление</v-card-title>
-              <v-card-text>
-                <v-form @submit.prevent="saveStorageLocation">
-                  <v-row>
-
-                    <v-col cols="12">
+            <v-row>
+              <v-col cols="12">
+                <v-card color="grey-lighten-4">
+                  <v-card-title>
+                    Поля
+                  </v-card-title>
+                  <v-card-subtitle>
+                    Заполните поля данными
+                  </v-card-subtitle>
+                  <v-card-text>
+                    <v-row>
+                    <v-col cols="4">
                       <v-text-field
                         v-model="selectedStorageLocation.storageLocationId"
                         label="ID места хранения"
@@ -216,6 +239,15 @@
                         prepend-icon="mdi-identifier"
                       ></v-text-field>
                     </v-col>
+
+                    <v-col cols="8">
+                      <v-file-input
+                        v-model="selectedStorageLocation.image"
+                        label="Фото места хранения"
+                        accept="image/*"
+                        prepend-icon="mdi-image"
+                      ></v-file-input>
+                    </v-col>
                   </v-row>
 
                   <v-row>
@@ -228,36 +260,26 @@
                     </v-col>
                   </v-row>
 
-                  <v-row>
-                    <v-col cols="12">
-                      <v-file-input
-                        v-model="selectedStorageLocation.image"
-                        label="Фото места хранения"
-                        accept="image/*"
-                        prepend-icon="mdi-image"
-                      ></v-file-input>
-                    </v-col>
-                  </v-row>
+                  </v-card-text>
+                </v-card>
+              </v-col>
+            </v-row>
 
-                  <v-row>
-                    <v-col>
-                      <v-btn class="mr-4" type="submit" color="primary" prepend-icon="mdi-content-save">
-                        Редактировать
-                      </v-btn>
-                      <v-btn @click="deleteStorageLocation" color="secondary" prepend-icon="mdi-delete">
-                        Удалить
-                      </v-btn>
-                    </v-col>
-                </v-row>
-                </v-form>
-              </v-card-text>
           </div>
+
           <div v-else>
-            <v-card-title>Добавление</v-card-title>
-              <v-card-text>
-                <v-form @submit.prevent="saveStorageLocation">
-                  <v-row>
-                    <v-col cols="4">
+            <v-row>
+              <v-col cols="6">
+                <v-card color="grey-lighten-4">
+                  <v-card-title>
+                    Поля
+                  </v-card-title>
+                  <v-card-subtitle>
+                    Заполните поля данными
+                  </v-card-subtitle>
+                  <v-card-text>
+                    <v-row>
+                      <v-col cols="4">
                       <v-text-field
                         v-model="selectedStorageLocation.rackCode"
                         label="Код стеллажа*"
@@ -265,15 +287,7 @@
                       ></v-text-field>
                     </v-col>
 
-                    <v-col cols="4">
-                      <v-text-field
-                        v-model="selectedStorageLocation.description"
-                        label="Описание"
-                        prepend-icon="mdi-note-text"
-                      ></v-text-field>
-                    </v-col>
-
-                    <v-col cols="4">
+                    <v-col cols="8">
                       <v-file-input
                         v-model="selectedStorageLocation.image"
                         label="Фото места хранения"
@@ -281,11 +295,31 @@
                         prepend-icon="mdi-image"
                       ></v-file-input>
                     </v-col>
-                  </v-row>
+                    </v-row>
+                    <v-row>
+                      <v-col cols="12">
+                      <v-text-field
+                        v-model="selectedStorageLocation.description"
+                        label="Описание"
+                        prepend-icon="mdi-note-text"
+                      ></v-text-field>
+                    </v-col>
+                    </v-row>
+                  </v-card-text>
+                </v-card>
+              </v-col>
 
-
-                  <v-row>      
-                    <v-col cols="4">
+              <v-col cols="6">
+                <v-card color="teal-lighten-5">
+                  <v-card-title>
+                    Иерархические сущности
+                  </v-card-title>
+                  <v-card-subtitle>
+                    Выберите один из предложенных вариантов
+                  </v-card-subtitle>
+                  <v-card-text>
+                    <v-row>
+                      <v-col cols="12">
                       <v-select
                         v-model="selectedCompanyId"
                         :items="companies"
@@ -297,8 +331,9 @@
                         @update:modelValue="selectionOfStocks(true)"
                       ></v-select>
                     </v-col>
-
-                    <v-col cols="4">
+                    </v-row>
+                    <v-row>
+                      <v-col cols="12">
                       <v-select
                         v-model="selectedStockId"
                         :items="stocksByCompanyId"
@@ -309,19 +344,13 @@
                         dense
                       ></v-select>
                     </v-col>
-
-                  </v-row>
-
-                  <v-row>
-                    <v-col>
-                      <v-btn class="mr-4" type="submit" color="primary" prepend-icon="mdi-plus-circle">
-                        Добавить
-                      </v-btn>
-                    </v-col>
-                  </v-row>
-                </v-form>
-              </v-card-text>
+                    </v-row>
+                  </v-card-text>
+                </v-card>
+              </v-col>
+            </v-row>
           </div>
+        </v-card-text>
       </v-card>
 
     </v-container>
@@ -548,7 +577,7 @@ import { mapGetters } from 'vuex';
   computed: {
     selectedStockId: {
       get() {
-        const stock = this.stocks.find(s => s.stockId === this.selectedStorageLocation.stockId);
+        const stock = this.stocksByCompanyId.find(s => s.stockId === this.selectedStorageLocation.stockId);
         return stock ? stock : null;
       },
       set(value) {

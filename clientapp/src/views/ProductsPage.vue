@@ -653,13 +653,8 @@
                         </v-card-text>
                       </v-card>
                     </v-col>
-                  </v-row>
-
-
-
-                  
+                  </v-row>  
           </div>
-          
       </v-card-text>
       </v-card>
 
@@ -943,7 +938,6 @@ import { mapGetters } from 'vuex';
         } else {
           this.selectedProduct = {...item};
           this.isEditing = true
-
 
         this.$store.dispatch( 'productPage/getStocksByCompanyId', {companyId: this.selectedProduct.companyId, selected: true})
         this.$store.dispatch( 'productPage/getProductCategoriesByCompanyId', {companyId: this.selectedProduct.companyId, selected: true})

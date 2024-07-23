@@ -63,94 +63,131 @@
           <v-expansion-panel-title>
             <v-icon start icon="mdi-filter"></v-icon>
             Фильтры
+            <v-row @click.stop justify="end" align="center" class="ml-auto mr-5">
+              <v-col cols="auto">
+                <v-btn
+                  class="mr-3"
+                  color="primary"
+                  @click="applyFilters"
+                  icon="mdi-magnify"
+                  size="small"
+                  rounded="circle"
+                ></v-btn>
+                <v-btn
+                  color="secondary"
+                  @click="resetFilters"
+                  icon="mdi-eraser"
+                  size="small"
+                  rounded="circle"
+                ></v-btn>
+              </v-col>
+            </v-row>
           </v-expansion-panel-title>
-          <v-expansion-panel-text class="pt-6">
-            <v-row>
-              <v-col cols="12" sm="6" md="4">
-                <v-text-field
-                  label="ID УПД"
-                  v-model="filters.updId"
-                  type="number"
-                  prepend-icon="mdi-identifier"
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12" sm="6" md="4">
-                <v-text-field
-                  label="Номер документа"
-                  v-model="filters.documentNumber"
-                  prepend-icon="mdi-file-document-outline"
-                ></v-text-field>
-              </v-col>
-                  
-
-              <v-col cols="4">
-                      <v-select
-                      v-model="filtersCompanyId"
-                      @update:modelValue="selectionOfBills(false)"
-                      :items="companies"
-                      item-title="name"
-                      item-value="companyId"
-                      label="Компания"
-                      prepend-icon="mdi-domain"
-                      dense
-                    ></v-select>   
-                  </v-col>
-            </v-row>
+          <v-expansion-panel-text class="pt-2">
 
             <v-row>
+              <v-col cols="6">
+                <v-card color="grey-lighten-4">
+                  <v-card-title>
+                    Поля
+                  </v-card-title>
+                  <v-card-subtitle>
+                    Заполните поля данными
+                  </v-card-subtitle>
+                  <v-card-text>
+                    <v-row>
+                      <v-col cols="4">
+                        <v-text-field
+                          label="ID УПД"
+                          v-model="filters.updId"
+                          type="number"
+                          prepend-icon="mdi-identifier"
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="8">
+                        <v-text-field
+                          label="Номер документа"
+                          v-model="filters.documentNumber"
+                          prepend-icon="mdi-file-document-outline"
+                        ></v-text-field>
+                      </v-col>
+                    </v-row>
 
-              <v-col cols="4">
-                      <v-select
-                      v-model="filtersProviderId"
-                      @update:modelValue="selectionOfBills(false)"
-                      :items="providers"
-                      item-title="name"
-                      item-value="providerId"
-                      label="Поставщик"
-                      prepend-icon="mdi-domain"
-                      dense
-                    ></v-select>   
-                  </v-col>
+                    <v-row>
 
-              <v-col cols="4">
-                    <v-select
-                      v-model="filtersBillId"                    
-                      :items="fBillsByProviderAndCompanyId"
-                      item-title="name"
-                      item-value="billId"
-                      label="Счет"
-                      prepend-icon="mdi-domain"
-                      dense
-                    ></v-select>
-                  </v-col>
+                      <v-col cols="6">
+                        <v-text-field
+                          label="От даты и времени"
+                          v-model="filters.startDate"
+                          type="datetime-local"
+                          prepend-icon="mdi-calendar-clock"
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="6">
+                        <v-text-field
+                          label="До даты и времени"
+                          v-model="filters.endDate"
+                          type="datetime-local"
+                          prepend-icon="mdi-calendar-clock"
+                        ></v-text-field>
+                      </v-col>
 
-              <v-col cols="12" sm="6" md="4">
-                <v-text-field
-                  label="От даты и времени"
-                  v-model="filters.startDate"
-                  type="datetime-local"
-                  prepend-icon="mdi-calendar-clock"
-                ></v-text-field>
+                      </v-row>
+                  </v-card-text>
+                </v-card>
               </v-col>
-              <v-col cols="12" sm="6" md="4">
-                <v-text-field
-                  label="До даты и времени"
-                  v-model="filters.endDate"
-                  type="datetime-local"
-                  prepend-icon="mdi-calendar-clock"
-                ></v-text-field>
-              </v-col>
 
-            </v-row>
+              <v-col cols="6">
+                <v-card color="teal-lighten-5">
+                  <v-card-title>
+                    Иерархические сущности
+                  </v-card-title>
+                  <v-card-subtitle>
+                    Выберите один из предложенных вариантов
+                  </v-card-subtitle>
+                  <v-card-text>
+                    <v-row>
+                      <v-col cols="6">
+                          <v-select
+                              v-model="filtersCompanyId"
+                              @update:modelValue="selectionOfBills(false)"
+                              :items="companies"
+                              item-title="name"
+                              item-value="companyId"
+                              label="Компания"
+                              prepend-icon="mdi-domain"
+                              dense
+                            ></v-select>   
+                          </v-col>
 
-            <v-row>
-              <v-col cols="12">
-                <v-btn class="mr-4" color="primary" @click="applyFilters" prepend-icon="mdi-magnify">
-                  Применить фильтры
-                </v-btn>
-                <v-btn color="secondary" @click="resetFilters" prepend-icon="mdi-eraser">
-                  Очистить фильтры
-                </v-btn>
+                          <v-col cols="6">
+                          <v-select
+                          v-model="filtersProviderId"
+                          @update:modelValue="selectionOfBills(false)"
+                          :items="providers"
+                          item-title="name"
+                          item-value="providerId"
+                          label="Поставщик"
+                          prepend-icon="mdi-domain"
+                          dense
+                        ></v-select>   
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col cols="12">
+                        <v-select
+                          v-model="filtersBillId"                    
+                          :items="fBillsByProviderAndCompanyId"
+                          item-title="name"
+                          item-value="billId"
+                          label="Счет"
+                          prepend-icon="mdi-domain"
+                          dense
+                        ></v-select>
+                      </v-col>
+                    </v-row>
+                  </v-card-text>
+                </v-card>
               </v-col>
             </v-row>
           </v-expansion-panel-text>
@@ -159,13 +196,13 @@
   
       <!-- Секция редактирования -->
       <v-card >
-        <v-card-text>
-          <v-row align="center" no-gutters>
-            <v-col class="mr-4" cols="auto">
+        <v-card-title>
+          <v-row align="center">
+            <v-col cols="auto">
               <v-switch
                 :model-value="isEditing"
                 color="primary"
-                label="Удаление"
+                label="Редактирование"
                 @click="switchEditingMode"
                 hide-details
               ></v-switch>
@@ -182,48 +219,71 @@
                 <v-icon>mdi-broom</v-icon>
               </v-btn>
             </v-col>
-          </v-row>
-          
-        </v-card-text>
+            <v-spacer />
+          <v-col class="mr-15" cols="auto">
+            <v-btn 
+              v-if="isEditing"
+              class="ml-3"
+              color="secondary"
+              @click="deleteUpd"
+              icon="mdi-delete"
+              size="small"
+              rounded="circle"
+            ></v-btn>
+          </v-col>
+        </v-row>
+        </v-card-title>
+        <v-card-text>
           <div v-if="selectedUpd.updId !== undefined || isEditing">
-            <v-card-title>Удаление</v-card-title>
-            <v-card-text>
-              <v-form @submit.prevent="saveUpd">
-                <v-row>
-                  <v-col cols="12" sm="6">
-                    <v-text-field
-                      v-model="selectedUpd.updId"
-                      label="ID УПД"
-                      type="number"
-                      prepend-icon="mdi-identifier"
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
 
-                <v-row>
-                  <v-col>
-                    <v-btn @click="deleteUpd" color="secondary" prepend-icon="mdi-delete">
-                      Удалить
-                    </v-btn>
-                  </v-col>
-                </v-row>
-              </v-form>
-            </v-card-text>
+            <v-row>
+              <v-col cols="12">
+                <v-card color="grey-lighten-4">
+                  <v-card-title>
+                    Удаление
+                  </v-card-title>
+                  <v-card-subtitle>
+                    Укажите Id удаляемого УПД
+                  </v-card-subtitle>
+                  <v-card-text>
+                    <v-row>
+                      <v-col cols="12" >
+                        <v-text-field
+                          v-model="selectedUpd.updId"
+                          label="ID УПД"
+                          type="number"
+                          prepend-icon="mdi-identifier"
+                        ></v-text-field>
+                      </v-col>
+                    </v-row>
+                  </v-card-text>
+                </v-card>
+              </v-col>
+            </v-row>
+            
           </div>
           <div v-else>
-            <v-card-title>Добавление</v-card-title>
-              <v-card-text>
-                <v-form @submit.prevent="saveUpd">
-                  <v-row>
-                    <v-col cols="4">
+            <v-row>
+              <v-col cols="6">
+                <v-card color="grey-lighten-4">
+                  <v-card-title>
+                    Поля
+                  </v-card-title>
+                  <v-card-subtitle>
+                    Заполните поля данными
+                  </v-card-subtitle>
+                  <v-card-text>
+                    <v-row>
+                    <v-col cols="12">
                       <v-text-field
                         v-model="selectedUpd.documentNumber"
                         label="Номер документа*"
                         prepend-icon="mdi-file-document-outline"
                       ></v-text-field>
                     </v-col>
-
-                    <v-col cols="4">
+                  </v-row>
+                  <v-row>
+                    <v-col cols="12">
                       <v-file-input
                         v-model="selectedUpd.updPdf"
                         label="Скан PDF УПД*"
@@ -231,11 +291,21 @@
                         prepend-icon="mdi-image"
                       ></v-file-input>
                     </v-col>
-  
                   </v-row>
-                  <v-row>
-
-                    <v-col cols="4">
+                  </v-card-text>
+                </v-card>
+              </v-col>
+              <v-col cols="6">
+                <v-card color="teal-lighten-5">
+                  <v-card-title>
+                    Иерархические сущности
+                  </v-card-title>
+                  <v-card-subtitle>
+                    Выберите один из предложенных вариантов
+                  </v-card-subtitle>
+                  <v-card-text>
+                    <v-row>
+                    <v-col cols="6">
                       <v-select
                       v-model="selectedCompanyId"
                       @update:modelValue="selectionOfBills(true)"
@@ -248,8 +318,7 @@
                     ></v-select>   
                   </v-col>
 
-
-                    <v-col cols="4">
+                    <v-col cols="6">
                       <v-select
                       v-model="selectedProviderId"
                       @update:modelValue="selectionOfBills(true)"
@@ -261,8 +330,9 @@
                       dense
                     ></v-select>   
                   </v-col>
-
-                  <v-col cols="4">
+                  </v-row>
+                  <v-row>
+                    <v-col cols="12">
                       <v-select
                       v-model="selectedBillId"
                       :items="billsByProviderAndCompanyId"
@@ -273,19 +343,13 @@
                       dense
                     ></v-select>   
                   </v-col>
-                </v-row>
-                  
-                  
-                  <v-row>
-                    <v-col>
-                      <v-btn class="mr-4" type="submit" color="primary" prepend-icon="mdi-plus-circle">
-                        Добавить
-                      </v-btn>
-                    </v-col>
                   </v-row>
-                </v-form>
-              </v-card-text>
+                  </v-card-text>
+                </v-card>
+              </v-col>
+            </v-row>
           </div>
+        </v-card-text>
       </v-card>
 
     </v-container>

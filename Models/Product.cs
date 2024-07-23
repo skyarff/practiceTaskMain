@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Infrastructure;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace StockService.Models
 {

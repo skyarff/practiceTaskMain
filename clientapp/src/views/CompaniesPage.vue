@@ -61,49 +61,77 @@
           <v-expansion-panel-title>
             <v-icon start icon="mdi-filter"></v-icon>
             Фильтры
-          </v-expansion-panel-title>
-          <v-expansion-panel-text class="pt-6">
-            <v-row>
-              <v-col cols="12" sm="6" md="4">
-                <v-text-field
-                  label="ID компании"
-                  v-model="filters.companyId"
-                  type="number"
-                  prepend-icon="mdi-identifier"
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12" sm="6" md="4">
-                <v-text-field
-                  label="Название компании"
-                  v-model="filters.name"
-                  prepend-icon="mdi-domain"
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12" sm="6" md="4">
-                <v-text-field
-                  label="ИНН"
-                  v-model="filters.inn"
-                  prepend-icon="mdi-card-account-details"
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12">
-                <v-btn class="mr-4" color="primary" @click="applyFilters" prepend-icon="mdi-magnify">
-                  Применить фильтры
-                </v-btn>
-                <v-btn color="secondary" @click="resetFilters" prepend-icon="mdi-eraser">
-                  Очистить фильтры
-                </v-btn>
+            <v-row @click.stop justify="end" align="center" class="ml-auto mr-5">
+              <v-col cols="auto">
+                <v-btn
+                  class="mr-3"
+                  color="primary"
+                  @click="applyFilters"
+                  icon="mdi-magnify"
+                  size="small"
+                  rounded="circle"
+                ></v-btn>
+                <v-btn
+                  color="secondary"
+                  @click="resetFilters"
+                  icon="mdi-eraser"
+                  size="small"
+                  rounded="circle"
+                ></v-btn>
               </v-col>
             </v-row>
+          </v-expansion-panel-title>
+          <v-expansion-panel-text class="pt-2">
+
+            <v-row>
+              <v-col cols="12">
+                <v-card color="grey-lighten-4">
+                  <v-card-title>
+                    Поля
+                  </v-card-title>
+                  <v-card-subtitle>
+                    Заполните поля данными
+                  </v-card-subtitle>
+                  <v-card-text>
+                    <v-row>
+                      <v-col cols="2">
+                        <v-text-field
+                          label="ID компании"
+                          v-model="filters.companyId"
+                          type="number"
+                          prepend-icon="mdi-identifier"
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="5">
+                        <v-text-field
+                          label="Название компании"
+                          v-model="filters.name"
+                          prepend-icon="mdi-domain"
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="5">
+                        <v-text-field
+                          label="ИНН"
+                          v-model="filters.inn"
+                          prepend-icon="mdi-card-account-details"
+                        ></v-text-field>
+                      </v-col>
+                    </v-row>
+                  </v-card-text>
+                </v-card>
+              </v-col>
+            </v-row>
+
           </v-expansion-panel-text>
         </v-expansion-panel>
       </v-expansion-panels>
   
       <!-- Секция редактирования -->
       <v-card >
-        <v-card-text>
-          <v-row align="center" no-gutters>
-            <v-col class="mr-4" cols="auto">
+
+        <v-card-title>
+          <v-row align="center">
+            <v-col cols="auto">
               <v-switch
                 :model-value="isEditing"
                 color="primary"
@@ -119,20 +147,47 @@
                 color="grey"
                 variant="text"
                 size="x-large"
-                @click="selectedCompany = {}"
+                @click="selectedStorageLocation = {}"
               >
                 <v-icon>mdi-broom</v-icon>
               </v-btn>
             </v-col>
-          </v-row>
-          
-        </v-card-text>
+            <v-spacer />
+          <v-col class="mr-15" cols="auto">
+            <v-btn
+              color="primary"
+              @click="saveStorageLocation"
+              icon="mdi-plus-circle"
+              size="small"
+              rounded="circle"
+            ></v-btn>
+            <v-btn 
+              v-if="isEditing"
+              class="ml-3"
+              color="secondary"
+              @click="deleteStorageLocation"
+              icon="mdi-delete"
+              size="small"
+              rounded="circle"
+            ></v-btn>
+          </v-col>
+        </v-row>
+        </v-card-title>
+        <v-card-text>
           <div v-if="selectedCompany.companyId !== undefined || isEditing">
-            <v-card-title>Редактирование/удаление</v-card-title>
-            <v-card-text>
-              <v-form @submit.prevent="saveCompany">
-                <v-row>
-                  <v-col cols="12" sm="6">
+
+            <v-row>
+              <v-col cols="12">
+                <v-card color="grey-lighten-4">
+                  <v-card-title>
+                    Поля
+                  </v-card-title>
+                  <v-card-subtitle>
+                    Заполните поля данными
+                  </v-card-subtitle>
+                  <v-card-text>
+                    <v-row>
+                  <v-col cols="2">
                     <v-text-field
                       v-model="selectedCompany.companyId"
                       label="ID компании"
@@ -140,7 +195,7 @@
                       prepend-icon="mdi-identifier"
                     ></v-text-field>
                   </v-col>
-                  <v-col cols="12" sm="6">
+                  <v-col cols="10">
                     <v-text-field
                       v-model="selectedCompany.name"
                       label="Название"
@@ -149,14 +204,14 @@
                   </v-col>
                 </v-row>
                 <v-row>
-                  <v-col cols="12" sm="6">
+                  <v-col cols="10">
                     <v-text-field
                       v-model="selectedCompany.inn"
                       label="ИНН"
                       prepend-icon="mdi-card-account-details"
                     ></v-text-field>
                   </v-col>
-                  <v-col cols="12" sm="6">
+                  <v-col cols="2">
                     <v-file-input
                       v-model="selectedCompany.image"
                       label="Логотип"
@@ -165,41 +220,39 @@
                     ></v-file-input>
                   </v-col>
                 </v-row>
-                <v-row>
-                  <v-col>
-                    <v-btn class="mr-4" type="submit" color="primary" prepend-icon="mdi-content-save">
-                      Редактировать
-                    </v-btn>
-                    <v-btn @click="deleteCompany" color="secondary" prepend-icon="mdi-delete">
-                      Удалить
-                    </v-btn>
-                  </v-col>
-                </v-row>
-              </v-form>
-            </v-card-text>
+                  </v-card-text>
+                </v-card>
+              </v-col>
+            </v-row>        
           </div>
           <div v-else>
-            <v-card-title>Добавление</v-card-title>
-              <v-card-text>
-                <v-form @submit.prevent="saveCompany">
-                  <v-row>
-                    <v-col cols="12" sm="6">
+
+            <v-row>
+              <v-col cols="12">
+                <v-card color="grey-lighten-4">
+                  <v-card-title>
+                    Поля
+                  </v-card-title>
+                  <v-card-subtitle>
+                    Заполните поля данными
+                  </v-card-subtitle>
+                  <v-card-text>
+                    <v-row>
+                    <v-col cols="5">
                       <v-text-field
                         v-model="selectedCompany.name"
                         label="Название*"
                         prepend-icon="mdi-domain"
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="12" sm="6">
+                    <v-col cols="5">
                       <v-text-field
                         v-model="selectedCompany.inn"
                         label="ИНН"
                         prepend-icon="mdi-card-account-details"
                       ></v-text-field>
                     </v-col>
-                  </v-row>
-                  <v-row>
-                    <v-col cols="12">
+                    <v-col cols="2">
                       <v-file-input
                         v-model="selectedCompany.image"
                         label="Логотип"
@@ -208,16 +261,12 @@
                       ></v-file-input>
                     </v-col>
                   </v-row>
-                  <v-row>
-                    <v-col>
-                      <v-btn class="mr-4" type="submit" color="primary" prepend-icon="mdi-plus-circle">
-                        Добавить
-                      </v-btn>
-                    </v-col>
-                  </v-row>
-                </v-form>
-              </v-card-text>
+                  </v-card-text>
+                </v-card>
+              </v-col>
+            </v-row>
           </div>
+        </v-card-text>
       </v-card>
 
     </v-container>

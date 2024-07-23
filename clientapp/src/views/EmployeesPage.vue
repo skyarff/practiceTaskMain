@@ -66,11 +66,41 @@
           <v-expansion-panel-title>
             <v-icon start icon="mdi-filter"></v-icon>
             Фильтры
+            <v-row @click.stop justify="end" align="center" class="ml-auto mr-5">
+              <v-col cols="auto">
+                <v-btn
+                  class="mr-3"
+                  color="primary"
+                  @click="applyFilters"
+                  icon="mdi-magnify"
+                  size="small"
+                  rounded="circle"
+                ></v-btn>
+                <v-btn
+                  color="secondary"
+                  @click="resetFilters"
+                  icon="mdi-eraser"
+                  size="small"
+                  rounded="circle"
+                ></v-btn>
+              </v-col>
+            </v-row>
           </v-expansion-panel-title>
-          <v-expansion-panel-text class="pt-6">
-  
+
+
+          <v-expansion-panel-text class="pt-2">
             <v-row>
-              <v-col cols="12" sm="6" md="4">
+              <v-col cols="6">
+                <v-card color="grey-lighten-4">
+                  <v-card-title>
+                    Поля
+                  </v-card-title>
+                  <v-card-subtitle>
+                    Заполните поля данными
+                  </v-card-subtitle>
+                  <v-card-text>
+                    <v-row>
+              <v-col cols="4">
                 <v-text-field
                   label="ID сотрудника"
                   v-model="filters.employeeId"
@@ -79,7 +109,7 @@
                 ></v-text-field>
               </v-col>
 
-              <v-col cols="12" sm="6" md="4">
+              <v-col cols="4">
                 <v-text-field
                   label="ФИО"
                   v-model="filters.fullName"
@@ -87,7 +117,7 @@
                 ></v-text-field>
               </v-col>
 
-              <v-col cols="12" sm="6" md="4">
+              <v-col cols="4">
                 <v-text-field
                   label="Должность"
                   v-model="filters.jobTitle"
@@ -97,7 +127,7 @@
             </v-row>
 
             <v-row>
-              <v-col cols="12" sm="6" md="4">
+              <v-col cols="4">
                 <v-text-field
                   label="Логин"
                   v-model="filters.login"
@@ -105,7 +135,7 @@
                 ></v-text-field>
               </v-col>
 
-              <v-col cols="12" sm="6" md="4">
+              <v-col cols="4">
                 <v-text-field
                   label="Почта"
                   v-model="filters.email"
@@ -113,7 +143,7 @@
                 ></v-text-field>
               </v-col>
 
-              <v-col cols="12" sm="6" md="4">
+              <v-col cols="4">
                 <v-text-field
                   label="Телефон"
                   v-model="filters.phone"
@@ -122,47 +152,54 @@
               </v-col>
 
             </v-row>
+                  </v-card-text>
+                </v-card>
+              </v-col>
 
-            <v-row>
-
-              <v-col cols="4">
-                    <v-select
-                      v-model="filtersCompanyId"
-                      @update:modelValue="selectionOfStocks(false)"
-                      :items="companies"
-                      item-title="name"
-                      item-value="companyId"
-                      label="Компания"
-                      prepend-icon="mdi-domain"
-                      dense
-                    ></v-select>
-                  </v-col>
-              
-              <v-col cols="4">
-                    <v-select
-                      v-model="filtersStockId"
-                      :items="fStocksByCompanyId"
-                      item-title="name"
-                      item-value="stockId"
-                      label="Склад"
-                      prepend-icon="mdi-package-variant-closed"
-                      dense
-                    ></v-select>
-                  </v-col>
-
-              
-            </v-row>
-
-            <v-row>
-              <v-col cols="12">
-                <v-btn class="mr-4" color="primary" @click="applyFilters" prepend-icon="mdi-magnify">
-                  Применить фильтры
-                </v-btn>
-                <v-btn color="secondary" @click="resetFilters" prepend-icon="mdi-eraser">
-                  Очистить фильтры
-                </v-btn>
+              <v-col cols="6">
+                <v-card color="teal-lighten-5">
+                  <v-card-title>
+                    Иерархические сущности
+                  </v-card-title>
+                  <v-card-subtitle>
+                    Выберите один из предложенных вариантов
+                  </v-card-subtitle>
+                  <v-card-text>
+                    <v-row>
+                      <v-col cols="12">
+                            <v-select
+                              v-model="filtersCompanyId"
+                              @update:modelValue="selectionOfStocks(false)"
+                              :items="companies"
+                              item-title="name"
+                              item-value="companyId"
+                              label="Компания"
+                              prepend-icon="mdi-domain"
+                              dense
+                            ></v-select>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col cols="12">
+                            <v-select
+                              v-model="filtersStockId"
+                              :items="fStocksByCompanyId"
+                              item-title="name"
+                              item-value="stockId"
+                              label="Склад"
+                              prepend-icon="mdi-package-variant-closed"
+                              dense
+                            ></v-select>
+                      </v-col>
+                    </v-row>
+                  </v-card-text>
+                </v-card>
               </v-col>
             </v-row>
+  
+            
+
+            
 
           </v-expansion-panel-text>
         </v-expansion-panel>
@@ -170,9 +207,9 @@
   
       <!-- Секция редактирования -->
       <v-card >
-        <v-card-text>
-          <v-row align="center" no-gutters>
-            <v-col class="mr-4" cols="auto">
+        <v-card-title>
+          <v-row align="center">
+            <v-col cols="auto">
               <v-switch
                 :model-value="isEditing"
                 color="primary"
@@ -193,15 +230,42 @@
                 <v-icon>mdi-broom</v-icon>
               </v-btn>
             </v-col>
-          </v-row>
-        </v-card-text>
+            <v-spacer />
+          <v-col class="mr-15" cols="auto">
+            <v-btn
+              color="primary"
+              @click="saveEmployee"
+              icon="mdi-plus-circle"
+              size="small"
+              rounded="circle"
+            ></v-btn>
+            <v-btn 
+              v-if="isEditing"
+              class="ml-3"
+              color="secondary"
+              @click="deleteEmployee"
+              icon="mdi-delete"
+              size="small"
+              rounded="circle"
+            ></v-btn>
+          </v-col>
+        </v-row>
+        </v-card-title>
+        <v-card-text>
           <div v-if="selectedEmployee.employeeId !== undefined || isEditing">
-            <v-card-title>Редактирование/удаление</v-card-title>
-            <v-card-text>
-              <v-form @submit.prevent="saveEmployee">
 
-                <v-row>
-                    <v-col cols="12" sm="6" md="4">
+            <v-row>
+              <v-col cols="12">
+                <v-card color="grey-lighten-4">
+                  <v-card-title>
+                    Поля
+                  </v-card-title>
+                  <v-card-subtitle>
+                    Заполните поля данными
+                  </v-card-subtitle>
+                  <v-card-text>
+                    <v-row>
+                    <v-col cols="2">
                       <v-text-field
                         label="ID сотрудника"
                         v-model="selectedEmployee.employeeId"
@@ -210,7 +274,7 @@
                       ></v-text-field>
                     </v-col>
 
-                    <v-col cols="12" sm="6" md="4">
+                    <v-col cols="3">
                       <v-text-field
                         label="ФИО"
                         v-model="selectedEmployee.fullName"
@@ -218,7 +282,17 @@
                       ></v-text-field>
                     </v-col>
 
-                    <v-col cols="12" sm="6" md="4">
+                    <v-col cols="3">
+                      <v-file-input
+                        v-model="selectedEmployee.image"
+                        label="Фото сотрудника"
+                        accept="image/*"
+                        prepend-icon="mdi-image"
+                      ></v-file-input>
+                    </v-col>
+
+                    
+                    <v-col cols="4">
                       <v-text-field
                         label="Должность"
                         v-model="selectedEmployee.jobTitle"
@@ -255,40 +329,27 @@
 
                   </v-row>
 
-                  <v-row>
+                  </v-card-text>
+                </v-card>
+              </v-col>
+            </v-row>
 
-                    <v-col cols="4" sm="4">
-                      <v-file-input
-                        v-model="selectedEmployee.image"
-                        label="Фото сотрудника"
-                        accept="image/*"
-                        prepend-icon="mdi-image"
-                      ></v-file-input>
-                    </v-col>
-                  </v-row>
-
-
-                  <v-row>
-                  <v-col>
-                    <v-btn class="mr-4" type="submit" color="primary" prepend-icon="mdi-plus-circle">
-                      Редактировать
-                    </v-btn>
-                    <v-btn @click="deleteEmployee" color="teal" prepend-icon="mdi-delete">
-                      Удалить
-                    </v-btn>
-                  </v-col>
-                </v-row>
-              </v-form>
-            </v-card-text>
+            
           </div>
           <div v-else>
-            <v-card-title>Добавление</v-card-title>
-              <v-card-text>
-                <v-form @submit.prevent="saveEmployee">
+            <v-row>
+              <v-col cols="8">
+                <v-card color="grey-lighten-4">
+                  <v-card-title>
+                    Поля
+                  </v-card-title>
+                  <v-card-subtitle>
+                    Заполните поля данными
+                  </v-card-subtitle>
+                  <v-card-text>
+                    <v-row>
 
-                  <v-row>
-
-                    <v-col cols="12" sm="6" md="4">
+                    <v-col cols="3">
                       <v-text-field
                         label="ФИО*"
                         v-model="selectedEmployee.fullName"
@@ -296,7 +357,16 @@
                       ></v-text-field>
                     </v-col>
 
-                    <v-col cols="12" sm="6" md="4">
+                    <v-col cols="2">
+                      <v-file-input
+                        v-model="selectedEmployee.image"
+                        label="Фото сотрудника"
+                        accept="image/*"
+                        prepend-icon="mdi-image"
+                      ></v-file-input>
+                    </v-col>
+
+                    <v-col cols="4">
                       <v-text-field
                         label="Должность*"
                         v-model="selectedEmployee.jobTitle"
@@ -304,44 +374,56 @@
                       ></v-text-field>
                     </v-col>
 
-                    <v-col cols="12" sm="6" md="4">
+                    <v-col cols="3">
                       <v-text-field
                         label="Логин*"
                         v-model="selectedEmployee.login"
                         prepend-icon="mdi-account-circle"
                       ></v-text-field>
                     </v-col>
-                  </v-row>
-                  
-                  <v-row>
-                    
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field
-                        label="Пароль"
-                        v-model="selectedEmployee.password"
-                        prepend-icon="mdi-account-key"
-                      ></v-text-field>
-                    </v-col>
+                    </v-row>
 
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field
-                        label="Почта"
-                        v-model="selectedEmployee.email"
-                        prepend-icon="mdi-email"
-                      ></v-text-field>
-                    </v-col>
+                    <v-row>
+                      <v-col cols="4">
+                        <v-text-field
+                          label="Пароль"
+                          v-model="selectedEmployee.password"
+                          prepend-icon="mdi-account-key"
+                        ></v-text-field>
+                      </v-col>
 
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field
-                        label="Телефон"
-                        v-model="selectedEmployee.phone"
-                        prepend-icon="mdi-phone"
-                      ></v-text-field>
-                    </v-col>
-                  </v-row>
+                      <v-col cols="4">
+                        <v-text-field
+                          label="Почта"
+                          v-model="selectedEmployee.email"
+                          prepend-icon="mdi-email"
+                        ></v-text-field>
+                      </v-col>
 
-                  <v-row>      
-                    <v-col cols="4">
+                      <v-col cols="4">
+                        <v-text-field
+                          label="Телефон"
+                          v-model="selectedEmployee.phone"
+                          prepend-icon="mdi-phone"
+                        ></v-text-field>
+                      </v-col>
+                    </v-row>
+
+                  </v-card-text>
+                </v-card>
+              </v-col>
+
+              <v-col cols="4">
+                <v-card color="teal-lighten-5">
+                  <v-card-title>
+                    Иерархические сущности
+                  </v-card-title>
+                  <v-card-subtitle>
+                    Выберите один из предложенных вариантов
+                  </v-card-subtitle>
+                  <v-card-text>
+                    <v-row>      
+                    <v-col cols="12">
                       <v-select
                         v-model="selectedCompanyId"
                         :items="companies"
@@ -353,8 +435,9 @@
                         @update:modelValue="selectionOfStocks(true)"
                       ></v-select>
                     </v-col>
-
-                    <v-col cols="4">
+                  </v-row>
+                  <v-row>
+                    <v-col cols="12">
                       <v-select
                         v-model="selectedStockId"
                         :items="stocksByCompanyId"
@@ -366,29 +449,12 @@
                       ></v-select>
                     </v-col>
                   </v-row>
-
-                <v-row>
-                    <v-col cols="4" sm="4">
-                      <v-file-input
-                        v-model="selectedEmployee.image"
-                        label="Фото сотрудника"
-                        accept="image/*"
-                        prepend-icon="mdi-image"
-                      ></v-file-input>
-                    </v-col>
-                  </v-row>
-
-                  <v-row>
-                    <v-col>
-                      <v-btn class="mr-4" type="submit" color="primary" prepend-icon="mdi-plus-circle">
-                        Добавить
-                      </v-btn>
-                    </v-col>
-                </v-row>
-
-                </v-form>
-              </v-card-text>
+                  </v-card-text>
+                </v-card>
+              </v-col>
+            </v-row>  
           </div>
+        </v-card-text>
       </v-card>
 
     </v-container>
@@ -567,7 +633,7 @@ import { mapGetters } from 'vuex';
     },
     selectedStockId: {
       get() {
-        const stock = this.stocks.find(s => s.stockId === this.selectedEmployee.stockId);
+        const stock = this.stocksByCompanyId.find(s => s.stockId === this.selectedEmployee.stockId);
         return stock ? stock.name : null;
       },
       set(value) {
