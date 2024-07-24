@@ -19,9 +19,10 @@
               <td 
               @dblclick="navigateUpdId(item)" 
               class="navigation-column">
-                {{ item.updId}}
+                {{ item.updId }}
               </td>
               <td>{{ item.documentNumber }}</td>
+              <td>{{ formatDate(item.createDate) }}</td>
               <td>
                   <div v-if="item.updPdfPath">
                     <v-img 
@@ -46,10 +47,9 @@
                     </v-icon>
                   </div>
               </td>
-              <td>{{ getProviderName(item.providerId) }}</td>
-              <td>{{ getCompanyName(item.companyId) }}</td>
-              <td>{{ getBillName(item.billId) }}</td>
-              <td>{{ formatDate(item.createDate) }}</td>
+              <td>{{ item.companyName }}</td>
+              <td>{{ item.providerName }}</td> 
+              <td>{{ item.billNumber }}</td>
             </tr>
           </template>
         </v-data-table>
@@ -356,13 +356,12 @@
   </template>
   
 
- 
-
 
 <script>
 import api from '@/api';
 import Loader from '@/components/TableLoader.vue'
 import { mapGetters } from 'vuex';
+import '@/assets/main.css';
 
   export default {
     components: {
@@ -375,11 +374,11 @@ import { mapGetters } from 'vuex';
         headers: [
           { title: 'ID УПД*', key: 'updId', align: 'start', sortable: true },
           { title: 'Номер документа', key: 'documentNumber', align: 'start', sortable: true },
-          { title: 'Скан. УПД', key: 'updPdfPath', align: 'start', sortable: true },
-          { title: 'Поставщик', key: 'providerName', align: 'start', sortable: false },
-          { title: 'Компания', key: 'companyName', align: 'start', sortable: false },
-          { title: 'Счет', key: 'billName', align: 'start', sortable: false },
           { title: 'Дата добавления', key: 'createDate', align: 'start', sortable: false },
+          { title: 'Скан. УПД', key: 'updPdfPath', align: 'start', sortable: true },
+          { title: 'Компания', key: 'companyName', align: 'start', sortable: false },
+          { title: 'Поставщик', key: 'providerName', align: 'start', sortable: false },
+          { title: 'Счет', key: 'billName', align: 'start', sortable: false },        
         ],
         upds: [],
         selectedUpd: {},
@@ -387,13 +386,19 @@ import { mapGetters } from 'vuex';
         isLoading: true,
         page: 1,
         itemsPerPage: 10,
+        abortFlag: false,
+        timeoutId: null
       }
     },
     activated() {
-      this.applyFilters();
+      this.abortFlag = false
+      this.checkConnection();
       this.$store.dispatch('getAllCompanies');
       this.$store.dispatch('getAllProviders');
-      this.$store.dispatch('getAllBills');
+    },
+    deactivated() {
+      this.abortFlag = true
+      clearTimeout(this.timeoutId)
     },
     methods: {
       selectionOfBills(selected) {
@@ -435,19 +440,59 @@ import { mapGetters } from 'vuex';
             this.selectedUpd.updId = undefined
           }
       },
+      async checkConnection() {
+        let flag = true;
+        while (flag && !this.abortFlag) {
+          try {
+            await this.applyFilters();
+            flag = false;
+          } catch {
+            await new Promise(resolve => {
+              this.timeoutId = setTimeout(resolve, 30000)
+            });
+          }
+        }
+      },
       async applyFilters() {
         this.isLoading = true;
         const url = '/api/Upd/getUpdsFiltered';
 
-        api.post(url, this.filters, {
+        const data = {}
+
+        if (this.filters.updId)
+          data.updId = this.filters.updId
+        if (this.filters.documentNumber)
+          data.documentNumber = this.filters.documentNumber
+        if (this.filters.companyId)
+          data.companyId = this.filters.companyId
+        if (this.filters.providerId)
+          data.providerId = this.filters.providerId
+        if (this.filters.billId)
+          data.billId = this.filters.billId
+        if (this.filters.startDate)
+          data.startDate = new Date(this.filters.startDate).toISOString();
+        if (this.filters.endDate)
+          data.endDate = new Date(this.filters.endDate).toISOString();
+
+        return new Promise((resolve, reject) => {
+          api.post(url, data, {
             headers: {
               'accept': '*/*',
               'Content-Type': 'application/json'
             }
           })
-          .then(response => this.upds = Array.from(response.data.result))
-          .catch(error => this.$store.commit('setErrorMessage', error))
-          .finally(() => this.isLoading = false)
+          .then(response => {
+            this.upds = Array.from(response.data.result);
+            resolve();
+          })
+          .catch(error => {
+            this.$store.commit('setErrorMessage', error);
+            reject();
+          })
+          .finally(() => {
+            this.isLoading = false;
+          });
+      });
       },
       resetFilters() {
         this.filters = {}
@@ -497,18 +542,6 @@ import { mapGetters } from 'vuex';
       const date = new Date(dateString);
       return date.toLocaleString();
       },
-      getProviderName(providerId) {
-          const provider = this.providers.find(p => p.providerId === providerId);
-          return provider ? provider.name : 'Не указано';
-      },
-      getCompanyName(companyId) {
-        const company = this.companies.find(c => c.companyId === companyId);
-        return company ? company.name : 'Не указано';
-      },
-      getBillName(billId) {
-        const bill = this.bills.find(b => b.billId === billId);
-        return bill ? bill.name : 'Не указано';
-      },
   },
   computed: {
     selectedProviderId: {
@@ -531,7 +564,7 @@ import { mapGetters } from 'vuex';
     },
     selectedBillId: {
     get() {
-      const bill = this.bills.find(b => b.billId === this.selectedUpd.billId);
+      const bill = this.billsByProviderAndCompanyId.find(b => b.billId === this.selectedUpd.billId);
       return bill ? bill.name : null;
     },
     set(value) {

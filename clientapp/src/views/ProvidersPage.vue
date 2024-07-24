@@ -22,15 +22,17 @@
                 {{ item.providerId}}
               </td>
               <td>{{ item.name }}</td>
+              <td>{{ item.managerFullname }}</td>
               <td>{{ item.phone }}</td>
+              <td>{{ item.email }}</td>
+              <td>{{ item.bank }}</td>
+              <td>{{ item.checkingAccount }}</td>
+              <td>{{ item.correspondentAccount }}</td>
+              <td>{{ item.bik }}</td>
               <td>{{ item.inn }}</td>
               <td>{{ item.legalAdress }}</td>
-              <td>{{ item.checkingAccount }}</td>
-              <td>{{ item.bank }}</td>
-              <td>{{ item.bik }}</td>
-              <td>{{ item.correspondentAccount }}</td>
-              <td>{{ item.managerFullname }}</td>
-              <td>{{ item.email }}</td>
+              
+              
             </tr>
           </template>
         </v-data-table>
@@ -166,7 +168,7 @@
                       <v-col cols="4">
                         <v-text-field
                           label="ФИО менеджера"
-                          v-model="filters.correspondentAccount"
+                          v-model="filters.managerFullname"
                           prepend-icon="mdi-badge-account"
                         ></v-text-field>
                       </v-col>
@@ -462,7 +464,8 @@
 
 <script>
 import api from '@/api';
-import Loader from '@/components/TableLoader.vue'
+import Loader from '@/components/TableLoader.vue';
+import '@/assets/main.css';
 
   export default {
     components: {
@@ -475,15 +478,15 @@ import Loader from '@/components/TableLoader.vue'
         headers: [
           { title: 'ID поставщика*', key: 'providerId', align: 'start', sortable: true },
           { title: 'Наименование', key: 'name', align: 'start', sortable: true },
+          { title: 'ФИО менеджера', key: 'managerFullname', align: 'start', sortable: true },
           { title: 'Телефон', key: 'phone', align: 'start', sortable: true },
+          { title: 'Почта', key: 'email', align: 'start', sortable: true },
+          { title: 'Банк', key: 'bank', align: 'start', sortable: true },
+          { title: 'Расч. счет', key: 'сheckingAccount', align: 'start', sortable: false },
+          { title: 'Корр. счет', key: 'сorrespondentAccount', align: 'start', sortable: true },
+          { title: 'БИК', key: 'email', bik: 'start', sortable: true },
           { title: 'ИНН', key: 'inn', align: 'start', sortable: true },
           { title: 'Юр. адресс', key: 'legalAdress', align: 'start', sortable: true },
-          { title: 'Расч. счет', key: 'сheckingAccount', align: 'start', sortable: false },
-          { title: 'Банк', key: 'bank', align: 'start', sortable: true },
-          { title: 'БИК', key: 'email', bik: 'start', sortable: true },
-          { title: 'Корр. счет', key: 'сorrespondentAccount', align: 'start', sortable: true },
-          { title: 'ФИО менеджера', key: 'managerFullname', align: 'start', sortable: true },
-          { title: 'Почта', key: 'email', align: 'start', sortable: true },
         ],
         providers: [],
         selectedProvider: {},
@@ -491,10 +494,17 @@ import Loader from '@/components/TableLoader.vue'
         isLoading: true,
         page: 1,
         itemsPerPage: 10,
+        abortFlag: false,
+        timeoutId: null
       }
     },
     activated() {
-      this.applyFilters();
+      this.abortFlag = false
+      this.checkConnection();
+    },
+    deactivated() {
+      this.abortFlag = true
+      clearTimeout(this.timeoutId)
     },
     methods: {
       updatePage(newPage) {
@@ -517,19 +527,68 @@ import Loader from '@/components/TableLoader.vue'
             this.selectedProvider.providerId = undefined
           }
       },
+      async checkConnection() {
+        let flag = true;
+        while (flag && !this.abortFlag) {
+          try {
+            await this.applyFilters();
+            flag = false;
+          } catch {
+            await new Promise(resolve => {
+              this.timeoutId = setTimeout(resolve, 30000)
+            });
+          }
+        }
+      },
       async applyFilters() {
         this.isLoading = true;
         const url = '/api/Provider/getProvidersFiltered';
 
-        api.post(url, this.filters, {
+        const data = {}
+
+        if (this.filters.providerId)
+          data.providerId = this.filters.providerId
+        if (this.filters.name)
+          data.name = this.filters.name
+        if (this.filters.phone)
+          data.phone = this.filters.phone
+        if (this.filters.email)
+          data.email = this.filters.email
+        if (this.filters.bank)
+          data.bank = this.filters.bank
+        if (this.filters.checkingAccount)
+          data.checkingAccount = this.filters.checkingAccount
+        if (this.filters.correspondentAccount)
+          data.correspondentAccount = this.filters.correspondentAccount
+        if (this.filters.bik)
+          data.bik = this.filters.bik
+        if (this.filters.inn)
+          data.inn = this.filters.inn
+        if (this.filters.legalAdress)
+          data.legalAdress = this.filters.legalAdress
+        if (this.filters.managerFullname)
+          data.managerFullname = this.filters.managerFullname
+
+
+        return new Promise((resolve, reject) => {
+          api.post(url, data, {
             headers: {
               'accept': '*/*',
               'Content-Type': 'application/json'
             }
           })
-          .then(response => this.providers = Array.from(response.data.result))
-          .catch(error => this.$store.commit('setErrorMessage', error))
-          .finally(() => this.isLoading = false)
+          .then(response => {
+            this.providers = Array.from(response.data.result);
+            resolve();
+          })
+          .catch(error => {
+            this.$store.commit('setErrorMessage', error);
+            reject();
+          })
+          .finally(() => {
+            this.isLoading = false;
+          });
+        });
       },
       resetFilters() {
         this.filters = {}
@@ -600,19 +659,3 @@ import Loader from '@/components/TableLoader.vue'
   },
 }
 </script>
-
-
-<style scoped>
-.selected-row {
-  outline: 2px solid rgba(130, 184, 179, 0.81);
-  outline-offset: -2px;
-  border-radius: 0%;
-}
-.navigation-column {
-  background-color: rgba(234, 234, 234, 0.21);
-}
-.bordered-table :deep() td {
-  border-right: 1px solid rgba(222, 222, 222, 0.22);
-}
-
-</style>

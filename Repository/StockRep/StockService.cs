@@ -156,7 +156,22 @@ namespace StockService.Repository.StockRep
                 query = query.Where(s => s.CompanyId == stockDto.CompanyId);
 
 
-            var stocks = await query.ToListAsync();
+            //var stocks = await query.ToListAsync();
+
+            #region
+            var stocks = await query
+                .Select(s => new
+                {
+                    StockId = s.StockId,
+                    Name = s.Name,
+                    CompanyId = s.CompanyId,
+                    CompanyName = _db.Companies
+                        .Where(c => c.CompanyId == s.CompanyId)
+                        .Select(c => c.Name)
+                        .FirstOrDefault(),
+                })
+                .ToListAsync();
+            #endregion
 
             if (stocks.Any())
             {

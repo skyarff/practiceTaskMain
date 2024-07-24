@@ -21,10 +21,9 @@
               class="navigation-column">
                 {{ item.employeeId}}
               </td>
+              <td>{{ item.login }}</td>
               <td>{{ item.fullName }}</td>
               <td>{{ item.jobTitle }}</td>
-
-              <td>{{ item.login }}</td>
               <td>
                   <div v-if="item.imagePath">
                     <v-img 
@@ -49,10 +48,10 @@
                     </v-icon>
                   </div>
               </td>
-              <td>{{ getStockName(item.stockId) }}</td>
-              <td>{{ getCompanyName(item.companyId) }}</td>
-              <td>{{ item.email }}</td>
+              <td>{{ item.companyName }}</td>
+              <td>{{ item.stockName }}</td>
               <td>{{ item.phone }}</td>
+              <td>{{ item.email }}</td> 
             </tr>
           </template>
         </v-data-table>
@@ -468,6 +467,7 @@
 import api from '@/api';
 import Loader from '@/components/TableLoader.vue'
 import { mapGetters } from 'vuex';
+import '@/assets/main.css';
 
   export default {
     components: {
@@ -479,14 +479,14 @@ import { mapGetters } from 'vuex';
         filters: {},
         headers: [
           { title: 'ID сотрудника*', key: 'employeeId', align: 'start', sortable: true },
+          { title: 'Логин', key: 'login', align: 'start', sortable: true },
           { title: 'ФИО', key: 'fullName', align: 'start', sortable: true },
           { title: 'Должность', key: 'jobTitile', align: 'start', sortable: true },
-          { title: 'Логин', key: 'login', align: 'start', sortable: true },
           { title: 'Фото сотудника', key: 'imagePath', align: 'start', sortable: false },
-          { title: 'Склад', key: 'stockName', align: 'start', sortable: true },
           { title: 'Компания', key: 'companyName', align: 'start', sortable: true },
-          { title: 'Почта', key: 'email', align: 'start', sortable: true },
+          { title: 'Склад', key: 'stockName', align: 'start', sortable: true },
           { title: 'Телефон', key: 'phone', align: 'start', sortable: true },
+          { title: 'Почта', key: 'email', align: 'start', sortable: true },
         ],
         employees: [],
         selectedEmployee: {},
@@ -494,12 +494,18 @@ import { mapGetters } from 'vuex';
         isLoading: true,
         page: 1,
         itemsPerPage: 10,
+        abortFlag: false,
+        timeoutId: null
       }
     },
     activated() {
-      this.applyFilters();
+      this.abortFlag = false
+      this.checkConnection();
       this.$store.dispatch('getAllCompanies');
-      this.$store.dispatch('getAllStocks');
+    },
+    deactivated() {
+      this.abortFlag = true
+      clearTimeout(this.timeoutId)
     },
     methods: {
       selectionOfStocks(selected) {
@@ -535,19 +541,62 @@ import { mapGetters } from 'vuex';
             this.selectedEmployee.employeeId = undefined
           }
       },
+      async checkConnection() {
+        let flag = true;
+        while (flag && !this.abortFlag) {
+          try {
+            await this.applyFilters();
+            flag = false;
+          } catch {
+            await new Promise(resolve => {
+              this.timeoutId = setTimeout(resolve, 30000)
+            });
+          }
+        }
+      },
       async applyFilters() {
         this.isLoading = true;
         const url = '/api/Employee/getEmployeesFiltered';
- 
-        api.post(url, this.filters, {
+
+        const data = {}
+
+        if (this.filters.employeeId)
+          data.employeeId = this.filters.employeeId
+        if (this.filters.fullName)
+          data.fullName = this.filters.fullName
+        if (this.filters.jobTitle)
+          data.jobTitle = this.filters.jobTitle
+        if (this.filters.login)
+          data.login = this.filters.login
+        if (this.filters.email)
+          data.email = this.filters.email
+        if (this.filters.phone)
+          data.phone = this.filters.phone
+        if (this.filters.companyId)
+          data.companyId = this.filters.companyId
+        if (this.filters.stockId)
+          data.stockId = this.filters.stockId
+
+        return new Promise((resolve, reject) => {
+          api.post(url, data, {
             headers: {
               'accept': '*/*',
               'Content-Type': 'application/json'
             }
           })
-          .then(response => this.employees = Array.from(response.data.result))
-          .catch(() => this.$store.commit('setErrorMessage', 'Записи, соответствующие заданным фильтрам, отсутствуют.'))
-          .finally(() => this.isLoading = false)
+          .then(response => {
+            this.employees = Array.from(response.data.result);
+            resolve();
+          })
+          .catch(error => {
+            this.$store.commit('setErrorMessage', error);
+            reject();
+          })
+          .finally(() => {
+            this.isLoading = false;
+          });
+        });
+        
       },
       resetFilters() {
         this.filters = {}
@@ -611,14 +660,6 @@ import { mapGetters } from 'vuex';
           this.$store.dispatch( 'employeePage/getStocksByCompanyId', {companyId: this.selectedEmployee.companyId, selected: true})
         }
       },
-      getStockName(stockId) {
-        const stock = this.stocks.find(s => s.stockId === stockId);
-        return stock ? stock.name : 'Не указано';
-      },
-      getCompanyName(companyId) {
-        const company = this.companies.find(c => c.companyId === companyId);
-        return company ? company.name : 'Не указано';
-      },
   },
     computed: {
     
@@ -671,29 +712,3 @@ import { mapGetters } from 'vuex';
   }
 }
 </script>
-
-
-<style scoped>
-.selected-row {
-  outline: 2px solid rgba(130, 184, 179, 0.81);
-  outline-offset: -2px;
-  border-radius: 0%;
-}
-.navigation-column {
-  background-color: rgba(234, 234, 234, 0.21);
-}
-.bordered-table :deep() td {
-  border-right: 1px solid rgba(222, 222, 222, 0.22);
-}
-
-:deep(.image-tooltip) {
-  padding: 0 !important;
-  background-color: transparent !important;
-  opacity: 1 !important;
-}
-.full-size-image {
-  width: 200px;
-  height: 200px; 
-  object-fit: cover;
-}
-</style>

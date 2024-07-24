@@ -22,7 +22,7 @@
               {{ item.productCategoryId }}
             </td>
             <td>{{ item.name }}</td>
-            <td>{{ getCompanyName(item.companyId) }}</td>
+            <td>{{ item.companyName }}</td>
           </tr>
         </template>
       </v-data-table>
@@ -250,6 +250,7 @@
 import api from '@/api';
 import Loader from '@/components/TableLoader.vue'
 import { mapGetters } from 'vuex';
+import '@/assets/main.css';
 
 export default {
   components: {
@@ -270,11 +271,18 @@ export default {
       isLoading: true,
       page: 1,
       itemsPerPage: 10,
+      abortFlag: false,
+      timeoutId: null
     }
   },
   activated() {
-    this.applyFilters();
+    this.abortFlag = false
+    this.checkConnection();
     this.$store.dispatch('getAllCompanies');
+  },
+  deactivated() {
+      this.abortFlag = true
+      clearTimeout(this.timeoutId)
   },
   methods: {
     updatePage(newPage) {
@@ -297,19 +305,53 @@ export default {
           this.selectedProductCategory.productCategoryId = undefined
         }
     },
+    async checkConnection() {
+        let flag = true;
+        while (flag && !this.abortFlag) {
+          try {
+            await this.applyFilters();
+            flag = false;
+          } catch {
+            await new Promise(resolve => {
+              this.timeoutId = setTimeout(resolve, 30000)
+            });
+          }
+        }
+      },
     async applyFilters() {
       this.isLoading = true;
       const url = '/api/ProductCategory/getProductCategoriesFiltered';
 
-      api.post(url, this.filters, {
-          headers: {
-            'accept': '*/*',
-            'Content-Type': 'application/json'
-          }
-        })
-        .then(response => this.productCategories = Array.from(response.data.result))
-        .catch(() => this.$store.commit('setErrorMessage', 'Записи, соответствующие заданным фильтрам, отсутствуют.'))
-        .finally(() => this.isLoading = false)
+      const data = {}
+
+      if (this.filters.productCategoryId)
+        data.productCategoryId = this.filters.productCategoryId
+      if (this.filters.name)
+        data.name = this.filters.name
+      if (this.filters.name)
+        data.name = this.filters.name
+      if (this.filters.companyId)
+        data.companyId = this.filters.companyId
+
+      return new Promise((resolve, reject) => {
+          api.post(url, data, {
+            headers: {
+              'accept': '*/*',
+              'Content-Type': 'application/json'
+            }
+          })
+          .then(response => {
+            this.productCategories = Array.from(response.data.result);
+            resolve();
+          })
+          .catch(error => {
+            this.$store.commit('setErrorMessage', error);
+            reject();
+          })
+          .finally(() => {
+            this.isLoading = false;
+          });
+        });
     },
     resetFilters() {
       this.filters = {}
@@ -354,10 +396,6 @@ export default {
         this.isEditing = true
       }
     },
-    getCompanyName(companyId) {
-      const company = this.companies.find(c => c.companyId === companyId);
-      return company ? company.name : 'Не указано';
-    },
 },
 computed: {
   selectedCompanyId: {
@@ -383,18 +421,3 @@ computed: {
 }
 </script>
 
-
-<style scoped>
-.selected-row {
-outline: 2px solid rgba(130, 184, 179, 0.81);
-outline-offset: -2px;
-border-radius: 0%;
-}
-.navigation-column {
-background-color: rgba(234, 234, 234, 0.21);
-}
-.bordered-table :deep() td {
-border-right: 1px solid rgba(222, 222, 222, 0.22);
-}
-
-</style>

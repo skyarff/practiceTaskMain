@@ -85,7 +85,8 @@ namespace StockService
                 entity.Property(p => p.Price).HasDefaultValue(0);
 
 
-                entity.HasIndex(p => p.ProductCategoryId);
+                entity.HasIndex(p => p.ProductCategoryId); //.HasMethod("hash");
+
                 entity.HasIndex(p => p.StorageLocationId);
                 entity.HasIndex(p => p.EmployeeId);
                 entity.HasIndex(p => p.UpdId);

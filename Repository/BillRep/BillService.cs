@@ -212,11 +212,37 @@ namespace StockService.Repository.BillRep
 
 
             if (billDto.StartDate != null)
-                query = query.Where(b => b.CreateDate >= billDto.StartDate.Value);
+                query = query.Where(p => p.CreateDate >= billDto.StartDate.Value);
             if (billDto.EndDate != null)
-                query = query.Where(b => b.CreateDate <= billDto.EndDate.Value);
+                query = query.Where(p => p.CreateDate <= billDto.EndDate.Value);
 
-            var bills = await query.ToListAsync();
+            //var bills = await query.ToListAsync();
+
+            #region
+            var bills = await query
+                .Select(b => new
+                {
+                    BillId = b.BillId,
+                    BillNumber = b.BillNumber,
+                    BillPdfPath = b.BillPdfPath,
+                    BillTotal = b.BillTotal,
+                    CreateDate = b.CreateDate,
+
+                    ProviderId = b.ProviderId,
+                    ProviderName = _db.Providers
+                        .Where(p => p.ProviderId == b.ProviderId)
+                        .Select(p => p.Name)
+                        .FirstOrDefault(),
+
+                    CompanyId = b.CompanyId,
+                    CompanyName = _db.Companies
+                        .Where(c => c.CompanyId == b.CompanyId)
+                        .Select(c => c.Name)
+                        .FirstOrDefault(),
+                })
+                .ToListAsync();
+            #endregion
+
             if (bills.Any())
             {
                 _response.IsSuccess = true;

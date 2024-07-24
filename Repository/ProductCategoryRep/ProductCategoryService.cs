@@ -109,9 +109,22 @@ namespace StockService.Repository.ProductCategoryRep
                 query = query.Where(pc => pc.CompanyId == productCategoryDto.CompanyId);
 
 
-            var productCategories = await query.ToListAsync();
+            //var productCategories = await query.ToListAsync();
 
-
+            #region
+            var productCategories = await query
+                .Select(pc => new
+                {
+                    ProductCategoryId = pc.ProductCategoryId,
+                    Name = pc.Name,
+                    CompanyId = pc.CompanyId,
+                    CompanyName = _db.Companies
+                        .Where(c => c.CompanyId == pc.CompanyId)
+                        .Select(c => c.Name)
+                        .FirstOrDefault(),
+                })
+                .ToListAsync();
+            #endregion
 
             if (productCategories.Any())
             {

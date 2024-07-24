@@ -267,8 +267,71 @@ namespace StockService.Repository.ProductRep
             else if (productDto.ProviderId != null)
                 query = query.Where(p => p.ProviderId == productDto.ProviderId);
 
+            //var products = await query.ToListAsync();
 
-            var products = await query.ToListAsync();
+            #region
+            var products = await query
+                .Select(p => new 
+                {
+                    ProductId = p.ProductId,
+                    Name = p.Name,
+                    Manufacturer = p.Manufacturer,
+                    ProductionArticle = p.ProductionArticle,
+                    InnerArticle = p.InnerArticle,
+                    FactoryNumber = p.FactoryNumber,
+                    Price = p.Price,
+                    ImagePath = p.ImagePath,
+                    CreateDate = p.CreateDate,
+
+                    UpdId = p.UpdId,
+                    DocumentNumber = p.UpdId != null ? _db.Upds
+                        .Where(u => u.UpdId == p.UpdId)
+                        .Select(u => u.DocumentNumber)
+                        .FirstOrDefault() : null,
+
+                    ProductCategoryId = p.ProductCategoryId,
+                    ProductCategoryName = p.ProductCategoryId != null ? _db.ProductCategories
+                        .Where(pc => pc.ProductCategoryId == p.ProductCategoryId)
+                        .Select(pc => pc.Name)
+                        .FirstOrDefault() : null,
+
+                    StorageLocationId = p.StorageLocationId,
+                    RackCode = p.RackCode,
+                    ShelfCode = p.ShelfCode,
+
+                    EmployeeId = p.EmployeeId,
+                    EmployeeName = p.EmployeeId != null ? _db.Employees
+                        .Where(e => e.EmployeeId == p.EmployeeId)
+                        .Select(e => e.FullName)
+                        .FirstOrDefault() : null,
+
+                    StockId = p.StockId,
+                    StockName = _db.Stocks
+                        .Where(s => s.StockId == p.StockId)
+                        .Select(s => s.Name)
+                        .FirstOrDefault(),
+
+                    CompanyId = p.CompanyId,
+                    CompanyName = _db.Companies
+                        .Where(c => c.CompanyId == p.CompanyId)
+                        .Select(c => c.Name)
+                        .FirstOrDefault(),
+
+                    BillId = p.BillId,
+                    BillNumber = p.BillId != null ? _db.Bills
+                        .Where(b => b.BillId == p.BillId)
+                        .Select(b => b.BillNumber)
+                        .FirstOrDefault() : null,
+
+                    ProviderId = p.ProviderId,
+                    ProviderName = p.ProviderId != null ? _db.Providers
+                        .Where(pr => pr.ProviderId == p.ProviderId)
+                        .Select(pr => pr.Name)
+                        .FirstOrDefault() : null
+                })
+                .ToListAsync();
+            #endregion
+
             if (products.Any())
             {
                 _response.IsSuccess = true;

@@ -1,0 +1,23 @@
+.selected-row {
+  outline: 2px solid rgba(130, 184, 179, 0.81);
+  outline-offset: -2px;
+  border-radius: 0%;
+}
+.navigation-column {
+  background-color: rgba(234, 234, 234, 0.21);
+}
+.bordered-table :deep() td {
+  border-right: 1px solid rgba(222, 222, 222, 0.22);
+}
+
+.image-tooltip {
+  padding: 0 !important;
+  background-color: transparent !important;
+  opacity: 1 !important;
+}
+
+.full-size-image {
+  width: 200px;
+  height: 200px; 
+  object-fit: cover;
+}

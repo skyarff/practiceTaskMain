@@ -21,12 +21,9 @@
               class="navigation-column">
                 {{ item.productId}}
               </td>
-              <td>{{ item.name }}</td>
-              <td>{{ item.manufacturer }}</td>
-              <td>{{ item.productionArticle }}</td>
-              <td>{{ item.innerArticle }}</td>
-              <td>{{ item.factoryNumber }}</td>
+              <td>{{ item.name }}</td>        
               <td>{{ item.price }}</td>
+              <td>{{ formatDate(item.createDate) }}</td>
               <td>
                   <div v-if="item.imagePath">
                     <v-img 
@@ -51,16 +48,19 @@
                     </v-icon>
                   </div>
               </td>
-              <td>{{ formatDate(item.createDate) }}</td>
-              <td>{{ getBillName(item.billId) }}</td>
-              <td>{{ getUpdName(item.updId) }}</td>
-              <td>{{ getProductCategoryName(item.productCategoryId) }}</td>
-              <td>{{ getCompanyName(item.companyId) }}</td>
-              <td>{{ getStockName(item.stockId) }}</td>
+              <td>{{ item.companyName }}</td>
+              <td>{{ item.stockName }}</td>
+              <td>{{ item.productCategoryName }}</td>
               <td>{{ item.rackCode }}</td>
+              <td>{{ item.employeeName }}</td>
               <td>{{ item.shelfCode }}</td>
-              <td>{{ getEmployeeName(item.employeeId) }}</td>
-              <td>{{ getProviderName(item.providerId) }}</td>
+              <td>{{ item.providerName}}</td>
+              <td>{{ item.billNumber }}</td>
+              <td>{{ item.documentNumber }}</td>
+              <td>{{ item.manufacturer }}</td>
+              <td>{{ item.productionArticle }}</td>
+              <td>{{ item.innerArticle }}</td>
+              <td>{{ item.factoryNumber }}</td>
             </tr>
           </template>
         </v-data-table>
@@ -669,6 +669,7 @@
 import api from '@/api';
 import Loader from '@/components/TableLoader.vue'
 import { mapGetters } from 'vuex';
+import '@/assets/main.css';
 
   export default {
     components: {
@@ -681,22 +682,22 @@ import { mapGetters } from 'vuex';
         headers: [
           { title: 'ID продукта*', key: 'productId', align: 'start', sortable: true },
           { title: 'Наименование продутка', key: 'name', align: 'start', sortable: true },
+          { title: 'Цена', key: 'price', align: 'start', sortable: true },
+          { title: 'Дата добавления', key: 'createDate', align: 'start', sortable: true },
+          { title: 'Фото продукта', key: 'productPhoto', align: 'start', sortable: false },
+          { title: 'Компания', key: 'companyName', align: 'start', sortable: true },
+          { title: 'Склад', key: 'stockName', align: 'start', sortable: true },
+          { title: 'Категория', key: 'productCategoryName', align: 'start', sortable: true },
+          { title: 'Стеллаж', key: 'rackCode', align: 'start', sortable: true },
+          { title: 'Работник', key: 'employeeName', align: 'start', sortable: true },
+          { title: 'Полка', key: 'shelfCode', align: 'start', sortable: true },
+          { title: 'Поставщик', key: 'providerName', align: 'start', sortable: true },
+          { title: 'Счет', key: 'billName', align: 'start', sortable: true },
+          { title: 'УПД', key: 'updName', align: 'start', sortable: true },
           { title: 'Производитель', key: 'manufacturer', align: 'start', sortable: true },
           { title: 'Произв. артикул', key: 'productionArticle', align: 'start', sortable: true },
           { title: 'Внутр. артикул', key: 'innerArticle', align: 'start', sortable: false },
-          { title: 'Заводской номер', key: 'factoryNumber', align: 'start', sortable: true },
-          { title: 'Цена', key: 'price', align: 'start', sortable: true },
-          { title: 'Фото продукта', key: 'productPhoto', align: 'start', sortable: false },
-          { title: 'Дата добавления', key: 'createDate', align: 'start', sortable: true },
-          { title: 'Счет', key: 'billName', align: 'start', sortable: true },
-          { title: 'УПД', key: 'updName', align: 'start', sortable: true },
-          { title: 'Категория', key: 'productCategoryName', align: 'start', sortable: true },
-          { title: 'Компания', key: 'companyName', align: 'start', sortable: true },
-          { title: 'Склад', key: 'stockName', align: 'start', sortable: true },
-          { title: 'Стеллаж', key: 'rackCode', align: 'start', sortable: true },
-          { title: 'Полка', key: 'shelfCode', align: 'start', sortable: true },
-          { title: 'Работник', key: 'employeeName', align: 'start', sortable: true },
-          { title: 'Поставщик', key: 'providerName', align: 'start', sortable: true },
+          { title: 'Заводской номер', key: 'factoryNumber', align: 'start', sortable: true }, 
         ],
         products: [],
         selectedProduct: {},
@@ -704,17 +705,19 @@ import { mapGetters } from 'vuex';
         isLoading: true,
         page: 1,
         itemsPerPage: 10,
+        abortFlag: false,
+        timeoutId: null
       }
     },
     activated() {
-      this.applyFilters();
+      this.abortFlag = false
+      this.checkConnection();
       this.$store.dispatch('getAllProviders');
       this.$store.dispatch('getAllCompanies');
-      this.$store.dispatch('getAllStocks');
-      this.$store.dispatch('getAllEmployees');
-      this.$store.dispatch('getAllProductCategories');
-      this.$store.dispatch('getAllBills');
-      this.$store.dispatch('getAllUpds');
+    },
+    deactivated() {
+      this.abortFlag = true
+      clearTimeout(this.timeoutId)
     },
     methods: {
       selectionOfStocksAndProductCategoriesAndBills(selected) {
@@ -824,6 +827,19 @@ import { mapGetters } from 'vuex';
             this.selectedProduct.productId = undefined
           }
       },
+      async checkConnection() {
+        let flag = true;
+        while (flag && !this.abortFlag) {
+          try {
+            await this.applyFilters();
+            flag = false;
+          } catch {
+            await new Promise(resolve => {
+              this.timeoutId = setTimeout(resolve, 30000)
+            });
+          }
+        }
+      },
       async applyFilters() {
         this.isLoading = true;
         const url = '/api/Product/getProductsFiltered';
@@ -857,18 +873,28 @@ import { mapGetters } from 'vuex';
           data.upperPriceLimit = this.filters.upperPriceLimit
         if (this.filters.startDate)
           data.startDate = new Date(this.filters.startDate).toISOString();
-        if(this.filters.endDate)
+        if (this.filters.endDate)
           data.endDate = new Date(this.filters.endDate).toISOString();
          
+          return new Promise((resolve, reject) => {
           api.post(url, data, {
             headers: {
               'accept': '*/*',
               'Content-Type': 'application/json'
             }
           })
-          .then(response => this.products = Array.from(response.data.result))
-          .catch(error => this.$store.commit('setErrorMessage', error))
-          .finally(() => this.isLoading = false)
+          .then(response => {
+            this.products = Array.from(response.data.result);
+            resolve();
+          })
+          .catch(error => {
+            this.$store.commit('setErrorMessage', error);
+            reject();
+          })
+          .finally(() => {
+            this.isLoading = false;
+          });
+        });
       },
       resetFilters() {
         this.filters = {}
@@ -947,40 +973,10 @@ import { mapGetters } from 'vuex';
         this.$store.dispatch( 'productPage/getEmployeesByStockId', {stockId: this.selectedProduct.stockId, selected: true})
         this.$store.dispatch( 'productPage/getUpdsByBillId', {billId: this.selectedProduct.billId, selected: true})
         }
-        
-        
       },
       formatDate(dateString) {
       const date = new Date(dateString);
       return date.toLocaleString();
-      },
-      getStockName(stockId) {
-        const stock = this.stocks.find(s => s.stockId === stockId);
-        return stock ? stock.name : 'Не указано';
-      },
-      getCompanyName(companyId) {
-        const company = this.companies.find(c => c.companyId === companyId);
-        return company ? company.name : 'Не указано';
-      },
-      getProviderName(providerId) {
-        const provider = this.providers.find(p => p.providerId === providerId);
-        return provider ? provider.name : 'Не указано';
-      },
-      getEmployeeName(employeeId) {
-        const employee = this.employees.find(e => e.employeeId === employeeId);
-        return employee ? employee.name : 'Не указано';
-      },
-      getProductCategoryName(productCategoryId) {
-        const productCategory = this.productCategories.find(pc => pc.productCategoryId === productCategoryId);
-        return productCategory ? productCategory.name : 'Не указано';
-      },
-      getBillName(billId) {
-        const bill = this.bills.find(b => b.billId === billId);
-        return bill ? bill.name : 'Не указано';
-      },
-      getUpdName(updId) {
-        const upd = this.upds.find(u => u.updId === updId);
-        return upd ? upd.name : 'Не указано';
       },
   },
   computed: {
@@ -1155,30 +1151,3 @@ import { mapGetters } from 'vuex';
   }
 }
 </script>
-
-
-<style scoped>
-.selected-row {
-  outline: 2px solid rgba(130, 184, 179, 0.81);
-  outline-offset: -2px;
-  border-radius: 0%;
-}
-.navigation-column {
-  background-color: rgba(234, 234, 234, 0.21);
-}
-.bordered-table :deep() td {
-  border-right: 1px solid rgba(222, 222, 222, 0.22);
-}
-
-:deep(.image-tooltip) {
-  padding: 0 !important;
-  background-color: transparent !important;
-  opacity: 1 !important;
-}
-.full-size-image {
-  width: 200px;
-  height: 200px; 
-  object-fit: cover;
-}
-
-</style>

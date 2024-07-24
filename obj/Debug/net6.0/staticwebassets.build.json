@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "D2Xl88K/iG7Xx8MiSZ8Rjw5NcT/Em5pob2YC7qr1G/o=",
+  "Hash": "t9gwaGn49xW3DVX3OgZzvPkrcNcTG/3d1t11ZVJ0e0o=",
   "Source": "StockService",
   "BasePath": "_content/StockService",
   "Mode": "Default",
@@ -1052,6 +1052,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Images\\ProductImages\\567016c5-dfe4-4782-8505-9be05643548f.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\ProductImages\\589f7a41-79b6-483c-88b6-01b023901672.jpg",
+      "SourceId": "StockService",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\",
+      "BasePath": "_content/StockService",
+      "RelativePath": "Images/ProductImages/589f7a41-79b6-483c-88b6-01b023901672.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\ProductImages\\589f7a41-79b6-483c-88b6-01b023901672.jpg"
     },
     {
       "Identity": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\ProductImages\\5ce3b7f4-f942-4309-8f03-7dcbbafba0f7.jpg",

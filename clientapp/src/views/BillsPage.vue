@@ -22,6 +22,8 @@
                 {{ item.billId}}
               </td>
               <td>{{ item.billNumber }}</td>
+              <td>{{ item.billTotal }}</td>
+              <td>{{ formatDate(item.createDate) }}</td>
               <td>
                   <div v-if="item.billPdfPath">
                     <v-img 
@@ -46,10 +48,8 @@
                     </v-icon>
                   </div>
               </td>
-              <td>{{ getProviderName(item.providerId) }}</td>
-              <td>{{ getCompanyName(item.companyId) }}</td>
-              <td>{{ item.billTotal }}</td>
-              <td>{{ formatDate(item.createDate) }}</td>
+              <td>{{ item.companyName }}</td>
+              <td>{{ item.providerName }}</td>
             </tr>
           </template>
         </v-data-table>
@@ -361,6 +361,7 @@
 import api from '@/api';
 import Loader from '@/components/TableLoader.vue'
 import { mapGetters } from 'vuex';
+import '@/assets/main.css';
 
   export default {
     components: {
@@ -373,11 +374,11 @@ import { mapGetters } from 'vuex';
         headers: [
           { title: 'ID счета*', key: 'billId', align: 'start', sortable: true },
           { title: 'Номер счёта', key: 'billNumber', align: 'start', sortable: true },
-          { title: 'Скан. PDF счета', key: 'billPdfPath', align: 'start', sortable: true },
-          { title: 'Провайдер', key: 'providerName', align: 'start', sortable: false },
-          { title: 'Компания', key: 'companyName', align: 'start', sortable: false },
           { title: 'Сумма счета', key: 'billTotal', align: 'start', sortable: false },
           { title: 'Дата добавления', key: 'createDate', align: 'start', sortable: false },
+          { title: 'Скан. PDF счета', key: 'billPdfPath', align: 'start', sortable: true },
+          { title: 'Компания', key: 'companyName', align: 'start', sortable: false },
+          { title: 'Провайдер', key: 'providerName', align: 'start', sortable: false },
         ],
         bills: [],
         selectedBill: {},
@@ -385,12 +386,19 @@ import { mapGetters } from 'vuex';
         isLoading: true,
         page: 1,
         itemsPerPage: 10,
+        abortFlag: false,
+        timeoutId: null
       }
     },
     activated() {
-      this.applyFilters();
+      this.abortFlag = false
+      this.checkConnection();
       this.$store.dispatch('getAllProviders');
       this.$store.dispatch('getAllCompanies');
+    },
+    deactivated() {
+      this.abortFlag = true
+      clearTimeout(this.timeoutId);
     },
     methods: {
       updatePage(newPage) {
@@ -413,19 +421,64 @@ import { mapGetters } from 'vuex';
             this.selectedBill.billId = undefined
           }
       },
+      async checkConnection() {
+        let flag = true;
+        while (flag && !this.abortFlag) {
+          try {
+            await this.applyFilters();
+            flag = false;
+          } catch {
+            await new Promise(resolve => {
+              this.timeoutId = setTimeout(resolve, 30000)
+            });
+          }
+        }
+      },
       async applyFilters() {
         this.isLoading = true;
         const url = '/api/Bill/getBillsFiltered';
 
-        api.post(url, this.filters, {
+        const data = {}
+
+        if (this.filters.billId)
+          data.billId = this.filters.billId
+        if (this.filters.billNumber)
+          data.billNumber = this.filters.billNumber
+        if (this.filters.billNumber)
+          data.billNumber = this.filters.billNumber
+        if (this.filters.lowerBillTotalLimit)
+          data.lowerBillTotalLimit = this.filters.lowerBillTotalLimit
+        if (this.filters.upperBillTotalLimit)
+          data.upperBillTotalLimit = this.filters.upperBillTotalLimit
+        if (this.filters.companyId)
+          data.companyId = this.filters.companyId
+        if (this.filters.providerId)
+          data.providerId = this.filters.providerId
+        if (this.filters.startDate)
+          data.startDate = new Date(this.filters.startDate).toISOString();
+        if (this.filters.endDate)
+          data.endDate = new Date(this.filters.endDate).toISOString();
+
+
+        return new Promise((resolve, reject) => {
+          api.post(url, data, {
             headers: {
               'accept': '*/*',
               'Content-Type': 'application/json'
             }
           })
-        .then(response => this.bills = Array.from(response.data.result))
-        .catch(error => this.$store.commit('setErrorMessage', error))
-        .finally(() => this.isLoading = false)
+          .then(response => {
+            this.bills = Array.from(response.data.result);
+            resolve();
+          })
+          .catch(error => {
+            this.$store.commit('setErrorMessage', error);
+            reject();
+          })
+          .finally(() => {
+            this.isLoading = false;
+          });
+        });
       },
       resetFilters() {
         this.filters = {}
@@ -458,7 +511,6 @@ import { mapGetters } from 'vuex';
         }
       },
       async deleteBill() {
-
         api.delete(`/api/Bill/delById?billId=${this.selectedBill.billId}`)
         .then(() => this.applyFilters())
         .catch(error => this.$store.commit('setErrorMessage', error))
@@ -476,14 +528,6 @@ import { mapGetters } from 'vuex';
       formatDate(dateString) {
       const date = new Date(dateString);
       return date.toLocaleString();
-      },
-      getProviderName(providerId) {
-        const provider = this.providers.find(p => p.providerId === providerId);
-        return provider ? provider.name : 'Не указано';
-      },
-      getCompanyName(companyId) {
-        const company = this.companies.find(c => c.companyId === companyId);
-        return company ? company.name : 'Не указано';
       },
   },
   computed: {
@@ -532,28 +576,3 @@ import { mapGetters } from 'vuex';
 </script>
 
 
-<style scoped>
-.selected-row {
-  outline: 2px solid rgba(130, 184, 179, 0.81);
-  outline-offset: -2px;
-  border-radius: 0%;
-}
-.navigation-column {
-  background-color: rgba(234, 234, 234, 0.21);
-}
-.bordered-table :deep() td {
-  border-right: 1px solid rgba(222, 222, 222, 0.22);
-}
-
-:deep(.image-tooltip) {
-  padding: 0 !important;
-  background-color: transparent !important;
-  opacity: 1 !important;
-}
-
-.full-size-image {
-  width: 200px;
-  height: 200px; 
-  object-fit: cover;
-}
-</style>

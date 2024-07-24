@@ -2,7 +2,7 @@
     <v-container fluid>
       
       <!-- Секция таблицы -->
-      <v-card v-if="!isLoading" class="mb-4">
+      <v-card v-if="!isLoading"  class="mb-4">
         <v-data-table
           :headers="headers"
           :items="companies"
@@ -22,7 +22,6 @@
                 {{ item.companyId}}
               </td>
               <td>{{ item.name }}</td>
-              <td>{{ item.inn }}</td>
               <td>
                   <div v-if="item.logoPath">
                     <v-img 
@@ -48,6 +47,7 @@
                     </v-icon>
                   </div>
               </td>
+              <td>{{ item.inn }}</td>
             </tr>
           </template>
         </v-data-table>
@@ -165,7 +165,7 @@
               v-if="isEditing"
               class="ml-3"
               color="secondary"
-              @click="deleteStorageLocation"
+              @click="deleteCompany"
               icon="mdi-delete"
               size="small"
               rounded="circle"
@@ -279,6 +279,7 @@
 <script>
 import api from '@/api';
 import Loader from '@/components/TableLoader.vue'
+import '@/assets/main.css';
 
   export default {
     components: {
@@ -291,8 +292,9 @@ import Loader from '@/components/TableLoader.vue'
         headers: [
           { title: 'ID компании*', key: 'companyId', align: 'start', sortable: true },
           { title: 'Название', key: 'name', align: 'start', sortable: true },
-          { title: 'ИНН', key: 'inn', align: 'start', sortable: true },
           { title: 'Логотип', key: 'logoPath', align: 'start', sortable: false },
+          { title: 'ИНН', key: 'inn', align: 'start', sortable: true },
+          
         ],
         companies: [],
         selectedCompany: {},
@@ -301,17 +303,17 @@ import Loader from '@/components/TableLoader.vue'
         page: 1,
         itemsPerPage: 10,
         controller: null,
-        flag: false
+        abortFlag: false,
+        timeoutId: null
       }
     },
     activated() {
-      // this.controller = new AbortController();
-      this.flag = false
+      this.abortFlag = false
       this.checkConnection();
     },
     deactivated() {
-      // this.controller.abort();
-      this.flag = true
+      this.abortFlag = true
+      clearTimeout(this.timeoutId);
     },
     methods: {
       updatePage(newPage) {
@@ -329,17 +331,40 @@ import Loader from '@/components/TableLoader.vue'
         window.scrollTo(0, document.body.scrollHeight);
       },
       switchEditingMode() {
+        console.log(this.companies)
           this.isEditing = !this.isEditing
           if (!this.isEditing) {
             this.selectedCompany.companyId = undefined
           }
       },
+      async checkConnection() {
+        let flag = true;
+        while (flag && !this.abortFlag) {
+          try {
+            await this.applyFilters();
+            flag = false;
+          } catch {
+            await new Promise(resolve => {
+              this.timeoutId = setTimeout(resolve, 30000)
+            });
+          }
+        }
+      },
       async applyFilters() {
         this.isLoading = true;
         const url = '/api/Company/getCompaniesFiltered';
+
+        const data = {}
+
+        if (this.filters.companyId)
+          data.companyId = this.filters.companyId
+        if (this.filters.name)
+          data.name = this.filters.name
+        if (this.filters.inn)
+          data.inn = this.filters.inn
         
         return new Promise((resolve, reject) => {
-          api.post(url, this.filters, {
+          api.post(url, data, {
             headers: {
               'accept': '*/*',
               'Content-Type': 'application/json'
@@ -351,25 +376,12 @@ import Loader from '@/components/TableLoader.vue'
           })
           .catch(error => {
             this.$store.commit('setErrorMessage', error);
-            reject(error);
+            reject();
           })
           .finally(() => {
             this.isLoading = false;
           });
         });
-      },
-      async checkConnection() {
-        // signal.addEventListener('abort', () => console.log('Aborted!'));
-
-        let flag = true;
-        while (flag && !this.flag) {
-          try {
-            await this.applyFilters();
-            flag = false;
-          } catch {
-            await new Promise(resolve => setTimeout(resolve, 7000));
-          }
-        }
       },
       resetFilters() {
         this.filters = {}
@@ -422,33 +434,16 @@ import Loader from '@/components/TableLoader.vue'
         }
       }
   },
+  computed: {
+    payload() {
+      return {
+        url: '/api/Company/getCompaniesFiltered',
+        isLoading: this.isLoading,
+        items: this.companies,
+        filters: this.filters
+      }
+    }
+  }
 }
 </script>
 
-
-<style scoped>
-.selected-row {
-  outline: 2px solid rgba(130, 184, 179, 0.81);
-  outline-offset: -2px;
-  border-radius: 0%;
-}
-.navigation-column {
-  background-color: rgba(234, 234, 234, 0.21);
-}
-.bordered-table :deep() td {
-  border-right: 1px solid rgba(222, 222, 222, 0.22);
-}
-
-:deep(.image-tooltip) {
-  padding: 0 !important;
-  background-color: transparent !important;
-  opacity: 1 !important;
-}
-
-.full-size-image {
-  width: 200px;
-  height: 200px; 
-  object-fit: cover;
-}
-
-</style>

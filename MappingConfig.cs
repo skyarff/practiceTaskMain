@@ -53,6 +53,7 @@ namespace StockService
                 config.CreateMap<Provider, ProviderDto>();
                 config.CreateMap<ProviderDto, Provider>()
                     .ForMember(dest => dest.ProviderId, opt => opt.Ignore());
+
             });
         }
     }

@@ -228,12 +228,6 @@ namespace StockService.Repository.EmployeeRep
                             File.Delete("wwwroot//" + oldPath);
                 }
 
-                
-
-
-                
-
-
                 _response.IsSuccess = true;
                 _response.Result = employee;
                 _response.Message = "Данные сотрудника обновлены.";
@@ -270,12 +264,39 @@ namespace StockService.Repository.EmployeeRep
             else if (employeeDto.CompanyId != null)
                 query = query.Where(e => e.CompanyId == employeeDto.CompanyId);
 
-            var products = await query.ToListAsync();
+            //var employees = await query.ToListAsync();
 
-            if (products.Any())
+            #region
+            var employees = await query
+                .Select(e => new
+                {
+                    EmployeeId = e.EmployeeId,
+                    FullName = e.FullName,
+                    JobTitle = e.JobTitle,
+                    Login = e.Login,
+                    ImagePath = e.ImagePath,
+                    Email = e.Email,
+                    Phone = e.Phone,
+
+                    StockId = e.StockId,
+                    StockName = e.StockId != null ? _db.Stocks
+                        .Where(s => s.StockId == e.StockId)
+                        .Select(s => s.Name)
+                        .FirstOrDefault() : null,
+
+                    CompanyId = e.CompanyId,
+                    CompanyName = _db.Companies
+                        .Where(c => c.CompanyId == e.CompanyId)
+                        .Select(c => c.Name)
+                        .FirstOrDefault(),
+                })
+                .ToListAsync();
+            #endregion
+
+            if (employees.Any())
             {
                 _response.IsSuccess = true;
-                _response.Result = products;
+                _response.Result = employees;
                 _response.Message = "Сотрудники успешно найдены по указанным критериям.";
             }
 

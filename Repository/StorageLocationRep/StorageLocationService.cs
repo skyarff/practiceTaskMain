@@ -177,10 +177,34 @@ namespace StockService.Repository.StorageLocationRep
                 query = query.Where(sl => EF.Functions.ILike(sl.Description, $"%{storageLocationDto.Description}%"));
 
             if (!string.IsNullOrEmpty(storageLocationDto.RackCode))
-                query = query.Where(sl => sl.RackCode == storageLocationDto.RackCode);
+                query = query.Where(sl => EF.Functions.ILike(sl.RackCode, $"%{storageLocationDto.RackCode}%"));
 
 
-            var storageLocations = await query.ToListAsync();
+            //var storageLocations = await query.ToListAsync();
+
+            #region
+            var storageLocations = await query
+                .Select(sl => new
+                {
+                    StorageLocationId = sl.StorageLocationId,
+                    RackCode = sl.RackCode,
+                    Description = sl.Description,
+                    ImagePath = sl.ImagePath,
+
+                    StockId = sl.StockId,
+                    StockName = _db.Stocks
+                        .Where(s => s.StockId == sl.StockId)
+                        .Select(s => s.Name)
+                        .FirstOrDefault(),
+
+                    CompanyId = sl.CompanyId,
+                    CompanyName = _db.Companies
+                        .Where(c => c.CompanyId == sl.CompanyId)
+                        .Select(c => c.Name)
+                        .FirstOrDefault(),
+                })
+                .ToListAsync();
+            #endregion
 
 
             if (storageLocations.Any())

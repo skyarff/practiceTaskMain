@@ -175,7 +175,7 @@ namespace StockService.Repository.BillRep
                 query = query.Where(u => u.UpdId == updDto.UpdId);
 
             if (!string.IsNullOrEmpty(updDto.DocumentNumber))
-                query = query.Where(u => u.DocumentNumber == updDto.DocumentNumber);
+                query = query.Where(sl => EF.Functions.ILike(sl.DocumentNumber, $"%{updDto.DocumentNumber}%"));
 
 
             if (updDto.BillId != null)
@@ -194,7 +194,39 @@ namespace StockService.Repository.BillRep
                 query = query.Where(b => b.CreateDate <= updDto.EndDate.Value);
 
 
-            var upds = await query.ToListAsync();
+            //var upds = await query.ToListAsync();
+
+
+            #region
+            var upds = await query
+                .Select(u => new
+                {
+                    UpdId = u.UpdId,
+                    DocumentNumber = u.DocumentNumber,
+                    UpdPdfPath = u.UpdPdfPath,
+                    CreateDate = u.CreateDate,
+
+                    BillId = u.BillId,
+                    BillNumber = u.BillId != 0 ? _db.Bills
+                        .Where(b => b.BillId == u.BillId)
+                        .Select(b => b.BillNumber)
+                        .FirstOrDefault() : null,
+
+                    CompanyId = u.CompanyId,
+                    CompanyName = _db.Companies
+                        .Where(c => c.CompanyId == u.CompanyId)
+                        .Select(c => c.Name)
+                        .FirstOrDefault(),
+
+                    ProviderId = u.ProviderId,
+                    ProviderName = _db.Providers
+                        .Where(p => p.ProviderId == u.ProviderId)
+                        .Select(p => p.Name)
+                        .FirstOrDefault(),         
+                })
+                .ToListAsync();
+            #endregion
+
             if (upds.Any())
             {
                 _response.IsSuccess = true;
