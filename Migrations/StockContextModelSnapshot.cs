@@ -147,6 +147,9 @@ namespace StockService.Migrations
 
                     NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("CompanyId"), "hash");
 
+                    b.HasIndex("Login")
+                        .IsUnique();
+
                     b.HasIndex("StockId");
 
                     NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("StockId"), "hash");

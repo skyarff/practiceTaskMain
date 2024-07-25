@@ -21,9 +21,9 @@
         @submit.prevent="signIn"
         >
             <v-text-field
-                v-model="email"
-                label="E-mail"
-                :rules="emailRules"
+                v-model="login"
+                label="login"
+                :rules="loginRules"
             >
                 <template v-slot:prepend>
                     <v-icon>mdi-email</v-icon>
@@ -109,15 +109,15 @@
 </template>
 
 <script>
+import api from '@/api'
 
 export default {
     data: () => ({
         showPassword: false,
-        email: '',
+        login: '',
         password: '',
-        emailRules: [
+        loginRules: [
         v => !!v || 'E-mail is required',
-        v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
         v => (v && v.length >= 3) || 'Minimum length is 3 characters',
         ],
         passwordRules: [
@@ -127,7 +127,28 @@ export default {
     }),
     methods: {
         async signIn() {
-            const t = true
+
+            const url = `/api/Employee/signIn`
+            api.get(url, {
+                headers: {
+                'accept': '*/*'
+                },
+                params: {
+                    login: this.login,
+                    password: this.password
+                }
+            })
+            .then(response => {
+                this.$store.commit('setUserInfo', response.data.result)
+                this.$router.push('/ProductsPage')
+            })
+            .catch(error => this.$store.commit('setErrorMessage', error))
+  
+
+
+
+
+
 
             // if (t || this.$refs.signForm.validate()) {
 
@@ -137,12 +158,10 @@ export default {
             //         type: 'signInWithPassword'
             //     }
 
-
             //     await this.$store.dispatch('auth/auth', payLoad);
 
             //     this.$router.push('/items')
             // }
-            
         },
         clear() {
             this.showPassword = false

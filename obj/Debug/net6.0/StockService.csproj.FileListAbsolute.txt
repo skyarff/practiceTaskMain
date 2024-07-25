@@ -137,3 +137,12 @@ C:\Users\InDrive\Desktop\practiceTaskMain\obj\Debug\net6.0\refint\StockService.d
 C:\Users\InDrive\Desktop\practiceTaskMain\obj\Debug\net6.0\StockService.pdb
 C:\Users\InDrive\Desktop\practiceTaskMain\obj\Debug\net6.0\StockService.genruntimeconfig.cache
 C:\Users\InDrive\Desktop\practiceTaskMain\obj\Debug\net6.0\ref\StockService.dll
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\bin\Debug\net6.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\bin\Debug\net6.0\Newtonsoft.Json.dll

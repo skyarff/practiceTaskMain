@@ -283,6 +283,12 @@ namespace StockService.Migrations
                 .Annotation("Npgsql:IndexMethod", "hash");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Employees_Login",
+                table: "Employees",
+                column: "Login",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Employees_StockId",
                 table: "Employees",
                 column: "StockId")

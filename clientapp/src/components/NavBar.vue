@@ -20,7 +20,6 @@
   
           <v-spacer></v-spacer>
   
-          
 
           <v-btn class="mr-5" icon to="/AuthPage">
             <v-icon>mdi-login</v-icon>

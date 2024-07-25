@@ -9,6 +9,7 @@ namespace StockService.Models
         public string JobTitle { get; set; }
 
         public string Login { get; set; }
+        [JsonIgnore]
         public string? PasswordHash { get; set; }
         public string Role { get; set; }
         public string? RefreshToken { get; set; }

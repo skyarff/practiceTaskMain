@@ -15,5 +15,6 @@ namespace StockService.Repository.EmployeeRep
         Task<Response> UpdateEmployeeAsync(EmployeeDto employeeDto);
         Task<Response> DeleteEmployeeAsync(int employeeId);
         Task<Response> GetEmployeesFilteredAsync(EmployeeDto employeeDto);
+        Task<Response> SignInAsync(EmployeeDto employeeDto);
     }
 }

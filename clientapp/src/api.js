@@ -6,16 +6,20 @@ const api = axios.create({
   // baseURL: import.meta.env.VITE_API_BASE_URL,
 });
 
-api.interceptors.request.use((config) => {
-//   const token = store.state.auth.userInfo.token;
-//   if (!config.url.includes('signUp') && !config.url.includes('signInWithPassword') && token) {
-//     config.params = {
-//       ...config.params,
-//       auth: token,
-//     }
-//   }
-  return config;
-});
+api.interceptors.request.use(
+  (config) => {
+    const token = store.state.accessToken;
+    
+    if (!config.url.includes('signUp') && token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 
 api.interceptors.response.use((response) => {

@@ -55,6 +55,7 @@ namespace StockService
             modelBuilder.Entity<Employee>(entity =>
             {
                 entity.HasKey(e => e.EmployeeId);
+                entity.HasIndex(e => e.Login).HasMethod("hash");
 
                 entity.HasIndex(e => e.StockId).HasMethod("hash");
                 entity.HasIndex(e => e.CompanyId).HasMethod("hash");

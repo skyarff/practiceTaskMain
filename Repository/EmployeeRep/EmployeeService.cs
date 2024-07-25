@@ -1,9 +1,12 @@
 ﻿using AppSettings;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using StockService.Models;
 using StockService.Models.dto;
-
+using StockService.Repository.CookieRep;
+using StockService.Repository.JwtRep;
+using System;
 
 namespace StockService.Repository.EmployeeRep
 {
@@ -13,10 +16,19 @@ namespace StockService.Repository.EmployeeRep
         private readonly IMapper _mapper;
         private Response _response;
         private string _imagePath = PathSettings.ImagePaths["EmployeeImages"];
-        public EmployeeService(IMapper mapper, StockContext db)
+
+        private readonly ITokenService _tokenService;
+        private readonly ICookieService _cookieService;
+
+        public EmployeeService(IMapper mapper, 
+            ITokenService tokenService, 
+            ICookieService cookieService, 
+            StockContext db)
         {
             _db = db;
             _mapper = mapper;
+            _tokenService = tokenService;
+            _cookieService = cookieService;
             _response = new Response();
         }
         public async Task<Response> ChangeEmployeePassword(EmployeeDto employeeDto)
@@ -57,12 +69,13 @@ namespace StockService.Repository.EmployeeRep
             if (!employeeIsExists)
             {
                 var employee = _mapper.Map<EmployeeDto, Employee>(employeeDto);
+
                 var stock = await _db.Stocks.FindAsync(employeeDto.StockId);
-                employee.CompanyId = stock.CompanyId;
+                if (stock != null) employee.CompanyId = stock.CompanyId;
+
 
                 if (!string.IsNullOrEmpty(employeeDto.Password))
                     employee.PasswordHash = Sha256.ComputeSha256Hash(employeeDto.Password);
-
 
                 string filePath = "";
                 if (employeeDto.Image != null && employeeDto.Image.Length > 0)
@@ -194,6 +207,9 @@ namespace StockService.Repository.EmployeeRep
                 if (!string.IsNullOrEmpty(employeeDto.FullName))
                     employee.FullName = employeeDto.FullName;
 
+                if (!string.IsNullOrEmpty(employeeDto.Role))
+                    employee.Role = employeeDto.Role;
+
                 if (!string.IsNullOrEmpty(employeeDto.JobTitle))
                     employee.JobTitle = employeeDto.JobTitle;
 
@@ -299,6 +315,36 @@ namespace StockService.Repository.EmployeeRep
                 _response.IsSuccess = true;
                 _response.Result = employees;
                 _response.Message = "Сотрудники успешно найдены по указанным критериям.";
+            }
+
+            return _response;
+        }
+
+        public async Task<Response> SignInAsync(EmployeeDto employeeDto)
+        {
+            _response.IsSuccess = false;
+            _response.Message = "Некорректные учетные данные.";
+
+            //var employee = await _db.Employees.FindAsync(employeeDto.EmployeeId);
+            var employee = await _db.Employees
+                .FirstOrDefaultAsync(e => e.Login == employeeDto.Login);
+
+
+            if (employee == null
+                || employeeDto.Password == null
+                || employee.PasswordHash != Sha256.ComputeSha256Hash(employeeDto.Password)
+                )
+                return _response;
+
+            if (employee != null)
+            {
+                _cookieService.SetCookie("token", 
+                    _tokenService.GenerateToken(employee).ToString(), 30);
+                _cookieService.SetCookie("employee", JsonConvert.SerializeObject(employee), 30);
+
+
+                _response.IsSuccess = true;
+                _response.Message = "Авторизация успешно пройдена.";
             }
 
             return _response;

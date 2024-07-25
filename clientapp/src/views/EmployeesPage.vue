@@ -24,6 +24,7 @@
               <td>{{ item.login }}</td>
               <td>{{ item.fullName }}</td>
               <td>{{ item.jobTitle }}</td>
+              <td>{{ item.role }}</td>
               <td>
                   <div v-if="item.imagePath">
                     <v-img 
@@ -164,6 +165,17 @@
                     Выберите один из предложенных вариантов
                   </v-card-subtitle>
                   <v-card-text>
+                    <v-row>      
+                    <v-col cols="12">
+                      <v-select
+                        v-model="filtersRole"
+                        :items="roles"
+                        label="Роль"
+                        prepend-icon="mdi-domain"
+                        dense
+                      ></v-select>
+                    </v-col>
+                  </v-row>
                     <v-row>
                       <v-col cols="12">
                             <v-select
@@ -302,7 +314,7 @@
                   
                   <v-row>
 
-                    <v-col cols="12" sm="6" md="4">
+                    <v-col cols="3">
                       <v-text-field
                         label="Почта"
                         v-model="selectedEmployee.email"
@@ -310,7 +322,7 @@
                       ></v-text-field>
                     </v-col>
 
-                    <v-col cols="12" sm="6" md="4">
+                    <v-col cols="3">
                       <v-text-field
                         label="Телефон"
                         v-model="selectedEmployee.phone"
@@ -318,7 +330,7 @@
                       ></v-text-field>
                     </v-col>
 
-                    <v-col cols="12" sm="6" md="4">
+                    <v-col cols="3">
                       <v-text-field
                         label="Пароль"
                         v-model="selectedEmployee.password"
@@ -326,6 +338,15 @@
                       ></v-text-field>
                     </v-col>
 
+                    <v-col cols="3">
+                      <v-select
+                        v-model="selectedRole"
+                        :items="roles"
+                        label="Роль"
+                        prepend-icon="mdi-domain"
+                        dense
+                      ></v-select>
+                    </v-col>
                   </v-row>
 
                   </v-card-text>
@@ -333,7 +354,6 @@
               </v-col>
             </v-row>
 
-            
           </div>
           <div v-else>
             <v-row>
@@ -424,6 +444,17 @@
                     <v-row>      
                     <v-col cols="12">
                       <v-select
+                        v-model="selectedRole"
+                        :items="roles"
+                        label="Роль"
+                        prepend-icon="mdi-domain"
+                        dense
+                      ></v-select>
+                    </v-col>
+                  </v-row>
+                    <v-row>      
+                    <v-col cols="12">
+                      <v-select
                         v-model="selectedCompanyId"
                         :items="companies"
                         item-title="name"
@@ -482,11 +513,17 @@ import '@/assets/main.css';
           { title: 'Логин', key: 'login', align: 'start', sortable: true },
           { title: 'ФИО', key: 'fullName', align: 'start', sortable: true },
           { title: 'Должность', key: 'jobTitile', align: 'start', sortable: true },
+          { title: 'Роль', key: 'role', align: 'start', sortable: true },
           { title: 'Фото сотудника', key: 'imagePath', align: 'start', sortable: false },
           { title: 'Компания', key: 'companyName', align: 'start', sortable: true },
           { title: 'Склад', key: 'stockName', align: 'start', sortable: true },
           { title: 'Телефон', key: 'phone', align: 'start', sortable: true },
           { title: 'Почта', key: 'email', align: 'start', sortable: true },
+        ],
+        roles: [
+          'StockLevelWorker',
+          'CompanyLevelWorker',
+          'Admin',
         ],
         employees: [],
         selectedEmployee: {},
@@ -568,6 +605,8 @@ import '@/assets/main.css';
           data.jobTitle = this.filters.jobTitle
         if (this.filters.login)
           data.login = this.filters.login
+        if (this.filters.role)
+          data.role = this.filters.role
         if (this.filters.email)
           data.email = this.filters.email
         if (this.filters.phone)
@@ -698,6 +737,22 @@ import '@/assets/main.css';
       set(value) {
         this.filters.stockId = value;
       }
+    },
+    selectedRole: {
+    get() {
+      return this.selectedEmployee.role ? this.selectedEmployee.role : this.roles[0];
+    },
+    set(value) {
+      this.selectedEmployee.role = value;
+    }
+    },
+    filtersRole: {
+    get() {
+      return this.filters.role ? this.filters.role : this.roles[0];
+    },
+    set(value) {
+      this.filters.role = value;
+    }
     },
     ...mapGetters([
       'companies',

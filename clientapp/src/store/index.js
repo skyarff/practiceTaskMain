@@ -4,13 +4,13 @@ import updPageModule from '@/store/updPage'
 import employeePageModule from '@/store/employeePage';
 import storageLocationPageModule from '@/store/storageLocationPage'
 import productPageModule from '@/store/productPage'
+import VueCookies from 'vue-cookies'
 
 export default createStore({
   state: {
     errorMessage: '',
-    companyId: 3,
-    employeeId: 5,
-    stockId: 4,
+    employeeInfo: null,
+    accessToken: '',
     companies: [],
     providers: [],
   },
@@ -32,6 +32,10 @@ export default createStore({
     setProviders(state, providers) {
       state.providers = providers
     },
+    setUserInfo(state) {
+      state.employeeInfo = VueCookies.get('employee');
+      state.accessToken = VueCookies.get('token');
+    }
   },
   actions: {
       async getAllCompanies({commit}) {
