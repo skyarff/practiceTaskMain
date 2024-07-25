@@ -31,8 +31,9 @@ namespace StockService
             modelBuilder.Entity<Stock>(entity =>
             {
                 entity.HasKey(s => s.StockId);
-                entity.HasIndex(e => e.CompanyId);
-                entity.HasIndex(e => e.Name).IsUnique();
+
+                entity.HasIndex(s => s.CompanyId).HasMethod("hash");
+                entity.HasIndex(s => s.Name).IsUnique();
 
                 entity.HasOne(s => s.Company)
                     .WithMany(c => c.Stocks)
@@ -43,7 +44,7 @@ namespace StockService
             modelBuilder.Entity<ProductCategory>(entity =>
             {
                 entity.HasKey(pc => pc.ProductCategoryId);
-                entity.HasIndex(p => p.CompanyId);
+                entity.HasIndex(pc => pc.CompanyId).HasMethod("hash");
 
                 entity.HasOne(pc => pc.Company)
                     .WithMany(c => c.ProductCategories)
@@ -54,10 +55,12 @@ namespace StockService
             modelBuilder.Entity<Employee>(entity =>
             {
                 entity.HasKey(e => e.EmployeeId);
+
+                entity.HasIndex(e => e.StockId).HasMethod("hash");
+                entity.HasIndex(e => e.CompanyId).HasMethod("hash");
+
                 entity.Property(e => e.JobTitle).HasDefaultValue("Junior");
-                entity.HasIndex(e => e.StockId);
-                entity.HasIndex(e => e.CompanyId);
-                entity.HasIndex(e => e.Login).IsUnique();
+                entity.Property(lm => lm.Role).HasDefaultValue("StockLevelWorker");
 
                 entity.HasOne(e => e.Stock)
                     .WithMany(s => s.Employees)
@@ -68,9 +71,10 @@ namespace StockService
             modelBuilder.Entity<StorageLocation>(entity =>
             {
                 entity.HasKey(sl => sl.StorageLocationId);
-                entity.HasIndex(sl => sl.StockId);
+
+                entity.HasIndex(sl => sl.CompanyId).HasMethod("hash");
+                entity.HasIndex(sl => sl.StockId).HasMethod("hash");
                 entity.HasIndex(sl => sl.RackCode);
-                entity.HasIndex(sl => sl.CompanyId);
 
                 entity.HasOne(sl => sl.Stock)
                     .WithMany(s => s.StorageLocations)
@@ -82,20 +86,18 @@ namespace StockService
             {
                 entity.HasKey(p => p.ProductId);
 
-                entity.Property(p => p.Price).HasDefaultValue(0);
-
-
-                entity.HasIndex(p => p.ProductCategoryId); //.HasMethod("hash");
-
-                entity.HasIndex(p => p.StorageLocationId);
-                entity.HasIndex(p => p.EmployeeId);
-                entity.HasIndex(p => p.UpdId);
-                entity.HasIndex(p => p.StockId);
-                entity.HasIndex(p => p.CompanyId);
-                entity.HasIndex(p => p.BillId);
-                entity.HasIndex(p => p.ProviderId);
+                entity.HasIndex(p => p.ProductCategoryId).HasMethod("hash");
+                entity.HasIndex(p => p.StorageLocationId).HasMethod("hash");
+                entity.HasIndex(p => p.EmployeeId).HasMethod("hash");
+                entity.HasIndex(p => p.UpdId).HasMethod("hash");
+                entity.HasIndex(p => p.StockId).HasMethod("hash");
+                entity.HasIndex(p => p.CompanyId).HasMethod("hash");
+                entity.HasIndex(p => p.BillId).HasMethod("hash");
+                entity.HasIndex(p => p.ProviderId).HasMethod("hash");
                 entity.HasIndex(p => p.RackCode);
                 entity.HasIndex(p => p.ShelfCode);
+
+                entity.Property(p => p.Price).HasDefaultValue(0);
 
                 entity.HasOne(p => p.ProductCategory)
                     .WithMany(pc => pc.Products)
@@ -119,15 +121,29 @@ namespace StockService
 
             });
 
+            modelBuilder.Entity<Upd>(entity =>
+            {
+                entity.HasKey(u => u.UpdId);
+
+                entity.HasIndex(u => u.DocumentNumber).IsUnique();
+                entity.HasIndex(u => u.BillId).HasMethod("hash");
+                entity.HasIndex(u => u.ProviderId).HasMethod("hash");
+                entity.HasIndex(u => u.CompanyId).HasMethod("hash");
+
+                entity.HasOne(u => u.Bill)
+                    .WithMany(b => b.Upds)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasForeignKey(u => u.BillId);
+            });
+
             modelBuilder.Entity<Bill>(entity =>
             {
-                entity.Property(b => b.BillTotal).HasDefaultValue(0);
-
-                entity.HasIndex(b => b.BillNumber).IsUnique();
-
                 entity.HasKey(b => b.BillId);
+
                 entity.HasIndex(b => b.BillNumber).IsUnique();
-                entity.HasIndex(b => b.ProviderId);
+                entity.HasIndex(b => b.ProviderId).HasMethod("hash");
+
+                entity.Property(b => b.BillTotal).HasDefaultValue(0);
 
                 entity.HasOne(b => b.Provider)
                     .WithMany(p => p.Bills)
@@ -138,20 +154,6 @@ namespace StockService
                     .WithMany(c => c.Bills)
                     .OnDelete(DeleteBehavior.SetNull)
                     .HasForeignKey(c => c.CompanyId);
-            });
-
-            modelBuilder.Entity<Upd>(entity =>
-            {
-                entity.HasKey(u => u.UpdId);
-                entity.HasIndex(u => u.DocumentNumber).IsUnique();
-                entity.HasIndex(u => u.BillId);
-                entity.HasIndex(u => u.ProviderId);
-                entity.HasIndex(u => u.CompanyId);
-
-                entity.HasOne(u => u.Bill)
-                    .WithMany(b => b.Upds)
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .HasForeignKey(u => u.BillId);
             });
 
             modelBuilder.Entity<Provider>(entity =>

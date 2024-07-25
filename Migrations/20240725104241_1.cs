@@ -126,7 +126,9 @@ namespace StockService.Migrations
                     FullName = table.Column<string>(type: "text", nullable: false),
                     JobTitle = table.Column<string>(type: "text", nullable: false, defaultValue: "Junior"),
                     Login = table.Column<string>(type: "text", nullable: false),
-                    Password = table.Column<string>(type: "text", nullable: true),
+                    PasswordHash = table.Column<string>(type: "text", nullable: true),
+                    Role = table.Column<string>(type: "text", nullable: false, defaultValue: "StockLevelWorker"),
+                    RefreshToken = table.Column<string>(type: "text", nullable: true),
                     StockId = table.Column<int>(type: "integer", nullable: true),
                     ImagePath = table.Column<string>(type: "text", nullable: true),
                     Email = table.Column<string>(type: "text", nullable: true),
@@ -265,7 +267,8 @@ namespace StockService.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Bills_ProviderId",
                 table: "Bills",
-                column: "ProviderId");
+                column: "ProviderId")
+                .Annotation("Npgsql:IndexMethod", "hash");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Companies_Name",
@@ -276,48 +279,50 @@ namespace StockService.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Employees_CompanyId",
                 table: "Employees",
-                column: "CompanyId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Employees_Login",
-                table: "Employees",
-                column: "Login",
-                unique: true);
+                column: "CompanyId")
+                .Annotation("Npgsql:IndexMethod", "hash");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employees_StockId",
                 table: "Employees",
-                column: "StockId");
+                column: "StockId")
+                .Annotation("Npgsql:IndexMethod", "hash");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductCategories_CompanyId",
                 table: "ProductCategories",
-                column: "CompanyId");
+                column: "CompanyId")
+                .Annotation("Npgsql:IndexMethod", "hash");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_BillId",
                 table: "Products",
-                column: "BillId");
+                column: "BillId")
+                .Annotation("Npgsql:IndexMethod", "hash");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_CompanyId",
                 table: "Products",
-                column: "CompanyId");
+                column: "CompanyId")
+                .Annotation("Npgsql:IndexMethod", "hash");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_EmployeeId",
                 table: "Products",
-                column: "EmployeeId");
+                column: "EmployeeId")
+                .Annotation("Npgsql:IndexMethod", "hash");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_ProductCategoryId",
                 table: "Products",
-                column: "ProductCategoryId");
+                column: "ProductCategoryId")
+                .Annotation("Npgsql:IndexMethod", "hash");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_ProviderId",
                 table: "Products",
-                column: "ProviderId");
+                column: "ProviderId")
+                .Annotation("Npgsql:IndexMethod", "hash");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_RackCode",
@@ -332,17 +337,20 @@ namespace StockService.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Products_StockId",
                 table: "Products",
-                column: "StockId");
+                column: "StockId")
+                .Annotation("Npgsql:IndexMethod", "hash");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_StorageLocationId",
                 table: "Products",
-                column: "StorageLocationId");
+                column: "StorageLocationId")
+                .Annotation("Npgsql:IndexMethod", "hash");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_UpdId",
                 table: "Products",
-                column: "UpdId");
+                column: "UpdId")
+                .Annotation("Npgsql:IndexMethod", "hash");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Providers_Name",
@@ -353,7 +361,8 @@ namespace StockService.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Stocks_CompanyId",
                 table: "Stocks",
-                column: "CompanyId");
+                column: "CompanyId")
+                .Annotation("Npgsql:IndexMethod", "hash");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Stocks_Name",
@@ -364,7 +373,8 @@ namespace StockService.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_StorageLocations_CompanyId",
                 table: "StorageLocations",
-                column: "CompanyId");
+                column: "CompanyId")
+                .Annotation("Npgsql:IndexMethod", "hash");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StorageLocations_RackCode",
@@ -374,17 +384,20 @@ namespace StockService.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_StorageLocations_StockId",
                 table: "StorageLocations",
-                column: "StockId");
+                column: "StockId")
+                .Annotation("Npgsql:IndexMethod", "hash");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Upds_BillId",
                 table: "Upds",
-                column: "BillId");
+                column: "BillId")
+                .Annotation("Npgsql:IndexMethod", "hash");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Upds_CompanyId",
                 table: "Upds",
-                column: "CompanyId");
+                column: "CompanyId")
+                .Annotation("Npgsql:IndexMethod", "hash");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Upds_DocumentNumber",
@@ -395,7 +408,8 @@ namespace StockService.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Upds_ProviderId",
                 table: "Upds",
-                column: "ProviderId");
+                column: "ProviderId")
+                .Annotation("Npgsql:IndexMethod", "hash");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

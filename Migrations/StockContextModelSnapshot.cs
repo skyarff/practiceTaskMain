@@ -61,6 +61,8 @@ namespace StockService.Migrations
 
                     b.HasIndex("ProviderId");
 
+                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("ProviderId"), "hash");
+
                     b.ToTable("Bills");
                 });
 
@@ -121,11 +123,20 @@ namespace StockService.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Password")
+                    b.Property<string>("PasswordHash")
                         .HasColumnType("text");
 
                     b.Property<string>("Phone")
                         .HasColumnType("text");
+
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("text")
+                        .HasDefaultValue("StockLevelWorker");
 
                     b.Property<int?>("StockId")
                         .HasColumnType("integer");
@@ -134,10 +145,11 @@ namespace StockService.Migrations
 
                     b.HasIndex("CompanyId");
 
-                    b.HasIndex("Login")
-                        .IsUnique();
+                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("CompanyId"), "hash");
 
                     b.HasIndex("StockId");
+
+                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("StockId"), "hash");
 
                     b.ToTable("Employees");
                 });
@@ -213,13 +225,23 @@ namespace StockService.Migrations
 
                     b.HasIndex("BillId");
 
+                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("BillId"), "hash");
+
                     b.HasIndex("CompanyId");
+
+                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("CompanyId"), "hash");
 
                     b.HasIndex("EmployeeId");
 
+                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("EmployeeId"), "hash");
+
                     b.HasIndex("ProductCategoryId");
 
+                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("ProductCategoryId"), "hash");
+
                     b.HasIndex("ProviderId");
+
+                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("ProviderId"), "hash");
 
                     b.HasIndex("RackCode");
 
@@ -227,9 +249,15 @@ namespace StockService.Migrations
 
                     b.HasIndex("StockId");
 
+                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("StockId"), "hash");
+
                     b.HasIndex("StorageLocationId");
 
+                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("StorageLocationId"), "hash");
+
                     b.HasIndex("UpdId");
+
+                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("UpdId"), "hash");
 
                     b.ToTable("Products");
                 });
@@ -252,6 +280,8 @@ namespace StockService.Migrations
                     b.HasKey("ProductCategoryId");
 
                     b.HasIndex("CompanyId");
+
+                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("CompanyId"), "hash");
 
                     b.ToTable("ProductCategories");
                 });
@@ -323,6 +353,8 @@ namespace StockService.Migrations
 
                     b.HasIndex("CompanyId");
 
+                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("CompanyId"), "hash");
+
                     b.HasIndex("Name")
                         .IsUnique();
 
@@ -357,9 +389,13 @@ namespace StockService.Migrations
 
                     b.HasIndex("CompanyId");
 
+                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("CompanyId"), "hash");
+
                     b.HasIndex("RackCode");
 
                     b.HasIndex("StockId");
+
+                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("StockId"), "hash");
 
                     b.ToTable("StorageLocations");
                 });
@@ -396,12 +432,18 @@ namespace StockService.Migrations
 
                     b.HasIndex("BillId");
 
+                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("BillId"), "hash");
+
                     b.HasIndex("CompanyId");
+
+                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("CompanyId"), "hash");
 
                     b.HasIndex("DocumentNumber")
                         .IsUnique();
 
                     b.HasIndex("ProviderId");
+
+                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("ProviderId"), "hash");
 
                     b.ToTable("Upds");
                 });

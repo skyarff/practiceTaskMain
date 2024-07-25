@@ -156,7 +156,7 @@
           <v-col class="mr-15" cols="auto">
             <v-btn
               color="primary"
-              @click="saveStorageLocation"
+              @click="saveCompany"
               icon="mdi-plus-circle"
               size="small"
               rounded="circle"

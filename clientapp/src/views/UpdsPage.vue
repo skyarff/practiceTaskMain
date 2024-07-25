@@ -221,6 +221,13 @@
             </v-col>
             <v-spacer />
           <v-col class="mr-15" cols="auto">
+            <v-btn
+              color="primary"
+              @click="saveUpd"
+              icon="mdi-plus-circle"
+              size="small"
+              rounded="circle"
+            ></v-btn>
             <v-btn 
               v-if="isEditing"
               class="ml-3"

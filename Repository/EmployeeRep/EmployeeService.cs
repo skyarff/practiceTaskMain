@@ -30,12 +30,12 @@ namespace StockService.Repository.EmployeeRep
             {
                 if (string.IsNullOrEmpty(employeeDto.Password))
                 {
-                    employee.Password = null;
+                    employee.PasswordHash = null;
                     _response.Message = "Пароль установлен в null.";
                 }
                 else
                 {
-                    employee.Password = Sha256.ComputeSha256Hash(employeeDto.Password);
+                    employee.PasswordHash = Sha256.ComputeSha256Hash(employeeDto.Password);
                     _response.Message = "Пароль успешно изменен.";
                 }
 
@@ -61,7 +61,7 @@ namespace StockService.Repository.EmployeeRep
                 employee.CompanyId = stock.CompanyId;
 
                 if (!string.IsNullOrEmpty(employeeDto.Password))
-                    employee.Password = Sha256.ComputeSha256Hash(employeeDto.Password);
+                    employee.PasswordHash = Sha256.ComputeSha256Hash(employeeDto.Password);
 
 
                 string filePath = "";
@@ -198,7 +198,7 @@ namespace StockService.Repository.EmployeeRep
                     employee.JobTitle = employeeDto.JobTitle;
 
                 if (!string.IsNullOrEmpty(employeeDto.Password))
-                    employee.Password = Sha256.ComputeSha256Hash(employeeDto.Password);
+                    employee.PasswordHash = Sha256.ComputeSha256Hash(employeeDto.Password);
 
                 string filePath = "";
                 string? oldPath = employee.ImagePath;
@@ -274,6 +274,7 @@ namespace StockService.Repository.EmployeeRep
                     FullName = e.FullName,
                     JobTitle = e.JobTitle,
                     Login = e.Login,
+                    Role = e.Role,
                     ImagePath = e.ImagePath,
                     Email = e.Email,
                     Phone = e.Phone,
