@@ -6,14 +6,10 @@ import storageLocationPageModule from '@/store/storageLocationPage'
 import productPageModule from '@/store/productPage'
 import VueCookies from 'vue-cookies'
 
+
+
 export default createStore({
-  state: {
-    errorMessage: '',
-    employeeInfo: null,
-    accessToken: '',
-    companies: [],
-    providers: [],
-  },
+  state: getInitialState,
   getters: {
     companies(state) {
       return state.companies;
@@ -23,6 +19,9 @@ export default createStore({
     },
   },
   mutations: {
+    setInitialState(state) {
+      state = getInitialState()
+    },
     setErrorMessage(state, message) {
       state.errorMessage = message
     },
@@ -83,6 +82,11 @@ export default createStore({
             // this.$store.commit('setErrorMessage', error);
           } 
       },
+      logout({commit}) {
+        commit('setInitialState');
+        VueCookies.remove('employee');
+        VueCookies.remove('token');
+      }
   },
   modules: {
     updPage: updPageModule,
@@ -91,3 +95,14 @@ export default createStore({
     productPage: productPageModule
   },
 });
+
+
+function getInitialState() {
+  return {
+    errorMessage: '',
+    employeeInfo: null,
+    accessToken: '',
+    companies: [],
+    providers: [],
+  };
+}

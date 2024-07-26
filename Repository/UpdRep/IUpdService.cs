@@ -1,16 +1,16 @@
 ﻿using StockService.Models.dto;
 using StockService.Models;
+using System.Security.Claims;
 
 namespace StockService.Repository.UpdRep
 {
     public interface IUpdService
     {
         Task<Response> GetAllUpdsAsync();
-        Task<Response> GetUpdsInRangeAsync(UpdDto updDto);
-        Task<Response> GetUpdsByBillIdAsync(int billId);
-        Task<Response> GetUpdByIdAsync(int updId);
-        Task<Response> CreateUpdAsync(UpdDto updDto);
-        Task<Response> DeleteUpdAsync(int updId);
-        Task<Response> GetUpdsFilteredAsync(UpdDto updDto);
+        Task<Response> GetUpdsByBillIdAsync(int billId, ClaimsPrincipal User);
+        Task<Response> GetUpdByIdAsync(int updId, ClaimsPrincipal User);
+        Task<Response> CreateUpdAsync(UpdDto updDto, ClaimsPrincipal User);
+        Task<Response> DeleteUpdAsync(int updId, ClaimsPrincipal User);
+        Task<Response> GetUpdsFilteredAsync(UpdDto updDto, ClaimsPrincipal User);
     }
 }

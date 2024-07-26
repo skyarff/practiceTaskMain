@@ -3,6 +3,8 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using StockService.Models;
 using StockService.Models.dto;
+using System.Security.Claims;
+using System.Security.Cryptography.X509Certificates;
 
 namespace StockService.Repository.ProductRep
 {
@@ -19,8 +21,17 @@ namespace StockService.Repository.ProductRep
             _response = new Response();
         }
         
-        public async Task<Response> CreateProductAsync(ProductDto productDto)
+        public async Task<Response> CreateProductAsync(ProductDto productDto, ClaimsPrincipal User)
         {
+            var storageLocation = await _db.StorageLocations.FindAsync(productDto.StorageLocationId);
+
+            if (User.IsInRole("StockLevelWorker")
+                && productDto.StockId != Convert.ToInt32(User.FindFirstValue("StockId"))
+                || User.IsInRole("CompanyLevelWorker")
+                && storageLocation?.CompanyId != Convert.ToInt32(User.FindFirstValue("CompanyId"))
+                )
+                throw new Exception("Некорректные данные запроса");
+
             var productIsExists = await _db.Products.AnyAsync(p => p.StorageLocationId == productDto.StorageLocationId
                 && p.ShelfCode == productDto.ShelfCode);
 
@@ -29,8 +40,6 @@ namespace StockService.Repository.ProductRep
             if (!productIsExists)
             {
                 var product = _mapper.Map<ProductDto, Product>(productDto);
-
-                var storageLocation = await _db.StorageLocations.FindAsync(productDto.StorageLocationId);
                 product.StockId = storageLocation.StockId;
                 product.CompanyId = storageLocation.CompanyId;
                 product.RackCode = storageLocation.RackCode;
@@ -72,10 +81,18 @@ namespace StockService.Repository.ProductRep
             return _response;
         }
 
-        public async Task<Response> DeleteProductAsync(int productId)
+        public async Task<Response> DeleteProductAsync(int productId, ClaimsPrincipal User)
         {
             var product = await _db.Products.FindAsync(productId);
 
+            if (User.IsInRole("StockLevelWorker")
+                && product.StockId != Convert.ToInt32(User.FindFirstValue("StockId"))
+            || User.IsInRole("CompanyLevelWorker")
+                && product?.CompanyId != Convert.ToInt32(User.FindFirstValue("CompanyId"))
+                )
+                throw new Exception("Некорректные данные запроса");
+
+            
             _response.IsSuccess = false;
             _response.Message = "Продукт не найден.";
 
@@ -112,9 +129,16 @@ namespace StockService.Repository.ProductRep
             return _response;
         }
 
-        public async Task<Response> GetProductByIdAsync(int productId)
+        public async Task<Response> GetProductByIdAsync(int productId, ClaimsPrincipal User)
         {
             var product = await _db.Products.FindAsync(productId);
+
+            if (User.IsInRole("StockLevelWorker")
+                && product?.StockId != Convert.ToInt32(User.FindFirstValue("StockId"))
+            || User.IsInRole("CompanyLevelWorker")
+                && product?.CompanyId != Convert.ToInt32(User.FindFirstValue("CompanyId"))
+                )
+                throw new Exception("Некорректные данные запроса");
 
             _response.IsSuccess = false;
             _response.Message = "Продукт не найден.";
@@ -129,9 +153,16 @@ namespace StockService.Repository.ProductRep
             return _response;
         }
 
-        public async Task<Response> UpdateProductAsync(ProductDto productDto)
+        public async Task<Response> UpdateProductAsync(ProductDto productDto, ClaimsPrincipal User)
         {
             var product = await _db.Products.FindAsync(productDto.ProductId);
+
+            if (User.IsInRole("StockLevelWorker")
+                && product.StockId != Convert.ToInt32(User.FindFirstValue("StockId"))
+            || User.IsInRole("CompanyLevelWorker")
+                && product?.CompanyId != Convert.ToInt32(User.FindFirstValue("CompanyId"))
+                )
+                throw new Exception("Некорректные данные запроса");
 
             _response.IsSuccess = false;
             _response.Message = "Продукт не найден.";
@@ -208,8 +239,15 @@ namespace StockService.Repository.ProductRep
             return _response;
         }
 
-        public async Task<Response> GetProductsFilteredAsync(ProductDto productDto)
+        public async Task<Response> GetProductsFilteredAsync(ProductDto productDto, ClaimsPrincipal User)
         {
+            if (User.IsInRole("StockLevelWorker")
+                && (productDto.StockId = Convert.ToInt32(User.FindFirstValue("StockId"))) == -1
+            || User.IsInRole("CompanyLevelWorker")
+                && (productDto.CompanyId = Convert.ToInt32(User.FindFirstValue("CompanyId"))) == -1
+                )
+                throw new Exception("Некорректные данные запроса");
+
             _response.IsSuccess = false;
             _response.Message = "Продукты не найдены по указанным критериям.";
 

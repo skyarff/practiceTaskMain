@@ -1,5 +1,6 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using StockService.Models;
+using StockService.Models.dto;
 using StockService.Repository.JwtRep;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -16,6 +17,11 @@ public class TokenService : ITokenService
 
     public string GenerateToken(Employee employee)
     {
+        if (!(employee.Role == "StockLevelWorker" && employee?.StockId != null
+            || employee.Role == "CompanyLevelWorker" && employee?.CompanyId != null
+            || employee.Role == "Admin"))
+            throw new Exception("Некорректные данные запроса");
+
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
@@ -25,11 +31,9 @@ public class TokenService : ITokenService
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             new Claim(ClaimTypes.Role, employee.Role),
 
-            new Claim("CompanyId", employee.StockId.ToString() ?? ""),
-            new Claim("StockId", employee.StockId.ToString() ?? ""),
+            new Claim("CompanyId", employee?.CompanyId != null ? employee.CompanyId.ToString() : "-1"),
+            new Claim("StockId", employee?.StockId != null ? employee.StockId.ToString() : "-1"),
         };
-
-        //var stockId = User.FindFirstValue("StockId");
 
         //if (employee?.CompanyId != null)
         //    claims.Add(new Claim("CompanyId", employee.CompanyId.ToString()));

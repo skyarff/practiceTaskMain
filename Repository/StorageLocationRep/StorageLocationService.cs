@@ -3,6 +3,7 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using StockService.Models;
 using StockService.Models.dto;
+using System.Security.Claims;
 
 namespace StockService.Repository.StorageLocationRep
 {
@@ -19,8 +20,17 @@ namespace StockService.Repository.StorageLocationRep
             _response = new Response();
         }
         
-        public async Task<Response> CreateStorageLocationAsync(StorageLocationDto storageLocationDto)
+        public async Task<Response> CreateStorageLocationAsync(StorageLocationDto storageLocationDto, ClaimsPrincipal User)
         {
+            var stock = await _db.Stocks.FindAsync(storageLocationDto.StockId);
+
+            if (User.IsInRole("StockLevelWorker")
+                && storageLocationDto.StockId != Convert.ToInt32(User.FindFirstValue("StockId"))
+                || User.IsInRole("CompanyLevelWorker")
+                && stock?.CompanyId != Convert.ToInt32(User.FindFirstValue("CompanyId"))
+                )
+                throw new Exception("Некорректные данные запроса");
+
             var storageLocationIsExists = await _db.StorageLocations.AnyAsync(sl => 
             sl.StockId == storageLocationDto.StockId
             && sl.RackCode == storageLocationDto.RackCode);
@@ -31,7 +41,6 @@ namespace StockService.Repository.StorageLocationRep
             if (!storageLocationIsExists)
             {
                 var storageLocation = _mapper.Map<StorageLocationDto, StorageLocation>(storageLocationDto);
-                var stock = await _db.Stocks.FindAsync(storageLocationDto.StockId);
                 storageLocation.CompanyId = stock.CompanyId;
 
                 string filePath = "";
@@ -57,9 +66,18 @@ namespace StockService.Repository.StorageLocationRep
             return _response;
         }
 
-        public async Task<Response> DeleteStorageLocationAsync(int storageLocationId)
+        public async Task<Response> DeleteStorageLocationAsync(int storageLocationId, ClaimsPrincipal User)
         {
             var storageLocation = await _db.StorageLocations.FindAsync(storageLocationId);
+
+            if (User.IsInRole("StockLevelWorker")
+                && storageLocation?.StockId != Convert.ToInt32(User.FindFirstValue("StockId"))
+                || User.IsInRole("CompanyLevelWorker")
+                && storageLocation?.CompanyId != Convert.ToInt32(User.FindFirstValue("CompanyId"))
+                )
+                throw new Exception("Некорректные данные запроса");
+
+            
 
             _response.IsSuccess = false;
             _response.Message = "Стеллаж не найден.";
@@ -80,8 +98,17 @@ namespace StockService.Repository.StorageLocationRep
             return _response;
         }
 
-        public async Task<Response> GetStorageLocationsByStockIdAsync(int stockId)
+        public async Task<Response> GetStorageLocationsByStockIdAsync(int stockId, ClaimsPrincipal User)
         {
+            var stock = await _db.Stocks.FindAsync(stockId);
+
+            if (User.IsInRole("StockLevelWorker")
+                && stockId != Convert.ToInt32(User.FindFirstValue("StockId"))
+                || User.IsInRole("CompanyLevelWorker")
+                && stock?.CompanyId != Convert.ToInt32(User.FindFirstValue("CompanyId"))
+                )
+                throw new Exception("Некорректные данные запроса");
+
             _response.IsSuccess = false;
             _response.Message = "Стеллажы не найдены.";
 
@@ -99,9 +126,16 @@ namespace StockService.Repository.StorageLocationRep
             return _response;
         }
 
-        public async Task<Response> GetStorageLocationByIdAsync(int storageLocationId)
+        public async Task<Response> GetStorageLocationByIdAsync(int storageLocationId, ClaimsPrincipal User)
         {
             var storageLocation = await _db.StorageLocations.FindAsync(storageLocationId);
+
+            if (User.IsInRole("StockLevelWorker")
+                && storageLocation?.StockId != Convert.ToInt32(User.FindFirstValue("StockId"))
+                || User.IsInRole("CompanyLevelWorker")
+                && storageLocation?.CompanyId != Convert.ToInt32(User.FindFirstValue("CompanyId"))
+                )
+                throw new Exception("Некорректные данные запроса");
 
             _response.IsSuccess = false;
             _response.Message = "Стеллаж не найден.";
@@ -115,9 +149,16 @@ namespace StockService.Repository.StorageLocationRep
             return _response;
         }
 
-        public async Task<Response> UpdateStorageLocationAsync(StorageLocationDto storageLocationDto)
+        public async Task<Response> UpdateStorageLocationAsync(StorageLocationDto storageLocationDto, ClaimsPrincipal User)
         {
             var storageLocation = await _db.StorageLocations.FindAsync(storageLocationDto.StorageLocationId);
+
+            if (User.IsInRole("StockLevelWorker")
+                && storageLocation?.StockId != Convert.ToInt32(User.FindFirstValue("StockId"))
+                || User.IsInRole("CompanyLevelWorker")
+                && storageLocation?.CompanyId != Convert.ToInt32(User.FindFirstValue("CompanyId"))
+                )
+                throw new Exception("Некорректные данные запроса");
 
             _response.IsSuccess = false;
             _response.Message = "Стеллаж не найден.";
@@ -157,8 +198,17 @@ namespace StockService.Repository.StorageLocationRep
             return _response;
         }
 
-        public async Task<Response> GetStorageLocationsFilteredAsync(StorageLocationDto storageLocationDto)
+        public async Task<Response> GetStorageLocationsFilteredAsync(StorageLocationDto storageLocationDto, ClaimsPrincipal User)
         {
+            var storageLocation = await _db.StorageLocations.FindAsync(storageLocationDto.StorageLocationId);
+
+            if (User.IsInRole("StockLevelWorker")
+                && (storageLocationDto.StockId = Convert.ToInt32(User.FindFirstValue("StockId"))) == -1
+                || User.IsInRole("CompanyLevelWorker")
+                && (storageLocationDto.CompanyId = Convert.ToInt32(User.FindFirstValue("CompanyId"))) == -1
+                )
+                throw new Exception("Некорректные данные запроса");
+
             _response.IsSuccess = false;
             _response.Message = "Стеллажы не найдены по указанным критериям.";
 

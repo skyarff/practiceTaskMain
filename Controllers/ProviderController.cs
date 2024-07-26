@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using StockService.Models;
 using StockService.Models.dto;
 using StockService.Repository.ProviderRep;
@@ -18,6 +19,7 @@ namespace StockService.Controllers
             this._response = new Response();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost("create")]
         public async Task<IActionResult> CreateProvider(ProviderDto providerDto)
         {
@@ -35,6 +37,7 @@ namespace StockService.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("dellById")]
         public async Task<IActionResult> DeleteProvider([FromQuery] int providerId)
         {
@@ -52,6 +55,7 @@ namespace StockService.Controllers
             }
         }
 
+        [Authorize(Roles = "CompanyLevelWorker,Admin")]
         [HttpGet("getAll")]
         public async Task<IActionResult> GetAllProviders()
         {
@@ -69,6 +73,7 @@ namespace StockService.Controllers
             }
         }
 
+        [Authorize(Roles = "CompanyLevelWorker,Admin")]
         [HttpGet("getById")]
         public async Task<IActionResult> GetProviderById([FromQuery] int id)
         {
@@ -86,6 +91,7 @@ namespace StockService.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("update")]
         public async Task<IActionResult> UpdateProviderAsync(ProviderDto providerDto)
         {
@@ -103,6 +109,7 @@ namespace StockService.Controllers
             }
         }
 
+        [Authorize(Roles = "CompanyLevelWorker,Admin")]
         [HttpPost("getProvidersFiltered")]
         public async Task<IActionResult> GetProvidersFiltered(ProviderDto providerDto)
         {

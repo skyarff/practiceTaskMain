@@ -1,5 +1,21 @@
 ﻿<Project>
   <ItemGroup>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Images\BillPdfs\011e746b-4f18-4002-b122-536d08cd31a9.png))">
+      <SourceType>Package</SourceType>
+      <SourceId>StockService</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/StockService</BasePath>
+      <RelativePath>Images/BillPdfs/011e746b-4f18-4002-b122-536d08cd31a9.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Images\BillPdfs\011e746b-4f18-4002-b122-536d08cd31a9.png))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Images\BillPdfs\12bb1ce9-0edf-4991-96f0-4051bc6022a6.png))">
       <SourceType>Package</SourceType>
       <SourceId>StockService</SourceId>
@@ -896,6 +912,22 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Images\ProductImages\316a42c5-c91a-41b2-bf05-aa293909b9d4.jpg))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Images\ProductImages\31f24920-0629-4646-b1a4-f32cd233e6bf.png))">
+      <SourceType>Package</SourceType>
+      <SourceId>StockService</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/StockService</BasePath>
+      <RelativePath>Images/ProductImages/31f24920-0629-4646-b1a4-f32cd233e6bf.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Images\ProductImages\31f24920-0629-4646-b1a4-f32cd233e6bf.png))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Images\ProductImages\3250ef19-2eaf-466b-855a-c9a75884b16c.jpg))">
       <SourceType>Package</SourceType>
       <SourceId>StockService</SourceId>
@@ -1568,6 +1600,22 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Images\StorageLocationImages\840bcddb-4c9f-428b-a53d-188799570869.jpg))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Images\StorageLocationImages\8b156c0d-2703-4f24-bb72-fe8b1ac8ad15.png))">
+      <SourceType>Package</SourceType>
+      <SourceId>StockService</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/StockService</BasePath>
+      <RelativePath>Images/StorageLocationImages/8b156c0d-2703-4f24-bb72-fe8b1ac8ad15.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Images\StorageLocationImages\8b156c0d-2703-4f24-bb72-fe8b1ac8ad15.png))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Images\StorageLocationImages\8c539b57-6478-4337-b19d-53f606217cc9.png))">
       <SourceType>Package</SourceType>
       <SourceId>StockService</SourceId>
@@ -1871,6 +1919,22 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Images\UpdPdfs\84b49373-2826-46dc-859a-7d037472425f.png))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Images\UpdPdfs\8e7dae47-fc04-4a31-b335-2cc3961175e5.png))">
+      <SourceType>Package</SourceType>
+      <SourceId>StockService</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/StockService</BasePath>
+      <RelativePath>Images/UpdPdfs/8e7dae47-fc04-4a31-b335-2cc3961175e5.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Images\UpdPdfs\8e7dae47-fc04-4a31-b335-2cc3961175e5.png))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Images\UpdPdfs\9f1b22e5-3fc2-45c6-8bf4-4a200862b62a.png))">
       <SourceType>Package</SourceType>

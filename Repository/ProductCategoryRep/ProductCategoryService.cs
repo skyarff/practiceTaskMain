@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using StockService.Models;
 using StockService.Models.dto;
+using System.ComponentModel.Design;
+using System.Security.Claims;
 
 namespace StockService.Repository.ProductCategoryRep
 {
@@ -18,8 +20,13 @@ namespace StockService.Repository.ProductCategoryRep
             _response = new Response();
         }
 
-        public async Task<Response> CreateProductCategoryAsync(ProductCategoryDto productCategoryDto)
+        public async Task<Response> CreateProductCategoryAsync(ProductCategoryDto productCategoryDto, ClaimsPrincipal User)
         {
+            if (User.IsInRole("CompanyLevelWorker")
+                && productCategoryDto.CompanyId != Convert.ToInt32(User.FindFirstValue("CompanyId")))
+                throw new Exception("Некорректные данные запроса");
+
+
             var productCategoryIsExists = await _db.ProductCategories
                 .AnyAsync(c => c.Name == productCategoryDto.Name && c.CompanyId == productCategoryDto.CompanyId);
 
@@ -37,10 +44,14 @@ namespace StockService.Repository.ProductCategoryRep
             }
             return _response;
         }
-
-        public async Task<Response> DeleteProductCategoryAsync(int productCategoryId)
+        public async Task<Response> DeleteProductCategoryAsync(int productCategoryId, ClaimsPrincipal User)
         {
             var productCategory = await _db.ProductCategories.FindAsync(productCategoryId);
+
+            if (User.IsInRole("CompanyLevelWorker")
+                && productCategory?.CompanyId != Convert.ToInt32(User.FindFirstValue("CompanyId")))
+                throw new Exception("Некорректные данные запроса");
+
 
             _response.IsSuccess = false;
             _response.Message = "Категория продуктов не найдена.";
@@ -72,8 +83,12 @@ namespace StockService.Repository.ProductCategoryRep
 
             return _response;
         }
-        public async Task<Response> GetProductCategoriesByCompanyIdAsync(int companyId)
+        public async Task<Response> GetProductCategoriesByCompanyIdAsync(int companyId, ClaimsPrincipal User)
         {
+            if ((User.IsInRole("CompanyLevelWorker") || User.IsInRole("StockLevelWorker"))
+                && companyId != Convert.ToInt32(User.FindFirstValue("CompanyId")))
+                throw new Exception("Некорректные данные запроса");
+
             _response.IsSuccess = false;
             _response.Message = "Категории продуктов не найдены для указанной компании.";
 
@@ -90,11 +105,12 @@ namespace StockService.Repository.ProductCategoryRep
 
             return _response;
         }
-
-
-
-        public async Task<Response> GetCategoriesFilteredAsync(ProductCategoryDto productCategoryDto)
+        public async Task<Response> GetCategoriesFilteredAsync(ProductCategoryDto productCategoryDto, ClaimsPrincipal User)
         {
+            if ((User.IsInRole("CompanyLevelWorker") || User.IsInRole("StockLevelWorker"))
+                && (productCategoryDto.CompanyId = Convert.ToInt32(User.FindFirstValue("CompanyId"))) == -1)
+                throw new Exception("Некорректные данные запроса");
+
             _response.IsSuccess = false;
             _response.Message = "Категории продуктов не найдены по указанным критериям.";
 

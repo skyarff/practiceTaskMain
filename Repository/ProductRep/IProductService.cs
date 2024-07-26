@@ -1,33 +1,16 @@
 ﻿using StockService.Models;
-using StockService.Models;
 using StockService.Models.dto;
+using System.Security.Claims;
 
 namespace StockService.Repository.ProductRep
 {
     public interface IProductService
     {
-
-
-
-        //Task<Response> GetProductsByCompanyIdAsync(int companyId);
-        //Task<Response> GetProductsByProviderIdAsync(int companyId);
-
-
-        //Task<Response> GetProductsByStockIdAsync(int? stockId);
-        //Task<Response> GetProductsByBillIdAsync(int companyId);
-        //Task<Response> GetProductsByUpdIdAsync(int companyId);
-
-
-        Task<Response> GetProductsFilteredAsync(ProductDto productDto);
-
-
-
+        Task<Response> GetProductsFilteredAsync(ProductDto productDto, ClaimsPrincipal User);
         Task<Response> GetAllProductsAsync();
-
-        Task<Response> GetProductByIdAsync(int productId);
-        Task<Response> CreateProductAsync(ProductDto productDto);
-        Task<Response> DeleteProductAsync(int productId);
-        Task<Response> UpdateProductAsync(ProductDto productDto);
-        
+        Task<Response> GetProductByIdAsync(int productId, ClaimsPrincipal User);
+        Task<Response> CreateProductAsync(ProductDto productDto, ClaimsPrincipal User);
+        Task<Response> DeleteProductAsync(int productId, ClaimsPrincipal User);
+        Task<Response> UpdateProductAsync(ProductDto productDto, ClaimsPrincipal User);
     }
 }

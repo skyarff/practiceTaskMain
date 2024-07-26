@@ -653,8 +653,12 @@ import '@/assets/main.css';
           formData.append('Login', this.selectedEmployee.login);
         if(this.selectedEmployee.password)
           formData.append('Password', this.selectedEmployee.password);
+        if(this.selectedEmployee.role)
+          formData.append('Role', this.selectedEmployee.role);
         if(this.selectedEmployee.stockId)
           formData.append('StockId', this.selectedEmployee.stockId);
+        if(this.selectedEmployee.companyId)
+          formData.append('CompanyId', this.selectedEmployee.companyId);
         if(this.selectedEmployee.email)
           formData.append('Email', this.selectedEmployee.email);
         if(this.selectedEmployee.phone)

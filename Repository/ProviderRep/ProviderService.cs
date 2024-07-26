@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using StockService.Models;
 using StockService.Models.dto;
+using System.Security.Claims;
 using System.Text.RegularExpressions;
 
 namespace StockService.Repository.ProviderRep

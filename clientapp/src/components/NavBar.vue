@@ -21,18 +21,16 @@
           <v-spacer></v-spacer>
   
 
-          <v-btn class="mr-5" icon to="/AuthPage">
-            <v-icon>mdi-login</v-icon>
-          </v-btn>
-  
-          <!-- <v-btn icon>
-            <v-icon>mdi-heart</v-icon>
-          </v-btn>
-  
-          <v-btn icon>
-            <v-icon>mdi-dots-vertical</v-icon>
-          </v-btn> -->
 
+          <v-btn @click="logout" v-if="isAuth" class="mr-3" to="/AuthPage">
+            <v-icon class="mr-1">mdi-logout</v-icon>
+            <span>Выйти</span>
+          </v-btn>
+
+          <v-btn v-else class="mr-3" to="/AuthPage">
+            <v-icon class="mr-1">mdi-login</v-icon>
+            <span>Войти</span>
+          </v-btn>
 
     </v-app-bar>
 </template>
@@ -42,6 +40,16 @@ export default {
   data() {
     return {
       apiBaseUrl: import.meta.env.VITE_API_BASE_URL,
+    }
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch('logout')
+    }
+  },
+  computed: {
+    isAuth() {
+      return !!this.$store.state.accessToken;
     }
   }
 }

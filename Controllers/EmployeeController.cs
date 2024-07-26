@@ -19,13 +19,14 @@ namespace StockService.Controllers
             this._response = new Response();
         }
 
+        [Authorize(Roles = "CompanyLevelWorker,Admin")]
         [HttpPost("create")]
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> CreateEmployee([FromForm] EmployeeDto employeeDto)
         {
             try
             {
-                _response = await _employeeService.CreateEmployeeAsync(employeeDto);
+                _response = await _employeeService.CreateEmployeeAsync(employeeDto, User);
                 if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }
@@ -37,12 +38,13 @@ namespace StockService.Controllers
             }
         }
 
+        [Authorize(Roles = "CompanyLevelWorker,Admin")]
         [HttpDelete("dellById")]
         public async Task<IActionResult> DeleteEmployee([FromQuery] int employeeId)
         {
             try
             {
-                _response = await _employeeService.DeleteEmployeeAsync(employeeId);
+                _response = await _employeeService.DeleteEmployeeAsync(employeeId, User);
                 if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }
@@ -54,6 +56,7 @@ namespace StockService.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("getAll")]
         public async Task<IActionResult> GetAllEmployees()
         {
@@ -71,12 +74,13 @@ namespace StockService.Controllers
             }
         }
 
+        [Authorize(Roles = "CompanyLevelWorker,Admin")]
         [HttpGet("getById")]
         public async Task<IActionResult> GetEmployeeById([FromQuery] int employeeId)
         {
             try
             {
-                _response = await _employeeService.GetEmployeeByIdAsync(employeeId);
+                _response = await _employeeService.GetEmployeeByIdAsync(employeeId, User);
                 if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }
@@ -88,12 +92,13 @@ namespace StockService.Controllers
             }
         }
 
+        [Authorize(Roles = "StockLevelWorker,CompanyLevelWorker,Admin")]
         [HttpGet("getByStockId")]
         public async Task<IActionResult> GetEmployeesByStockIdAsync([FromQuery] int? stockId)
         {
             try
             {
-                _response = await _employeeService.GetEmployeesByStockIdAsync(stockId);
+                _response = await _employeeService.GetEmployeesByStockIdAsync(stockId, User);
                 if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }
@@ -105,12 +110,13 @@ namespace StockService.Controllers
             }
         }
 
+        [Authorize(Roles = "CompanyLevelWorker,Admin")]
         [HttpGet("getByCompanyId")]
         public async Task<IActionResult> GetEmployeesByCompanyIdAsync([FromQuery] int? companyId)
         {
             try
             {
-                _response = await _employeeService.GetEmployeesByCompanyIdAsync(companyId);
+                _response = await _employeeService.GetEmployeesByCompanyIdAsync(companyId, User);
                 if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }
@@ -122,13 +128,14 @@ namespace StockService.Controllers
             }
         }
 
+        [Authorize(Roles = "StockLevelWorker,CompanyLevelWorker,Admin")]
         [HttpPut("update")]
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> UpdateEmployeeAsync([FromForm] EmployeeDto employeeDto)
         {
             try
             {
-                _response = await _employeeService.UpdateEmployeeAsync(employeeDto);
+                _response = await _employeeService.UpdateEmployeeAsync(employeeDto, User);
                 if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }
@@ -140,12 +147,13 @@ namespace StockService.Controllers
             }
         }
 
+        [Authorize(Roles = "CompanyLevelWorker,Admin")]
         [HttpPut("changePassword")]
         public async Task<IActionResult> ChangeEmployeePassword(EmployeeDto employeeDto)
         {
             try
             {
-                _response = await _employeeService.ChangeEmployeePassword(employeeDto);
+                _response = await _employeeService.ChangeEmployeePassword(employeeDto, User);
                 if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }
@@ -159,20 +167,11 @@ namespace StockService.Controllers
 
         [Authorize(Roles = "StockLevelWorker,CompanyLevelWorker,Admin")]
         [HttpPost("getEmployeesFiltered")]
-        public async Task<IActionResult> GetCompaniesFiltered(EmployeeDto employeeDto)
+        public async Task<IActionResult> GetEmployeesFiltered(EmployeeDto employeeDto)
         {
             try
             {
-                //if (User.IsInRole("StockLevelWorker"))
-                //{
-                //    int a = 5;
-                //}
-                //if (User.IsInRole("CompanyLevelWorker"))
-                //{
-                //    int a = 7;
-                //}
-
-                _response = await _employeeService.GetEmployeesFilteredAsync(employeeDto);
+                _response = await _employeeService.GetEmployeesFilteredAsync(employeeDto, User);
                 if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }
@@ -184,8 +183,7 @@ namespace StockService.Controllers
             }
         }
 
-
-        
+        [AllowAnonymous]
         [HttpGet("signIn")]
         public async Task<IActionResult> GetAllEmployees(string login, string password)
         {

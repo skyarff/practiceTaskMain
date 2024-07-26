@@ -3,6 +3,8 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using StockService.Models;
 using StockService.Models.dto;
+using System.ComponentModel.Design;
+using System.Security.Claims;
 
 namespace StockService.Repository.BillRep
 {
@@ -19,8 +21,12 @@ namespace StockService.Repository.BillRep
             _response = new Response();
         }
 
-        public async Task<Response> CreateBillAsync(BillDto billDto)
+        public async Task<Response> CreateBillAsync(BillDto billDto, ClaimsPrincipal User)
         {
+            if (User.IsInRole("CompanyLevelWorker")
+                && billDto.CompanyId != Convert.ToInt32(User.FindFirstValue("CompanyId")))
+                throw new Exception("Некорректные данные запроса");
+
             var billIsExists = await _db.Bills.AnyAsync(b => b.BillNumber == billDto.BillNumber);
 
             _response.IsSuccess = false;
@@ -54,9 +60,14 @@ namespace StockService.Repository.BillRep
             return _response;
         }
 
-        public async Task<Response> DeleteBillAsync(int billId)
+        public async Task<Response> DeleteBillAsync(int billId, ClaimsPrincipal User)
         {
             var bill = await _db.Bills.FindAsync(billId);
+
+            if (User.IsInRole("CompanyLevelWorker")
+                && bill?.CompanyId != Convert.ToInt32(User.FindFirstValue("CompanyId")))
+                throw new Exception("Некорректные данные запроса");
+
 
             _response.IsSuccess = false;
             _response.Message = "Счет не найден.";
@@ -94,38 +105,13 @@ namespace StockService.Repository.BillRep
             return _response;
         }
 
-        public async Task<Response> GetBillsInRangeAsync(BillDto billDto)
+        public async Task<Response> GetBillsByProviderAndCompanyIdAsync(int? providerId, int? companyId, ClaimsPrincipal User)
         {
+            if ((User.IsInRole("CompanyLevelWorker") || User.IsInRole("StockLevelWorker"))
+                && companyId != Convert.ToInt32(User.FindFirstValue("CompanyId"))
+                )
+                throw new Exception("Некорректные данные запроса");
 
-            var query = _db.Bills.AsQueryable();
-
-            if (billDto.StartDate != null)
-                query = query.Where(b => b.CreateDate >= billDto.StartDate.Value);
-
-            if (billDto.EndDate != null)
-                query = query.Where(b => b.CreateDate <= billDto.EndDate.Value);
-
-            query = true
-                ? query.OrderBy(b => b.CreateDate)
-                : query.OrderByDescending(b => b.CreateDate);
-
-            var bills = await query.ToListAsync();
-
-            _response.IsSuccess = false;
-            _response.Message = "Счета не найдены.";
-
-            if (bills.Any())
-            {
-                _response.IsSuccess = true;
-                _response.Result = bills;
-                _response.Message = "Счета успешно получены.";
-            }
-
-            return _response;
-        }
-
-        public async Task<Response> GetBillsByProviderAndCompanyIdAsync(int? providerId, int? companyId)
-        {
             _response.IsSuccess = false;
             _response.Message = "Счета не найдены для указанного поставщика и компании.";
 
@@ -148,28 +134,14 @@ namespace StockService.Repository.BillRep
             return _response;
         }
 
-        public async Task<Response> GetBillsByCompanyIdAsync(int companyId)
-        {
-            _response.IsSuccess = false;
-            _response.Message = "Счета не найдены для указанной компании.";
-
-            var bills = await _db.Bills
-                    .Where(с => с.CompanyId == companyId)
-                    .ToListAsync();
-
-            if (bills.Any())
-            {
-                _response.IsSuccess = true;
-                _response.Result = bills;
-                _response.Message = $"Счета для компании с ID {companyId} успешно получены.";
-            }
-
-            return _response;
-        }
-
-        public async Task<Response> GetBillByIdAsync(int billId)
+        public async Task<Response> GetBillByIdAsync(int billId, ClaimsPrincipal User)
         {
             var bill = await _db.Bills.FindAsync(billId);
+
+            if ((User.IsInRole("CompanyLevelWorker") || User.IsInRole("StockLevelWorker"))
+                && bill?.CompanyId != Convert.ToInt32(User.FindFirstValue("CompanyId"))
+                )
+                throw new Exception("Некорректные данные запроса");
 
             _response.IsSuccess = false;
             _response.Message = "Счет не найден.";
@@ -185,8 +157,13 @@ namespace StockService.Repository.BillRep
             return _response;
         }
 
-        public async Task<Response> GetBillsFilteredAsync(BillDto billDto)
+        public async Task<Response> GetBillsFilteredAsync(BillDto billDto, ClaimsPrincipal User)
         {
+            if ((User.IsInRole("CompanyLevelWorker") || User.IsInRole("StockLevelWorker"))
+                && (billDto.CompanyId = Convert.ToInt32(User.FindFirstValue("CompanyId"))) == -1
+                )
+                throw new Exception("Некорректные данные запроса");
+
             _response.IsSuccess = false;
             _response.Message = "Счета не найдены по указанным критериям.";
 

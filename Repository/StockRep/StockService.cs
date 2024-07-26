@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using StockService.Models;
 using StockService.Models.dto;
+using System.ComponentModel.Design;
+using System.Security.Claims;
 using System.Text.RegularExpressions;
 
 namespace StockService.Repository.StockRep
@@ -18,8 +20,14 @@ namespace StockService.Repository.StockRep
             _response = new Response();
         }
 
-        public async Task<Response> CreateStockAsync(StockDto stockDto)
+        public async Task<Response> CreateStockAsync(StockDto stockDto, ClaimsPrincipal User)
         {
+
+            if (User.IsInRole("CompanyLevelWorker") 
+                && stockDto.CompanyId != Convert.ToInt32(User.FindFirstValue("CompanyId")))  
+                throw new Exception("Некорректные данные запроса");
+
+
             var stockIsExists = await _db.Stocks.AnyAsync(s => s.Name == stockDto.Name);
 
             _response.IsSuccess = false;
@@ -39,11 +47,16 @@ namespace StockService.Repository.StockRep
             return _response;
         }
 
-        public async Task<Response> DeleteStockAsync(int stockId)
+        public async Task<Response> DeleteStockAsync(int stockId, ClaimsPrincipal User)
         {
             var stock = await _db.Stocks.FindAsync(stockId);
 
-            _response.IsSuccess = false;
+            if (User.IsInRole("CompanyLevelWorker")
+                && stock?.CompanyId != Convert.ToInt32(User.FindFirstValue("CompanyId")))
+                throw new Exception("Некорректные данные запроса");
+
+
+            _response.IsSuccess = false;    
             _response.Message = "Склад не найден.";
 
             if (stock != null)
@@ -75,8 +88,13 @@ namespace StockService.Repository.StockRep
             return _response;
         }
 
-        public async Task<Response> GetStocksByCompanyIdAsync(int? companyId)
+        public async Task<Response> GetStocksByCompanyIdAsync(int? companyId, ClaimsPrincipal User)
         {
+
+            if (User.IsInRole("CompanyLevelWorker")
+                && companyId != Convert.ToInt32(User.FindFirstValue("CompanyId")))
+                throw new Exception("Некорректные данные запроса");
+
             _response.IsSuccess = false;
             _response.Message = "Склады не найдены для указанной компании.";
 
@@ -94,9 +112,19 @@ namespace StockService.Repository.StockRep
             return _response;
         }
 
-        public async Task<Response> GetStockByIdAsync(int stockId)
+        public async Task<Response> GetStockByIdAsync(int stockId, ClaimsPrincipal User)
         {
             var stock = await _db.Stocks.FindAsync(stockId);
+
+            if (stock == null
+                || User.IsInRole("CompanyLevelWorker")
+                && stock?.CompanyId != Convert.ToInt32(User.FindFirstValue("CompanyId"))
+                || User.IsInRole("StockLevelWorker")
+                && stockId != Convert.ToInt32(User.FindFirstValue("StockId"))
+                )
+                throw new Exception("Некорректные данные запроса");
+
+            
 
             _response.IsSuccess = false;
             _response.Message = "Склад не найден.";
@@ -112,9 +140,16 @@ namespace StockService.Repository.StockRep
             return _response;
         }
 
-        public async Task<Response> UpdateEmployeeAsync(StockDto stockDto)
+        public async Task<Response> UpdateEmployeeAsync(StockDto stockDto, ClaimsPrincipal User)
         {
             var stock = await _db.Stocks.FindAsync(stockDto.StockId);
+
+            if (stock == null
+                || User.IsInRole("CompanyLevelWorker")
+                && stock?.CompanyId != Convert.ToInt32(User.FindFirstValue("CompanyId"))
+                )
+                throw new Exception("Некорректные данные запроса");
+
 
             _response.IsSuccess = false;
             _response.Message = "Не удалось установить новую компанию для склада.";
@@ -139,8 +174,15 @@ namespace StockService.Repository.StockRep
             return _response;
         }
 
-        public async Task<Response> GetStocksFilteredAsync(StockDto stockDto)
+        public async Task<Response> GetStocksFilteredAsync(StockDto stockDto, ClaimsPrincipal User)
         {
+            var stock = await _db.Stocks.FindAsync(stockDto.StockId);
+
+            if (User.IsInRole("CompanyLevelWorker")
+                && (stockDto.CompanyId = Convert.ToInt32(User.FindFirstValue("CompanyId"))) == -1
+                )
+                throw new Exception("Некорректные данные запроса");
+
             _response.IsSuccess = false;
             _response.Message = "Склады не найдены по указанным критериям.";
 

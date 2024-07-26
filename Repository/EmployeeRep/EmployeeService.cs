@@ -7,6 +7,9 @@ using StockService.Models.dto;
 using StockService.Repository.CookieRep;
 using StockService.Repository.JwtRep;
 using System;
+using System.Data;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace StockService.Repository.EmployeeRep
 {
@@ -31,9 +34,16 @@ namespace StockService.Repository.EmployeeRep
             _cookieService = cookieService;
             _response = new Response();
         }
-        public async Task<Response> ChangeEmployeePassword(EmployeeDto employeeDto)
+        public async Task<Response> ChangeEmployeePassword(EmployeeDto employeeDto, ClaimsPrincipal User)
         {
             var employee = await _db.Employees.FindAsync(employeeDto.EmployeeId);
+
+            if (User.IsInRole("CompanyLevelWorker")
+                    && ((employee.CompanyId != Convert.ToInt32(User.FindFirstValue("CompanyId"))
+                    || employee.Role == "CompanyLevelWorker")
+                    || employee.Role == "Admin"))
+                throw new Exception("Некорректные данные запроса");
+
 
             _response.IsSuccess = false;
             _response.Message = "Не удалось установить новый пароль.";
@@ -60,8 +70,15 @@ namespace StockService.Repository.EmployeeRep
             return _response;
         }
 
-        public async Task<Response> CreateEmployeeAsync(EmployeeDto employeeDto)
+        public async Task<Response> CreateEmployeeAsync(EmployeeDto employeeDto, ClaimsPrincipal User)
         {
+            if (User.IsInRole("CompanyLevelWorker")
+                    && ((employeeDto.CompanyId != Convert.ToInt32(User.FindFirstValue("CompanyId"))
+                    || employeeDto.Role == "CompanyLevelWorker")
+                    || employeeDto.Role == "Admin"))
+                throw new Exception("Некорректные данные запроса");
+
+
             var employeeIsExists = await _db.Employees.AnyAsync(e => e.Login == employeeDto.Login);
 
             _response.IsSuccess = false;
@@ -69,6 +86,7 @@ namespace StockService.Repository.EmployeeRep
             if (!employeeIsExists)
             {
                 var employee = _mapper.Map<EmployeeDto, Employee>(employeeDto);
+
 
                 var stock = await _db.Stocks.FindAsync(employeeDto.StockId);
                 if (stock != null) employee.CompanyId = stock.CompanyId;
@@ -100,9 +118,16 @@ namespace StockService.Repository.EmployeeRep
             return _response;
         }
 
-        public async Task<Response> DeleteEmployeeAsync(int employeeId)
+        public async Task<Response> DeleteEmployeeAsync(int employeeId, ClaimsPrincipal User)
         {
             var employee = await _db.Employees.FindAsync(employeeId);
+
+            if (User.IsInRole("CompanyLevelWorker")
+                    && ((employee.CompanyId != Convert.ToInt32(User.FindFirstValue("CompanyId"))
+                    || employee.Role == "CompanyLevelWorker")
+                    || employee.Role == "Admin"))
+                throw new Exception("Некорректные данные запроса");
+
 
             _response.IsSuccess = false;
             _response.Message = "Сотрудник не найден.";
@@ -140,8 +165,14 @@ namespace StockService.Repository.EmployeeRep
             return _response;
         }
 
-        public async Task<Response> GetEmployeesByStockIdAsync(int? stockId)
+        public async Task<Response> GetEmployeesByStockIdAsync(int? stockId, ClaimsPrincipal User)
         {
+            var stock = await _db.Stocks.FindAsync(stockId);
+
+            if (User.IsInRole("CompanyLevelWorker") 
+                && stock?.CompanyId != Convert.ToInt32(User.FindFirstValue("CompanyId")))
+                throw new Exception("Некорректные данные запроса");
+
             _response.IsSuccess = false;
             _response.Message = "Сотрудники не найдены.";
 
@@ -159,8 +190,12 @@ namespace StockService.Repository.EmployeeRep
             return _response;
         }
 
-        public async Task<Response> GetEmployeesByCompanyIdAsync(int? companyId)
+        public async Task<Response> GetEmployeesByCompanyIdAsync(int? companyId, ClaimsPrincipal User)
         {
+            if (User.IsInRole("CompanyLevelWorker")
+                && companyId != Convert.ToInt32(User.FindFirstValue("CompanyId")))
+                throw new Exception("Некорректные данные запроса");
+
             _response.IsSuccess = false;
             _response.Message = "Сотрудники не найдены для указанной компании.";
 
@@ -178,9 +213,14 @@ namespace StockService.Repository.EmployeeRep
             return _response;
         }
 
-        public async Task<Response> GetEmployeeByIdAsync(int employeeId)
+        public async Task<Response> GetEmployeeByIdAsync(int employeeId, ClaimsPrincipal User)
         {
             var employee = await _db.Employees.FindAsync(employeeId);
+
+            if (User.IsInRole("CompanyLevelWorker")
+                   && (employee.CompanyId != Convert.ToInt32(User.FindFirstValue("CompanyId"))
+                   || employee.Role == "Admin"))
+                throw new Exception("Некорректные данные запроса");
 
             _response.IsSuccess = false;
             _response.Message = "Сотрудник не найден.";
@@ -195,9 +235,24 @@ namespace StockService.Repository.EmployeeRep
             return _response;
         }
 
-        public async Task<Response> UpdateEmployeeAsync(EmployeeDto employeeDto)
+        public async Task<Response> UpdateEmployeeAsync(EmployeeDto employeeDto, ClaimsPrincipal User)
         {
             var employee = await _db.Employees.FindAsync(employeeDto.EmployeeId);
+
+
+            if (User.IsInRole("StockLevelWorker") && employeeDto.Role != "StockLevelWorker"
+                || employeeDto.Role == User.FindFirstValue(ClaimTypes.Role) 
+                && (employeeDto.EmployeeId.ToString() != User.FindFirstValue(ClaimTypes.NameIdentifier))
+                || User.IsInRole("CompanyLevelWorker")
+                && (employeeDto.CompanyId != Convert.ToInt32(User.FindFirstValue("CompanyId")) || employeeDto.Role == "Admin")
+                )
+                throw new Exception("Некорректные данные запроса");
+
+
+            if (User.IsInRole("CompanyLevelWorker")
+                    && (employeeDto.CompanyId != Convert.ToInt32(User.FindFirstValue("CompanyId"))
+                    || employeeDto.Role == "Admin"))
+                throw new Exception("Некорректные данные запроса");
 
             _response.IsSuccess = false;
             _response.Message = "Сотрудник не найден.";
@@ -252,8 +307,14 @@ namespace StockService.Repository.EmployeeRep
             return _response;
         }
 
-        public async Task<Response> GetEmployeesFilteredAsync(EmployeeDto employeeDto)
+        public async Task<Response> GetEmployeesFilteredAsync(EmployeeDto employeeDto, ClaimsPrincipal User)
         {
+            if (User.IsInRole("StockLevelWorker")
+                    && (employeeDto.StockId = Convert.ToInt32(User.FindFirstValue("StockId"))) == -1
+                    || User.IsInRole("CompanyLevelWorker")
+                    && (employeeDto.CompanyId = Convert.ToInt32(User.FindFirstValue("CompanyId"))) == -1)
+                throw new Exception("Некорректные данные запроса");
+
             _response.IsSuccess = false;
             _response.Message = "Сотрудники не найдены по указанным критериям.";
 
@@ -328,7 +389,6 @@ namespace StockService.Repository.EmployeeRep
             //var employee = await _db.Employees.FindAsync(employeeDto.EmployeeId);
             var employee = await _db.Employees
                 .FirstOrDefaultAsync(e => e.Login == employeeDto.Login);
-
 
             if (employee == null
                 || employeeDto.Password == null

@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using StockService.Models;
 using StockService.Models.dto;
 using StockService.Repository.StockRep;
+using System.Data;
 
 namespace StockService.Controllers
 {
@@ -18,12 +20,13 @@ namespace StockService.Controllers
             this._response = new Response();
         }
 
+        [Authorize(Roles = "CompanyLevelWorker,Admin")]
         [HttpPost("create")]
         public async Task<IActionResult> CreateStock(StockDto stockDto)
         {
             try
             {
-                _response = await _stockService.CreateStockAsync(stockDto);
+                _response = await _stockService.CreateStockAsync(stockDto, User);
                 if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }
@@ -35,12 +38,13 @@ namespace StockService.Controllers
             }
         }
 
+        [Authorize(Roles = "CompanyLevelWorker,Admin")]
         [HttpDelete("dellById")]
         public async Task<IActionResult> DeleteStock([FromQuery] int stockId)
         {
             try
             {
-                _response = await _stockService.DeleteStockAsync(stockId);
+                _response = await _stockService.DeleteStockAsync(stockId, User);
                 if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }
@@ -52,6 +56,7 @@ namespace StockService.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("getAll")]
         public async Task<IActionResult> GetAllStocks()
         {
@@ -69,12 +74,13 @@ namespace StockService.Controllers
             }
         }
 
+        [Authorize(Roles = "CompanyLevelWorker,Admin")]
         [HttpGet("getByCompanyId")]
         public async Task<IActionResult> GetStocksByCompanyId([FromQuery] int? companyId)
         {
             try
             {
-                _response = await _stockService.GetStocksByCompanyIdAsync(companyId);
+                _response = await _stockService.GetStocksByCompanyIdAsync(companyId, User);
                 if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }
@@ -86,12 +92,13 @@ namespace StockService.Controllers
             }
         }
 
+        [Authorize(Roles = "StockLevelWorker,CompanyLevelWorker,Admin")]
         [HttpGet("getById")]
         public async Task<IActionResult> GetStockByIdAsync([FromQuery] int stockId)
         {
             try
             {
-                _response = await _stockService.GetStockByIdAsync(stockId);
+                _response = await _stockService.GetStockByIdAsync(stockId, User);
                 if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }
@@ -103,12 +110,13 @@ namespace StockService.Controllers
             }
         }
 
+        [Authorize(Roles = "CompanyLevelWorker,Admin")]
         [HttpPut("update")]
         public async Task<IActionResult> UpdateStockAsync(StockDto stockDto)
         {
             try
             {
-                _response = await _stockService.UpdateEmployeeAsync(stockDto);
+                _response = await _stockService.UpdateEmployeeAsync(stockDto, User);
                 if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }
@@ -120,12 +128,13 @@ namespace StockService.Controllers
             }
         }
 
+        [Authorize(Roles = "CompanyLevelWorker,Admin")]
         [HttpPost("getStocksFiltered")]
         public async Task<IActionResult> GetStocksFiltered(StockDto stockDto)
         {
             try
             {
-                _response = await _stockService.GetStocksFilteredAsync(stockDto);
+                _response = await _stockService.GetStocksFilteredAsync(stockDto, User);
                 if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }

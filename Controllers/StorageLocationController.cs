@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using StockService.Models;
 using StockService.Models.dto;
 using StockService.Repository.StorageLocationRep;
+using System.Data;
 
 namespace StockService.Controllers
 {
+    [Authorize(Roles = "StockLevelWorker,CompanyLevelWorker,Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class StorageLocationController : ControllerBase
@@ -24,7 +27,7 @@ namespace StockService.Controllers
         {
             try
             {
-                _response = await _storageLocationService.CreateStorageLocationAsync(storageLocationDto);
+                _response = await _storageLocationService.CreateStorageLocationAsync(storageLocationDto, User);
                 if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }
@@ -41,7 +44,7 @@ namespace StockService.Controllers
         {
             try
             {
-                _response = await _storageLocationService.DeleteStorageLocationAsync(storageLocationId);
+                _response = await _storageLocationService.DeleteStorageLocationAsync(storageLocationId, User);
                 if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }
@@ -58,7 +61,7 @@ namespace StockService.Controllers
         {
             try
             {
-                _response = await _storageLocationService.GetStorageLocationByIdAsync(storageLocationId);
+                _response = await _storageLocationService.GetStorageLocationByIdAsync(storageLocationId, User);
                 if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }
@@ -75,7 +78,7 @@ namespace StockService.Controllers
         {
             try
             {
-                _response = await _storageLocationService.GetStorageLocationsByStockIdAsync(stockId);
+                _response = await _storageLocationService.GetStorageLocationsByStockIdAsync(stockId, User);
                 if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }
@@ -93,7 +96,7 @@ namespace StockService.Controllers
         {
             try
             {
-                _response = await _storageLocationService.UpdateStorageLocationAsync(storageLocationDto);
+                _response = await _storageLocationService.UpdateStorageLocationAsync(storageLocationDto, User);
                 if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }
@@ -110,7 +113,7 @@ namespace StockService.Controllers
         {
             try
             {
-                _response = await _storageLocationService.GetStorageLocationsFilteredAsync(storageLocationDto);
+                _response = await _storageLocationService.GetStorageLocationsFilteredAsync(storageLocationDto, User);
                 if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }

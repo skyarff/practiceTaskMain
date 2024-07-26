@@ -851,8 +851,6 @@ import '@/assets/main.css';
           data.name = this.filters.name
         if (this.filters.providerId)
           data.providerId = this.filters.providerId
-        if (this.filters.companyId)
-          data.companyId = this.filters.companyId
         if (this.filters.stockId)
           data.stockId = this.filters.stockId
         if (this.filters.productCategoryId)

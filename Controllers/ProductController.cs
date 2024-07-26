@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using StockService.Models;
 using StockService.Models.dto;
 using StockService.Repository.ProductRep;
+using System.Data;
 
 namespace StockService.Controllers
 {
@@ -18,13 +20,14 @@ namespace StockService.Controllers
             this._response = new Response();
         }
 
+        [Authorize(Roles = "StockLevelWorker,CompanyLevelWorker,Admin")]
         [HttpPost("create")]
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> CreateProduct([FromForm] ProductDto productDto)
         {
             try
             {
-                _response = await _productService.CreateProductAsync(productDto);
+                _response = await _productService.CreateProductAsync(productDto, User);
                 if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }
@@ -36,12 +39,13 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpDelete("dellById/")]
+        [Authorize(Roles = "StockLevelWorker,CompanyLevelWorker,Admin")]
+        [HttpDelete("dellById")]
         public async Task<IActionResult> DeleteProduct([FromQuery] int productId)
         {
             try
             {
-                _response = await _productService.DeleteProductAsync(productId);
+                _response = await _productService.DeleteProductAsync(productId, User);
                 if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }
@@ -53,6 +57,7 @@ namespace StockService.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("getAll")]
         public async Task<IActionResult> GetAllProducts()
         {
@@ -70,12 +75,13 @@ namespace StockService.Controllers
             }
         }
 
+        [Authorize(Roles = "StockLevelWorker,CompanyLevelWorker,Admin")]
         [HttpGet("getById")]
         public async Task<IActionResult> GetProductById([FromQuery] int productId)
         {
             try
             {
-                _response = await _productService.GetProductByIdAsync(productId);
+                _response = await _productService.GetProductByIdAsync(productId, User);
                 if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }
@@ -87,13 +93,14 @@ namespace StockService.Controllers
             }
         }
 
+        [Authorize(Roles = "StockLevelWorker,CompanyLevelWorker,Admin")]
         [HttpPut("update")]
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> UpdateProductAsync([FromForm] ProductDto productDto)
         {
             try
             {
-                _response = await _productService.UpdateProductAsync(productDto);
+                _response = await _productService.UpdateProductAsync(productDto, User);
                 if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }
@@ -105,12 +112,13 @@ namespace StockService.Controllers
             }
         }
 
+        [Authorize(Roles = "StockLevelWorker,CompanyLevelWorker,Admin")]
         [HttpPost("getProductsFiltered")]
         public async Task<IActionResult> GetProductsFiltered(ProductDto productDto)
         {
             try
             {
-                _response = await _productService.GetProductsFilteredAsync(productDto);
+                _response = await _productService.GetProductsFilteredAsync(productDto, User);
                 if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }

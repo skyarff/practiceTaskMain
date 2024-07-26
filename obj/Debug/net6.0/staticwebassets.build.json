@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "8x6dBX/vyxo8P9ixHcZPBQULXbGHQKG8Zmv4AxHHQQI=",
+  "Hash": "nM5R+b7cS/eYjHD3lxDDraMZy2BUMEKrWE9uTItvPJY=",
   "Source": "StockService",
   "BasePath": "_content/StockService",
   "Mode": "Default",
@@ -16,6 +16,23 @@
     }
   ],
   "Assets": [
+    {
+      "Identity": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\BillPdfs\\011e746b-4f18-4002-b122-536d08cd31a9.png",
+      "SourceId": "StockService",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\",
+      "BasePath": "_content/StockService",
+      "RelativePath": "Images/BillPdfs/011e746b-4f18-4002-b122-536d08cd31a9.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\BillPdfs\\011e746b-4f18-4002-b122-536d08cd31a9.png"
+    },
     {
       "Identity": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\BillPdfs\\12bb1ce9-0edf-4991-96f0-4051bc6022a6.png",
       "SourceId": "StockService",
@@ -969,6 +986,23 @@
       "OriginalItemSpec": "wwwroot\\Images\\ProductImages\\316a42c5-c91a-41b2-bf05-aa293909b9d4.jpg"
     },
     {
+      "Identity": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\ProductImages\\31f24920-0629-4646-b1a4-f32cd233e6bf.png",
+      "SourceId": "StockService",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\",
+      "BasePath": "_content/StockService",
+      "RelativePath": "Images/ProductImages/31f24920-0629-4646-b1a4-f32cd233e6bf.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\ProductImages\\31f24920-0629-4646-b1a4-f32cd233e6bf.png"
+    },
+    {
       "Identity": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\ProductImages\\3250ef19-2eaf-466b-855a-c9a75884b16c.jpg",
       "SourceId": "StockService",
       "SourceType": "Discovered",
@@ -1683,6 +1717,23 @@
       "OriginalItemSpec": "wwwroot\\Images\\StorageLocationImages\\840bcddb-4c9f-428b-a53d-188799570869.jpg"
     },
     {
+      "Identity": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\StorageLocationImages\\8b156c0d-2703-4f24-bb72-fe8b1ac8ad15.png",
+      "SourceId": "StockService",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\",
+      "BasePath": "_content/StockService",
+      "RelativePath": "Images/StorageLocationImages/8b156c0d-2703-4f24-bb72-fe8b1ac8ad15.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\StorageLocationImages\\8b156c0d-2703-4f24-bb72-fe8b1ac8ad15.png"
+    },
+    {
       "Identity": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\StorageLocationImages\\8c539b57-6478-4337-b19d-53f606217cc9.png",
       "SourceId": "StockService",
       "SourceType": "Discovered",
@@ -2004,6 +2055,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Images\\UpdPdfs\\84b49373-2826-46dc-859a-7d037472425f.png"
+    },
+    {
+      "Identity": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\UpdPdfs\\8e7dae47-fc04-4a31-b335-2cc3961175e5.png",
+      "SourceId": "StockService",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\",
+      "BasePath": "_content/StockService",
+      "RelativePath": "Images/UpdPdfs/8e7dae47-fc04-4a31-b335-2cc3961175e5.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\UpdPdfs\\8e7dae47-fc04-4a31-b335-2cc3961175e5.png"
     },
     {
       "Identity": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\UpdPdfs\\9f1b22e5-3fc2-45c6-8bf4-4a200862b62a.png",

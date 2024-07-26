@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using StockService.Models;
 using StockService.Models.dto;
 using StockService.Repository.CompanyRep;
 
 namespace StockService.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class CompanyController : ControllerBase
@@ -19,7 +21,7 @@ namespace StockService.Controllers
             this._response = new Response();
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpPost("Create")]
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> CreateCompany([FromForm] CompanyDto companyDto)
@@ -44,6 +46,7 @@ namespace StockService.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("dellById")]
         public async Task<IActionResult> DeleteCompany([FromQuery] int companyId)
         {
@@ -61,6 +64,7 @@ namespace StockService.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("getAll")]
         public async Task<IActionResult> GetAllEmployees()
         {
@@ -78,12 +82,13 @@ namespace StockService.Controllers
             }
         }
 
+        [Authorize(Roles = "StockLevelWorker,CompanyLevelWorker,Admin")]
         [HttpGet("getById")]
         public async Task<IActionResult> GetCompanyById([FromQuery] int companyId)
         {
             try
             {
-                _response = await _companyService.GetCompanyByIdAsync(companyId);
+                _response = await _companyService.GetCompanyByIdAsync(companyId, User);
                 if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }
@@ -95,6 +100,7 @@ namespace StockService.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("update")]
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> UpdateEmployeeAsync([FromForm] CompanyDto companyDto)
@@ -113,6 +119,7 @@ namespace StockService.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost("getCompaniesFiltered")]
         public async Task<IActionResult> GetCompaniesFiltered(CompanyDto companyDto)
         {

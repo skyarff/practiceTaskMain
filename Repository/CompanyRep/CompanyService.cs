@@ -3,6 +3,7 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using StockService.Models;
 using StockService.Models.dto;
+using System.Security.Claims;
 
 namespace StockService.Repository.CompanyRep
 {
@@ -92,9 +93,16 @@ namespace StockService.Repository.CompanyRep
             return _response;
         }
 
-        public async Task<Response> GetCompanyByIdAsync(int companyId)
+        public async Task<Response> GetCompanyByIdAsync(int companyId, ClaimsPrincipal User)
         {
+            var employee = await _db.Employees
+                .FindAsync(Convert.ToUInt32(User.FindFirstValue(ClaimTypes.NameIdentifier)));
+
+            if (employee?.CompanyId != companyId && !User.IsInRole("Admin"))
+                throw new Exception("Некорректные данные запроса");
+
             var company = await _db.Companies.FindAsync(companyId);
+
 
             _response.IsSuccess = false;
             _response.Message = "Компания не найдена.";

@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using StockService.Models;
 using StockService.Models.dto;
 using StockService.Repository.ProductCategoryRep;
+using System.Data;
 
 namespace StockService.Controllers
 {
@@ -19,12 +21,13 @@ namespace StockService.Controllers
             this._response = new Response();
         }
 
+        [Authorize(Roles = "CompanyLevelWorker,Admin")]
         [HttpPost("create")]
         public async Task<IActionResult> CreateProductCategory(ProductCategoryDto productCategoryDto)
         {
             try
             {
-                _response = await _productCategoryService.CreateProductCategoryAsync(productCategoryDto);
+                _response = await _productCategoryService.CreateProductCategoryAsync(productCategoryDto, User);
                 if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }
@@ -42,6 +45,7 @@ namespace StockService.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("getAll")]
         public async Task<IActionResult> GetAllProductCategories()
         {
@@ -59,12 +63,13 @@ namespace StockService.Controllers
             }
         }
 
+        [Authorize(Roles = "CompanyLevelWorker,Admin")]
         [HttpDelete("dellById")]
         public async Task<IActionResult> DeleteProductCategory([FromQuery] int productCategoryId)
         {
             try
             {
-                _response = await _productCategoryService.DeleteProductCategoryAsync(productCategoryId);
+                _response = await _productCategoryService.DeleteProductCategoryAsync(productCategoryId, User);
                 if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }
@@ -76,12 +81,13 @@ namespace StockService.Controllers
             }
         }
 
+        [Authorize(Roles = "StockLevelWorker,CompanyLevelWorker,Admin")]
         [HttpGet("getByCompany")]
         public async Task<IActionResult> GetProductCategoriesByCompanyId([FromQuery] int companyId)
         {
             try
             {
-                _response = await _productCategoryService.GetProductCategoriesByCompanyIdAsync(companyId);
+                _response = await _productCategoryService.GetProductCategoriesByCompanyIdAsync(companyId, User);
                 if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }
@@ -93,12 +99,13 @@ namespace StockService.Controllers
             }
         }
 
+        [Authorize(Roles = "StockLevelWorker,CompanyLevelWorker,Admin")]
         [HttpPost("getProductCategoriesFiltered")]
         public async Task<IActionResult> GetProductCategoriesFiltered(ProductCategoryDto productCategoryDto)
         {
             try
             {
-                _response = await _productCategoryService.GetCategoriesFilteredAsync(productCategoryDto);
+                _response = await _productCategoryService.GetCategoriesFilteredAsync(productCategoryDto, User);
                 if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }

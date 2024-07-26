@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using StockService.Models;
 using StockService.Models.dto;
 using StockService.Repository.BillRep;
+using System.Data;
 
 namespace StockService.Controllers
 {
@@ -18,13 +20,14 @@ namespace StockService.Controllers
             this._response = new Response();
         }
 
+        [Authorize(Roles = "CompanyLevelWorker,Admin")]
         [HttpPost("create")]
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> CreateStorageLocation([FromForm] BillDto billDto)
         {
             try
             {
-                _response = await _billService.CreateBillAsync(billDto);
+                _response = await _billService.CreateBillAsync(billDto, User);
                 if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }
@@ -36,12 +39,13 @@ namespace StockService.Controllers
             }
         }
 
+        [Authorize(Roles = "CompanyLevelWorker,Admin")]
         [HttpDelete("delById")]
         public async Task<IActionResult> DeleteBill([FromQuery] int billId)
         {
             try
             {
-                _response = await _billService.DeleteBillAsync(billId);
+                _response = await _billService.DeleteBillAsync(billId, User);
                 if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }
@@ -53,6 +57,7 @@ namespace StockService.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("getAll")]
         public async Task<IActionResult> GetAllBills()
         {
@@ -70,30 +75,13 @@ namespace StockService.Controllers
             }
         }
 
-        [HttpGet("getInRange")]
-        public async Task<IActionResult> GetBillsInRange([FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate)
-        {
-            try
-            {
-                var billDto = new BillDto { StartDate = startDate, EndDate = endDate };
-                _response = await _billService.GetBillsInRangeAsync(billDto);
-                if (_response.IsSuccess) return Ok(_response);
-                return NotFound(_response);
-            }
-            catch (Exception ex)
-            {
-                _response.IsSuccess = false;
-                _response.Errors.Add(ex.Message);
-                return BadRequest(_response);
-            }
-        }
-
+        [Authorize(Roles = "StockLevelWorker,CompanyLevelWorker,Admin")]
         [HttpGet("getByProviderAndCompanyId")]
         public async Task<IActionResult> GetBillsByProviderAndCompanyIdAsync([FromQuery] int? providerId, int? companyId)
         {
             try
             {
-                _response = await _billService.GetBillsByProviderAndCompanyIdAsync(providerId, companyId);
+                _response = await _billService.GetBillsByProviderAndCompanyIdAsync(providerId, companyId, User);
                 if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }
@@ -105,12 +93,13 @@ namespace StockService.Controllers
             }
         }
 
+        [Authorize(Roles = "StockLevelWorker,CompanyLevelWorker,Admin")]
         [HttpGet("getById")]
         public async Task<IActionResult> GetBillByIdAsync([FromQuery] int billId)
         {
             try
             {
-                _response = await _billService.GetBillByIdAsync(billId);
+                _response = await _billService.GetBillByIdAsync(billId, User);
                 if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }
@@ -122,12 +111,13 @@ namespace StockService.Controllers
             }
         }
 
+        [Authorize(Roles = "StockLevelWorker,CompanyLevelWorker,Admin")]
         [HttpPost("getBillsFiltered")]
         public async Task<IActionResult> GetBillsFiltered(BillDto billDto)
         {
             try
             {
-                _response = await _billService.GetBillsFilteredAsync(billDto);
+                _response = await _billService.GetBillsFilteredAsync(billDto, User);
                 if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }

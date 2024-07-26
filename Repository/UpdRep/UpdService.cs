@@ -4,6 +4,8 @@ using StockService.Models;
 using StockService.Models.dto;
 using StockService.Repository.UpdRep;
 using AppSettings;
+using System.Security.Claims;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace StockService.Repository.BillRep
 {
@@ -20,8 +22,15 @@ namespace StockService.Repository.BillRep
             _response = new Response();
         }
 
-        public async Task<Response> CreateUpdAsync(UpdDto updDto)
+        public async Task<Response> CreateUpdAsync(UpdDto updDto, ClaimsPrincipal User)
         {
+            var bill = await _db.Bills.FindAsync(updDto.BillId);
+
+            if ((User.IsInRole("StockLevelWorker") || User.IsInRole("CompanyLevelWorker"))
+                && bill?.CompanyId != Convert.ToInt32(User.FindFirstValue("CompanyId"))
+                )
+                throw new Exception("Некорректные данные запроса");
+
             var updIsExists = await _db.Upds.AnyAsync(u => u.DocumentNumber == updDto.DocumentNumber);
 
             _response.IsSuccess = false;
@@ -30,7 +39,6 @@ namespace StockService.Repository.BillRep
             if (!updIsExists)
             {
                 var upd = _mapper.Map<UpdDto, Upd>(updDto);
-                var bill = await _db.Bills.FindAsync(updDto.BillId);
                 upd.ProviderId = bill.ProviderId;
                 upd.CompanyId = bill.CompanyId;
 
@@ -58,9 +66,16 @@ namespace StockService.Repository.BillRep
             return _response;
         }
 
-        public async Task<Response> DeleteUpdAsync(int updId)
+        public async Task<Response> DeleteUpdAsync(int updId, ClaimsPrincipal User)
         {
             var upd = await _db.Upds.FindAsync(updId);
+
+            if ((User.IsInRole("StockLevelWorker") || User.IsInRole("CompanyLevelWorker"))
+                && upd?.CompanyId != Convert.ToInt32(User.FindFirstValue("CompanyId"))
+                )
+                throw new Exception("Некорректные данные запроса");
+
+            
 
             _response.IsSuccess = false;
             _response.Message = "УПД не найден.";
@@ -98,37 +113,15 @@ namespace StockService.Repository.BillRep
             return _response;
         }
 
-        public async Task<Response> GetUpdsInRangeAsync(UpdDto updDto)
+        public async Task<Response> GetUpdsByBillIdAsync(int billId, ClaimsPrincipal User)
         {
-            var query = _db.Upds.AsQueryable();
+            var bill = await _db.Bills.FindAsync(billId);
 
-            if (updDto.StartDate != null)
-                query = query.Where(b => b.CreateDate >= updDto.StartDate.Value);
+            if ((User.IsInRole("StockLevelWorker") || User.IsInRole("CompanyLevelWorker"))
+                && bill?.CompanyId != Convert.ToInt32(User.FindFirstValue("CompanyId"))
+                )
+                throw new Exception("Некорректные данные запроса");
 
-            if (updDto.EndDate != null)
-                query = query.Where(b => b.CreateDate <= updDto.EndDate.Value);
-
-            query = true
-                ? query.OrderBy(b => b.CreateDate)
-                : query.OrderByDescending(b => b.CreateDate);
-
-            var upds = await query.ToListAsync();
-
-            _response.IsSuccess = false;
-            _response.Message = "УПД не найдены.";
-
-            if (upds.Any())
-            {
-                _response.IsSuccess = true;
-                _response.Result = upds;
-                _response.Message = "УПД успешно получены.";
-            }
-
-            return _response;
-        }
-
-        public async Task<Response> GetUpdsByBillIdAsync(int billId)
-        {
             _response.IsSuccess = false;
             _response.Message = "УПД не найдены для указанного счета.";
 
@@ -146,9 +139,14 @@ namespace StockService.Repository.BillRep
             return _response;
         }
 
-        public async Task<Response> GetUpdByIdAsync(int updId)
+        public async Task<Response> GetUpdByIdAsync(int updId, ClaimsPrincipal User)
         {
             var upd = await _db.Upds.FindAsync(updId);
+
+            if ((User.IsInRole("StockLevelWorker") || User.IsInRole("CompanyLevelWorker"))
+                && upd?.CompanyId != Convert.ToInt32(User.FindFirstValue("CompanyId"))
+                )
+                throw new Exception("Некорректные данные запроса");
 
             _response.IsSuccess = false;
             _response.Message = "УПД не найден.";
@@ -164,8 +162,13 @@ namespace StockService.Repository.BillRep
             return _response;
         }
 
-        public async Task<Response> GetUpdsFilteredAsync(UpdDto updDto)
+        public async Task<Response> GetUpdsFilteredAsync(UpdDto updDto, ClaimsPrincipal User)
         {
+            if ((User.IsInRole("StockLevelWorker") || User.IsInRole("CompanyLevelWorker"))
+                && (updDto.CompanyId = Convert.ToInt32(User.FindFirstValue("CompanyId"))) == -1
+                )
+                throw new Exception("Некорректные данные запроса");
+
             _response.IsSuccess = false;
             _response.Message = "УПД не найдены по указанным критериям.";
 
