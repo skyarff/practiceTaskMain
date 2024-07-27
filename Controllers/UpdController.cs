@@ -39,7 +39,7 @@ namespace StockService.Controllers
             }
         }
 
-        [Authorize(Roles = "StockLevelWorker,CompanyLevelWorker,Admin")]
+        [Authorize(Roles = "CompanyLevelWorker,Admin")]
         [HttpDelete("delById")]
         public async Task<IActionResult> DeleteUpd([FromQuery] int updId)
         {

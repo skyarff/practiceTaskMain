@@ -70,7 +70,7 @@ namespace StockService.Repository.BillRep
         {
             var upd = await _db.Upds.FindAsync(updId);
 
-            if ((User.IsInRole("StockLevelWorker") || User.IsInRole("CompanyLevelWorker"))
+            if (User.IsInRole("CompanyLevelWorker")
                 && upd?.CompanyId != Convert.ToInt32(User.FindFirstValue("CompanyId"))
                 )
                 throw new Exception("Некорректные данные запроса");

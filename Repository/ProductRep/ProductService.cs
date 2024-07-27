@@ -25,12 +25,14 @@ namespace StockService.Repository.ProductRep
         {
             var storageLocation = await _db.StorageLocations.FindAsync(productDto.StorageLocationId);
 
-            if (User.IsInRole("StockLevelWorker")
-                && productDto.StockId != Convert.ToInt32(User.FindFirstValue("StockId"))
+            if (storageLocation == null
+                || User.IsInRole("StockLevelWorker")
+                && storageLocation?.StockId != Convert.ToInt32(User.FindFirstValue("StockId"))
                 || User.IsInRole("CompanyLevelWorker")
                 && storageLocation?.CompanyId != Convert.ToInt32(User.FindFirstValue("CompanyId"))
                 )
                 throw new Exception("Некорректные данные запроса");
+
 
             var productIsExists = await _db.Products.AnyAsync(p => p.StorageLocationId == productDto.StorageLocationId
                 && p.ShelfCode == productDto.ShelfCode);
@@ -86,7 +88,7 @@ namespace StockService.Repository.ProductRep
             var product = await _db.Products.FindAsync(productId);
 
             if (User.IsInRole("StockLevelWorker")
-                && product.StockId != Convert.ToInt32(User.FindFirstValue("StockId"))
+                && product?.StockId != Convert.ToInt32(User.FindFirstValue("StockId"))
             || User.IsInRole("CompanyLevelWorker")
                 && product?.CompanyId != Convert.ToInt32(User.FindFirstValue("CompanyId"))
                 )
@@ -158,7 +160,7 @@ namespace StockService.Repository.ProductRep
             var product = await _db.Products.FindAsync(productDto.ProductId);
 
             if (User.IsInRole("StockLevelWorker")
-                && product.StockId != Convert.ToInt32(User.FindFirstValue("StockId"))
+                && product?.StockId != Convert.ToInt32(User.FindFirstValue("StockId"))
             || User.IsInRole("CompanyLevelWorker")
                 && product?.CompanyId != Convert.ToInt32(User.FindFirstValue("CompanyId"))
                 )

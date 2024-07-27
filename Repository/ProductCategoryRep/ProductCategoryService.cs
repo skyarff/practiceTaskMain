@@ -23,7 +23,8 @@ namespace StockService.Repository.ProductCategoryRep
         public async Task<Response> CreateProductCategoryAsync(ProductCategoryDto productCategoryDto, ClaimsPrincipal User)
         {
             if (User.IsInRole("CompanyLevelWorker")
-                && productCategoryDto.CompanyId != Convert.ToInt32(User.FindFirstValue("CompanyId")))
+                && (productCategoryDto.CompanyId = Convert.ToInt32(User.FindFirstValue("CompanyId"))) == -1
+                )
                 throw new Exception("Некорректные данные запроса");
 
 

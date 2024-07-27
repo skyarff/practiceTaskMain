@@ -72,10 +72,11 @@ namespace StockService.Repository.EmployeeRep
 
         public async Task<Response> CreateEmployeeAsync(EmployeeDto employeeDto, ClaimsPrincipal User)
         {
-            if (User.IsInRole("CompanyLevelWorker")
-                    && ((employeeDto.CompanyId != Convert.ToInt32(User.FindFirstValue("CompanyId"))
-                    || employeeDto.Role == "CompanyLevelWorker")
-                    || employeeDto.Role == "Admin"))
+            var stock = await _db.Stocks.FindAsync(employeeDto.StockId);
+
+            if (User.IsInRole("CompanyLevelWorker") && (employeeDto.Role != "StockLevelWorker"
+                || stock?.CompanyId != Convert.ToInt32(User.FindFirstValue("CompanyId")))
+                )
                 throw new Exception("Некорректные данные запроса");
 
 
@@ -88,9 +89,7 @@ namespace StockService.Repository.EmployeeRep
                 var employee = _mapper.Map<EmployeeDto, Employee>(employeeDto);
 
 
-                var stock = await _db.Stocks.FindAsync(employeeDto.StockId);
                 if (stock != null) employee.CompanyId = stock.CompanyId;
-
 
                 if (!string.IsNullOrEmpty(employeeDto.Password))
                     employee.PasswordHash = Sha256.ComputeSha256Hash(employeeDto.Password);

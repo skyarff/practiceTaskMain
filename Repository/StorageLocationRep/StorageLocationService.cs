@@ -25,11 +25,11 @@ namespace StockService.Repository.StorageLocationRep
             var stock = await _db.Stocks.FindAsync(storageLocationDto.StockId);
 
             if (User.IsInRole("StockLevelWorker")
-                && storageLocationDto.StockId != Convert.ToInt32(User.FindFirstValue("StockId"))
+                && (storageLocationDto.StockId = Convert.ToInt32(User.FindFirstValue("StockId"))) == -1
                 || User.IsInRole("CompanyLevelWorker")
                 && stock?.CompanyId != Convert.ToInt32(User.FindFirstValue("CompanyId"))
-                )
-                throw new Exception("Некорректные данные запроса");
+                ) throw new Exception("Некорректные данные запроса");
+
 
             var storageLocationIsExists = await _db.StorageLocations.AnyAsync(sl => 
             sl.StockId == storageLocationDto.StockId
@@ -41,7 +41,9 @@ namespace StockService.Repository.StorageLocationRep
             if (!storageLocationIsExists)
             {
                 var storageLocation = _mapper.Map<StorageLocationDto, StorageLocation>(storageLocationDto);
-                storageLocation.CompanyId = stock.CompanyId;
+                storageLocation.CompanyId = User.IsInRole("StockLevelWorker") 
+                    ? Convert.ToInt32(User.FindFirstValue("CompanyId")) 
+                    : stock.CompanyId;
 
                 string filePath = "";
                 if (storageLocationDto.Image != null && storageLocationDto.Image.Length > 0)
