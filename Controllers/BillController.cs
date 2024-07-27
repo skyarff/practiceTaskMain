@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using StockService.Models;
 using StockService.Models.dto;
 using StockService.Repository.BillRep;
-using System.Data;
 
 namespace StockService.Controllers
 {
@@ -23,7 +22,7 @@ namespace StockService.Controllers
         [Authorize(Roles = "CompanyLevelWorker,Admin")]
         [HttpPost("create")]
         [Consumes("multipart/form-data")]
-        public async Task<IActionResult> CreateStorageLocation([FromForm] BillDto billDto)
+        public async Task<IActionResult> CreateBill([FromForm] BillDto billDto)
         {
             try
             {

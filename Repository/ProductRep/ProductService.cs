@@ -315,6 +315,10 @@ namespace StockService.Repository.ProductRep
                 {
                     ProductId = p.ProductId,
                     Name = p.Name,
+                    Login = p.EmployeeId != null ? _db.Employees
+                        .Where(e => e.EmployeeId == p.EmployeeId)
+                        .Select(e => e.Login)
+                        .FirstOrDefault() : null,
                     Manufacturer = p.Manufacturer,
                     ProductionArticle = p.ProductionArticle,
                     InnerArticle = p.InnerArticle,

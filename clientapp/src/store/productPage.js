@@ -21,6 +21,9 @@ const productPageModule = {
 
         updsByBillId: [{ name: 'Все УПД', updId: null }],
         fUpdsByBillId: [{ name: 'Все УПД', updId: null }],
+
+        updsByStockId: [{ name: 'Все УПД', updId: null }],
+        fUpdsByStockId: [{ name: 'Все УПД', updId: null }],
     },
     getters: {
         stocksByCompanyId(state) {
@@ -59,6 +62,12 @@ const productPageModule = {
         fUpdsByBillId(state) {
             return state.fUpdsByBillId;
         },
+        updsByBillId(state) {
+            return state.updsByStockId;
+        },
+        fUpdsByBillId(state) {
+            return state.fUpdsByStockId;
+        },
     },
     mutations: {
         setStocksByCompanyId(state, stocksByCompanyId) {
@@ -96,6 +105,12 @@ const productPageModule = {
         },
         setFUpdsByBillId(state, fUpdsByBillId) {
             state.fUpdsByBillId = fUpdsByBillId
+        },
+        setUpdsByStockId(state, updsByStockId) {
+            state.updsByStockId = updsByStockId
+        },
+        setFUpdsByStockId(state, fUpdsByStockId) {
+            state.fUpdsByStockId = fUpdsByStockId
         },
     },
     actions: {
@@ -269,6 +284,34 @@ const productPageModule = {
               console.error('Error fetching stocks by company ID:', error);
             }
         },
+        async getUpdsByStockId({commit}, payload) {
+            if (payload.selected) commit('setUpdsByStockId', []);    
+            else commit('setFUpdsByStockId', []);
+
+            let url = `/api/Upd/getUpdsByStockId?StockId=${payload.stockId}`;
+
+            try {
+                const response = await api.get(url, {
+                    headers: {
+                        'accept': '*/*',
+                    }
+                });
+
+              const updsByBillId = response.data.result.map(upd => ({
+                name: upd.documentNumber,
+                updId: upd.updId,
+              }));
+              updsByBillId.unshift({ name: 'Все УПД', updId: null });
+
+              if (payload.selected) commit('setUpdsByStockId', updsByBillId);    
+              else commit('setFUpdsByStockId', updsByBillId);
+
+              
+            } catch (error) {
+              console.error('Error fetching stocks by company ID:', error);
+            }
+        },
+        
     }
 }
 

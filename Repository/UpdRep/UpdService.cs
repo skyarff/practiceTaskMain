@@ -240,5 +240,31 @@ namespace StockService.Repository.BillRep
             return _response;
         }
 
+        public async Task<Response> GetUpdsByStockIdAsync(int stockId, ClaimsPrincipal User)
+        {
+            var stock = await _db.Stocks.FindAsync(stockId);
+
+            if ((User.IsInRole("StockLevelWorker") || User.IsInRole("CompanyLevelWorker"))
+                && stock?.CompanyId != Convert.ToInt32(User.FindFirstValue("CompanyId"))
+                )
+                throw new Exception("Некорректные данные запроса");
+
+            _response.IsSuccess = false;
+            _response.Message = "УПД не найдены.";
+
+            var upds = await _db.Upds
+                    .Where(u => u.BillId == stockId)
+                    .ToListAsync();
+
+            if (upds != null)
+            {
+                _response.IsSuccess = true;
+                _response.Result = upds;
+                _response.Message = "УПД найдены.";
+
+            }
+
+            return _response;
+        }
     }
 }

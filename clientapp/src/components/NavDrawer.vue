@@ -82,9 +82,6 @@
         drawer: true,
         rail: true,
         apiBaseUrl: import.meta.env.VITE_API_BASE_URL,
-        policySCA: ['StockLevelWorker', 'CompanyLevelWorker', 'Admin'],
-        policyCA: ['CompanyLevelWorker', 'Admin'],
-        policyA: ['Admin']
       }
     },
     computed: {

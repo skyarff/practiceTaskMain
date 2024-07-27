@@ -85,7 +85,9 @@
           </v-expansion-panel-title>
           <v-expansion-panel-text class="pt-2">
             <v-row>
-            <v-col cols="6">
+            <v-col 
+            :cols="`${policyCA.includes(getEmployeeInfo.Role) ? 6 : 12}`"
+            >
               <v-card color="grey-lighten-4">
                 <v-card-title>
                   Поля
@@ -127,7 +129,9 @@
             </v-col>
 
               
-            <v-col cols="6">
+            <v-col
+            v-if="policyCA.includes(getEmployeeInfo.Role)"
+             cols="6">
               <v-card color="teal-lighten-5">
                 <v-card-title>
                   Иерархические сущности
@@ -137,7 +141,9 @@
                 </v-card-subtitle>
                 <v-card-text>
                   <v-row>
-                <v-col cols="12">
+                <v-col
+                v-if="policyA.includes(getEmployeeInfo.Role)"
+                cols="12">
                     <v-select
                       v-model="filtersCompanyId"
                       @update:modelValue="selectionOfStocks(false)"
@@ -151,7 +157,8 @@
                   </v-col>
               </v-row>
               <v-row>
-                <v-col cols="12">
+                <v-col
+                cols="12">
                       <v-select
                         v-model="filtersStockId"
                         :items="fStocksByCompanyId"
@@ -270,7 +277,9 @@
 
           <div v-else>
             <v-row>
-              <v-col cols="6">
+              <v-col
+              :cols="`${policyCA.includes(getEmployeeInfo.Role) ? 6 : 12}`"
+              >
                 <v-card color="grey-lighten-4">
                   <v-card-title>
                     Поля
@@ -310,7 +319,9 @@
                 </v-card>
               </v-col>
 
-              <v-col cols="6">
+              <v-col cols="6"
+              v-if="policyCA.includes(getEmployeeInfo.Role)"
+              >
                 <v-card color="teal-lighten-5">
                   <v-card-title>
                     Иерархические сущности
@@ -320,7 +331,9 @@
                   </v-card-subtitle>
                   <v-card-text>
                     <v-row>
-                      <v-col cols="12">
+                      <v-col
+                      v-if="policyA.includes(getEmployeeInfo.Role)"
+                      cols="12">
                       <v-select
                         v-model="selectedCompanyId"
                         :items="companies"
@@ -334,7 +347,8 @@
                     </v-col>
                     </v-row>
                     <v-row>
-                      <v-col cols="12">
+                      <v-col
+                      cols="12">
                       <v-select
                         v-model="selectedStockId"
                         :items="stocksByCompanyId"
@@ -397,7 +411,13 @@ import '@/assets/main.css';
     activated() {
       this.abortFlag = false
       this.checkConnection();
-      this.$store.dispatch('getAllCompanies');
+
+      if (this.policyA.includes(this.getEmployeeInfo.Role))
+        this.$store.dispatch('getAllCompanies');
+      else if (this.policyCA.includes(this.getEmployeeInfo.Role)) {
+        this.$store.dispatch( 'storageLocationPage/getStocksByCompanyId', {companyId: this.getEmployeeInfo.CompanyId, selected: true})
+        this.$store.dispatch( 'storageLocationPage/getStocksByCompanyId', {companyId: this.getEmployeeInfo.CompanyId, selected: false})
+      }
     },
     deactivated() {
       this.abortFlag = true
@@ -651,8 +671,18 @@ import '@/assets/main.css';
     ...mapGetters('storageLocationPage', [
       'stocksByCompanyId',
       'fStocksByCompanyId'
-    ])
-
+    ]),
+    getEmployeeInfo() {
+        if (this.$store.state.employeeInfo) 
+          return this.$store.state.employeeInfo
+        else return {}
+      },
+      policyCA() {
+        return this.$store.state.policyCA
+      },
+      policyA() {
+        return this.$store.state.policyA
+      }
   }
 }
 </script>

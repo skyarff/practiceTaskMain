@@ -20,7 +20,7 @@ namespace StockService.Controllers
             this._response = new Response();
         }
 
-        [Authorize(Roles = "StockLevelWorker,CompanyLevelWorker,Admin")]
+        [Authorize(Roles = "CompanyLevelWorker,Admin")]
         [HttpPost("create")]
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> CreateUpd([FromForm] UpdDto updDto)
@@ -75,7 +75,7 @@ namespace StockService.Controllers
             }
         }
 
-        [Authorize(Roles = "StockLevelWorker,CompanyLevelWorker,Admin")]
+        [Authorize(Roles = "CompanyLevelWorker,Admin")]
         [HttpGet("getByBillId")]
         public async Task<IActionResult> GetUpdsByBillId([FromQuery] int billId)
         {
@@ -93,6 +93,24 @@ namespace StockService.Controllers
             }
         }
 
+        [Authorize(Roles = "StockLevelWorker,CompanyLevelWorker,Admin")]
+        [HttpGet("getUpdsByStockId")]
+        public async Task<IActionResult> GetUpdsByStockIdAsync([FromQuery] int stockId)
+        {
+            try
+            {
+                _response = await _updService.GetUpdsByStockIdAsync(stockId, User);
+                if (_response.IsSuccess) return Ok(_response);
+                return NotFound(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.Errors.Add(ex.Message);
+                return BadRequest(_response);
+            }
+        }
+        
         [Authorize(Roles = "StockLevelWorker,CompanyLevelWorker,Admin")]
         [HttpGet("getById")]
         public async Task<IActionResult> GetUpdByIdAsync([FromQuery] int updId)
