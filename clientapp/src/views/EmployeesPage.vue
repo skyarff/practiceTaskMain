@@ -90,7 +90,9 @@
 
           <v-expansion-panel-text class="pt-2">
             <v-row>
-              <v-col cols="6">
+              <v-col 
+              cols="6"
+              >
                 <v-card color="grey-lighten-4">
                   <v-card-title>
                     Поля
@@ -156,7 +158,8 @@
                 </v-card>
               </v-col>
 
-              <v-col cols="6">
+              <v-col
+               cols="6">
                 <v-card color="teal-lighten-5">
                   <v-card-title>
                     Иерархические сущности
@@ -176,7 +179,7 @@
                       ></v-select>
                     </v-col>
                   </v-row>
-                    <v-row>
+                    <v-row v-if="policyA.includes(getEmployeeInfo.Role)">
                       <v-col cols="12">
                             <v-select
                               v-model="filtersCompanyId"
@@ -330,7 +333,9 @@
                       ></v-text-field>
                     </v-col>
 
-                    <v-col cols="3">
+                    <v-col 
+                    :cols="`${policyA.includes(getEmployeeInfo.Role) ? 3 : 6}`"
+                    >
                       <v-text-field
                         label="Пароль"
                         v-model="selectedEmployee.password"
@@ -338,7 +343,7 @@
                       ></v-text-field>
                     </v-col>
 
-                    <v-col cols="3">
+                    <v-col v-if="policyA.includes(getEmployeeInfo.Role)" cols="3">
                       <v-select
                         v-model="selectedRole"
                         :items="roles"
@@ -357,7 +362,9 @@
           </div>
           <div v-else>
             <v-row>
-              <v-col cols="8">
+              <v-col 
+              cols="8"
+              >
                 <v-card color="grey-lighten-4">
                   <v-card-title>
                     Поля
@@ -432,7 +439,8 @@
                 </v-card>
               </v-col>
 
-              <v-col cols="4">
+              <v-col
+               cols="4">
                 <v-card color="teal-lighten-5">
                   <v-card-title>
                     Иерархические сущности
@@ -442,7 +450,7 @@
                   </v-card-subtitle>
                   <v-card-text>
                     <v-row>      
-                    <v-col cols="12">
+                    <v-col v-if="policyA.includes(getEmployeeInfo.Role)" cols="12">
                       <v-select
                         v-model="selectedRole"
                         :items="roles"
@@ -453,7 +461,7 @@
                     </v-col>
                   </v-row>
                     <v-row>      
-                    <v-col cols="12">
+                    <v-col v-if="policyA.includes(getEmployeeInfo.Role)" cols="12">
                       <v-select
                         v-model="selectedCompanyId"
                         :items="companies"
@@ -467,7 +475,7 @@
                     </v-col>
                   </v-row>
                   <v-row>
-                    <v-col cols="12">
+                    <v-col v-if="selectedRole === 'StockLevelWorker'" cols="12">
                       <v-select
                         v-model="selectedStockId"
                         :items="stocksByCompanyId"
@@ -523,7 +531,6 @@ import '@/assets/main.css';
         roles: [
           'StockLevelWorker',
           'CompanyLevelWorker',
-          'Admin',
         ],
         employees: [],
         selectedEmployee: {},
@@ -538,7 +545,14 @@ import '@/assets/main.css';
     activated() {
       this.abortFlag = false
       this.checkConnection();
-      this.$store.dispatch('getAllCompanies');
+
+      if (this.policyA.includes(this.getEmployeeInfo.Role))
+        this.$store.dispatch('getAllCompanies');
+      else {
+        this.$store.dispatch( 'employeePage/getStocksByCompanyId', {companyId: this.getEmployeeInfo.CompanyId, selected: true})
+        this.$store.dispatch( 'employeePage/getStocksByCompanyId', {companyId: this.getEmployeeInfo.CompanyId, selected: false})
+      }
+        
     },
     deactivated() {
       this.abortFlag = true
@@ -655,7 +669,7 @@ import '@/assets/main.css';
           formData.append('Password', this.selectedEmployee.password);
         if(this.selectedEmployee.role)
           formData.append('Role', this.selectedEmployee.role);
-        if(this.selectedEmployee.stockId)
+        if(this.selectedEmployee.stockId && this.selectedRole === 'StockLevelWorker')
           formData.append('StockId', this.selectedEmployee.stockId);
         if(this.selectedEmployee.companyId)
           formData.append('CompanyId', this.selectedEmployee.companyId);
@@ -766,8 +780,13 @@ import '@/assets/main.css';
     [
       'stocksByCompanyId',
       'fStocksByCompanyId'
-    ]) 
-  
+    ]),
+    getEmployeeInfo() {
+        return this.$store.state.employeeInfo
+      },
+      policyA() {
+        return this.$store.state.policyA
+      }
   }
 }
 </script>

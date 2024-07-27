@@ -165,7 +165,9 @@
                   </v-card-subtitle>
                   <v-card-text>
                     <v-row>
-                      <v-col cols="6">
+                      <v-col 
+                      v-if="policyA.includes(getEmployeeInfo.Role)"
+                      cols="6">
                             <v-select
                               v-model="filtersCompanyId"                    
                               :items="companies"
@@ -176,7 +178,9 @@
                               dense
                             ></v-select>
                           </v-col>
-                      <v-col cols="6">
+                      <v-col 
+                      :cols="`${policyA.includes(getEmployeeInfo.Role) ? 6 : 12}`"
+                      >
                         <v-select
                           v-model="filtersProviderId"                    
                           :items="providers"
@@ -314,7 +318,9 @@
                 </v-card>
               </v-col>
 
-              <v-col cols="6">
+              <v-col 
+              cols="6"
+              >
                 <v-card color="teal-lighten-5">
                   <v-card-title>
                     Иерархические сущности
@@ -324,19 +330,9 @@
                   </v-card-subtitle>
                   <v-card-text>
                     <v-row>
-                    <v-col cols="6">
-                    <v-select
-                      v-model="selectedProviderId"                    
-                      :items="providers"
-                      item-title="name"
-                      item-value="providerId"
-                      label="Поставщик"
-                      prepend-icon="mdi-domain"
-                      dense
-                    ></v-select>
-                  </v-col>
-
-                  <v-col cols="6">
+                  <v-col 
+                  v-if="policyA.includes(getEmployeeInfo.Role)" cols="6"
+                  >
                     <v-select
                       v-model="selectedCompanyId"                    
                       :items="companies"
@@ -348,6 +344,19 @@
                     ></v-select>
                   </v-col>
 
+                  <v-col 
+                  :cols="`${policyA.includes(getEmployeeInfo.Role) ? 6 : 12}`"
+                  >
+                    <v-select
+                      v-model="selectedProviderId"                    
+                      :items="providers"
+                      item-title="name"
+                      item-value="providerId"
+                      label="Поставщик"
+                      prepend-icon="mdi-domain"
+                      dense
+                    ></v-select>
+                  </v-col>
                   </v-row>
                   </v-card-text>
                 </v-card>
@@ -400,8 +409,12 @@ import '@/assets/main.css';
     activated() {
       this.abortFlag = false
       this.checkConnection();
+
       this.$store.dispatch('getAllProviders');
-      this.$store.dispatch('getAllCompanies');
+
+      if (this.policyA.includes(this.getEmployeeInfo.Role))
+        this.$store.dispatch('getAllCompanies');
+
     },
     deactivated() {
       this.abortFlag = true
@@ -577,7 +590,13 @@ import '@/assets/main.css';
     ...mapGetters([
       'companies',
       'providers'
-    ])
+    ]),
+    getEmployeeInfo() {
+        return this.$store.state.employeeInfo
+      },
+      policyA() {
+        return this.$store.state.policyA
+      }
   }
 }
 </script>

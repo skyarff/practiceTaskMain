@@ -107,8 +107,8 @@ namespace StockService.Repository.BillRep
 
         public async Task<Response> GetBillsByProviderAndCompanyIdAsync(int? providerId, int? companyId, ClaimsPrincipal User)
         {
-            if ((User.IsInRole("CompanyLevelWorker") || User.IsInRole("StockLevelWorker"))
-                && companyId != Convert.ToInt32(User.FindFirstValue("CompanyId"))
+            if (User.IsInRole("CompanyLevelWorker")
+                && (companyId = Convert.ToInt32(User.FindFirstValue("CompanyId"))) == -1
                 )
                 throw new Exception("Некорректные данные запроса");
 

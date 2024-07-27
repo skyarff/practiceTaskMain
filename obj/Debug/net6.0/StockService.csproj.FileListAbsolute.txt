@@ -146,3 +146,6 @@ C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\bin\Debug\net6.
 C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
 C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\bin\Debug\net6.0\clientapp — копия\jsconfig.json
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\bin\Debug\net6.0\clientapp — копия\package-lock.json
+C:\Users\bffus\OneDrive\Рабочий стол\practiceTaskMain\bin\Debug\net6.0\clientapp — копия\package.json

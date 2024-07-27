@@ -104,5 +104,8 @@ function getInitialState() {
     accessToken: '',
     companies: [],
     providers: [],
+    policySCA: ['StockLevelWorker', 'CompanyLevelWorker', 'Admin'],
+    policyCA: ['CompanyLevelWorker', 'Admin'],
+    policyA: ['Admin']
   };
 }

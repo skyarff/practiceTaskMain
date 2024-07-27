@@ -65,6 +65,10 @@
       "PackagePath": "staticwebassets\\Images\\Common\\2.png"
     },
     {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\Common\\NoAvatar.jpg",
+      "PackagePath": "staticwebassets\\Images\\Common\\NoAvatar.jpg"
+    },
+    {
       "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\Common\\SchemaAccess.png",
       "PackagePath": "staticwebassets\\Images\\Common\\SchemaAccess.png"
     },
@@ -183,6 +187,10 @@
     {
       "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\d36e0d27-ca02-4452-82bb-fc03d0381704.png",
       "PackagePath": "staticwebassets\\Images\\EmployeeImages\\d36e0d27-ca02-4452-82bb-fc03d0381704.png"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\edf22103-1fe6-4179-a4a7-bae3c4bf28c1.png",
+      "PackagePath": "staticwebassets\\Images\\EmployeeImages\\edf22103-1fe6-4179-a4a7-bae3c4bf28c1.png"
     },
     {
       "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\f4642ff3-86df-44ad-a794-e304c632d0bd.jpg",

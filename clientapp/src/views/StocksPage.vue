@@ -59,7 +59,9 @@
         <v-expansion-panel-text class="pt-2">
 
           <v-row>
-              <v-col cols="7">
+              <v-col 
+              :cols="`${policyA.includes(getEmployeeInfo.Role) ? 7 : 12}`"
+              >
                 <v-card color="grey-lighten-4">
                   <v-card-title>
                     Поля
@@ -89,7 +91,7 @@
                 </v-card>
               </v-col>
 
-              <v-col cols="5">
+              <v-col v-if="policyA.includes(getEmployeeInfo.Role)" cols="5">
                 <v-card color="teal-lighten-5">
                   <v-card-title>
                     Иерархические сущности
@@ -170,7 +172,7 @@
           <div v-if="selectedStock.stockId !== undefined || isEditing">
             
             <v-row>
-                <v-col cols="7">
+                <v-col v-if="policyA.includes(getEmployeeInfo.Role)" cols="7">
                   <v-card color="grey-lighten-4">
                     <v-card-title>
                       Поля
@@ -200,7 +202,7 @@
                   </v-card>
                 </v-col>
 
-                <v-col cols="5">
+                <v-col v-if="policyA.includes(getEmployeeInfo.Role)" cols="5">
                   <v-card color="teal-lighten-5">
                     <v-card-title>
                       Иерархические сущности
@@ -230,7 +232,9 @@
           <div v-else>
 
           <v-row>
-              <v-col cols="7">
+              <v-col 
+              :cols="`${policyA.includes(getEmployeeInfo.Role) ? 7 : 12}`"
+              >
                 <v-card color="grey-lighten-4">
                   <v-card-title>
                     Поля
@@ -252,7 +256,7 @@
                 </v-card>
               </v-col>
 
-              <v-col cols="5">
+              <v-col v-if="policyA.includes(getEmployeeInfo.Role)" cols="5">
                 <v-card color="teal-lighten-5">
                   <v-card-title>
                     Иерархические сущности
@@ -320,7 +324,9 @@ export default {
   activated() {
     this.abortFlag = false
     this.checkConnection();
-    this.$store.dispatch('getAllCompanies');
+
+    if (this.policyA.includes(this.getEmployeeInfo.Role))
+      this.$store.dispatch('getAllCompanies');
   },
   deactivated() {
     this.abortFlag = true
@@ -334,7 +340,6 @@ export default {
       this.itemsPerPage = itemsPerPage;
     },
     navigateStockId(item) {
-      console.log(this.$store.state._companies)
       this.filters = {stockId: item.stockId}
       this.isEditing = true
       this.selectedStock = item
@@ -467,7 +472,13 @@ computed: {
       this.filters.companyId = value;
     }
   },
-  ...mapGetters(['companies'])
+  ...mapGetters(['companies']),
+  getEmployeeInfo() {
+        return this.$store.state.employeeInfo
+      },
+      policyA() {
+        return this.$store.state.policyA
+      }
 }
 }
 </script>

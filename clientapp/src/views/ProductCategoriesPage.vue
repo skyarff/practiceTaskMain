@@ -59,7 +59,9 @@
         <v-expansion-panel-text class="pt-2">
 
           <v-row>
-              <v-col cols="7">
+              <v-col 
+              :cols="`${policyA.includes(getEmployeeInfo.Role) ? 7 : 12}`"
+              >
                 <v-card color="grey-lighten-4">
                   <v-card-title>
                     Поля
@@ -89,7 +91,7 @@
                 </v-card>
               </v-col>
 
-              <v-col cols="5">
+              <v-col v-if="policyA.includes(getEmployeeInfo.Role)" cols="5">
                 <v-card color="teal-lighten-5">
                   <v-card-title>
                     Иерархические сущности
@@ -120,7 +122,7 @@
     </v-expansion-panels>
 
     <!-- Секция редактирования -->
-    <v-card >
+    <v-card v-if="policyCA.includes(getEmployeeInfo.Role)">
       <v-card-title>
           <v-row align="center">
             <v-col cols="auto">
@@ -196,7 +198,9 @@
     <div v-else>
 
     <v-row>
-        <v-col cols="7">
+        <v-col 
+        :cols="`${policyA.includes(getEmployeeInfo.Role) ? 7 : 12}`"
+        >
           <v-card color="grey-lighten-4">
             <v-card-title>
               Поля
@@ -218,7 +222,7 @@
           </v-card>
         </v-col>
 
-        <v-col cols="5">
+        <v-col v-if="policyA.includes(getEmployeeInfo.Role)" cols="5">
           <v-card color="teal-lighten-5">
             <v-card-title>
               Иерархические сущности
@@ -285,7 +289,9 @@ export default {
   activated() {
     this.abortFlag = false
     this.checkConnection();
-    this.$store.dispatch('getAllCompanies');
+
+    if (this.policyA.includes(this.getEmployeeInfo.Role))
+      this.$store.dispatch('getAllCompanies');
   },
   deactivated() {
       this.abortFlag = true
@@ -423,7 +429,16 @@ computed: {
       this.filters.companyId = value;
     }
   },
-  ...mapGetters(['companies'])
+  ...mapGetters(['companies']),
+  getEmployeeInfo() {
+        return this.$store.state.employeeInfo
+      },
+      policyCA() {
+        return this.$store.state.policyCA
+      },
+      policyA() {
+        return this.$store.state.policyA
+      }
 }
 }
 </script>

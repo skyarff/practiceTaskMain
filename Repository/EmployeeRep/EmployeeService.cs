@@ -74,7 +74,8 @@ namespace StockService.Repository.EmployeeRep
         {
             var stock = await _db.Stocks.FindAsync(employeeDto.StockId);
 
-            if (User.IsInRole("CompanyLevelWorker") && (employeeDto.Role != "StockLevelWorker"
+            if (User.IsInRole("CompanyLevelWorker") 
+                && ((employeeDto.Role = "StockLevelWorker") == ""
                 || stock?.CompanyId != Convert.ToInt32(User.FindFirstValue("CompanyId")))
                 )
                 throw new Exception("Некорректные данные запроса");
@@ -238,20 +239,15 @@ namespace StockService.Repository.EmployeeRep
         {
             var employee = await _db.Employees.FindAsync(employeeDto.EmployeeId);
 
-
-            if (User.IsInRole("StockLevelWorker") && employeeDto.Role != "StockLevelWorker"
-                || employeeDto.Role == User.FindFirstValue(ClaimTypes.Role) 
-                && (employeeDto.EmployeeId.ToString() != User.FindFirstValue(ClaimTypes.NameIdentifier))
+            if (User.IsInRole("StockLevelWorker") && employee?.Role != "StockLevelWorker"
+                || employee?.Role == User.FindFirstValue(ClaimTypes.Role)
+                && (employee?.EmployeeId.ToString() != User.FindFirstValue(ClaimTypes.NameIdentifier))
                 || User.IsInRole("CompanyLevelWorker")
-                && (employeeDto.CompanyId != Convert.ToInt32(User.FindFirstValue("CompanyId")) || employeeDto.Role == "Admin")
+                && (employee?.Role != "StockLevelWorker"
+                || employee?.CompanyId != Convert.ToInt32(User.FindFirstValue("CompanyId")))
                 )
                 throw new Exception("Некорректные данные запроса");
 
-
-            if (User.IsInRole("CompanyLevelWorker")
-                    && (employeeDto.CompanyId != Convert.ToInt32(User.FindFirstValue("CompanyId"))
-                    || employeeDto.Role == "Admin"))
-                throw new Exception("Некорректные данные запроса");
 
             _response.IsSuccess = false;
             _response.Message = "Сотрудник не найден.";
@@ -261,7 +257,11 @@ namespace StockService.Repository.EmployeeRep
                 if (!string.IsNullOrEmpty(employeeDto.FullName))
                     employee.FullName = employeeDto.FullName;
 
-                if (!string.IsNullOrEmpty(employeeDto.Role))
+                if (!string.IsNullOrEmpty(employee.Role)
+                    && !User.IsInRole("StockLevelWorker")
+                    && User.FindFirstValue(ClaimTypes.Role) != employee.Role
+                    && employee.Role != "Admin"
+                    )
                     employee.Role = employeeDto.Role;
 
                 if (!string.IsNullOrEmpty(employeeDto.JobTitle))
@@ -308,9 +308,7 @@ namespace StockService.Repository.EmployeeRep
 
         public async Task<Response> GetEmployeesFilteredAsync(EmployeeDto employeeDto, ClaimsPrincipal User)
         {
-            if (User.IsInRole("StockLevelWorker")
-                    && (employeeDto.StockId = Convert.ToInt32(User.FindFirstValue("StockId"))) == -1
-                    || User.IsInRole("CompanyLevelWorker")
+            if (User.IsInRole("CompanyLevelWorker")
                     && (employeeDto.CompanyId = Convert.ToInt32(User.FindFirstValue("CompanyId"))) == -1)
                 throw new Exception("Некорректные данные запроса");
 
@@ -333,6 +331,9 @@ namespace StockService.Repository.EmployeeRep
                 query = query.Where(e => EF.Functions.ILike(e.Email, $"%{employeeDto.Email}%"));
             if (!string.IsNullOrEmpty(employeeDto.Phone))
                 query = query.Where(e => EF.Functions.ILike(e.Phone, $"%{employeeDto.Phone}%"));
+
+            if (!string.IsNullOrEmpty(employeeDto.Role))
+                query = query.Where(e => e.Role == employeeDto.Role);
 
 
             if (employeeDto.StockId != null)
@@ -397,9 +398,40 @@ namespace StockService.Repository.EmployeeRep
 
             if (employee != null)
             {
+
+
+                var employeeRes = _db.Employees
+                .Where(e => e.EmployeeId == employee.EmployeeId)
+                .Select(e => new
+                {
+                    EmployeeId = e.EmployeeId,
+                    FullName = e.FullName,
+                    JobTitle = e.JobTitle,
+                    Login = e.Login,
+                    Role = e.Role,
+
+                    ImagePath = e.ImagePath,
+                    Email = e.Email,
+                    Phone = e.Phone,
+
+                    StockId = e.StockId,
+                    StockName = e.StockId != null ? _db.Stocks
+                        .Where(s => s.StockId == e.StockId)
+                        .Select(s => s.Name)
+                        .FirstOrDefault() : null,
+                    CompanyId = e.CompanyId,
+                    CompanyName = _db.Companies
+                        .Where(c => c.CompanyId == e.CompanyId)
+                        .Select(c => c.Name)
+                        .FirstOrDefault(),
+                })
+                .FirstOrDefault();
+
+
+
                 _cookieService.SetCookie("token", 
                     _tokenService.GenerateToken(employee).ToString(), 30);
-                _cookieService.SetCookie("employee", JsonConvert.SerializeObject(employee), 30);
+                _cookieService.SetCookie("employee", JsonConvert.SerializeObject(employeeRes), 30);
 
 
                 _response.IsSuccess = true;

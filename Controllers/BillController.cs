@@ -57,7 +57,7 @@ namespace StockService.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "CompanyLevelWorker,Admin")]
         [HttpGet("getAll")]
         public async Task<IActionResult> GetAllBills()
         {
@@ -75,7 +75,7 @@ namespace StockService.Controllers
             }
         }
 
-        [Authorize(Roles = "StockLevelWorker,CompanyLevelWorker,Admin")]
+        [Authorize(Roles = "CompanyLevelWorker,Admin")]
         [HttpGet("getByProviderAndCompanyId")]
         public async Task<IActionResult> GetBillsByProviderAndCompanyIdAsync([FromQuery] int? providerId, int? companyId)
         {
@@ -93,7 +93,7 @@ namespace StockService.Controllers
             }
         }
 
-        [Authorize(Roles = "StockLevelWorker,CompanyLevelWorker,Admin")]
+        [Authorize(Roles = "CompanyLevelWorker,Admin")]
         [HttpGet("getById")]
         public async Task<IActionResult> GetBillByIdAsync([FromQuery] int billId)
         {
@@ -111,7 +111,7 @@ namespace StockService.Controllers
             }
         }
 
-        [Authorize(Roles = "StockLevelWorker,CompanyLevelWorker,Admin")]
+        [Authorize(Roles = "CompanyLevelWorker,Admin")]
         [HttpPost("getBillsFiltered")]
         public async Task<IActionResult> GetBillsFiltered(BillDto billDto)
         {

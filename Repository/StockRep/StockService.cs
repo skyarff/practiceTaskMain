@@ -24,7 +24,8 @@ namespace StockService.Repository.StockRep
         {
 
             if (User.IsInRole("CompanyLevelWorker") 
-                && stockDto.CompanyId != Convert.ToInt32(User.FindFirstValue("CompanyId")))  
+                && (stockDto.CompanyId = Convert.ToInt32(User.FindFirstValue("CompanyId"))) == -1
+                )
                 throw new Exception("Некорректные данные запроса");
 
 
@@ -92,7 +93,8 @@ namespace StockService.Repository.StockRep
         {
 
             if (User.IsInRole("CompanyLevelWorker")
-                && companyId != Convert.ToInt32(User.FindFirstValue("CompanyId")))
+                && (companyId = Convert.ToInt32(User.FindFirstValue("CompanyId"))) == -1
+                )
                 throw new Exception("Некорректные данные запроса");
 
             _response.IsSuccess = false;
@@ -125,7 +127,6 @@ namespace StockService.Repository.StockRep
                 throw new Exception("Некорректные данные запроса");
 
             
-
             _response.IsSuccess = false;
             _response.Message = "Склад не найден.";
 

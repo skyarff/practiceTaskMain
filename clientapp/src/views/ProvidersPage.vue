@@ -184,7 +184,7 @@
       </v-expansion-panels>
   
       <!-- Секция редактирования -->
-      <v-card >
+      <v-card v-if="policyA.includes(getEmployeeInfo.Role)">
         <v-card-title>
           <v-row align="center">
             <v-col cols="auto">
@@ -657,5 +657,13 @@ import '@/assets/main.css';
         }
       }
   },
+  computed: {
+    getEmployeeInfo() {
+        return this.$store.state.employeeInfo
+      },
+      policyA() {
+        return this.$store.state.policyA
+      }
+  }
 }
 </script>
