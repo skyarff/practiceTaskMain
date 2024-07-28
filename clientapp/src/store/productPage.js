@@ -22,8 +22,8 @@ const productPageModule = {
         updsByBillId: [{ name: 'Все УПД', updId: null }],
         fUpdsByBillId: [{ name: 'Все УПД', updId: null }],
 
-        updsByStockId: [{ name: 'Все УПД', updId: null }],
-        fUpdsByStockId: [{ name: 'Все УПД', updId: null }],
+        updsByCompanyId: [{ name: 'Все УПД', updId: null }],
+        fUpdsByCompanyId: [{ name: 'Все УПД', updId: null }],
     },
     getters: {
         stocksByCompanyId(state) {
@@ -62,11 +62,11 @@ const productPageModule = {
         fUpdsByBillId(state) {
             return state.fUpdsByBillId;
         },
-        updsByBillId(state) {
-            return state.updsByStockId;
+        updsByCompanyId(state) {
+            return state.updsByCompanyId;
         },
-        fUpdsByBillId(state) {
-            return state.fUpdsByStockId;
+        fUpdsByCompanyId(state) {
+            return state.fUpdsByCompanyId;
         },
     },
     mutations: {
@@ -106,11 +106,11 @@ const productPageModule = {
         setFUpdsByBillId(state, fUpdsByBillId) {
             state.fUpdsByBillId = fUpdsByBillId
         },
-        setUpdsByStockId(state, updsByStockId) {
-            state.updsByStockId = updsByStockId
+        setUpdsByCompanyId(state, updsByCompanyId) {
+            state.updsByCompanyId = updsByCompanyId
         },
-        setFUpdsByStockId(state, fUpdsByStockId) {
-            state.fUpdsByStockId = fUpdsByStockId
+        setFUpdsByCompanyId(state, fUpdsByCompanyId) {
+            state.fUpdsByCompanyId = fUpdsByCompanyId
         },
     },
     actions: {
@@ -284,11 +284,10 @@ const productPageModule = {
               console.error('Error fetching stocks by company ID:', error);
             }
         },
-        async getUpdsByStockId({commit}, payload) {
-            if (payload.selected) commit('setUpdsByStockId', []);    
-            else commit('setFUpdsByStockId', []);
-
-            let url = `/api/Upd/getUpdsByStockId?StockId=${payload.stockId}`;
+        async getUpdsByCompanyId({commit}, payload) {
+            if (payload.selected) commit('setUpdsByCompanyId', []);    
+            else commit('setFUpdsByCompanyId', []);
+            let url = `/api/Upd/getUpdsByCompanyId?CompanyId=${payload.companyId}`;
 
             try {
                 const response = await api.get(url, {
@@ -303,8 +302,10 @@ const productPageModule = {
               }));
               updsByBillId.unshift({ name: 'Все УПД', updId: null });
 
-              if (payload.selected) commit('setUpdsByStockId', updsByBillId);    
-              else commit('setFUpdsByStockId', updsByBillId);
+
+
+              if (payload.selected) commit('setUpdsByCompanyId', updsByBillId);    
+              else commit('setFUpdsByCompanyId', updsByBillId);
 
               
             } catch (error) {

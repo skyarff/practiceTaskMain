@@ -439,7 +439,7 @@ namespace StockService.Repository.EmployeeRep
                 _cookieService.SetCookie("employee", JsonConvert.SerializeObject(employeeRes), 30);
 
                 employee.RefreshToken = tokenPair.RefreshToken;
-                _db.SaveChanges();
+                await _db.SaveChangesAsync();
 
                 _response.IsSuccess = true;
                 _response.Message = "Авторизация успешно пройдена.";

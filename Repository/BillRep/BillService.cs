@@ -24,7 +24,8 @@ namespace StockService.Repository.BillRep
         public async Task<Response> CreateBillAsync(BillDto billDto, ClaimsPrincipal User)
         {
             if (User.IsInRole("CompanyLevelWorker")
-                && billDto.CompanyId != Convert.ToInt32(User.FindFirstValue("CompanyId")))
+                && (billDto.CompanyId = Convert.ToInt32(User.FindFirstValue("CompanyId"))) == -1
+                )
                 throw new Exception("Некорректные данные запроса");
 
             var billIsExists = await _db.Bills.AnyAsync(b => b.BillNumber == billDto.BillNumber);

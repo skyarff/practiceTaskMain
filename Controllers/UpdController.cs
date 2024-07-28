@@ -94,12 +94,12 @@ namespace StockService.Controllers
         }
 
         [Authorize(Roles = "StockLevelWorker,CompanyLevelWorker,Admin")]
-        [HttpGet("getUpdsByStockId")]
-        public async Task<IActionResult> GetUpdsByStockIdAsync([FromQuery] int stockId)
+        [HttpGet("getUpdsByCompanyId")]
+        public async Task<IActionResult> GetUpdsByCompanyIdAsync([FromQuery] int companyId)
         {
             try
             {
-                _response = await _updService.GetUpdsByStockIdAsync(stockId, User);
+                _response = await _updService.GetUpdsByCompanyIdAsync(companyId, User);
                 if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }

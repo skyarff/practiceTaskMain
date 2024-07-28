@@ -477,7 +477,8 @@
                     </v-col>
                   </v-row>
                   <v-row>
-                    <v-col v-if="selectedRole === 'StockLevelWorker'" cols="12">
+                    <v-col v-if="!(policyA.includes(getEmployeeInfo.Role) && selectedRole !== 'StockLevelWorker')" 
+                    cols="12">
                       <v-select
                         v-model="selectedStockId"
                         :items="stocksByCompanyId"
@@ -569,6 +570,7 @@ import '@/assets/main.css';
           companyId = this.filters.companyId
           this.filtersStockId = null
         }
+        if (this.selectedEmployee.role === 'StockLevelWorker')
         this.$store.dispatch( 'employeePage/getStocksByCompanyId', {companyId: companyId, selected: selected})
       },
       updatePage(newPage) {

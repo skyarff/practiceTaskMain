@@ -304,7 +304,7 @@
                     >
                       <v-select
                         v-model="filtersUpdId"
-                        :items="fUpdsByBillId"
+                        :items="policyCA.includes(getEmployeeInfo.Role) ? updsByBillId : updsByCompanyId"
                         item-title="name"
                         item-value="updId"
                         label="УПД"
@@ -679,7 +679,7 @@
                             >
                               <v-select
                                 v-model="selectedUpdId"
-                                :items="updsByBillId"
+                                :items="policyCA.includes(getEmployeeInfo.Role) ? updsByBillId : updsByCompanyId"
                                 item-title="name"
                                 item-value="updId"
                                 label="УПД"
@@ -767,11 +767,11 @@ import '@/assets/main.css';
       } else {
         this.$store.dispatch( 'productPage/getProductCategoriesByCompanyId', {companyId: this.getEmployeeInfo.CompanyId, selected: true})
         this.$store.dispatch( 'productPage/getStorageLocationsByStockId', {stockId: this.getEmployeeInfo.StockId, selected: true})
-        this.$store.dispatch( 'productPage/getUpdsByStockId', {stockId: this.getEmployeeInfo.StockId, selected: true})
+        this.$store.dispatch( 'productPage/getUpdsByCompanyId', {companyId: this.getEmployeeInfo.CompanyId, selected: true})
 
         this.$store.dispatch( 'productPage/getProductCategoriesByCompanyId', {companyId: this.getEmployeeInfo.CompanyId, selected: false})
         this.$store.dispatch( 'productPage/getStorageLocationsByStockId', {stockId: this.getEmployeeInfo.StockId, selected: false})
-        this.$store.dispatch( 'productPage/getUpdsByStockId', {stockId: this.getEmployeeInfo.StockId, selected: false})
+        this.$store.dispatch( 'productPage/getUpdsByCompanyId', {companyId: this.getEmployeeInfo.CompanyId, selected: false})
       }
     },
     deactivated() {
@@ -887,6 +887,7 @@ import '@/assets/main.css';
             this.$store.dispatch( 'productPage/getUpdsByStockId', {stockId: this.getEmployeeInfo.StockId, selected: true})
       },
       switchEditingMode() {
+        console.log(this.updsByCompanyId)
           this.isEditing = !this.isEditing
           if (!this.isEditing) {
             this.selectedProduct.productId = undefined
@@ -1176,8 +1177,9 @@ import '@/assets/main.css';
     },
     selectedUpdId: {
       get() {
-        const upd = this.updsByBillId.find(u => u.updId === this.selectedProduct.updId);
-        return upd ? upd.name : null;
+        const upd = (this.policyCA.includes(this.getEmployeeInfo.Role) ? this.updsByBillId : this.updsByCompanyId)
+            .find(u => u.updId === this.selectedProduct.updId);
+              return upd ? upd.name : null;
       },
       set(value) {
         this.selectedProduct.updId = value;
@@ -1214,7 +1216,9 @@ import '@/assets/main.css';
       'employeesByStockId',
       'fEmployeesByStockId',
       'updsByBillId',
-      'fUpdsByBillId'
+      'fUpdsByBillId',
+      'updsByCompanyId',
+      'fUpdsByCompanyId'
     ]),
     getEmployeeInfo() {
         if (this.$store.state.employeeInfo) 

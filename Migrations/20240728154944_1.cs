@@ -133,7 +133,7 @@ namespace StockService.Migrations
                     ImagePath = table.Column<string>(type: "text", nullable: true),
                     Email = table.Column<string>(type: "text", nullable: true),
                     Phone = table.Column<string>(type: "text", nullable: true),
-                    CompanyId = table.Column<int>(type: "integer", nullable: false)
+                    CompanyId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -285,8 +285,8 @@ namespace StockService.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Employees_Login",
                 table: "Employees",
-                column: "Login",
-                unique: true);
+                column: "Login")
+                .Annotation("Npgsql:IndexMethod", "hash");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employees_StockId",

@@ -12,7 +12,7 @@ using StockService;
 namespace StockService.Migrations
 {
     [DbContext(typeof(StockContext))]
-    [Migration("20240725124738_1")]
+    [Migration("20240728154944_1")]
     partial class _1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -102,7 +102,7 @@ namespace StockService.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("EmployeeId"));
 
-                    b.Property<int>("CompanyId")
+                    b.Property<int?>("CompanyId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Email")
@@ -149,8 +149,9 @@ namespace StockService.Migrations
 
                     NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("CompanyId"), "hash");
 
-                    b.HasIndex("Login")
-                        .IsUnique();
+                    b.HasIndex("Login");
+
+                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("Login"), "hash");
 
                     b.HasIndex("StockId");
 

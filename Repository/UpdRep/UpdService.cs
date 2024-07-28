@@ -240,12 +240,10 @@ namespace StockService.Repository.BillRep
             return _response;
         }
 
-        public async Task<Response> GetUpdsByStockIdAsync(int stockId, ClaimsPrincipal User)
+        public async Task<Response> GetUpdsByCompanyIdAsync(int companyId, ClaimsPrincipal User)
         {
-            var stock = await _db.Stocks.FindAsync(stockId);
-
             if ((User.IsInRole("StockLevelWorker") || User.IsInRole("CompanyLevelWorker"))
-                && stock?.CompanyId != Convert.ToInt32(User.FindFirstValue("CompanyId"))
+                && (companyId = Convert.ToInt32(User.FindFirstValue("CompanyId"))) == -1
                 )
                 throw new Exception("Некорректные данные запроса");
 
@@ -253,7 +251,7 @@ namespace StockService.Repository.BillRep
             _response.Message = "УПД не найдены.";
 
             var upds = await _db.Upds
-                    .Where(u => u.BillId == stockId)
+                    .Where(u => u.CompanyId == companyId)
                     .ToListAsync();
 
             if (upds != null)
