@@ -47,7 +47,9 @@
                     </v-icon>
                   </div>
               </td>
-              <td>{{ item.companyName }}</td>
+              <td
+              v-if="policyA.includes(getEmployeeInfo.Role)"
+              >{{ item.companyName }}</td>
               <td>{{ item.providerName }}</td> 
               <td>{{ item.billNumber }}</td>
             </tr>
@@ -394,12 +396,11 @@ import '@/assets/main.css';
       return {
         apiBaseUrl: import.meta.env.VITE_API_BASE_URL,
         filters: {},
-        headers: [
+        baseHeaders: [
           { title: 'ID УПД*', key: 'updId', align: 'start', sortable: true },
           { title: 'Номер документа', key: 'documentNumber', align: 'start', sortable: true },
           { title: 'Дата добавления', key: 'createDate', align: 'start', sortable: false },
           { title: 'Скан. УПД', key: 'updPdfPath', align: 'start', sortable: true },
-          { title: 'Компания', key: 'companyName', align: 'start', sortable: false },
           { title: 'Поставщик', key: 'providerName', align: 'start', sortable: false },
           { title: 'Счет', key: 'billName', align: 'start', sortable: false },        
         ],
@@ -463,8 +464,13 @@ import '@/assets/main.css';
         this.applyFilters();
         this.filters = {}
         window.scrollTo(0, document.body.scrollHeight);
-        this.$store.dispatch('updPage/getBillsByProviderAndCompanyId', 
+
+        if (this.policyCA.includes(this.getEmployeeInfo.Role))
+          this.$store.dispatch('updPage/getBillsByProviderAndCompanyId', 
             {providerId: this.selectedUpd.providerId, companyId: this.selectedUpd.companyId, selected: true})
+
+
+        
       },
       switchEditingMode() {
 
@@ -567,8 +573,10 @@ import '@/assets/main.css';
         } else {
           this.selectedUpd = {...item};
           this.isEditing = true
-          this.$store.dispatch('updPage/getBillsByProviderAndCompanyId', 
-            {providerId: this.selectedUpd.providerId, companyId: this.selectedUpd.companyId, selected: true})
+
+          if (this.policyCA.includes(this.getEmployeeInfo.Role))
+            this.$store.dispatch('updPage/getBillsByProviderAndCompanyId', 
+              {providerId: this.selectedUpd.providerId, companyId: this.selectedUpd.companyId, selected: true})
         }
       },
       formatDate(dateString) {
@@ -654,7 +662,18 @@ import '@/assets/main.css';
       },
       policyA() {
         return this.$store.state.policyA
+      },
+      headers() {
+      if (this.policyA.includes(this.getEmployeeInfo.Role)) {
+          this.baseHeaders.splice(4, 0, { 
+            title: 'Компания', 
+            key: 'companyName', 
+            align: 'start', 
+            sortable: true 
+          });
       }
+      return this.baseHeaders;
+    }
   }
 }
 </script>

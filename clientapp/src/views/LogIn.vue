@@ -12,17 +12,13 @@
             Sign In
         </v-card-title>
 
-        <!-- <v-card-subtitle>
-            Sign
-        </v-card-subtitle> -->
-
         <v-form 
         ref="signForm"
         @submit.prevent="signIn"
         >
             <v-text-field
                 v-model="login"
-                label="login"
+                label="Login"
                 :rules="loginRules"
             >
                 <template v-slot:prepend>
@@ -58,58 +54,18 @@
                 type="submit"
                 :loading="loading"
             >
-                submit
+                Войти
             </v-btn>
-
-            <v-btn @click="clear">
-                clear
-            </v-btn>
-
-            <router-link 
-            to="/signUp"
-            class="ml-5"
-            style="text-decoration: none;"
-            >
-                <span class="caption">Don't have an account? Register to sign in.</span>
-            </router-link>
-
         </v-form>
     </v-card>
 
-    
-
-    <v-card
-    v-if="errorMessage"
-    class="mx-auto mt-3 error-card"
-    elevation="16"
-    width="70vw"
-    style="border-left: 4px solid #a3540f; border-radius: 0;"
-  >
-        <v-layout class="ma-1 d-flex align-center">
-            <v-flex class="xs11 sm11 md11 lg11 xl11 xxl11 d-flex justify-start ml-5">
-                <v-icon default class="error-card mr-1">
-                    mdi-alert-octagon-outline
-                </v-icon>
-            <strong style="font-size: 1.4vw;">{{ errorMessage }}</strong>
-        </v-flex>
-        <v-flex class="xs1 sm1 md1 lg1 xl1 xxl1 d-flex justify-center">
-            <v-btn class="error-card" fab text @click="closeErrorMessage">
-                <v-icon>
-                    mdi-close
-                </v-icon>
-            </v-btn>
-        </v-flex>
-        </v-layout>
-
-  </v-card>
-
-  
 </div>
 </v-container>
 </template>
 
 <script>
 import api from '@/api'
+
 
 export default {
     data: () => ({
@@ -124,63 +80,34 @@ export default {
         v => !!v || 'Password is required',
         v => (v && v.length >= 3) || 'Minimum length is 3 characters',
         ],
+        loading: false
     }),
     methods: {
         async signIn() {
+            this.loading = true;
+            const url = `/api/Employee/signIn`;
+            
+            try {
+                const response = await api.get(url, {
+                    headers: {
+                        'accept': '*/*'
+                    },
+                    params: {
+                        login: this.login,
+                        password: this.password
+                    }
+                });
 
-            const url = `/api/Employee/signIn`
-            api.get(url, {
-                headers: {
-                'accept': '*/*'
-                },
-                params: {
-                    login: this.login,
-                    password: this.password
-                }
-            })
-            .then(response => {
-                this.$store.commit('setUserInfo', response.data.result)
-                this.$router.push('/ProductsPage')
-            })
-            .catch(error => this.$store.commit('setErrorMessage', error))
-  
-
-
-
-
-
-
-            // if (t || this.$refs.signForm.validate()) {
-
-            //     const payLoad = {
-            //         email: this.email,
-            //         password: this.password,
-            //         type: 'signInWithPassword'
-            //     }
-
-            //     await this.$store.dispatch('auth/auth', payLoad);
-
-            //     this.$router.push('/items')
-            // }
+                this.$store.commit('setUserInfo', response.data.result);
+                this.$router.push('/ProductsPage');
+            } catch (error) {
+                this.$store.commit('setErrorMessage', error);
+            } finally {
+                this.loading = false;
+            }
         },
-        clear() {
-            this.showPassword = false
-            this.email = ''
-            this.password = ''
-        },
-        closeErrorMessage() {
-            // this.$store.state.auth.error = ''
-        }
     },
-    computed: {
-        // loading() {
-        //     return this.$store.state.auth.loading
-        // },
-        // errorMessage() {
-        //     return this.$store.state.auth.error
-        // },
-    }
-    
+
 }
 
 </script>

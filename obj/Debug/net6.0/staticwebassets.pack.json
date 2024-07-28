@@ -69,6 +69,10 @@
       "PackagePath": "staticwebassets\\Images\\Common\\NoAvatar.jpg"
     },
     {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\Common\\NoLogo.png",
+      "PackagePath": "staticwebassets\\Images\\Common\\NoLogo.png"
+    },
+    {
       "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\Common\\SchemaAccess.png",
       "PackagePath": "staticwebassets\\Images\\Common\\SchemaAccess.png"
     },
@@ -103,6 +107,10 @@
     {
       "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\93a8f3a1-86f4-4d26-bde4-177277572905.png",
       "PackagePath": "staticwebassets\\Images\\CompanyLogos\\93a8f3a1-86f4-4d26-bde4-177277572905.png"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\a7659ce6-d478-43aa-9b8e-28428f133586.png",
+      "PackagePath": "staticwebassets\\Images\\CompanyLogos\\a7659ce6-d478-43aa-9b8e-28428f133586.png"
     },
     {
       "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\CompanyLogos\\d06e9967-0f36-4a04-b8fb-d9fb838dccd9.png",
@@ -195,6 +203,10 @@
     {
       "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\f4642ff3-86df-44ad-a794-e304c632d0bd.jpg",
       "PackagePath": "staticwebassets\\Images\\EmployeeImages\\f4642ff3-86df-44ad-a794-e304c632d0bd.jpg"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\fb7d76b2-f1ce-4732-b283-859e47c645b1.jpg",
+      "PackagePath": "staticwebassets\\Images\\EmployeeImages\\fb7d76b2-f1ce-4732-b283-859e47c645b1.jpg"
     },
     {
       "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\EmployeeImages\\ff979298-f4f7-49a9-b259-b66297cd0d1b.jpg",
@@ -399,6 +411,10 @@
     {
       "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\StorageLocationImages\\4bae9cda-58a3-4b18-81ac-b03bc35f44a5.jpg",
       "PackagePath": "staticwebassets\\Images\\StorageLocationImages\\4bae9cda-58a3-4b18-81ac-b03bc35f44a5.jpg"
+    },
+    {
+      "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\StorageLocationImages\\549ff088-e381-4992-bed7-bd33f74e95d5.jpg",
+      "PackagePath": "staticwebassets\\Images\\StorageLocationImages\\549ff088-e381-4992-bed7-bd33f74e95d5.jpg"
     },
     {
       "Id": "C:\\Users\\bffus\\OneDrive\\Рабочий стол\\practiceTaskMain\\wwwroot\\Images\\StorageLocationImages\\5d8b92d1-4233-474c-b061-fa91c1ef6cf4.png",

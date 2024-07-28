@@ -49,7 +49,9 @@
                     </v-icon>
                   </div>
               </td>
-              <td>{{ item.companyName }}</td>
+              <td
+              v-if="policyA.includes(getEmployeeInfo.Role)"
+              >{{ item.companyName }}</td>
               <td>{{ item.stockName }}</td>
               <td>{{ item.phone }}</td>
               <td>{{ item.email }}</td> 
@@ -516,14 +518,13 @@ import '@/assets/main.css';
       return {
         apiBaseUrl: import.meta.env.VITE_API_BASE_URL,
         filters: {},
-        headers: [
+        baseHeaders: [
           { title: 'ID сотрудника*', key: 'employeeId', align: 'start', sortable: true },
           { title: 'Логин', key: 'login', align: 'start', sortable: true },
           { title: 'ФИО', key: 'fullName', align: 'start', sortable: true },
           { title: 'Должность', key: 'jobTitile', align: 'start', sortable: true },
           { title: 'Роль', key: 'role', align: 'start', sortable: true },
           { title: 'Фото сотудника', key: 'imagePath', align: 'start', sortable: false },
-          { title: 'Компания', key: 'companyName', align: 'start', sortable: true },
           { title: 'Склад', key: 'stockName', align: 'start', sortable: true },
           { title: 'Телефон', key: 'phone', align: 'start', sortable: true },
           { title: 'Почта', key: 'email', align: 'start', sortable: true },
@@ -786,7 +787,21 @@ import '@/assets/main.css';
       },
       policyA() {
         return this.$store.state.policyA
+      },
+      policyCA() {
+        return this.$store.state.policyCA
+      },
+      headers() {
+      if (this.policyA.includes(this.getEmployeeInfo.Role)) {
+        this.baseHeaders.splice(6, 0, { 
+            title: 'Компания', 
+            key: 'companyName', 
+            align: 'start', 
+            sortable: true 
+          });
       }
+      return this.baseHeaders;
+    }
   }
 }
 </script>

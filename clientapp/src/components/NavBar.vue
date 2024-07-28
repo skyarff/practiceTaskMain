@@ -1,6 +1,5 @@
 <template>
 
-
     <v-app-bar
           color="lime-darken-3"
           :image="`${apiBaseUrl}//Images//Common//1.jpg`"
@@ -12,17 +11,13 @@
             ></v-img>
           </template>
   
-          <template v-slot:prepend>
-            <v-app-bar-nav-icon></v-app-bar-nav-icon>
-          </template>
-  
           <v-app-bar-title>INDRIVE</v-app-bar-title>
   
           <v-spacer></v-spacer>
   
 
 
-          <v-btn @click="logout" v-if="isAuth" class="mr-3" to="/AuthPage">
+          <v-btn @click="logout" v-if="isAuth" class="mr-3">
             <v-icon class="mr-1">mdi-logout</v-icon>
             <span>Выйти</span>
           </v-btn>
@@ -44,7 +39,10 @@ export default {
   },
   methods: {
     logout() {
-      this.$store.dispatch('logout')
+      this.$store.dispatch('logout');
+      window.location.reload();
+      this.$router.push('/AuthPage');
+      
     }
   },
   computed: {

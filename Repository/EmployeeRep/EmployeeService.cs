@@ -6,9 +6,7 @@ using StockService.Models;
 using StockService.Models.dto;
 using StockService.Repository.CookieRep;
 using StockService.Repository.JwtRep;
-using System;
 using System.Data;
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
 namespace StockService.Repository.EmployeeRep
@@ -424,15 +422,90 @@ namespace StockService.Repository.EmployeeRep
                         .Where(c => c.CompanyId == e.CompanyId)
                         .Select(c => c.Name)
                         .FirstOrDefault(),
+                    LogoPath = _db.Companies
+                        .Where(c => c.CompanyId == e.CompanyId)
+                        .Select(c => c.LogoPath)
+                        .FirstOrDefault(),
+                })
+                .FirstOrDefault();
+
+                TokenPair tokenPair = _tokenService.GenerateTokenPair(employee);
+
+
+                _cookieService.SetCookie("accessToken",
+                    tokenPair.AccessToken, 30);
+                _cookieService.SetCookie("refreshToken",
+                    tokenPair.RefreshToken, 10080);
+                _cookieService.SetCookie("employee", JsonConvert.SerializeObject(employeeRes), 30);
+
+                employee.RefreshToken = tokenPair.RefreshToken;
+                _db.SaveChanges();
+
+                _response.IsSuccess = true;
+                _response.Message = "Авторизация успешно пройдена.";
+            }
+
+            return _response;
+        }
+
+        public async Task<Response> GetNewTokensAsync(EmployeeDto employeeDto)
+        {
+            _response.IsSuccess = false;
+            _response.Message = "Некорректные учетные данные.";
+
+            //var employee = await _db.Employees.FindAsync(employeeDto.EmployeeId);
+            var employee = await _db.Employees
+                .FirstOrDefaultAsync(e => e.Login == employeeDto.Login);
+
+            if (employee == null
+                || employeeDto.Password == null
+                || employee.PasswordHash != Sha256.ComputeSha256Hash(employeeDto.Password)
+                )
+                return _response;
+
+            if (employee != null)
+            {
+
+
+                var employeeRes = _db.Employees
+                .Where(e => e.EmployeeId == employee.EmployeeId)
+                .Select(e => new
+                {
+                    EmployeeId = e.EmployeeId,
+                    FullName = e.FullName,
+                    JobTitle = e.JobTitle,
+                    Login = e.Login,
+                    Role = e.Role,
+
+                    ImagePath = e.ImagePath,
+                    Email = e.Email,
+                    Phone = e.Phone,
+
+                    StockId = e.StockId,
+                    StockName = e.StockId != null ? _db.Stocks
+                        .Where(s => s.StockId == e.StockId)
+                        .Select(s => s.Name)
+                        .FirstOrDefault() : null,
+                    CompanyId = e.CompanyId,
+                    CompanyName = _db.Companies
+                        .Where(c => c.CompanyId == e.CompanyId)
+                        .Select(c => c.Name)
+                        .FirstOrDefault(),
+                    LogoPath = _db.Companies
+                        .Where(c => c.CompanyId == e.CompanyId)
+                        .Select(c => c.LogoPath)
+                        .FirstOrDefault(),
                 })
                 .FirstOrDefault();
 
 
 
-                _cookieService.SetCookie("token", 
-                    _tokenService.GenerateToken(employee).ToString(), 30);
+                _cookieService.SetCookie("token",
+                    _tokenService.GenerateTokenPair(employee).ToString(), 30);
                 _cookieService.SetCookie("employee", JsonConvert.SerializeObject(employeeRes), 30);
 
+
+                
 
                 _response.IsSuccess = true;
                 _response.Message = "Авторизация успешно пройдена.";

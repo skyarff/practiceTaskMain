@@ -48,8 +48,12 @@
                     </v-icon>
                   </div>
               </td>
-              <td>{{ item.companyName }}</td>
-              <td>{{ item.stockName }}</td>
+              <td
+              v-if="policyA.includes(getEmployeeInfo.Role)"
+              >{{ item.companyName }}</td>
+              <td
+               v-if="policyCA.includes(getEmployeeInfo.Role)"
+              >{{ item.stockName }}</td>
               <td>{{ item.productCategoryName }}</td>
               <td>{{ item.rackCode }}</td>
               <td>{{ item.login }}</td>
@@ -713,18 +717,16 @@ import '@/assets/main.css';
       return {
         apiBaseUrl: import.meta.env.VITE_API_BASE_URL,
         filters: {},
-        headers: [
+        baseHeaders: [
           { title: 'ID продукта*', key: 'productId', align: 'start', sortable: true },
           { title: 'Наименование продутка', key: 'name', align: 'start', sortable: true },
           { title: 'Цена', key: 'price', align: 'start', sortable: true },
           { title: 'Дата добавления', key: 'createDate', align: 'start', sortable: true },
           { title: 'Фото продукта', key: 'productPhoto', align: 'start', sortable: false },
-          { title: 'Компания', key: 'companyName', align: 'start', sortable: true },
-          { title: 'Склад', key: 'stockName', align: 'start', sortable: true },
           { title: 'Категория', key: 'productCategoryName', align: 'start', sortable: true },
           { title: 'Стеллаж', key: 'rackCode', align: 'start', sortable: true },
           { title: 'Логин', key: 'login', align: 'start', sortable: true },
-          { title: 'Работник', key: 'employeeName', align: 'start', sortable: true },
+          { title: 'ФИО работника', key: 'employeeName', align: 'start', sortable: true },
           { title: 'Полка', key: 'shelfCode', align: 'start', sortable: true },
           { title: 'Поставщик', key: 'providerName', align: 'start', sortable: true },
           { title: 'Счет', key: 'billName', align: 'start', sortable: true },
@@ -870,13 +872,19 @@ import '@/assets/main.css';
         this.applyFilters();
         this.filters = {}
         window.scrollTo(0, document.body.scrollHeight);
-        this.$store.dispatch( 'productPage/getStocksByCompanyId', {companyId: this.selectedProduct.companyId, selected: true})
-        this.$store.dispatch( 'productPage/getProductCategoriesByCompanyId', {companyId: this.selectedProduct.companyId, selected: true})
-        this.$store.dispatch( 'productPage/getBillsByCompanyAndProviderId', 
-        {companyId: this.selectedProduct.companyId, providerId: this.selectedProduct.providerId, selected: true, })
-        this.$store.dispatch( 'productPage/getStorageLocationsByStockId', {stockId: this.selectedProduct.stockId, selected: true})
-        this.$store.dispatch( 'productPage/getEmployeesByStockId', {stockId: this.selectedProduct.stockId, selected: true})
-        this.$store.dispatch( 'productPage/getUpdsByBillId', {billId: this.selectedProduct.billId, selected: true}) 
+
+        if (this.policyCA.includes(this.getEmployeeInfo.Role)) {
+            this.$store.dispatch( 'productPage/getStocksByCompanyId', {companyId: this.selectedProduct.companyId, selected: true})
+            this.$store.dispatch( 'productPage/getEmployeesByStockId', {stockId: this.selectedProduct.stockId, selected: true})
+            this.$store.dispatch( 'productPage/getUpdsByBillId', {billId: this.selectedProduct.billId, selected: true})
+            this.$store.dispatch( 'productPage/getBillsByCompanyAndProviderId', 
+            {companyId: this.selectedProduct.companyId, providerId: this.selectedProduct.providerId, selected: true, })
+          }
+          this.$store.dispatch( 'productPage/getStorageLocationsByStockId', {stockId: this.selectedProduct.stockId, selected: true})
+          this.$store.dispatch( 'productPage/getProductCategoriesByCompanyId', {companyId: this.selectedProduct.companyId, selected: true})
+
+          if (this.policyS.includes(this.getEmployeeInfo.Role)) 
+            this.$store.dispatch( 'productPage/getUpdsByStockId', {stockId: this.getEmployeeInfo.StockId, selected: true})
       },
       switchEditingMode() {
           this.isEditing = !this.isEditing
@@ -1030,10 +1038,8 @@ import '@/assets/main.css';
           this.$store.dispatch( 'productPage/getStorageLocationsByStockId', {stockId: this.selectedProduct.stockId, selected: true})
           this.$store.dispatch( 'productPage/getProductCategoriesByCompanyId', {companyId: this.selectedProduct.companyId, selected: true})
 
-          if (this.getEmployeeInfo.Role === 'StockLevelWorker') 
+          if (this.policyS.includes(this.getEmployeeInfo.Role)) 
             this.$store.dispatch( 'productPage/getUpdsByStockId', {stockId: this.getEmployeeInfo.StockId, selected: true})
-        
-        
         }
       },
       formatDate(dateString) {
@@ -1223,7 +1229,30 @@ import '@/assets/main.css';
       },
       policyA() {
         return this.$store.state.policyA
+      },
+      policyS() {
+        return this.$store.state.policyS
+      },
+      headers() {
+        if (this.policyCA.includes(this.getEmployeeInfo.Role)) {
+        this.baseHeaders.splice(5, 0, { 
+          title: 'Склад', 
+          key: 'stockName', 
+          align: 'start', 
+          sortable: true 
+        });
       }
+
+      if (this.policyA.includes(this.getEmployeeInfo.Role)) {
+        this.baseHeaders.splice(5, 0, { 
+            title: 'Компания', 
+            key: 'companyName', 
+            align: 'start', 
+            sortable: true 
+          }); 
+      }
+      return this.baseHeaders;
+    }
   }
 }
 </script>

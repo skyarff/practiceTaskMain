@@ -1,13 +1,32 @@
 <template>
     <v-navigation-drawer
+      v-if="isAuth"
         v-model="drawer"
         :rail="rail"
         permanent
         app
         @click="rail = false"
       >
+      <v-list-item
+        v-if="policyA.includes(getEmployeeInfo.Role)"
+        nav
+        class="fixed-list-item text-h6"
+        >
+        <div>
+          <strong>ADMIN</strong>
+        </div>
+        <template v-slot:append>
+            <v-btn
+              icon="mdi-chevron-left"
+              variant="text"
+              @click.stop="rail = !rail"
+            ></v-btn>
+          </template>
+        </v-list-item>
+
         <v-list-item
-          :prepend-avatar="`${apiBaseUrl}//Images//Common//2.png`"
+          v-else
+          :prepend-avatar="`${apiBaseUrl}//${getEmployeeInfo.LogoPath ? getEmployeeInfo.LogoPath : 'Images//Common//NoLogo.png'}`"
           :title="`${getEmployeeInfo.CompanyName ? 'Компания ' + getEmployeeInfo.CompanyName : ''}`"
           :subtitle="`${getEmployeeInfo.StockName ? 'Склад ' + getEmployeeInfo.StockName : ''}`"
           nav
@@ -21,6 +40,8 @@
             ></v-btn>
           </template>
         </v-list-item>
+
+        
 
 
         <v-divider></v-divider>
@@ -56,11 +77,10 @@
                   ></v-img>
                   </div>
             </div>
-            
             <div>Логин: {{ getEmployeeInfo.Login }}</div>
-            <div>Роль: {{ getEmployeeInfo.Role }}</div>
           </v-card-title>
           <v-card-subtitle>
+            <div>Роль: {{ getEmployeeInfo.Role }}</div>
             <div>ФИО: {{ getEmployeeInfo.FullName }}</div>
             <div>Должность: {{ getEmployeeInfo.JobTitle }}</div>
             <div>Почта: {{ getEmployeeInfo.Email }}</div>
@@ -98,7 +118,10 @@
       },
       policyA() {
         return this.$store.state.policyA
-      }
+      },
+      isAuth() {
+      return !!this.$store.state.accessToken;
+    }
     }
   }
 </script>

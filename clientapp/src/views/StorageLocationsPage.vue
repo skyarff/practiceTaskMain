@@ -46,8 +46,12 @@
                     </v-icon>
                   </div>
               </td>
-              <td>{{ item.companyName }}</td>
-              <td>{{ item.stockName }}</td>
+              <td
+              v-if="policyA.includes(getEmployeeInfo.Role)"
+              >{{ item.companyName }}</td>
+              <td
+              v-if="policyCA.includes(getEmployeeInfo.Role)"
+              >{{ item.stockName }}</td>
               <td>{{ item.description }}</td>
               
             </tr>
@@ -389,12 +393,10 @@ import '@/assets/main.css';
       return {
         apiBaseUrl: import.meta.env.VITE_API_BASE_URL,
         filters: {},
-        headers: [
+        baseHeaders: [
           { title: 'ID стеллажа*', key: 'storageLocationId', align: 'start', sortable: true },
           { title: 'Код стеллажа', key: 'rackCode', align: 'start', sortable: true },
           { title: 'Фото места хранения', key: 'imagePath', align: 'start', sortable: false },
-          { title: 'Компания', key: 'companyName', align: 'start', sortable: false },
-          { title: 'Склад', key: 'stockName', align: 'start', sortable: false },
           { title: 'Описание', key: 'description', align: 'start', sortable: true },
           
         ],
@@ -504,7 +506,6 @@ import '@/assets/main.css';
         this.itemsPerPage = itemsPerPage;
       },
       navigateStorageLocationId(item) {
-        debugger
         this.filters = {storageLocationId: item.storageLocationId}
         this.isEditing = true
         this.selectedStorageLocation = {...item};
@@ -512,8 +513,10 @@ import '@/assets/main.css';
         this.filters = {}
         window.scrollTo(0, document.body.scrollHeight);
 
-        this.$store.dispatch('storageLocationPage/getStocksByCompanyId', 
+        if (this.policyCA.includes(this.getEmployeeInfo.Role))
+          this.$store.dispatch('storageLocationPage/getStocksByCompanyId', 
             {companyId: this.selectedStorageLocation.companyId, selected: true})
+   
       },
       switchEditingMode() {
           this.isEditing = !this.isEditing
@@ -621,8 +624,13 @@ import '@/assets/main.css';
         } else {
           this.selectedStorageLocation = {...item};
           this.isEditing = true
-          this.$store.dispatch('storageLocationPage/getStocksByCompanyId', 
-            {companyId: this.selectedStorageLocation.companyId, selected: true})
+
+
+
+          if (this.policyCA.includes(this.getEmployeeInfo.Role))
+            this.$store.dispatch('storageLocationPage/getStocksByCompanyId', 
+              {companyId: this.selectedStorageLocation.companyId, selected: true})
+          
         }
         
       },
@@ -682,7 +690,28 @@ import '@/assets/main.css';
       },
       policyA() {
         return this.$store.state.policyA
+      },
+      headers() {
+        if (this.policyCA.includes(this.getEmployeeInfo.Role)) {
+        this.baseHeaders.splice(3, 0, { 
+          title: 'Склад', 
+          key: 'stockName', 
+          align: 'start', 
+          sortable: true 
+        });
       }
+
+      if (this.policyA.includes(this.getEmployeeInfo.Role)) {
+        this.baseHeaders.splice(3, 0, { 
+          title: 'Компания', 
+          key: 'companyName', 
+          align: 'start', 
+          sortable: true 
+        });
+      }
+
+      return this.baseHeaders;
+    }
   }
 }
 </script>

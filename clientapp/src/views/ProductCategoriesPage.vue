@@ -22,7 +22,9 @@
               {{ item.productCategoryId }}
             </td>
             <td>{{ item.name }}</td>
-            <td>{{ item.companyName }}</td>
+            <td
+            v-if="policyA.includes(getEmployeeInfo.Role)"
+            >{{ item.companyName }}</td>
           </tr>
         </template>
       </v-data-table>
@@ -271,10 +273,9 @@ export default {
     return {
       apiBaseUrl: import.meta.env.VITE_API_BASE_URL,
       filters: {},
-      headers: [
+      baseHeaders: [
         { title: 'ID категории продуктов*', key: 'productCategoryId', align: 'start', sortable: true },
         { title: 'Название', key: 'name', align: 'start', sortable: true },
-        { title: 'Компания', key: 'companyName', align: 'start', sortable: true },
       ],
       productCategories: [],
       selectedProductCategory: {},
@@ -438,7 +439,18 @@ computed: {
       },
       policyA() {
         return this.$store.state.policyA
+      },
+      headers() {
+      if (this.policyA.includes(this.getEmployeeInfo.Role)) {
+        this.baseHeaders.splice(2, 0, { 
+            title: 'Компания', 
+            key: 'companyName', 
+            align: 'start', 
+            sortable: true 
+          });
       }
+      return this.baseHeaders;
+    }
 }
 }
 </script>

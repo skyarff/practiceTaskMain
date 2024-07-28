@@ -1,9 +1,11 @@
 ﻿using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Linq;
 using StockService.Models;
 using StockService.Models.dto;
 using StockService.Repository.JwtRep;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
 public class TokenService : ITokenService
@@ -15,7 +17,8 @@ public class TokenService : ITokenService
         _configuration = configuration;
     }
 
-    public string GenerateToken(Employee employee)
+
+    public TokenPair GenerateTokenPair(Employee employee)
     {
         if (!(employee.Role == "StockLevelWorker" && employee?.StockId != null
             || employee.Role == "CompanyLevelWorker" && employee?.CompanyId != null
@@ -35,11 +38,6 @@ public class TokenService : ITokenService
             new Claim("StockId", employee?.StockId != null ? employee.StockId.ToString() : "-1"),
         };
 
-        //if (employee?.CompanyId != null)
-        //    claims.Add(new Claim("CompanyId", employee.CompanyId.ToString()));
-        //if (employee?.StockId != null)
-        //    claims.Add(new Claim("StockId", employee.StockId.ToString()));
-
 
         var token = new JwtSecurityToken(
             issuer: _configuration["Jwt:Issuer"],
@@ -49,33 +47,18 @@ public class TokenService : ITokenService
             signingCredentials: credentials
         );
 
-        return new JwtSecurityTokenHandler().WriteToken(token);
+        var accessToken = new JwtSecurityTokenHandler().WriteToken(token);
+        var refreshToken = GenerateRefreshToken();
+
+        return new TokenPair() { AccessToken = accessToken, RefreshToken = refreshToken }; 
     }
 
-    public bool ValidateToken(string token)
+
+    public string GenerateRefreshToken()
     {
-        var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"]);
-
-        try
-        {
-            tokenHandler.ValidateToken(token, new TokenValidationParameters
-            {
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(key),
-                ValidateIssuer = true,
-                ValidIssuer = _configuration["Jwt:Issuer"],
-                ValidateAudience = false,
-                //ValidAudience = _configuration["Jwt:Audience"],
-                ValidateLifetime = true,
-                ClockSkew = TimeSpan.Zero
-            }, out SecurityToken validatedToken);
-
-            return true;
-        }
-        catch
-        {
-            return false;
-        }
+        var randomNumber = new byte[64];
+        using var rng = RandomNumberGenerator.Create();
+        rng.GetBytes(randomNumber);
+        return Convert.ToBase64String(randomNumber);
     }
 }

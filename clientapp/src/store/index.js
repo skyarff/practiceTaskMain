@@ -33,7 +33,8 @@ export default createStore({
     },
     setUserInfo(state) {
       state.employeeInfo = VueCookies.get('employee');
-      state.accessToken = VueCookies.get('token');
+      state.accessToken = VueCookies.get('accessToken');
+      state.refreshToken = VueCookies.get('refreshToken');
     }
   },
   actions: {
@@ -85,7 +86,8 @@ export default createStore({
       logout({commit}) {
         commit('setInitialState');
         VueCookies.remove('employee');
-        VueCookies.remove('token');
+        VueCookies.remove('accessToken');
+        VueCookies.remove('refreshToken');
       }
   },
   modules: {
@@ -102,8 +104,10 @@ function getInitialState() {
     errorMessage: '',
     employeeInfo: null,
     accessToken: '',
+    refreshToken: '',
     companies: [],
     providers: [],
+    policyS: ['StockLevelWorker'],
     policySCA: ['StockLevelWorker', 'CompanyLevelWorker', 'Admin'],
     policyCA: ['CompanyLevelWorker', 'Admin'],
     policyA: ['Admin']

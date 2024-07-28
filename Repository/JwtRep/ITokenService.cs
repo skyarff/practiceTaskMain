@@ -4,6 +4,7 @@ namespace StockService.Repository.JwtRep
 {
     public interface ITokenService
     {
-        string GenerateToken(Employee employee);
+        TokenPair GenerateTokenPair(Employee employee);
+        string GenerateRefreshToken();
     }
 }

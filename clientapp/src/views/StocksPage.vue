@@ -22,7 +22,9 @@
               {{ item.stockId}}
             </td>
             <td>{{ item.name }}</td>
-            <td>{{ item.companyName }}</td>
+            <td
+            v-if="policyA.includes(getEmployeeInfo.Role)"
+            >{{ item.companyName }}</td>
           </tr>
         </template>
       </v-data-table>
@@ -306,10 +308,9 @@ export default {
     return {
       apiBaseUrl: import.meta.env.VITE_API_BASE_URL,
       filters: {},
-      headers: [
+      baseHeaders: [
         { title: 'ID склада*', key: 'stockId', align: 'start', sortable: true },
         { title: 'Название', key: 'name', align: 'start', sortable: true },
-        { title: 'Компания', key: 'companyName', align: 'start', sortable: true },
       ],
       stocks: [],
       selectedStock: {},
@@ -439,7 +440,6 @@ export default {
       .catch(error => this.$store.commit('setErrorMessage', error))
     },
     async handleRowClick(item) {
-      
       if (this.selectedStock.stockId === item.stockId) {
         delete this.selectedStock.stockId
         this.isEditing = false
@@ -478,7 +478,18 @@ computed: {
       },
       policyA() {
         return this.$store.state.policyA
+      },
+      headers() {
+      if (this.policyA.includes(this.getEmployeeInfo.Role)) {
+        this.baseHeaders.splice(2, 0, { 
+            title: 'Компания', 
+            key: 'companyName', 
+            align: 'start', 
+            sortable: true 
+          });
       }
+      return this.baseHeaders;
+    }
 }
 }
 </script>

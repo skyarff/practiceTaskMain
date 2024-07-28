@@ -93,14 +93,14 @@ router.beforeResolve((to, from, next) => {
 
   if (to.meta.hasRole) {
     if (to.meta.hasRole.includes(userRole)) {
-      console.log('1')
       next();
     } else {
-      console.log('2')
       next('/SchemaPage');
     }
   } else {
-    next();
+    if (to.path === '/AuthPage' && userRole) {
+      next('/SchemaPage');
+    } else next();
   }
 });
 

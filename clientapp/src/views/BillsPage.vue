@@ -48,7 +48,9 @@
                     </v-icon>
                   </div>
               </td>
-              <td>{{ item.companyName }}</td>
+              <td
+              v-if="policyA.includes(getEmployeeInfo.Role)"
+              >{{ item.companyName }}</td>
               <td>{{ item.providerName }}</td>
             </tr>
           </template>
@@ -387,13 +389,12 @@ import '@/assets/main.css';
       return {
         apiBaseUrl: import.meta.env.VITE_API_BASE_URL,
         filters: {},
-        headers: [
+        baseHeaders: [
           { title: 'ID счета*', key: 'billId', align: 'start', sortable: true },
           { title: 'Номер счёта', key: 'billNumber', align: 'start', sortable: true },
           { title: 'Сумма счета', key: 'billTotal', align: 'start', sortable: false },
           { title: 'Дата добавления', key: 'createDate', align: 'start', sortable: false },
           { title: 'Скан. PDF счета', key: 'billPdfPath', align: 'start', sortable: true },
-          { title: 'Компания', key: 'companyName', align: 'start', sortable: false },
           { title: 'Провайдер', key: 'providerName', align: 'start', sortable: false },
         ],
         bills: [],
@@ -596,7 +597,18 @@ import '@/assets/main.css';
       },
       policyA() {
         return this.$store.state.policyA
+      },
+      headers() {
+      if (this.policyA.includes(this.getEmployeeInfo.Role)) {
+        this.baseHeaders.splice(5, 0, { 
+            title: 'Компания', 
+            key: 'companyName', 
+            align: 'start', 
+            sortable: true 
+          }); 
       }
+      return this.baseHeaders;
+    }
   }
 }
 </script>
