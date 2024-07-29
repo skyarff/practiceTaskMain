@@ -6,5 +6,6 @@ namespace StockService.Repository.JwtRep
     {
         TokenPair GenerateTokenPair(Employee employee);
         string GenerateRefreshToken();
+        bool IsValidRefreshToken(string refreshToken, Employee employee);
     }
 }

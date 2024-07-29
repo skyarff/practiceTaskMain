@@ -1,12 +1,13 @@
 ﻿using AppSettings;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
+using Microsoft.IdentityModel.Tokens;
 using StockService.Models;
 using StockService.Models.dto;
 using StockService.Repository.CookieRep;
 using StockService.Repository.JwtRep;
 using System.Data;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
 namespace StockService.Repository.EmployeeRep
@@ -384,7 +385,6 @@ namespace StockService.Repository.EmployeeRep
             _response.IsSuccess = false;
             _response.Message = "Некорректные учетные данные.";
 
-            //var employee = await _db.Employees.FindAsync(employeeDto.EmployeeId);
             var employee = await _db.Employees
                 .FirstOrDefaultAsync(e => e.Login == employeeDto.Login);
 
@@ -428,13 +428,11 @@ namespace StockService.Repository.EmployeeRep
                 .FirstOrDefault();
 
                 TokenPair tokenPair = _tokenService.GenerateTokenPair(employee);
-
-
                 _cookieService.SetCookie("accessToken",
                     tokenPair.AccessToken, 30);
                 _cookieService.SetCookie("refreshToken",
                     tokenPair.RefreshToken, 10080);
-   
+
 
                 employee.RefreshToken = tokenPair.RefreshToken;
                 await _db.SaveChangesAsync();
@@ -447,58 +445,43 @@ namespace StockService.Repository.EmployeeRep
             return _response;
         }
 
-        public async Task<Response> GetNewTokenPairAsync(TokenPair token)
+        public async Task<Response> GetNewTokenPairAsync(TokenPair tokenPair)
         {
             _response.IsSuccess = false;
-            _response.Message = "Некорректные учетные данные.";
+            _response.Message = "Не удалось обновить токены.";
 
-            var employee = await _db.Employees.FindAsync(1);
-            
-            if (employee != null)
-            {
-                var employeeRes = _db.Employees
-                .Where(e => e.EmployeeId == employee.EmployeeId)
-                .Select(e => new
-                {
-                    EmployeeId = e.EmployeeId,
-                    FullName = e.FullName,
-                    JobTitle = e.JobTitle,
-                    Login = e.Login,
-                    Role = e.Role,
+            var handler = new JwtSecurityTokenHandler();
+            var jsonToken = handler.ReadToken(tokenPair.AccessToken) as JwtSecurityToken;
 
-                    ImagePath = e.ImagePath,
-                    Email = e.Email,
-                    Phone = e.Phone,
+            if (jsonToken == null)
+                throw new SecurityTokenException("Invalid access token");
 
-                    StockId = e.StockId,
-                    StockName = e.StockId != null ? _db.Stocks
-                        .Where(s => s.StockId == e.StockId)
-                        .Select(s => s.Name)
-                        .FirstOrDefault() : null,
-                    CompanyId = e.CompanyId,
-                    CompanyName = _db.Companies
-                        .Where(c => c.CompanyId == e.CompanyId)
-                        .Select(c => c.Name)
-                        .FirstOrDefault(),
-                    LogoPath = _db.Companies
-                        .Where(c => c.CompanyId == e.CompanyId)
-                        .Select(c => c.LogoPath)
-                        .FirstOrDefault(),
-                })
-                .FirstOrDefault();
+            var employeeIdClaim = jsonToken.Claims.FirstOrDefault(claim => claim.Type == JwtRegisteredClaimNames.Sub);
 
+            if (employeeIdClaim == null)
+                throw new SecurityTokenException("Employee ID not found in token");
 
+            if (!int.TryParse(employeeIdClaim.Value, out int employeeId))
+                throw new SecurityTokenException("Invalid Employee ID in token");
 
-                _cookieService.SetCookie("token",
-                    _tokenService.GenerateTokenPair(employee).ToString(), 30);
-                _cookieService.SetCookie("employee", JsonConvert.SerializeObject(employeeRes), 30);
+            var employee = await _db.Employees.FindAsync(employeeId);
+            if (employee == null)
+                throw new SecurityTokenException("Employee not found");
 
+            if (!_tokenService.IsValidRefreshToken(tokenPair.RefreshToken, employee))
+                throw new SecurityTokenException("Invalid refresh token");
 
-                
+            TokenPair newTokenPair = _tokenService.GenerateTokenPair(employee);
+            _cookieService.SetCookie("accessToken",
+                newTokenPair.AccessToken, 30);
+            _cookieService.SetCookie("refreshToken",
+                newTokenPair.RefreshToken, 10080);
 
-                _response.IsSuccess = true;
-                _response.Message = "Авторизация успешно пройдена.";
-            }
+            employee.RefreshToken = newTokenPair.RefreshToken;
+            await _db.SaveChangesAsync();
+
+            _response.IsSuccess = true;
+            _response.Message = "Токены успешно обновлены.";
 
             return _response;
         }

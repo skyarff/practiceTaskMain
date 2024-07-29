@@ -1,7 +1,5 @@
 ﻿using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json.Linq;
 using StockService.Models;
-using StockService.Models.dto;
 using StockService.Repository.JwtRep;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -53,6 +51,19 @@ public class TokenService : ITokenService
         return new TokenPair() { AccessToken = accessToken, RefreshToken = refreshToken }; 
     }
 
+    public bool IsValidRefreshToken(string refreshToken, Employee employee)
+    {
+        if (string.IsNullOrEmpty(refreshToken) || employee == null)
+            return false;
+
+        if (refreshToken != employee.RefreshToken)
+            return false;
+
+        //if (employee.RefreshTokenExpiryTime <= DateTime.UtcNow)
+        //    throw new SecurityTokenException("Incorrect data.");
+
+        return true;
+    }
 
     public string GenerateRefreshToken()
     {

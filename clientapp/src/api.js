@@ -22,37 +22,51 @@ api.interceptors.request.use(
 );
 
 
+let isRefreshing = false;
+let refreshSubscribers = [];
+
+const addRefreshSubscriber = (callback) => {
+  refreshSubscribers.push(callback);
+}
+const onRefreshed = (token) => {
+  refreshSubscribers.forEach(callback => callback(token));
+  refreshSubscribers = [];
+}
+
 api.interceptors.response.use((response) => {
   return response
 }, async function (error) {
+  const originalRequest = error.config;
+  if (error.response.status === 401 && !originalRequest._retry) {
+    if (isRefreshing) {
+      return new Promise((resolve) => {
+        addRefreshSubscriber((token) => {
+          originalRequest.headers['Authorization'] = 'Bearer ' + token;
+          resolve(api(originalRequest));
+        });
+      });
+    }
 
-//   const originalRequest = error.config
-//   if (error.response.status === 401 & !originalRequest._retry) {
-//     originalRequest._retry = true
-//     try {
-//       const newTokens = await axios.post(
-//         `https://securetoken.googleapis.com/v1/token?key=${apiKey}`, {
-//           grant_type: 'refresh_token',
-//           refresh_token: JSON.parse(localStorage.getItem('userTokens')).refreshToken
-//         }
-//       )
+    originalRequest._retry = true;
+    isRefreshing = true;
 
-//       store.state.auth.userInfo.token = newTokens.data.access_token
-//       store.state.auth.userInfo.refreshToken = newTokens.data.refresh_token
+    try {
+      await store.dispatch('refreshTokens');
+      const newToken = store.state.accessToken;
+      
+      originalRequest.headers['Authorization'] = 'Bearer ' + newToken;
+      onRefreshed(newToken);
 
-//       localStorage.setItem('userTokens', JSON.stringify({
-//         token: newTokens.data.access_token,
-//         refreshToken: newTokens.data.refresh_token,
-//       }))
-//     } catch (error) {
-//       console.log(error)
-//       localStorage.removeItem('userTokens');
-//       store.state.auth.userInfo.token = '';
-//       store.state.auth.userInfo.refreshToken = '';
-//     }
-//   }
+      return api(originalRequest);
+    } catch (refreshError) {
+      store.dispatch('logout');
+      return Promise.reject(refreshError);
+    } finally {
+      isRefreshing = false;
+    }
+  }
 
-store.commit('setErrorMessage', error.response.data.message)
-})
+  return Promise.reject(error);
+});
 
 export default api;

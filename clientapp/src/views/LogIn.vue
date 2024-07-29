@@ -1,6 +1,5 @@
 <template>
     <v-container fluid class="d-flex justify-center" style="height: 100vh;">
-        <!-- <span>{{ $store.state.auth.isLoggedIn }}</span> -->
 
    <div style="display: flex; flex-direction: column; margin-top: 6%;">
     <v-card 
@@ -89,13 +88,14 @@ export default {
             const url = `/api/Employee/signIn`;
             
             try {
-                const response = await api.get(url, {
+                const response = await api.post(url, {
+                    login: this.login,
+                    password: this.password
+                }, 
+                {
                     headers: {
+                        'Content-Type': 'application/json',
                         'accept': '*/*'
-                    },
-                    params: {
-                        login: this.login,
-                        password: this.password
                     }
                 });
 

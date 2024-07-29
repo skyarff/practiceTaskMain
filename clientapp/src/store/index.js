@@ -33,7 +33,7 @@ export default createStore({
     },
     setUserInfo(state, employeeInfo) {
       state.employeeInfo = employeeInfo
-    }
+    },
   },
   actions: {
       async getAllCompanies({commit}) {
@@ -83,15 +83,10 @@ export default createStore({
       },
       logout({commit}) {
         commit('setInitialState');
-        // VueCookies.remove('employee');
         VueCookies.remove('accessToken');
         VueCookies.remove('refreshToken');
       },
-      async setUserInfo({commit, state}) {
-
-        state.accessToken = VueCookies.get('accessToken');
-        state.refreshToken = VueCookies.get('refreshToken');
-
+      async getUserInfo({commit, state}) {
         if (state.accessToken) {
           const url = '/api/Employee/getEmployeeInfo';
 
@@ -107,6 +102,27 @@ export default createStore({
           } catch (error) {
             commit('setErrorMessage', error);
           }
+        }
+      },
+      async refreshTokens({commit, state}) {
+        const url = `/api/Employee/refreshTokens`;
+
+        const data = {
+                    accessToken: state.accessToken,
+                    refreshToken: state.refreshToken
+                }
+        try {
+            await api.post(url, data, {
+                headers: {
+                    'accept': '*/*',
+                    'Content-Type': 'application/json'
+                },
+            });
+
+            state.accessToken = VueCookies.get('accessToken');
+            state.refreshToken = VueCookies.get('refreshToken');
+        } catch (error) {
+          commit('setErrorMessage', error);
         }
       }
 

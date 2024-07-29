@@ -11,15 +11,46 @@
           />
         </v-card-text>
       </v-card>
+
+      <v-btn @click="this.$store.dispatch('refreshTokens')">
+                Обновить пару токенов.
+            </v-btn>
     </div>
   </template>
 
 <script>
+import api from '@/api'
+import VueCookies from 'vue-cookies'
+
 export default {
     data() {
         return {
             apiBaseUrl: import.meta.env.VITE_API_BASE_URL,
         }
+    },
+    methods: {
+      async refreshTokens() {
+            const url = `/api/Employee/refreshTokens`;
+
+            const data = {
+                        accessToken: this.$store.state.accessToken,
+                        refreshToken: this.$store.state.refreshToken
+                    }
+            
+            try {
+                await api.post(url, data, {
+                    headers: {
+                        'accept': '*/*',
+                        'Content-Type': 'application/json'
+                    },
+                });
+
+                this.$store.state.accessToken = VueCookies.get('accessToken');
+                this.$store.state.refreshToken = VueCookies.get('refreshToken');
+            } catch (error) {
+                this.$store.commit('setErrorMessage', error);
+            }
+      }
     }
 }
 </script>

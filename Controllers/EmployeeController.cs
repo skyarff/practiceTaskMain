@@ -202,13 +202,12 @@ namespace StockService.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("signIn")]
-        public async Task<IActionResult> SignIn(string login, string password)
+        [HttpPost("signIn")]
+        public async Task<IActionResult> SignIn([FromBody] EmployeeDto employee)
         {
             try
             {
-                var loginData = new EmployeeDto() { Login = login, Password = password };
-                _response = await _employeeService.SignInAsync(loginData);
+                _response = await _employeeService.SignInAsync(employee);
                 if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);
             }
@@ -219,5 +218,25 @@ namespace StockService.Controllers
                 return BadRequest(_response);
             }
         }
+
+        [AllowAnonymous]
+        [HttpPost("refreshTokens")]
+        public async Task<IActionResult> RefreshTokens([FromBody] TokenPair tokenPair)
+        {
+            try
+            {
+                _response = await _employeeService.GetNewTokenPairAsync(tokenPair);
+                if (_response.IsSuccess) return Ok(_response);
+                return NotFound(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.Errors.Add(ex.Message);
+                return BadRequest(_response);
+            }
+        }
+
+        
     }
 }
