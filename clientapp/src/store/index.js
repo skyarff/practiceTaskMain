@@ -31,10 +31,8 @@ export default createStore({
     setProviders(state, providers) {
       state.providers = providers
     },
-    setUserInfo(state) {
-      state.employeeInfo = VueCookies.get('employee');
-      state.accessToken = VueCookies.get('accessToken');
-      state.refreshToken = VueCookies.get('refreshToken');
+    setUserInfo(state, employeeInfo) {
+      state.employeeInfo = employeeInfo
     }
   },
   actions: {
@@ -80,15 +78,38 @@ export default createStore({
             commit('setProviders', providers)
 
           } catch (error) {
-            // this.$store.commit('setErrorMessage', error);
-          } 
+            commit('setErrorMessage', error);
+          }
       },
       logout({commit}) {
         commit('setInitialState');
-        VueCookies.remove('employee');
+        // VueCookies.remove('employee');
         VueCookies.remove('accessToken');
         VueCookies.remove('refreshToken');
+      },
+      async setUserInfo({commit, state}) {
+
+        state.accessToken = VueCookies.get('accessToken');
+        state.refreshToken = VueCookies.get('refreshToken');
+
+        if (state.accessToken) {
+          const url = '/api/Employee/getEmployeeInfo';
+
+          try {
+            const response = await api.get(url, {
+              headers: {
+                'accept': '*/*'
+              }
+            });
+
+            commit('setUserInfo', response.data.result);
+
+          } catch (error) {
+            commit('setErrorMessage', error);
+          }
+        }
       }
+
   },
   modules: {
     updPage: updPageModule,

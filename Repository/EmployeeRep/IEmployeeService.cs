@@ -17,6 +17,7 @@ namespace StockService.Repository.EmployeeRep
         Task<Response> DeleteEmployeeAsync(int employeeId, ClaimsPrincipal User);
         Task<Response> GetEmployeesFilteredAsync(EmployeeDto employeeDto, ClaimsPrincipal User);
         Task<Response> SignInAsync(EmployeeDto employeeDto);
-        Task<Response> GetNewTokensAsync(EmployeeDto employeeDto);
+        Task<Response> GetEmployeeInfo(ClaimsPrincipal User);
+        Task<Response> GetNewTokenPairAsync(TokenPair tokenPair);
     }
 }

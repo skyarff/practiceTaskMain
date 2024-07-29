@@ -183,9 +183,27 @@ namespace StockService.Controllers
             }
         }
 
+        [Authorize(Roles = "StockLevelWorker,CompanyLevelWorker,Admin")]
+        [HttpGet("getEmployeeInfo")]
+        public async Task<IActionResult> GetEmployeeInfo()
+        {
+            try
+            {
+                _response = await _employeeService.GetEmployeeInfo(User);
+                if (_response.IsSuccess) return Ok(_response);
+                return NotFound(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.Errors.Add(ex.Message);
+                return BadRequest(_response);
+            }
+        }
+
         [AllowAnonymous]
         [HttpGet("signIn")]
-        public async Task<IActionResult> GetAllEmployees(string login, string password)
+        public async Task<IActionResult> SignIn(string login, string password)
         {
             try
             {

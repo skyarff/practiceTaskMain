@@ -50,7 +50,7 @@
                   </div>
               </td>
               <td
-              v-if="policyA.includes(getEmployeeInfo.Role)"
+              v-if="policyA.includes(getEmployeeInfo.role)"
               >{{ item.companyName }}</td>
               <td>{{ item.stockName }}</td>
               <td>{{ item.phone }}</td>
@@ -181,7 +181,7 @@
                       ></v-select>
                     </v-col>
                   </v-row>
-                    <v-row v-if="policyA.includes(getEmployeeInfo.Role)">
+                    <v-row v-if="policyA.includes(getEmployeeInfo.role)">
                       <v-col cols="12">
                             <v-select
                               v-model="filtersCompanyId"
@@ -336,7 +336,7 @@
                     </v-col>
 
                     <v-col 
-                    :cols="`${policyA.includes(getEmployeeInfo.Role) ? 3 : 6}`"
+                    :cols="`${policyA.includes(getEmployeeInfo.role) ? 3 : 6}`"
                     >
                       <v-text-field
                         label="Пароль"
@@ -345,7 +345,7 @@
                       ></v-text-field>
                     </v-col>
 
-                    <v-col v-if="policyA.includes(getEmployeeInfo.Role)" cols="3">
+                    <v-col v-if="policyA.includes(getEmployeeInfo.role)" cols="3">
                       <v-select
                         v-model="selectedRole"
                         :items="roles"
@@ -452,7 +452,7 @@
                   </v-card-subtitle>
                   <v-card-text>
                     <v-row>      
-                    <v-col v-if="policyA.includes(getEmployeeInfo.Role)" cols="12">
+                    <v-col v-if="policyA.includes(getEmployeeInfo.role)" cols="12">
                       <v-select
                         v-model="selectedRole"
                         :items="roles"
@@ -463,7 +463,7 @@
                     </v-col>
                   </v-row>
                     <v-row>      
-                    <v-col v-if="policyA.includes(getEmployeeInfo.Role)" cols="12">
+                    <v-col v-if="policyA.includes(getEmployeeInfo.role)" cols="12">
                       <v-select
                         v-model="selectedCompanyId"
                         :items="companies"
@@ -477,7 +477,7 @@
                     </v-col>
                   </v-row>
                   <v-row>
-                    <v-col v-if="!(policyA.includes(getEmployeeInfo.Role) && selectedRole !== 'StockLevelWorker')" 
+                    <v-col v-if="!(policyA.includes(getEmployeeInfo.role) && selectedRole !== 'StockLevelWorker')" 
                     cols="12">
                       <v-select
                         v-model="selectedStockId"
@@ -548,11 +548,11 @@ import '@/assets/main.css';
       this.abortFlag = false
       this.checkConnection();
 
-      if (this.policyA.includes(this.getEmployeeInfo.Role))
+      if (this.policyA.includes(this.getEmployeeInfo.role))
         this.$store.dispatch('getAllCompanies');
       else {
-        this.$store.dispatch( 'employeePage/getStocksByCompanyId', {companyId: this.getEmployeeInfo.CompanyId, selected: true})
-        this.$store.dispatch( 'employeePage/getStocksByCompanyId', {companyId: this.getEmployeeInfo.CompanyId, selected: false})
+        this.$store.dispatch( 'employeePage/getStocksByCompanyId', {companyId: this.getEmployeeInfo.companyId, selected: true})
+        this.$store.dispatch( 'employeePage/getStocksByCompanyId', {companyId: this.getEmployeeInfo.companyId, selected: false})
       }
         
     },

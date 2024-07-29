@@ -85,7 +85,7 @@ const router = createRouter({
 
 function getCurrentUserRole() {
   if (store.state.employeeInfo !== null)
-    return store.state.employeeInfo.Role ? store.state.employeeInfo.Role : ''
+    return store.state.employeeInfo.role ? store.state.employeeInfo.role : ''
 }
 
 router.beforeResolve((to, from, next) => {

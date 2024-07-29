@@ -47,10 +47,10 @@
                   </div>
               </td>
               <td
-              v-if="policyA.includes(getEmployeeInfo.Role)"
+              v-if="policyA.includes(getEmployeeInfo.role)"
               >{{ item.companyName }}</td>
               <td
-              v-if="policyCA.includes(getEmployeeInfo.Role)"
+              v-if="policyCA.includes(getEmployeeInfo.role)"
               >{{ item.stockName }}</td>
               <td>{{ item.description }}</td>
               
@@ -90,7 +90,7 @@
           <v-expansion-panel-text class="pt-2">
             <v-row>
             <v-col 
-            :cols="`${policyCA.includes(getEmployeeInfo.Role) ? 6 : 12}`"
+            :cols="`${policyCA.includes(getEmployeeInfo.role) ? 6 : 12}`"
             >
               <v-card color="grey-lighten-4">
                 <v-card-title>
@@ -134,7 +134,7 @@
 
               
             <v-col
-            v-if="policyCA.includes(getEmployeeInfo.Role)"
+            v-if="policyCA.includes(getEmployeeInfo.role)"
              cols="6">
               <v-card color="teal-lighten-5">
                 <v-card-title>
@@ -146,7 +146,7 @@
                 <v-card-text>
                   <v-row>
                 <v-col
-                v-if="policyA.includes(getEmployeeInfo.Role)"
+                v-if="policyA.includes(getEmployeeInfo.role)"
                 cols="12">
                     <v-select
                       v-model="filtersCompanyId"
@@ -282,7 +282,7 @@
           <div v-else>
             <v-row>
               <v-col
-              :cols="`${policyCA.includes(getEmployeeInfo.Role) ? 6 : 12}`"
+              :cols="`${policyCA.includes(getEmployeeInfo.role) ? 6 : 12}`"
               >
                 <v-card color="grey-lighten-4">
                   <v-card-title>
@@ -324,7 +324,7 @@
               </v-col>
 
               <v-col cols="6"
-              v-if="policyCA.includes(getEmployeeInfo.Role)"
+              v-if="policyCA.includes(getEmployeeInfo.role)"
               >
                 <v-card color="teal-lighten-5">
                   <v-card-title>
@@ -336,7 +336,7 @@
                   <v-card-text>
                     <v-row>
                       <v-col
-                      v-if="policyA.includes(getEmployeeInfo.Role)"
+                      v-if="policyA.includes(getEmployeeInfo.role)"
                       cols="12">
                       <v-select
                         v-model="selectedCompanyId"
@@ -414,11 +414,11 @@ import '@/assets/main.css';
       this.abortFlag = false
       this.checkConnection();
 
-      if (this.policyA.includes(this.getEmployeeInfo.Role))
+      if (this.policyA.includes(this.getEmployeeInfo.role))
         this.$store.dispatch('getAllCompanies');
-      else if (this.policyCA.includes(this.getEmployeeInfo.Role)) {
-        this.$store.dispatch( 'storageLocationPage/getStocksByCompanyId', {companyId: this.getEmployeeInfo.CompanyId, selected: true})
-        this.$store.dispatch( 'storageLocationPage/getStocksByCompanyId', {companyId: this.getEmployeeInfo.CompanyId, selected: false})
+      else if (this.policyCA.includes(this.getEmployeeInfo.role)) {
+        this.$store.dispatch( 'storageLocationPage/getStocksByCompanyId', {companyId: this.getEmployeeInfo.companyId, selected: true})
+        this.$store.dispatch( 'storageLocationPage/getStocksByCompanyId', {companyId: this.getEmployeeInfo.companyId, selected: false})
       }
     },
     deactivated() {
@@ -438,67 +438,6 @@ import '@/assets/main.css';
 
         this.$store.dispatch('storageLocationPage/getStocksByCompanyId', {companyId: companyId, selected: selected})
       },
-      async getAllCompanies() {
-        const url = '/api/Company/getAll';
-
-          try {
-            const response = await api.get(url, {
-              headers: {
-                'accept': '*/*'
-              }
-            });
-
-            this.companies = response.data.result.map(company => ({
-              name: company.name,
-              companyId: company.companyId.toString(),
-            }));
-
-          } catch (error) {
-            // this.$store.commit('setErrorMessage', error);
-          } 
-      },
-      async getAllStocks() {
-        const url = '/api/Stock/getAll';
-
-          try {
-            const response = await api.get(url, {
-              headers: {
-                'accept': '*/*'
-              }
-            });
-
-            this.stocks = response.data.result.map(stock => ({
-              name: stock.name,
-              stockId: stock.stockId.toString(),
-              companyId: stock.companyId
-            }));
-
-          } catch (error) {
-            // this.$store.commit('setErrorMessage', error);
-          }
-      },
-      async getStocksByCompanyId(companyId) {
-        this.stocksByCompanyId = [];
-        delete this.filters.stockId
-        const url = `/api/Stock/getByCompanyId?companyId=${companyId}`;
-
-        try {
-          const response = await api.get(url, {
-            headers: {
-              'accept': '*/*'
-            }
-          });
-
-          this.stocksByCompanyId = response.data.result.map(stock => ({
-            name: stock.name,
-            stockId: stock.stockId.toString(),
-          }));
-          
-        } catch (error) {
-          console.error('Error fetching stocks by company ID:', error);
-          // this.$store.commit('setErrorMessage', error);
-        }
-      },
       updatePage(newPage) {
         this.page = newPage;
       },
@@ -513,7 +452,7 @@ import '@/assets/main.css';
         this.filters = {}
         window.scrollTo(0, document.body.scrollHeight);
 
-        if (this.policyCA.includes(this.getEmployeeInfo.Role))
+        if (this.policyCA.includes(this.getEmployeeInfo.role))
           this.$store.dispatch('storageLocationPage/getStocksByCompanyId', 
             {companyId: this.selectedStorageLocation.companyId, selected: true})
    
@@ -626,11 +565,9 @@ import '@/assets/main.css';
           this.isEditing = true
 
 
-
-          if (this.policyCA.includes(this.getEmployeeInfo.Role))
+          if (this.policyCA.includes(this.getEmployeeInfo.role))
             this.$store.dispatch('storageLocationPage/getStocksByCompanyId', 
               {companyId: this.selectedStorageLocation.companyId, selected: true})
-          
         }
         
       },
@@ -692,7 +629,7 @@ import '@/assets/main.css';
         return this.$store.state.policyA
       },
       headers() {
-        if (this.policyCA.includes(this.getEmployeeInfo.Role)) {
+        if (this.policyCA.includes(this.getEmployeeInfo.role)) {
         this.baseHeaders.splice(3, 0, { 
           title: 'Склад', 
           key: 'stockName', 
@@ -701,7 +638,7 @@ import '@/assets/main.css';
         });
       }
 
-      if (this.policyA.includes(this.getEmployeeInfo.Role)) {
+      if (this.policyA.includes(this.getEmployeeInfo.role)) {
         this.baseHeaders.splice(3, 0, { 
           title: 'Компания', 
           key: 'companyName', 

@@ -26,8 +26,8 @@ export default {
     NavDrawer,
     ErrorOutput,
   },
-  mounted() {
-    this.$store.commit('setUserInfo')
+  created() {
+    this.$store.dispatch('setUserInfo')
   }
 };
 </script>

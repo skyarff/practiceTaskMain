@@ -49,10 +49,10 @@
                   </div>
               </td>
               <td
-              v-if="policyA.includes(getEmployeeInfo.Role)"
+              v-if="policyA.includes(getEmployeeInfo.role)"
               >{{ item.companyName }}</td>
               <td
-               v-if="policyCA.includes(getEmployeeInfo.Role)"
+               v-if="policyCA.includes(getEmployeeInfo.role)"
               >{{ item.stockName }}</td>
               <td>{{ item.productCategoryName }}</td>
               <td>{{ item.rackCode }}</td>
@@ -193,7 +193,7 @@
                   <v-card-text>
                     <v-row>
                         <v-col 
-                        v-if="policyA.includes(getEmployeeInfo.Role)"
+                        v-if="policyA.includes(getEmployeeInfo.role)"
                         cols="6">
                           <v-select
                             v-model="filtersCompanyId"
@@ -208,8 +208,8 @@
                         </v-col>
 
                         <v-col 
-                        v-if="policyCA.includes(getEmployeeInfo.Role)"
-                        :cols="`${policyA.includes(getEmployeeInfo.Role) ? 6 : 12}`"
+                        v-if="policyCA.includes(getEmployeeInfo.rackCodeole)"
+                        :cols="`${policyA.includes(getEmployeeInfo.role) ? 6 : 12}`"
                         >
                           <v-select
                             v-model="filtersProviderId"
@@ -226,7 +226,7 @@
 
                   <v-row>
                     <v-col
-                    v-if="policyCA.includes(getEmployeeInfo.Role)"
+                    v-if="policyCA.includes(getEmployeeInfo.role)"
                      cols="4">
                       <v-select
                         v-model="filtersStockId"
@@ -241,7 +241,7 @@
                     </v-col>
 
                     <v-col
-                    :cols="`${policyCA.includes(getEmployeeInfo.Role) ? 4 : 12}`" 
+                    :cols="`${policyCA.includes(getEmployeeInfo.role) ? 4 : 12}`" 
                     >
                       <v-select
                         v-model="filtersProductCategoryId"
@@ -255,7 +255,7 @@
                     </v-col>
 
                     <v-col
-                    v-if="policyCA.includes(getEmployeeInfo.Role)" cols="4">
+                    v-if="policyCA.includes(getEmployeeInfo.role)" cols="4">
                       <v-select
                         v-model="filtersBillId"
                         :items="fBillsByCompanyAndProviderId"
@@ -272,7 +272,7 @@
 
                   <v-row>
                     <v-col 
-                    :cols="`${policyCA.includes(getEmployeeInfo.Role) ? 4 : 6}`"
+                    :cols="`${policyCA.includes(getEmployeeInfo.role) ? 4 : 6}`"
                     >
                       <v-select
                         v-model="filtersStorageLocationId"
@@ -286,7 +286,7 @@
                     </v-col>
 
                     <v-col
-                    v-if="policyCA.includes(getEmployeeInfo.Role)"
+                    v-if="policyCA.includes(getEmployeeInfo.role)"
                      cols="4">
                       <v-select
                         v-model="filtersEmployeeId"
@@ -300,11 +300,11 @@
                     </v-col>
 
                     <v-col 
-                    :cols="`${policyCA.includes(getEmployeeInfo.Role) ? 4 : 6}`"
+                    :cols="`${policyCA.includes(getEmployeeInfo.role) ? 4 : 6}`"
                     >
                       <v-select
                         v-model="filtersUpdId"
-                        :items="policyCA.includes(getEmployeeInfo.Role) ? updsByBillId : updsByCompanyId"
+                        :items="policyCA.includes(getEmployeeInfo.role) ? updsByBillId : updsByCompanyId"
                         item-title="name"
                         item-value="updId"
                         label="УПД"
@@ -568,7 +568,7 @@
 
                           <v-row>
                             <v-col 
-                            v-if="policyA.includes(getEmployeeInfo.Role)"
+                            v-if="policyA.includes(getEmployeeInfo.role)"
                             cols="6">
                             <v-select
                               v-model="selectedCompanyId"
@@ -583,8 +583,8 @@
                           </v-col>
 
                             <v-col 
-                            v-if="policyCA.includes(getEmployeeInfo.Role)"
-                            :cols="`${policyA.includes(getEmployeeInfo.Role) ? 6 : 12}`"
+                            v-if="policyCA.includes(getEmployeeInfo.role)"
+                            :cols="`${policyA.includes(getEmployeeInfo.role) ? 6 : 12}`"
                             >
                               <v-select
                                 v-model="selectedProviderId"
@@ -601,7 +601,7 @@
 
                           <v-row>
                             <v-col
-                            v-if="policyCA.includes(getEmployeeInfo.Role)" 
+                            v-if="policyCA.includes(getEmployeeInfo.role)" 
                             cols="4">
                               <v-select
                                 v-model="selectedStockId"
@@ -616,7 +616,7 @@
                             </v-col>
 
                             <v-col 
-                            :cols="`${policyCA.includes(getEmployeeInfo.Role) ? 4 : 12}`"
+                            :cols="`${policyCA.includes(getEmployeeInfo.role) ? 4 : 12}`"
                             >
                               <v-select
                                 v-model="selectedProductCategoryId"
@@ -630,7 +630,7 @@
                             </v-col>
 
                             <v-col
-                            v-if="policyCA.includes(getEmployeeInfo.Role)"
+                            v-if="policyCA.includes(getEmployeeInfo.role)"
                              cols="4">
                               <v-select
                                 v-model="selectedBillId"
@@ -647,7 +647,7 @@
 
                           <v-row>
                             <v-col 
-                            :cols="`${policyCA.includes(getEmployeeInfo.Role) ? 4 : 6}`"
+                            :cols="`${policyCA.includes(getEmployeeInfo.role) ? 4 : 6}`"
                             >
                               <v-select
                                 v-model="selectedStorageLocationId"
@@ -661,7 +661,7 @@
                             </v-col>
 
                             <v-col
-                            v-if="policyCA.includes(getEmployeeInfo.Role)"
+                            v-if="policyCA.includes(getEmployeeInfo.role)"
                              cols="4">
                               <v-select
                                 v-model="selectedEmployeeId"
@@ -675,11 +675,11 @@
                             </v-col>
 
                             <v-col 
-                            :cols="`${policyCA.includes(getEmployeeInfo.Role) ? 4 : 6}`"
+                            :cols="`${policyCA.includes(getEmployeeInfo.role) ? 4 : 6}`"
                             >
                               <v-select
                                 v-model="selectedUpdId"
-                                :items="policyCA.includes(getEmployeeInfo.Role) ? updsByBillId : updsByCompanyId"
+                                :items="policyCA.includes(getEmployeeInfo.role) ? updsByBillId : updsByCompanyId"
                                 item-title="name"
                                 item-value="updId"
                                 label="УПД"
@@ -750,28 +750,28 @@ import '@/assets/main.css';
       this.abortFlag = false
       this.checkConnection();
 
-      if (this.policyA.includes(this.getEmployeeInfo.Role)) {
+      if (this.policyA.includes(this.getEmployeeInfo.role)) {
         this.$store.dispatch('getAllCompanies');
         this.$store.dispatch('getAllProviders');
       }
-      else if (this.policyCA.includes(this.getEmployeeInfo.Role)) {
+      else if (this.policyCA.includes(this.getEmployeeInfo.role)) {
         this.$store.dispatch('getAllProviders');
 
-        this.$store.dispatch( 'productPage/getStocksByCompanyId', {companyId: this.getEmployeeInfo.CompanyId, selected: true})
-        this.$store.dispatch( 'productPage/getProductCategoriesByCompanyId', {companyId: this.getEmployeeInfo.CompanyId, selected: true})
-        this.$store.dispatch( 'productPage/getBillsByCompanyAndProviderId', {companyId: this.getEmployeeInfo.CompanyId, selected: true, providerId: this.selectedProduct.providerId})
+        this.$store.dispatch( 'productPage/getStocksByCompanyId', {companyId: this.getEmployeeInfo.companyId, selected: true})
+        this.$store.dispatch( 'productPage/getProductCategoriesByCompanyId', {companyId: this.getEmployeeInfo.companyId, selected: true})
+        this.$store.dispatch( 'productPage/getBillsByCompanyAndProviderId', {companyId: this.getEmployeeInfo.companyId, selected: true, providerId: this.selectedProduct.providerId})
 
-        this.$store.dispatch( 'productPage/getStocksByCompanyId', {companyId: this.getEmployeeInfo.CompanyId, selected: false})
-        this.$store.dispatch( 'productPage/getProductCategoriesByCompanyId', {companyId: this.getEmployeeInfo.CompanyId, selected: false})
-        this.$store.dispatch( 'productPage/getBillsByCompanyAndProviderId', {companyId: this.getEmployeeInfo.CompanyId, selected: false, providerId: this.filters.providerId})
+        this.$store.dispatch( 'productPage/getStocksByCompanyId', {companyId: this.getEmployeeInfo.companyId, selected: false})
+        this.$store.dispatch( 'productPage/getProductCategoriesByCompanyId', {companyId: this.getEmployeeInfo.companyId, selected: false})
+        this.$store.dispatch( 'productPage/getBillsByCompanyAndProviderId', {companyId: this.getEmployeeInfo.companyId, selected: false, providerId: this.filters.providerId})
       } else {
-        this.$store.dispatch( 'productPage/getProductCategoriesByCompanyId', {companyId: this.getEmployeeInfo.CompanyId, selected: true})
-        this.$store.dispatch( 'productPage/getStorageLocationsByStockId', {stockId: this.getEmployeeInfo.StockId, selected: true})
-        this.$store.dispatch( 'productPage/getUpdsByCompanyId', {companyId: this.getEmployeeInfo.CompanyId, selected: true})
+        this.$store.dispatch( 'productPage/getProductCategoriesByCompanyId', {companyId: this.getEmployeeInfo.companyId, selected: true})
+        this.$store.dispatch( 'productPage/getStorageLocationsByStockId', {stockId: this.getEmployeeInfo.stockId, selected: true})
+        this.$store.dispatch( 'productPage/getUpdsByCompanyId', {companyId: this.getEmployeeInfo.companyId, selected: true})
 
-        this.$store.dispatch( 'productPage/getProductCategoriesByCompanyId', {companyId: this.getEmployeeInfo.CompanyId, selected: false})
-        this.$store.dispatch( 'productPage/getStorageLocationsByStockId', {stockId: this.getEmployeeInfo.StockId, selected: false})
-        this.$store.dispatch( 'productPage/getUpdsByCompanyId', {companyId: this.getEmployeeInfo.CompanyId, selected: false})
+        this.$store.dispatch( 'productPage/getProductCategoriesByCompanyId', {companyId: this.getEmployeeInfo.companyId, selected: false})
+        this.$store.dispatch( 'productPage/getStorageLocationsByStockId', {stockId: this.getEmployeeInfo.stockId, selected: false})
+        this.$store.dispatch( 'productPage/getUpdsByCompanyId', {companyId: this.getEmployeeInfo.companyId, selected: false})
       }
     },
     deactivated() {
@@ -873,7 +873,7 @@ import '@/assets/main.css';
         this.filters = {}
         window.scrollTo(0, document.body.scrollHeight);
 
-        if (this.policyCA.includes(this.getEmployeeInfo.Role)) {
+        if (this.policyCA.includes(this.getEmployeeInfo.role)) {
             this.$store.dispatch( 'productPage/getStocksByCompanyId', {companyId: this.selectedProduct.companyId, selected: true})
             this.$store.dispatch( 'productPage/getEmployeesByStockId', {stockId: this.selectedProduct.stockId, selected: true})
             this.$store.dispatch( 'productPage/getUpdsByBillId', {billId: this.selectedProduct.billId, selected: true})
@@ -883,11 +883,10 @@ import '@/assets/main.css';
           this.$store.dispatch( 'productPage/getStorageLocationsByStockId', {stockId: this.selectedProduct.stockId, selected: true})
           this.$store.dispatch( 'productPage/getProductCategoriesByCompanyId', {companyId: this.selectedProduct.companyId, selected: true})
 
-          if (this.policyS.includes(this.getEmployeeInfo.Role)) 
-            this.$store.dispatch( 'productPage/getUpdsByStockId', {stockId: this.getEmployeeInfo.StockId, selected: true})
+          if (this.policyS.includes(this.getEmployeeInfo.role)) 
+            this.$store.dispatch( 'productPage/getUpdsByStockId', {stockId: this.getEmployeeInfo.stockId, selected: true})
       },
       switchEditingMode() {
-        console.log(this.updsByCompanyId)
           this.isEditing = !this.isEditing
           if (!this.isEditing) {
             this.selectedProduct.productId = undefined
@@ -1029,7 +1028,7 @@ import '@/assets/main.css';
           this.selectedProduct = {...item};
           this.isEditing = true
 
-          if (this.policyCA.includes(this.getEmployeeInfo.Role)) {
+          if (this.policyCA.includes(this.getEmployeeInfo.role)) {
             this.$store.dispatch( 'productPage/getStocksByCompanyId', {companyId: this.selectedProduct.companyId, selected: true})
             this.$store.dispatch( 'productPage/getEmployeesByStockId', {stockId: this.selectedProduct.stockId, selected: true})
             this.$store.dispatch( 'productPage/getUpdsByBillId', {billId: this.selectedProduct.billId, selected: true})
@@ -1039,8 +1038,8 @@ import '@/assets/main.css';
           this.$store.dispatch( 'productPage/getStorageLocationsByStockId', {stockId: this.selectedProduct.stockId, selected: true})
           this.$store.dispatch( 'productPage/getProductCategoriesByCompanyId', {companyId: this.selectedProduct.companyId, selected: true})
 
-          if (this.policyS.includes(this.getEmployeeInfo.Role)) 
-            this.$store.dispatch( 'productPage/getUpdsByStockId', {stockId: this.getEmployeeInfo.StockId, selected: true})
+          if (this.policyS.includes(this.getEmployeeInfo.role)) 
+            this.$store.dispatch( 'productPage/getUpdsByStockId', {stockId: this.getEmployeeInfo.stockId, selected: true})
         }
       },
       formatDate(dateString) {
@@ -1177,7 +1176,7 @@ import '@/assets/main.css';
     },
     selectedUpdId: {
       get() {
-        const upd = (this.policyCA.includes(this.getEmployeeInfo.Role) ? this.updsByBillId : this.updsByCompanyId)
+        const upd = (this.policyCA.includes(this.getEmployeeInfo.role) ? this.updsByBillId : this.updsByCompanyId)
             .find(u => u.updId === this.selectedProduct.updId);
               return upd ? upd.name : null;
       },
@@ -1187,7 +1186,7 @@ import '@/assets/main.css';
     },
     filtersUpdId: {
       get() {
-        const upd = this.fUpdsByBillId.find(u => u.updId === this.filters.updId);
+        const upd = (this.policyCA.includes(this.getEmployeeInfo.role) ? this.fUpdsByBillId : this.fUpdsByCompanyId)
         return upd ? upd.name : null;
       },
       set(value) {
@@ -1238,7 +1237,7 @@ import '@/assets/main.css';
         return this.$store.state.policyS
       },
       headers() {
-        if (this.policyCA.includes(this.getEmployeeInfo.Role)) {
+        if (this.policyCA.includes(this.getEmployeeInfo.role)) {
         this.baseHeaders.splice(5, 0, { 
           title: 'Склад', 
           key: 'stockName', 
@@ -1247,7 +1246,7 @@ import '@/assets/main.css';
         });
       }
 
-      if (this.policyA.includes(this.getEmployeeInfo.Role)) {
+      if (this.policyA.includes(this.getEmployeeInfo.role)) {
         this.baseHeaders.splice(5, 0, { 
             title: 'Компания', 
             key: 'companyName', 

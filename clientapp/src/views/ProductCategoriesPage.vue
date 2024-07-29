@@ -23,7 +23,7 @@
             </td>
             <td>{{ item.name }}</td>
             <td
-            v-if="policyA.includes(getEmployeeInfo.Role)"
+            v-if="policyA.includes(getEmployeeInfo.role)"
             >{{ item.companyName }}</td>
           </tr>
         </template>
@@ -124,7 +124,7 @@
     </v-expansion-panels>
 
     <!-- Секция редактирования -->
-    <v-card v-if="policyCA.includes(getEmployeeInfo.Role)">
+    <v-card v-if="policyCA.includes(getEmployeeInfo.role)">
       <v-card-title>
           <v-row align="center">
             <v-col cols="auto">
@@ -201,7 +201,7 @@
 
     <v-row>
         <v-col 
-        :cols="`${policyA.includes(getEmployeeInfo.Role) ? 7 : 12}`"
+        :cols="`${policyA.includes(getEmployeeInfo.role) ? 7 : 12}`"
         >
           <v-card color="grey-lighten-4">
             <v-card-title>
@@ -224,7 +224,7 @@
           </v-card>
         </v-col>
 
-        <v-col v-if="policyA.includes(getEmployeeInfo.Role)" cols="5">
+        <v-col v-if="policyA.includes(getEmployeeInfo.role)" cols="5">
           <v-card color="teal-lighten-5">
             <v-card-title>
               Иерархические сущности

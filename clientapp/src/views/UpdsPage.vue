@@ -48,7 +48,7 @@
                   </div>
               </td>
               <td
-              v-if="policyA.includes(getEmployeeInfo.Role)"
+              v-if="policyA.includes(getEmployeeInfo.role)"
               >{{ item.companyName }}</td>
               <td>{{ item.providerName }}</td> 
               <td>{{ item.billNumber }}</td>
@@ -89,7 +89,7 @@
 
             <v-row>
               <v-col 
-              :cols="`${policyCA.includes(getEmployeeInfo.Role) ? 6 : 12}`"
+              :cols="`${policyCA.includes(getEmployeeInfo.role) ? 6 : 12}`"
               >
                 <v-card color="grey-lighten-4">
                   <v-card-title>
@@ -142,7 +142,7 @@
               </v-col>
 
               <v-col 
-              v-if="policyCA.includes(getEmployeeInfo.Role)"
+              v-if="policyCA.includes(getEmployeeInfo.role)"
               cols="6">
                 <v-card color="teal-lighten-5">
                   <v-card-title>
@@ -154,7 +154,7 @@
                   <v-card-text>
                     <v-row>
                       <v-col 
-                      v-if="policyA.includes(getEmployeeInfo.Role)"
+                      v-if="policyA.includes(getEmployeeInfo.role)"
                       cols="6">
                           <v-select
                               v-model="filtersCompanyId"
@@ -169,7 +169,7 @@
                           </v-col>
 
                           <v-col 
-                          :cols="`${policyA.includes(getEmployeeInfo.Role) ? 6 : 12}`"
+                          :cols="`${policyA.includes(getEmployeeInfo.role) ? 6 : 12}`"
                           >
                           <v-select
                           v-model="filtersProviderId"
@@ -205,7 +205,7 @@
       </v-expansion-panels>
   
       <!-- Секция редактирования -->
-      <v-card v-if="policyCA.includes(getEmployeeInfo.Role)">
+      <v-card v-if="policyCA.includes(getEmployeeInfo.role)">
         <v-card-title>
           <v-row align="center">
             <v-col cols="auto">
@@ -282,7 +282,7 @@
           <div v-else>
             <v-row>
               <v-col 
-              :cols="`${policyCA.includes(getEmployeeInfo.Role) ? 6 : 12}`"
+              :cols="`${policyCA.includes(getEmployeeInfo.role) ? 6 : 12}`"
               >
                 <v-card color="grey-lighten-4">
                   <v-card-title>
@@ -315,7 +315,7 @@
                 </v-card>
               </v-col>
               <v-col 
-              v-if="policyCA.includes(getEmployeeInfo.Role)"
+              v-if="policyCA.includes(getEmployeeInfo.role)"
               cols="6">
                 <v-card color="teal-lighten-5">
                   <v-card-title>
@@ -327,7 +327,7 @@
                   <v-card-text>
                     <v-row>
                     <v-col
-                    v-if="policyA.includes(getEmployeeInfo.Role)"
+                    v-if="policyA.includes(getEmployeeInfo.role)"
                      cols="6">
                       <v-select
                       v-model="selectedCompanyId"
@@ -342,7 +342,7 @@
                   </v-col>
 
                     <v-col 
-                    :cols="`${policyA.includes(getEmployeeInfo.Role) ? 6 : 12}`"
+                    :cols="`${policyA.includes(getEmployeeInfo.role) ? 6 : 12}`"
                     >
                       <v-select
                       v-model="selectedProviderId"
@@ -418,17 +418,15 @@ import '@/assets/main.css';
       this.abortFlag = false
       this.checkConnection();
 
-      if (this.policyA.includes(this.getEmployeeInfo.Role)) {
+      if (this.policyA.includes(this.getEmployeeInfo.role)) {
         this.$store.dispatch('getAllCompanies');
         this.$store.dispatch('getAllProviders');
       }
-      else if (this.policyCA.includes(this.getEmployeeInfo.Role)) {
+      else if (this.policyCA.includes(this.getEmployeeInfo.role)) {
         this.$store.dispatch('getAllProviders');
-        this.$store.dispatch('updPage/getBillsByProviderAndCompanyId', {providerId: this.selectedUpd.providerId, companyId: this.getEmployeeInfo.CompanyId, selected: true})
-        this.$store.dispatch('updPage/getBillsByProviderAndCompanyId', {providerId: this.filters.providerId, companyId: this.getEmployeeInfo.CompanyId, selected: false})
+        this.$store.dispatch('updPage/getBillsByProviderAndCompanyId', {providerId: this.selectedUpd.providerId, companyId: this.getEmployeeInfo.companyId, selected: true})
+        this.$store.dispatch('updPage/getBillsByProviderAndCompanyId', {providerId: this.filters.providerId, companyId: this.getEmployeeInfo.companyId, selected: false})
       }
-
-      
     },
     deactivated() {
       this.abortFlag = true
@@ -465,12 +463,9 @@ import '@/assets/main.css';
         this.filters = {}
         window.scrollTo(0, document.body.scrollHeight);
 
-        if (this.policyCA.includes(this.getEmployeeInfo.Role))
+        if (this.policyCA.includes(this.getEmployeeInfo.role))
           this.$store.dispatch('updPage/getBillsByProviderAndCompanyId', 
             {providerId: this.selectedUpd.providerId, companyId: this.selectedUpd.companyId, selected: true})
-
-
-        
       },
       switchEditingMode() {
 
@@ -574,7 +569,7 @@ import '@/assets/main.css';
           this.selectedUpd = {...item};
           this.isEditing = true
 
-          if (this.policyCA.includes(this.getEmployeeInfo.Role))
+          if (this.policyCA.includes(this.getEmployeeInfo.role))
             this.$store.dispatch('updPage/getBillsByProviderAndCompanyId', 
               {providerId: this.selectedUpd.providerId, companyId: this.selectedUpd.companyId, selected: true})
         }
@@ -664,7 +659,7 @@ import '@/assets/main.css';
         return this.$store.state.policyA
       },
       headers() {
-      if (this.policyA.includes(this.getEmployeeInfo.Role)) {
+      if (this.policyA.includes(this.getEmployeeInfo.role)) {
           this.baseHeaders.splice(4, 0, { 
             title: 'Компания', 
             key: 'companyName', 

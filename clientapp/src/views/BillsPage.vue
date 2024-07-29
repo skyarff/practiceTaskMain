@@ -49,7 +49,7 @@
                   </div>
               </td>
               <td
-              v-if="policyA.includes(getEmployeeInfo.Role)"
+              v-if="policyA.includes(getEmployeeInfo.role)"
               >{{ item.companyName }}</td>
               <td>{{ item.providerName }}</td>
             </tr>
@@ -168,7 +168,7 @@
                   <v-card-text>
                     <v-row>
                       <v-col 
-                      v-if="policyA.includes(getEmployeeInfo.Role)"
+                      v-if="policyA.includes(getEmployeeInfo.role)"
                       cols="6">
                             <v-select
                               v-model="filtersCompanyId"                    
@@ -181,7 +181,7 @@
                             ></v-select>
                           </v-col>
                       <v-col 
-                      :cols="`${policyA.includes(getEmployeeInfo.Role) ? 6 : 12}`"
+                      :cols="`${policyA.includes(getEmployeeInfo.role) ? 6 : 12}`"
                       >
                         <v-select
                           v-model="filtersProviderId"                    
@@ -333,7 +333,7 @@
                   <v-card-text>
                     <v-row>
                   <v-col 
-                  v-if="policyA.includes(getEmployeeInfo.Role)" cols="6"
+                  v-if="policyA.includes(getEmployeeInfo.role)" cols="6"
                   >
                     <v-select
                       v-model="selectedCompanyId"                    
@@ -347,7 +347,7 @@
                   </v-col>
 
                   <v-col 
-                  :cols="`${policyA.includes(getEmployeeInfo.Role) ? 6 : 12}`"
+                  :cols="`${policyA.includes(getEmployeeInfo.role) ? 6 : 12}`"
                   >
                     <v-select
                       v-model="selectedProviderId"                    
@@ -413,7 +413,7 @@ import '@/assets/main.css';
 
       this.$store.dispatch('getAllProviders');
 
-      if (this.policyA.includes(this.getEmployeeInfo.Role))
+      if (this.policyA.includes(this.getEmployeeInfo.role))
         this.$store.dispatch('getAllCompanies');
 
     },

@@ -396,8 +396,6 @@ namespace StockService.Repository.EmployeeRep
 
             if (employee != null)
             {
-
-
                 var employeeRes = _db.Employees
                 .Where(e => e.EmployeeId == employee.EmployeeId)
                 .Select(e => new
@@ -436,37 +434,28 @@ namespace StockService.Repository.EmployeeRep
                     tokenPair.AccessToken, 30);
                 _cookieService.SetCookie("refreshToken",
                     tokenPair.RefreshToken, 10080);
-                _cookieService.SetCookie("employee", JsonConvert.SerializeObject(employeeRes), 30);
+   
 
                 employee.RefreshToken = tokenPair.RefreshToken;
                 await _db.SaveChangesAsync();
 
                 _response.IsSuccess = true;
                 _response.Message = "Авторизация успешно пройдена.";
+                _response.Result = employeeRes;
             }
 
             return _response;
         }
 
-        public async Task<Response> GetNewTokensAsync(EmployeeDto employeeDto)
+        public async Task<Response> GetNewTokenPairAsync(TokenPair token)
         {
             _response.IsSuccess = false;
             _response.Message = "Некорректные учетные данные.";
 
-            //var employee = await _db.Employees.FindAsync(employeeDto.EmployeeId);
-            var employee = await _db.Employees
-                .FirstOrDefaultAsync(e => e.Login == employeeDto.Login);
-
-            if (employee == null
-                || employeeDto.Password == null
-                || employee.PasswordHash != Sha256.ComputeSha256Hash(employeeDto.Password)
-                )
-                return _response;
-
+            var employee = await _db.Employees.FindAsync(1);
+            
             if (employee != null)
             {
-
-
                 var employeeRes = _db.Employees
                 .Where(e => e.EmployeeId == employee.EmployeeId)
                 .Select(e => new
@@ -509,6 +498,57 @@ namespace StockService.Repository.EmployeeRep
 
                 _response.IsSuccess = true;
                 _response.Message = "Авторизация успешно пройдена.";
+            }
+
+            return _response;
+        }
+
+        public async Task<Response> GetEmployeeInfo(ClaimsPrincipal User)
+        {
+            _response.IsSuccess = false;
+            _response.Message = "Некорректные учетные данные.";
+
+            var employee = await _db.Employees
+                .FirstOrDefaultAsync(e => e.EmployeeId == Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier))
+                );
+
+            if (employee != null)
+            {
+                var employeeRes = _db.Employees
+                .Where(e => e.EmployeeId == employee.EmployeeId)
+                .Select(e => new
+                {
+                    EmployeeId = e.EmployeeId,
+                    FullName = e.FullName,
+                    JobTitle = e.JobTitle,
+                    Login = e.Login,
+                    Role = e.Role,
+
+                    ImagePath = e.ImagePath,
+                    Email = e.Email,
+                    Phone = e.Phone,
+
+                    StockId = e.StockId,
+                    StockName = e.StockId != null ? _db.Stocks
+                        .Where(s => s.StockId == e.StockId)
+                        .Select(s => s.Name)
+                        .FirstOrDefault() : null,
+                    CompanyId = e.CompanyId,
+                    CompanyName = _db.Companies
+                        .Where(c => c.CompanyId == e.CompanyId)
+                        .Select(c => c.Name)
+                        .FirstOrDefault(),
+                    LogoPath = _db.Companies
+                        .Where(c => c.CompanyId == e.CompanyId)
+                        .Select(c => c.LogoPath)
+                        .FirstOrDefault(),
+                })
+                .FirstOrDefault();
+
+
+                _response.Result = employeeRes;
+                _response.IsSuccess = true;
+                _response.Message = "Данные сотрудника успешно получены.";
             }
 
             return _response;

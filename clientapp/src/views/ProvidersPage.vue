@@ -184,7 +184,7 @@
       </v-expansion-panels>
   
       <!-- Секция редактирования -->
-      <v-card v-if="policyA.includes(getEmployeeInfo.Role)">
+      <v-card v-if="policyA.includes(getEmployeeInfo.role)">
         <v-card-title>
           <v-row align="center">
             <v-col cols="auto">

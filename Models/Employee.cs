@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json.Linq;
+using System.Text.Json.Serialization;
 
 namespace StockService.Models
 {
@@ -13,6 +14,7 @@ namespace StockService.Models
         public string? PasswordHash { get; set; }
         public string Role { get; set; }
         public string? RefreshToken { get; set; }
+        //public DateTime? RefreshExpires { get; set; }
 
 
         public int? StockId { get; set; }

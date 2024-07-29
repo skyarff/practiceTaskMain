@@ -23,7 +23,7 @@
             </td>
             <td>{{ item.name }}</td>
             <td
-            v-if="policyA.includes(getEmployeeInfo.Role)"
+            v-if="policyA.includes(getEmployeeInfo.role)"
             >{{ item.companyName }}</td>
           </tr>
         </template>
@@ -62,7 +62,7 @@
 
           <v-row>
               <v-col 
-              :cols="`${policyA.includes(getEmployeeInfo.Role) ? 7 : 12}`"
+              :cols="`${policyA.includes(getEmployeeInfo.role) ? 7 : 12}`"
               >
                 <v-card color="grey-lighten-4">
                   <v-card-title>
@@ -93,7 +93,7 @@
                 </v-card>
               </v-col>
 
-              <v-col v-if="policyA.includes(getEmployeeInfo.Role)" cols="5">
+              <v-col v-if="policyA.includes(getEmployeeInfo.role)" cols="5">
                 <v-card color="teal-lighten-5">
                   <v-card-title>
                     Иерархические сущности
@@ -174,7 +174,7 @@
           <div v-if="selectedStock.stockId !== undefined || isEditing">
             
             <v-row>
-                <v-col v-if="policyA.includes(getEmployeeInfo.Role)" cols="7">
+                <v-col v-if="policyA.includes(getEmployeeInfo.role)" cols="7">
                   <v-card color="grey-lighten-4">
                     <v-card-title>
                       Поля
@@ -204,7 +204,7 @@
                   </v-card>
                 </v-col>
 
-                <v-col v-if="policyA.includes(getEmployeeInfo.Role)" cols="5">
+                <v-col v-if="policyA.includes(getEmployeeInfo.role)" cols="5">
                   <v-card color="teal-lighten-5">
                     <v-card-title>
                       Иерархические сущности
@@ -235,7 +235,7 @@
 
           <v-row>
               <v-col 
-              :cols="`${policyA.includes(getEmployeeInfo.Role) ? 7 : 12}`"
+              :cols="`${policyA.includes(getEmployeeInfo.role) ? 7 : 12}`"
               >
                 <v-card color="grey-lighten-4">
                   <v-card-title>
@@ -258,7 +258,7 @@
                 </v-card>
               </v-col>
 
-              <v-col v-if="policyA.includes(getEmployeeInfo.Role)" cols="5">
+              <v-col v-if="policyA.includes(getEmployeeInfo.role)" cols="5">
                 <v-card color="teal-lighten-5">
                   <v-card-title>
                     Иерархические сущности
@@ -326,7 +326,7 @@ export default {
     this.abortFlag = false
     this.checkConnection();
 
-    if (this.policyA.includes(this.getEmployeeInfo.Role))
+    if (this.policyA.includes(this.getEmployeeInfo.role))
       this.$store.dispatch('getAllCompanies');
   },
   deactivated() {
@@ -480,7 +480,7 @@ computed: {
         return this.$store.state.policyA
       },
       headers() {
-      if (this.policyA.includes(this.getEmployeeInfo.Role)) {
+      if (this.policyA.includes(this.getEmployeeInfo.role)) {
         this.baseHeaders.splice(2, 0, { 
             title: 'Компания', 
             key: 'companyName', 
