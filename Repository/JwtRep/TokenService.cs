@@ -59,8 +59,8 @@ public class TokenService : ITokenService
         if (refreshToken != employee.RefreshToken)
             return false;
 
-        //if (employee.RefreshTokenExpiryTime <= DateTime.UtcNow)
-        //    throw new SecurityTokenException("Incorrect data.");
+        if (employee.RefreshTokenExpiryTime < DateTime.UtcNow)
+            throw new SecurityTokenException("Incorrect data.");
 
         return true;
     }

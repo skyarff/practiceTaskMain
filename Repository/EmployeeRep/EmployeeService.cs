@@ -435,6 +435,7 @@ namespace StockService.Repository.EmployeeRep
 
 
                 employee.RefreshToken = tokenPair.RefreshToken;
+                employee.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
                 await _db.SaveChangesAsync();
 
                 _response.IsSuccess = true;
@@ -456,6 +457,8 @@ namespace StockService.Repository.EmployeeRep
 
             _response.IsSuccess = true;
             _response.Message = "Выход успешно выполнен.";
+
+            await Task.Delay(0);
 
             return _response;
         }
@@ -493,6 +496,7 @@ namespace StockService.Repository.EmployeeRep
                 newTokenPair.RefreshToken, 10080);
 
             employee.RefreshToken = newTokenPair.RefreshToken;
+            employee.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
             await _db.SaveChangesAsync();
 
             _response.IsSuccess = true;
