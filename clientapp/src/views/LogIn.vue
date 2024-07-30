@@ -64,7 +64,6 @@
 
 <script>
 import api from '@/api'
-import VueCookies from 'vue-cookies'
 
 
 export default {
@@ -99,8 +98,6 @@ export default {
                     }
                 });
 
-                this.$store.state.accessToken = VueCookies.get('accessToken');
-                this.$store.state.refreshToken = VueCookies.get('refreshToken');
 
                 this.$store.commit('setUserInfo', response.data.result);
                 this.$router.push('/ProductsPage');

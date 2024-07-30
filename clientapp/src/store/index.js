@@ -4,7 +4,6 @@ import updPageModule from '@/store/updPage'
 import employeePageModule from '@/store/employeePage';
 import storageLocationPageModule from '@/store/storageLocationPage'
 import productPageModule from '@/store/productPage'
-import VueCookies from 'vue-cookies'
 
 
 
@@ -19,9 +18,6 @@ export default createStore({
     },
   },
   mutations: {
-    setInitialState(state) {
-      state = getInitialState()
-    },
     setErrorMessage(state, message) {
       state.errorMessage = message
     },
@@ -81,14 +77,8 @@ export default createStore({
             commit('setErrorMessage', error);
           }
       },
-      logout({commit}) {
-        commit('setInitialState');
-        VueCookies.remove('accessToken');
-        VueCookies.remove('refreshToken');
-      },
-      async getUserInfo({commit, state}) {
-        if (state.accessToken) {
-          const url = '/api/Employee/getEmployeeInfo';
+      async getUserInfo({commit}) {
+        const url = '/api/Employee/getEmployeeInfo';
 
           try {
             const response = await api.get(url, {
@@ -99,31 +89,30 @@ export default createStore({
 
             commit('setUserInfo', response.data.result);
 
-          } catch (error) {
-            commit('setErrorMessage', error);
-          }
-        }
+          } catch (error) {}
       },
-      async refreshTokens({commit, state}) {
+      async refreshTokens() {
         const url = `/api/Employee/refreshTokens`;
-
-        const data = {
-                    accessToken: state.accessToken,
-                    refreshToken: state.refreshToken
-                }
         try {
-            await api.post(url, data, {
+            await api.post(url, {}, {
                 headers: {
                     'accept': '*/*',
                     'Content-Type': 'application/json'
                 },
             });
 
-            state.accessToken = VueCookies.get('accessToken');
-            state.refreshToken = VueCookies.get('refreshToken');
-        } catch (error) {
-          commit('setErrorMessage', error);
-        }
+        } catch {}
+      },
+      async logout() {
+        const url = `/api/Employee/logout`
+        try {
+          await api.post(url, {
+            headers: {
+              'accept': '*/*'
+            }
+          })
+          window.location.reload();
+        } catch {}
       }
 
   },
@@ -140,8 +129,6 @@ function getInitialState() {
   return {
     errorMessage: '',
     employeeInfo: null,
-    accessToken: '',
-    refreshToken: '',
     companies: [],
     providers: [],
     policyS: ['StockLevelWorker'],

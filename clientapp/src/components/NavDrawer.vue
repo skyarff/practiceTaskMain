@@ -120,7 +120,7 @@
         return this.$store.state.policyA
       },
       isAuth() {
-      return !!this.$store.state.accessToken;
+      return !!this.$store.state.employeeInfo;
     }
     }
   }

@@ -39,15 +39,12 @@ export default {
   },
   methods: {
     logout() {
-      this.$store.dispatch('logout');
-      window.location.reload();
-      this.$router.push('/AuthPage');
-      
+      this.$store.dispatch('logout')
     }
   },
   computed: {
     isAuth() {
-      return !!this.$store.state.accessToken;
+      return !!this.$store.state.employeeInfo;
     }
   }
 }

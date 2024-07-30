@@ -90,7 +90,6 @@ function getCurrentUserRole() {
 
 router.beforeResolve((to, from, next) => {
   const userRole = getCurrentUserRole();
-
   if (to.meta.hasRole) {
     if (to.meta.hasRole.includes(userRole)) {
       next();
@@ -99,7 +98,8 @@ router.beforeResolve((to, from, next) => {
     }
   } else {
     if (to.path === '/AuthPage' && userRole) {
-      next('/SchemaPage');
+      // next('/SchemaPage');
+      next();
     } else next();
   }
 });

@@ -17,7 +17,6 @@
 import NavBar from '@/components/NavBar.vue'
 import NavDrawer from '@/components/NavDrawer.vue'
 import ErrorOutput from '@/components/ErrorOutput.vue'
-import VueCookies from 'vue-cookies'
 
 export default {
   name: "App",
@@ -28,8 +27,6 @@ export default {
     ErrorOutput,
   },
   created() {
-    this.$store.state.accessToken = VueCookies.get('accessToken');
-    this.$store.state.refreshToken = VueCookies.get('refreshToken');
     this.$store.dispatch('getUserInfo')
   }
 };

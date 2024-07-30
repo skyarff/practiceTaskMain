@@ -220,11 +220,35 @@ namespace StockService.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("refreshTokens")]
-        public async Task<IActionResult> RefreshTokens([FromBody] TokenPair tokenPair)
+        [HttpPost("logout")]
+        public async Task<IActionResult> logout()
         {
             try
             {
+                _response = await _employeeService.Logout();
+                if (_response.IsSuccess) return Ok(_response);
+                return NotFound(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.Errors.Add(ex.Message);
+                return BadRequest(_response);
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpPost("refreshTokens")]
+        public async Task<IActionResult> RefreshTokens()
+        {
+            try
+            {
+                TokenPair tokenPair = new TokenPair()
+                {
+                    AccessToken = Request.Cookies["accessToken"],
+                    RefreshToken = Request.Cookies["refreshToken"],
+                };
+
                 _response = await _employeeService.GetNewTokenPairAsync(tokenPair);
                 if (_response.IsSuccess) return Ok(_response);
                 return NotFound(_response);

@@ -445,6 +445,21 @@ namespace StockService.Repository.EmployeeRep
             return _response;
         }
 
+        public async Task<Response> Logout()
+        {
+            _response.IsSuccess = false;
+            _response.Message = "Ошибка выхода.";
+
+
+            _cookieService.RemoveCookie("accessToken");
+            _cookieService.RemoveCookie("refreshToken");
+
+            _response.IsSuccess = true;
+            _response.Message = "Выход успешно выполнен.";
+
+            return _response;
+        }
+
         public async Task<Response> GetNewTokenPairAsync(TokenPair tokenPair)
         {
             _response.IsSuccess = false;

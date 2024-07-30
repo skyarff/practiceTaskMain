@@ -9,13 +9,21 @@
             _httpContextAccessor = httpContextAccessor;
         }
 
+
         public void SetCookie(string key, string value, int? expireTime)
         {
-            CookieOptions option = new CookieOptions();
+            CookieOptions option = new CookieOptions
+            {
+                HttpOnly = true,
+                //Secure = true,
+                //SameSite = SameSiteMode.None
+            };
+
             if (expireTime.HasValue)
                 option.Expires = DateTime.Now.AddMinutes(expireTime.Value);
             else
                 option.Expires = DateTime.Now.AddMilliseconds(10);
+
             _httpContextAccessor.HttpContext.Response.Cookies.Append(key, value, option);
         }
 
