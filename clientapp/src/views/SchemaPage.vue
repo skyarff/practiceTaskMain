@@ -48,7 +48,7 @@ export default {
                 this.$store.state.accessToken = VueCookies.get('accessToken');
                 this.$store.state.refreshToken = VueCookies.get('refreshToken');
             } catch (error) {
-                this.$store.commit('setErrorMessage', error);
+              this.$store.commit('setErrorMessage', error.response.data.message);
             }
       }
     }

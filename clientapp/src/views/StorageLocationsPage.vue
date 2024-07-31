@@ -505,7 +505,7 @@ import '@/assets/main.css';
             resolve();
           })
           .catch(error => {
-            this.$store.commit('setErrorMessage', error);
+            this.$store.commit('setErrorMessage', error.response.data.message);
             reject();
           })
           .finally(() => {
@@ -547,13 +547,13 @@ import '@/assets/main.css';
           
           this.applyFilters();
         } catch (error) {
-          this.$store.commit('setErrorMessage', error)
+          this.$store.commit('setErrorMessage', error.response.data.message);
         }
       },
       async deleteStorageLocation() {
         api.delete(`/api/StorageLocation/dellById?storageLocationId=${this.selectedStorageLocation.storageLocationId}`)
         .then(() => this.applyFilters())
-        .catch(error => this.$store.commit('setErrorMessage', error))
+        .catch(error => this.$store.commit('setErrorMessage', error.response.data.message))
       },
       async handleRowClick(item) {
         

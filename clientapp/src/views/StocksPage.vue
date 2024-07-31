@@ -391,7 +391,7 @@ export default {
             resolve();
           })
           .catch(error => {
-            this.$store.commit('setErrorMessage', error);
+            this.$store.commit('setErrorMessage', error.response.data.message);
             reject();
           })
           .finally(() => {
@@ -431,13 +431,13 @@ export default {
         
         this.applyFilters();
       } catch (error) {
-        this.$store.commit('setErrorMessage', error)
+        this.$store.commit('setErrorMessage', error.response.data.message);
       }
     },
     async deleteStock() {
       api.delete(`api/Stock/dellById?stockId=${this.selectedStock.stockId}`)
       .then(() => this.applyFilters())
-      .catch(error => this.$store.commit('setErrorMessage', error))
+      .catch(error => this.$store.commit('setErrorMessage', error.response.data.message))
     },
     async handleRowClick(item) {
       if (this.selectedStock.stockId === item.stockId) {

@@ -29,8 +29,8 @@ let refreshSubscribers = [];
 const addRefreshSubscriber = (callback) => {
   refreshSubscribers.push(callback);
 }
-const onRefreshed = (token) => {
-  refreshSubscribers.forEach(callback => callback(token));
+const onRefreshed = () => {
+  refreshSubscribers.forEach(callback => callback());
   refreshSubscribers = [];
 }
 
@@ -41,8 +41,7 @@ api.interceptors.response.use((response) => {
   if (error.response.status === 401 && !originalRequest._retry) {
     if (isRefreshing) {
       return new Promise((resolve) => {
-        addRefreshSubscriber((token) => {
-          originalRequest.headers['Authorization'] = 'Bearer ' + token;
+        addRefreshSubscriber(() => {
           resolve(api(originalRequest));
         });
       });
@@ -53,10 +52,7 @@ api.interceptors.response.use((response) => {
 
     try {
       await store.dispatch('refreshTokens');
-      const newToken = store.state.accessToken;
-      
-      originalRequest.headers['Authorization'] = 'Bearer ' + newToken;
-      onRefreshed(newToken);
+      onRefreshed();
 
       return api(originalRequest);
     } catch (refreshError) {

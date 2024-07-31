@@ -102,7 +102,7 @@ export default {
                 this.$store.commit('setUserInfo', response.data.result);
                 this.$router.push('/ProductsPage');
             } catch (error) {
-                this.$store.commit('setErrorMessage', error);
+                this.$store.commit('setErrorMessage', error.response.data.message);
             } finally {
                 this.loading = false;
             }

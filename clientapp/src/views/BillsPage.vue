@@ -493,7 +493,7 @@ import '@/assets/main.css';
             resolve();
           })
           .catch(error => {
-            this.$store.commit('setErrorMessage', error);
+            this.$store.commit('setErrorMessage', error.response.data.message);
             reject();
           })
           .finally(() => {
@@ -528,13 +528,13 @@ import '@/assets/main.css';
             });
           this.applyFilters();
         } catch (error) {
-          this.$store.commit('setErrorMessage', error)
+          this.$store.commit('setErrorMessage', error.response.data.message);
         }
       },
       async deleteBill() {
         api.delete(`/api/Bill/delById?billId=${this.selectedBill.billId}`)
         .then(() => this.applyFilters())
-        .catch(error => this.$store.commit('setErrorMessage', error))
+        .catch(error => this.$store.commit('setErrorMessage', error.response.data.message))
       },
       async handleRowClick(item) {
         

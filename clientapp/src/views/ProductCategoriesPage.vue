@@ -359,7 +359,7 @@ export default {
             resolve();
           })
           .catch(error => {
-            this.$store.commit('setErrorMessage', error);
+            this.$store.commit('setErrorMessage', error.response.data.message);
             reject();
           })
           .finally(() => {
@@ -391,14 +391,14 @@ export default {
         
         this.applyFilters();
       } catch (error) {
-        this.$store.commit('setErrorMessage', error)
+        this.$store.commit('setErrorMessage', error.response.data.message);
       }
     },
     async deleteProductCategory() {
 
       api.delete(`api/ProductCategory/dellById?productCategoryId=${this.selectedProductCategory.productCategoryId}`)
       .then(() => this.applyFilters())
-      .catch(() => this.$store.commit('setErrorMessage', error))
+      .catch(() => this.$store.commit('setErrorMessage', error.response.data.message))
 
     },
     async handleRowClick(item) {

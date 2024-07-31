@@ -520,7 +520,7 @@ import '@/assets/main.css';
             resolve();
           })
           .catch(error => {
-            this.$store.commit('setErrorMessage', error);
+            this.$store.commit('setErrorMessage', error.response.data.message);
             reject();
           })
           .finally(() => {
@@ -552,13 +552,13 @@ import '@/assets/main.css';
             });
           this.applyFilters();
         } catch (error) {
-          this.$store.commit('setErrorMessage', error)
+          this.$store.commit('setErrorMessage', error.response.data.message);
         }
       },
       async deleteUpd() {
         api.delete(`/api/Upd/delById?updId=${this.selectedUpd.updId}`)
         .then(() => this.applyFilters())
-        .catch(error => this.$store.commit('setErrorMessage', error))
+        .catch(error => this.$store.commit('setErrorMessage', error.response.data.message))
       },
       async handleRowClick(item) {
         

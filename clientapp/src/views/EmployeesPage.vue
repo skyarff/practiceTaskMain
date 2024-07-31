@@ -645,7 +645,7 @@ import '@/assets/main.css';
             resolve();
           })
           .catch(error => {
-            this.$store.commit('setErrorMessage', error);
+            this.$store.commit('setErrorMessage', error.response.data.message);
             reject();
           })
           .finally(() => {
@@ -700,14 +700,14 @@ import '@/assets/main.css';
           
           this.applyFilters();
         } catch (error) {
-          this.$store.commit('setErrorMessage', error)
+          this.$store.commit('setErrorMessage', error.response.data.message);
         }
       },
       async deleteEmployee() {
 
         api.delete(`api/Employee/dellById?employeeId=${this.selectedEmployee.employeeId}`)
         .then(() => this.applyFilters())
-        .catch(error => this.$store.commit('setErrorMessage', error))
+        .catch(error => this.$store.commit('setErrorMessage', error.response.data.message))
       },
       handleRowClick(item) {
         if (this.selectedEmployee.employeeId === item.employeeId) {

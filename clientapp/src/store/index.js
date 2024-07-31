@@ -51,7 +51,7 @@ export default createStore({
           commit('setCompanies', companies)
           
         } catch (error) {
-          // this.$store.commit('setErrorMessage', error);
+          commit('setErrorMessage', error.response.data.message);
         }
       },
       async getAllProviders({commit}) {
@@ -74,7 +74,7 @@ export default createStore({
             commit('setProviders', providers)
 
           } catch (error) {
-            commit('setErrorMessage', error);
+            commit('setErrorMessage', error.response.data.message);
           }
       },
       async getUserInfo({commit}) {

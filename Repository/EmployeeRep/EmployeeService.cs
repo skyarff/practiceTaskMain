@@ -429,7 +429,7 @@ namespace StockService.Repository.EmployeeRep
 
                 TokenPair tokenPair = _tokenService.GenerateTokenPair(employee);
                 _cookieService.SetCookie("accessToken",
-                    tokenPair.AccessToken, 30);
+                    tokenPair.AccessToken, 10080);
                 _cookieService.SetCookie("refreshToken",
                     tokenPair.RefreshToken, 10080);
 
@@ -491,7 +491,7 @@ namespace StockService.Repository.EmployeeRep
 
             TokenPair newTokenPair = _tokenService.GenerateTokenPair(employee);
             _cookieService.SetCookie("accessToken",
-                newTokenPair.AccessToken, 30);
+                newTokenPair.AccessToken, 10080);
             _cookieService.SetCookie("refreshToken",
                 newTokenPair.RefreshToken, 10080);
 

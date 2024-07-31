@@ -2,8 +2,9 @@
   <v-snackbar
     v-model="localShow"
     :timeout="timeout"
-    color="warning"
+    color="teal-lighten-4"
     elevation="4"
+    location="top"
   >
     <div class="d-flex align-center">
       <v-icon

@@ -49,7 +49,7 @@ const employeePageModule = {
 
               
             } catch (error) {
-              console.error('Error fetching stocks by company ID:', error);
+                this.$store.commit('setErrorMessage', error.response.data.message);
             }
         },
     }

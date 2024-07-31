@@ -304,7 +304,7 @@
                     >
                       <v-select
                         v-model="filtersUpdId"
-                        :items="policyCA.includes(getEmployeeInfo.role) ? updsByBillId : updsByCompanyId"
+                        :items="policyCA.includes(getEmployeeInfo.role) ? fUpdsByBillId : fUpdsByCompanyId"
                         item-title="name"
                         item-value="updId"
                         label="УПД"
@@ -951,7 +951,7 @@ import '@/assets/main.css';
             resolve();
           })
           .catch(error => {
-            this.$store.commit('setErrorMessage', error);
+            this.$store.commit('setErrorMessage', error.response.data.message);
             reject();
           })
           .finally(() => {
@@ -1012,13 +1012,13 @@ import '@/assets/main.css';
           } 
           this.applyFilters();
         } catch (error) {
-          this.$store.commit('setErrorMessage', error)
+          this.$store.commit('setErrorMessage', error.response.data.message);
         }
       },
       async deleteProduct() {
         api.delete(`api/Product/dellById?productId=${this.selectedProduct.productId}`)
           .then(() => this.applyFilters())
-          .catch((error) => this.$store.commit('setErrorMessage', error))
+          .catch((error) => this.$store.commit('setErrorMessage', error.response.data.message))
       },
       async handleRowClick(item) {
         if (this.selectedProduct.productId === item.productId) {
@@ -1033,7 +1033,7 @@ import '@/assets/main.css';
             this.$store.dispatch( 'productPage/getEmployeesByStockId', {stockId: this.selectedProduct.stockId, selected: true})
             this.$store.dispatch( 'productPage/getUpdsByBillId', {billId: this.selectedProduct.billId, selected: true})
             this.$store.dispatch( 'productPage/getBillsByCompanyAndProviderId', 
-            {companyId: this.selectedProduct.companyId, providerId: this.selectedProduct.providerId, selected: true, })
+            {companyId: this.selectedProduct.companyId, providerId: this.selectedProduct.providerId, selected: true })
           }
           this.$store.dispatch( 'productPage/getStorageLocationsByStockId', {stockId: this.selectedProduct.stockId, selected: true})
           this.$store.dispatch( 'productPage/getProductCategoriesByCompanyId', {companyId: this.selectedProduct.companyId, selected: true})
@@ -1187,7 +1187,8 @@ import '@/assets/main.css';
     filtersUpdId: {
       get() {
         const upd = (this.policyCA.includes(this.getEmployeeInfo.role) ? this.fUpdsByBillId : this.fUpdsByCompanyId)
-        return upd ? upd.name : null;
+            .find(u => u.updId === this.filters.updId);
+              return upd ? upd.name : null;
       },
       set(value) {
         this.filters.updId = value;

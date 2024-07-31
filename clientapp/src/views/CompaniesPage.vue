@@ -375,7 +375,7 @@ import '@/assets/main.css';
             resolve();
           })
           .catch(error => {
-            this.$store.commit('setErrorMessage', error);
+            this.$store.commit('setErrorMessage', error.response.data.message);
             reject();
           })
           .finally(() => {
@@ -414,14 +414,14 @@ import '@/assets/main.css';
           }  
           this.applyFilters();
         } catch (error) {
-          this.$store.commit('setErrorMessage', error)
+          this.$store.commit('setErrorMessage', error.response.data.message);
         }
       },
       async deleteCompany() {
 
         api.delete(`api/Company/dellById?companyId=${this.selectedCompany.companyId}`)
         .then(() => this.applyFilters())
-        .catch(error => this.$store.commit('setErrorMessage', error)) 
+        .catch(error => this.$store.commit('setErrorMessage', error.response.data.message)) 
       },
       async handleRowClick(item) {
         

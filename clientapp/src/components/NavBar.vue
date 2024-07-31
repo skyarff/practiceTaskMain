@@ -15,8 +15,6 @@
   
           <v-spacer></v-spacer>
   
-
-
           <v-btn @click="logout" v-if="isAuth" class="mr-3">
             <v-icon class="mr-1">mdi-logout</v-icon>
             <span>Выйти</span>

@@ -582,7 +582,7 @@ import '@/assets/main.css';
             resolve();
           })
           .catch(error => {
-            this.$store.commit('setErrorMessage', error);
+            this.$store.commit('setErrorMessage', error.response.data.message);
             reject();
           })
           .finally(() => {
@@ -637,14 +637,14 @@ import '@/assets/main.css';
           
           this.applyFilters();
         } catch (error) {
-          this.$store.commit('setErrorMessage', error)
+          this.$store.commit('setErrorMessage', error.response.data.message);
         }
       },
       async deleteProvider() {
 
         api.delete(`api/Provider/dellById?providerId=${this.selectedProvider.providerId}`)
         .then(() => this.applyFilters())
-        .catch(error => this.$store.commit('setErrorMessage', error))
+        .catch(error => this.$store.commit('setErrorMessage', error.response.data.message))
       },
       async handleRowClick(item) {
         
